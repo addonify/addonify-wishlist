@@ -13,7 +13,7 @@
  * @package           Addonify_Wishlist
  *
  * @wordpress-plugin
- * Plugin Name:       Addonify WIshlist
+ * Plugin Name:       Addonify Wishlist
  * Plugin URI:        https://wordpress.org/plugins/addonify-wishlist
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
@@ -36,6 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'ADDONIFY_WISHLIST_VERSION', '1.0.0' );
+define( 'ADDONIFY_WISHLIST_DB_INITIALS', 'addonify_wishlist_' );
 
 /**
  * The code that runs during plugin activation.
