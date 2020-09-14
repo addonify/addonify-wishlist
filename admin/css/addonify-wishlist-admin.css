@@ -94,6 +94,15 @@
     width: 60px;
 }
 
+.addonify-content .number {
+    width: 60px;
+    padding-right: 0;
+}
+
+.addonify-content .label-after-input{
+    padding-left: 10px;
+}
+
 #addonify-image-overlay-btn-offset-wrapper{
     margin-top: -15px;
 }

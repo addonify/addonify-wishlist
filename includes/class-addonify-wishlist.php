@@ -191,6 +191,41 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+
+		// add button after add to cart button
+		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
+
+
+		// add button before add to cart button
+		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
+
+
+		// add button aside image
+		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'show_btn_aside_image_callback' );
+
+		
+		// image overlay container 
+		$this->loader->add_action( 'woocommerce_before_shop_loop_item', $plugin_public, 'addonify_overlay_container_start_callback', 10 );
+		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
+
+
+		$this->loader->add_action( 'init', $plugin_public, 'set_cookie', 10 );
+		
+
+		// add custom markup into footer
+		// $this->loader->add_action( 'wp_footer', $plugin_public, 'add_markup_into_footer_callback' );
+
+
+		// add custom styles into header
+		// $this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
+
+
+		// ajax callback
+
+		// search items
+		// $this->loader->add_action( 'wp_ajax_search_items', $plugin_public, 'search_items_callback' );
+		// $this->loader->add_action( 'wp_ajax_nopriv_search_items', $plugin_public, 'search_items_callback' );
+
 	}
 
 	/**

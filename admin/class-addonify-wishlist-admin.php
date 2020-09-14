@@ -233,8 +233,8 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_position', 
 							'options' 			=> array(
-								'before_add_to_cart' 	=> __('Before Add To Cart Button', 'addonify-compare-products'),
 								'after_add_to_cart'		=> __('After Add To Cart Button', 'addonify-compare-products'),
+								'before_add_to_cart' 	=> __('Before Add To Cart Button', 'addonify-compare-products'),
 								'overlay_on_image'		=> __('Overlay On The Product Image', 'addonify-compare-products')
 							),
 							'sanitize_callback'			=> 'sanitize_text_field'
@@ -335,6 +335,21 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart', 
 							'checked' 			=> 1,
+						)
+					) 
+				),
+				array(
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'cookies_lifetime',
+					'field_label'			=> __('Delete Wishlist Cookies after', 'addonify-wishlist'),
+					'field_callback'		=> array($this, "text_box"),
+					'field_callback_args'	=> array( 
+						array(
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'cookies_lifetime', 
+							'default' 			=> 30,
+							'css_class'			=> 'number',
+							'type'				=> 'number',
+							'end_label'			=> 'days',
+							'other_attr'		=> 'min="1"',
 						)
 					) 
 				),
@@ -617,6 +632,12 @@ class Addonify_Wishlist_Admin {
 		foreach($arguments as $args){
 			$default = isset( $args['default'] ) ? $args['default'] : '';
 			$db_value = get_option($args['name'], $default);
+
+			if( ! isset( $args['css_class'] ) ) 	$args['css_class'] 	= '';
+			if( ! isset( $args['type'] ) ) 			$args['type']		= 'text';
+			if( ! isset( $args['end_label'] ) ) 	$args['end_label']	= '';
+			if( ! isset( $args['end_label'] ) ) 	$args['end_label']	= '';
+			if( ! isset( $args['other_attr'] ) ) 	$args['other_attr']	= '';
 
 			require dirname( __FILE__ ) .'/templates/input_textbox.php';
 		}

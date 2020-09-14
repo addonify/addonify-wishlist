@@ -1,0 +1,79 @@
+$bck_color: rgb(41, 42, 48);
+$padding: 15px;
+$thumbnail_height : 48px;
+
+.addonify-overlay-buttons{
+    position: relative;
+
+    .addonify-overlay-btn-wrapper{
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: #1010101a;
+        opacity: 0;
+        transition: 0.4s;
+
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.hidden{
+    display: none;
+}
+
+
+.addonify-add-to-wishlist-btn {
+    a{
+        cursor: pointer;
+        margin-top: 1em;
+    }
+
+    a.show-icon{
+        background: url("data:image/svg+xml,%3Csvg width='16' height='15' viewBox='0 0 16 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.07932 3.43895L7.96445 5.12248L8.84957 3.43895C9.51275 2.17755 10.4836 1.45312 11.6978 1.45312C13.5044 1.45312 14.9289 2.96831 14.9289 5.01137C14.9289 6.29666 14.3361 7.40841 13.0612 8.75274C12.1662 9.69636 11.0302 10.6621 9.66327 11.8241C9.13172 12.276 8.56524 12.7576 7.96443 13.279C7.36408 12.758 6.79793 12.2767 6.26659 11.825C4.90044 10.6637 3.76446 9.69804 2.86924 8.75421C1.59357 7.40928 1 6.29666 1 5.01137C1 2.96801 2.42468 1.45312 4.23111 1.45312C5.44522 1.45312 6.41609 2.17747 7.07932 3.43895Z' stroke='%2396588a' stroke-width='1.5'/%3E%3C/svg%3E%0A") no-repeat 0 4px ;
+        padding-left: 25px;
+        display: inline-block;
+    }
+
+    a.added-to-wishlist{
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='15' viewBox='0 0 16 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.65713 14.3377C3.16416 10.4063 0 8.32377 0 5.01137C0 2.50652 1.78578 0.453125 4.23111 0.453125C5.92804 0.453125 7.1872 1.49525 7.96445 2.97359C8.74163 1.49535 10.0008 0.453125 11.6978 0.453125C14.1434 0.453125 15.9289 2.50693 15.9289 5.01137C15.9289 8.32337 12.7689 10.4026 8.27176 14.3376C8.09577 14.4916 7.83309 14.4916 7.65713 14.3377Z' fill='%2396588a'/%3E%3C/svg%3E%0A");
+    }
+}
+
+
+#addonify-wishlist-modal-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 99999;
+    background: rgba( 0, 0, 0, 0.4 );
+
+    .addonify-wishlist-modal-body{
+        width: 350px;
+        height: 300px;
+        background: #fff;
+        box-sizing: border-box;
+        margin: calc( ( 100vh - 300px) / 2 ) auto 0;
+        padding: 40px;
+    }
+
+    .wishlist-response{
+        text-align: center;
+        height: 105px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+    }
+
+    button.addonify-wishlist-modal-btn{
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+}
