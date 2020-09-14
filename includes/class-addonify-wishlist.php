@@ -222,9 +222,9 @@ class Addonify_Wishlist {
 
 		// ajax callback
 
-		// search items
-		// $this->loader->add_action( 'wp_ajax_search_items', $plugin_public, 'search_items_callback' );
-		// $this->loader->add_action( 'wp_ajax_nopriv_search_items', $plugin_public, 'search_items_callback' );
+		// add to wishlist
+		$this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
+		$this->loader->add_action( 'wp_ajax_nopriv_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
 
 	}
 

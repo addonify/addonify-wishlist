@@ -52,6 +52,7 @@ $thumbnail_height : 48px;
     right: 0;
     z-index: 99999;
     background: rgba( 0, 0, 0, 0.4 );
+    display: none;
 
     .addonify-wishlist-modal-body{
         width: 350px;
@@ -62,7 +63,7 @@ $thumbnail_height : 48px;
         padding: 40px;
     }
 
-    .wishlist-response{
+    #addonify-wishlist-modal-response{
         text-align: center;
         height: 105px;
         display: flex;
@@ -71,9 +72,26 @@ $thumbnail_height : 48px;
         justify-content: center;
     }
 
-    button.addonify-wishlist-modal-btn{
+    .addonify-wishlist-modal-btns button{
         width: 100%;
         margin-top: 10px;
     }
+
+    &.loading .addonify-wishlist-modal-body{
+
+        *{
+            display: none !important;
+        }
+
+        background: #fff url(../../images/loading.gif) no-repeat center;
+    }
     
+}
+
+body.addonify-wishlist-modal-is-open{
+    overflow: hidden;
+
+    #addonify-wishlist-modal-wrapper{
+        display: block;
+    }
 }

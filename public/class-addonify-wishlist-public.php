@@ -128,6 +128,7 @@ class Addonify_Wishlist_Public {
 			'addonify_wishlist_object', 
 			array( 
 				'ajax_url' 								=> admin_url( 'admin-ajax.php' ),
+				'action'								=> 'add_to_wishlist',
 				'view_wishlist_btn_text'				=> $this->get_db_values( 'view_wishlist_btn_text' ),
 				'product_added_to_wishlist_text' 		=> $this->get_db_values( 'product_added_to_wishlist_text', __( 'added to Wishlist', 'addonify-wishlist' ) ),
 				'product_already_in_wishlist_text' 		=> $this->get_db_values( 'product_already_in_wishlist_text', __( 'added to Wishlist', 'addonify-wishlist' ) ),
@@ -206,6 +207,12 @@ class Addonify_Wishlist_Public {
 
 		}
 
+	}
+
+
+
+	public function add_to_wishlist_callback(){
+		wp_send_json_success();
 	}
 	
 
