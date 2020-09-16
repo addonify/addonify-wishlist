@@ -225,8 +225,7 @@ class Addonify_Wishlist_Public {
 			wp_send_json_error( 'Either Product ID is missing or nonce does not match' );
 		}
 
-		// check if item already exists in cookie
-		$wishlist_cookies = isset( $_COOKIE[ $this->plugin_name ] ) ? explode(',', $_COOKIE[ $this->plugin_name ] )  : array();
+		$wishlist_cookies = $this->get_cookies();
 
 		if( ! in_array( $product_id, $wishlist_cookies ) ){
 			$wishlist_cookies[] = $product_id;
@@ -301,10 +300,22 @@ class Addonify_Wishlist_Public {
 	 * @param    $product_id    Product ID
 	 */
 	private function is_item_in_cookies( $product_id ){
-		$wishlist_cookies = isset( $_COOKIE[ $this->plugin_name ] ) ? explode(',', $_COOKIE[ $this->plugin_name ] )  : array();
+		$wishlist_cookies = $this->get_cookies();
 		if( in_array( $product_id, $wishlist_cookies ) ) return true;
 		return false;
 
+	}
+
+
+
+	/**
+	 * Return wishlist product ids in array from cookie or return empty array
+	 *
+	 * @since    1.0.0
+	 * @param    $product_id    Product ID
+	 */
+	private function get_cookies(){
+		return isset( $_COOKIE[ $this->plugin_name ] ) ? explode(',', $_COOKIE[ $this->plugin_name ] )  : array();
 	}
 
 
@@ -413,7 +424,6 @@ class Addonify_Wishlist_Public {
 	}
 
 
-
 	
 	/**
 	 * Print opening tag of overlay container
@@ -515,16 +525,11 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_shortcode_contents(){
 
+		$wishlist_items = isset( $_COOKIE[ $this->plugin_name ] ) ? explode(',', $_COOKIE[ $this->plugin_name ] )  : array();
+		$output_data = $this->generate_contents_data( $wishlist_items) ;
+		
 		ob_start();
-
-		$product_ids = [10];
-		$output_data = $this->generate_contents_data( $product_ids) ;
-
-		echo '<pre>';
-		var_dump( $output_data );
-		die;
-
-		$this->get_templates( 'addonify-wishlist-contents', false, array( ) );
+		$this->get_templates( 'addonify-wishlist-contents', false, $output_data );
 		return ob_get_clean();
 
 	}
@@ -552,17 +557,13 @@ class Addonify_Wishlist_Public {
 
 				if ( ! $product )  continue;
 
+				$sel_products_data[ $i ]['id'] =  $product_id;
 				$sel_products_data[ $i ]['image'] =  '<a href="' . $product->get_permalink() . '" >' . $product->get_image( 'woocommerce_thumbnail', array( 'draggable' => 'false' ) ) . '</a>';
-				
 				$sel_products_data[ $i ]['title'] = '<a href="' . $product->get_permalink() . '" >' . wp_strip_all_tags( $product->get_formatted_name() ) . '</a>';
-
 				$sel_products_data[ $i ]['price'] =  $product->get_price_html();
-
 				$sel_products_data[ $i ]['date_added'] =  date( 'Y-m-d' );
-
-				$sel_products_data[ $i ]['stock'] =  ( $product->get_stock_status() == 'instock' ) ? '<p class="stock in-stock">In stock</p>' : '<p class="stock out-of-stock">Out of stock</p>';
-
-				$sel_products_data[ $i ]['Add To Cart'] =   do_shortcode( '[add_to_cart id="' . $product_id . '" show_price="false" style="" ]' );
+				$sel_products_data[ $i ]['stock'] =  ( $product->get_stock_status() == 'instock' ) ? '<span class="stock in-stock">In stock</span>' : '<span class="stock out-of-stock">Out of stock</span>';
+				$sel_products_data[ $i ]['add_to_cart'] =   do_shortcode( '[add_to_cart id="' . $product_id . '" show_price="false" style="" ]' );
 
 				$i++;
 

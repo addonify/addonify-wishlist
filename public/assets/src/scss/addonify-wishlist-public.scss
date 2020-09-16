@@ -119,3 +119,93 @@ body.addonify-wishlist-modal-is-open{
         display: block;
     }
 }
+
+
+
+// wishlist page
+#addonify-wishlist-container{
+
+    ul{
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        *{
+            margin: 0;
+        }
+    }
+
+    .addonify-wishlist-items-heading{
+        background: #efefef;
+        padding: 20px 0;
+    }
+
+    .addonify-wishlist-items-package{
+        padding: 10px 0;
+        background: #fbfbfb;
+    }
+
+    li{
+        display: inline-block;
+    }
+
+    li.checkbox{
+        width: 45px;
+    }
+
+    li.remove{
+        width: 65px;
+    }
+
+    li.name{
+        width: 174px;
+    }
+    
+    li.price{
+        width: 85px;
+    }
+
+    li.date{
+        width: 90px;
+    }
+
+    li.stock{
+        width: 90px;
+    }
+
+    li.cart{
+        width:125px;
+    }
+    
+    li.image{
+        width: 90px;
+        img{
+            max-width: 75px;
+            height: auto;                
+        }
+    }
+
+
+    .addonify-wishlist-footer-actions{
+        overflow: hidden;
+        margin: 20px 0 0;
+        padding: 0 15px;
+
+
+        .addonify-wfa-packets{
+            float: left;
+            width: 50%;
+        }
+
+        select{
+            height: 45px;
+        }
+
+        .addonify-wfa-packets.go-right{
+            text-align: right;
+        }
+    }
+    
+}
