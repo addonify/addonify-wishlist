@@ -209,7 +209,7 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
 
 
-		$this->loader->add_action( 'init', $plugin_public, 'set_cookie', 10 );
+		$this->loader->add_action( 'init', $plugin_public, 'generate_cookies', 10 );
 		
 
 		// add custom markup into footer

@@ -722,7 +722,7 @@ class Addonify_Wishlist_Admin {
 		}
 
 		$args = $arguments[0];
-		$db_value = get_option($args['name']);
+		$db_value = get_option( $args['name'] );
 
 		if ( ! $db_value ) $db_value = get_option( ADDONIFY_WISHLIST_DB_INITIALS .'page_id' );
 		
