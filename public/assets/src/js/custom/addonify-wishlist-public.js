@@ -31,6 +31,21 @@
 		})
 
 
+		// wishlist page form elements --------------------------------------
+
+		// select all checkbox
+		$body.on('click', 'input.addonify-wishlist-check-all', function(){
+			$('input.addonify-wishlist-product-id').prop('checked', $(this).prop( "checked" ) );
+		})
+
+		$body.on('click', '.addonify-wishlist-remove-notification', function(){
+			var $parent = $(this).parents('.addonify-wishlist-notification');
+			$parent.remove();
+		})
+
+		// end wishlist page form elements --------------------------------------
+
+
 		function init(){
 			// create markups for "after add to wishlist" modal
 			var template = '<div id="addonify-wishlist-modal-wrapper"><div class="addonify-wishlist-modal-body" >';

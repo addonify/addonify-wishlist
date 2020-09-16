@@ -210,6 +210,8 @@ class Addonify_Wishlist {
 
 
 		$this->loader->add_action( 'init', $plugin_public, 'generate_cookies', 10 );
+
+		$this->loader->add_action( 'init', $plugin_public, 'process_wishlist_form_submit', 10 );
 		
 
 		// add custom markup into footer
