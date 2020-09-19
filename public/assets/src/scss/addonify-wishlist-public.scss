@@ -209,33 +209,3 @@ body.addonify-wishlist-modal-is-open{
     }
     
 }
-
-
-.addonify-wishlist-notification{
-    background: #ececec;
-    padding: 25px;
-    border: solid 1px #dadada;
-    margin: 1em 0 2em;
-
-    button.addonify-wishlist-remove-notification{
-        float: right;
-        padding: 0 0 3px;
-        margin: 0;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        font-size: 14px;
-    }
-
-    &.success{
-        background: #008000c4;
-        border-color: #19651c;
-        color: #fff;
-    }
-
-    &.danger{
-        background: #c50303;
-        border-color: #710202;
-        color: #fff;
-    }
-}

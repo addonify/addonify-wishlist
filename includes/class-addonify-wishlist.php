@@ -209,20 +209,10 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
 
 
-		$this->loader->add_action( 'init', $plugin_public, 'generate_cookies', 10 );
-
-		$this->loader->add_action( 'init', $plugin_public, 'process_wishlist_form_submit', 10 );
+		$this->loader->add_action( 'init', $plugin_public, 'generate_cookies', 10 );	
+		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit', 10 );
+		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode', 10 );
 		
-
-		// add custom markup into footer
-		// $this->loader->add_action( 'wp_footer', $plugin_public, 'add_markup_into_footer_callback' );
-
-
-		// add custom styles into header
-		// $this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
-
-
-		// ajax callback
 
 		// add to wishlist
 		$this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );

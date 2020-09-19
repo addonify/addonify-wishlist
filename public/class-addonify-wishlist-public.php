@@ -108,7 +108,7 @@ class Addonify_Wishlist_Public {
 			$this->btn_label 				= $this->get_db_values( 'btn_label', __( 'Add to Wishlist', 'addonify-wishlist' ) );
 			$this->button_custom_css_class	= $this->get_db_values( 'btn_custom_class' );
 
-			$this->register_shortcode();
+			// $this->register_shortcode();
 
 
 		}
@@ -528,19 +528,7 @@ class Addonify_Wishlist_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	private function register_shortcode(){
-
-		
-		var_dump( $this->get_flashdata( 'wishlist_action' ) );
-
-
-		if( $this->get_flashdata( 'wishlist_action' ) ){
-			
-			add_action( 'addonify_wishlist_notification', function(){
-				$this->get_templates( 'addonify-wishlist-notification', false, array( 'notification_text' => 'asdf', 'notification_status' => 'success' ) );
-			} );
-			
-		}
+	public function register_shortcode(){
 
 		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
 	}
@@ -592,8 +580,10 @@ class Addonify_Wishlist_Public {
 				$sel_products_data[ $i ]['title'] = '<a href="' . $product->get_permalink() . '" >' . wp_strip_all_tags( $product->get_formatted_name() ) . '</a>';
 				$sel_products_data[ $i ]['price'] =  $product->get_price_html();
 				$sel_products_data[ $i ]['date_added'] =  $timestamp;
+
 				$sel_products_data[ $i ]['stock'] =  ( $product->get_stock_status() == 'instock' ) ? '<span class="stock in-stock">In stock</span>' : '<span class="stock out-of-stock">Out of stock</span>';
-				$sel_products_data[ $i ]['add_to_cart'] =   do_shortcode( '[add_to_cart id="' . $product_id . '" show_price="false" style="" ]' );
+				
+				$sel_products_data[ $i ]['add_to_cart'] =  ( $product->get_stock_status() == 'instock' ) ? do_shortcode( '[add_to_cart id="' . $product_id . '" show_price="false" style="" ]' ) : '';
 
 				$i++;
 
@@ -613,23 +603,70 @@ class Addonify_Wishlist_Public {
 	 */
 	public function process_wishlist_form_submit(){
 
-		$wishlist_page_url = $this->wishlist_page_id;
+		// should we process this request ?
+		if( ! isset( $_POST['process_addonify_wishlist_form'] ) ) return;
+		
+		$wishlist_page_url = get_page_link( $this->wishlist_page_id );
 
-		if( isset( $_POST['addonify_wishlist_remove'] ) ){
+		// nonce
+		if( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], $this->plugin_name ) ) {
+			$this->set_flashdata( 'wishlist_action', array( 'Page has expired. Please try again', 'warning' ) );
+			wp_redirect( $wishlist_page_url );
+			exit;
+		}
+
+		
+		// remove single product
+		if( isset( $_POST['addonify_wishlist_remove'] )  && ! empty( $_POST['addonify_wishlist_remove'] ) ) {
 
 			$product_id = $_POST['addonify_wishlist_remove'];
 
-			if( isset( $_POST['nonce'] ) && wp_verify_nonce($_POST['nonce'], $this->plugin_name) && $this->is_item_in_cookies( $product_id ) ) {
-				// $this->remove_item_from_wishlist( $_POST['addonify_wishlist_remove'] );
+			// no need to check if item exists in wishlist
+			// because, user wants to delete it anyway.
+
+			$this->remove_item_from_wishlist( array( $_POST['addonify_wishlist_remove'] ) );
+			wp_redirect( $wishlist_page_url );
+			exit;
+			
+
+		}
+		// addonify-wishlist-footer-actions
+		elseif( isset( $_POST['addonify_wishlist_action'] )  && ! empty( $_POST['addonify_wishlist_action'] ) ) {
+			
+			// add all to cart
+			if( $_POST['addonify_wishlist_action'] == 'add_all_to_cart' ){
+
+				$this->add_to_cart( 'all' );
+				wp_redirect( $wishlist_page_url );
+				exit;
+			}
+			
+			
+			$selected_product_ids = $_POST['product_ids'];
+
+
+			// is any product selected ?
+			if( ! is_array( $selected_product_ids ) ){
+				$this->set_flashdata( 'wishlist_action', array( 'You have not selected any products', 'warning' ) );
+
+				wp_redirect( $wishlist_page_url );
+				exit;
+			}
+				
+			// remove selected
+			if( $_POST['addonify_wishlist_action'] == 'remove' ){
+				$this->remove_item_from_wishlist( $selected_product_ids );
+			}
+			
+			// add selected to cart
+			elseif( $_POST['addonify_wishlist_action'] == 'add_selected_to_cart' ){
+				$this->add_to_cart( $selected_product_ids );
 			}
 
-			$this->set_flashdata( 'wishlist_action', 1 );
-
-			wp_redirect( get_page_link( $wishlist_page_url ) );
+			wp_redirect( $wishlist_page_url );
 			exit;
 
 		}
-
 
 	}
 
@@ -640,40 +677,64 @@ class Addonify_Wishlist_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	private function remove_item_from_wishlist( $product_id ){
+	private function remove_item_from_wishlist( $product_ids ){
+
 		$wishlist_items = $this->get_cookies();
-		unset( $wishlist_items[ $product_id ] );
+		$msg = '';
+		
+		foreach( $product_ids as $product_id ){
+
+			$product = wc_get_product( $product_id );
+
+			unset( $wishlist_items[ $product_id ] );
+			$msg .=  $product->get_name() . ' is removed from wishlist <br>';
+		}
+
+		wc_add_notice( $msg, 'success' );
 
 		$this->save_wishlist_data( $wishlist_items );
 	}
 
 
-	private function set_flashdata( $name, $value ){
-		// setcookie( $this->plugin_name . '_' . $name, $value, 0, COOKIEPATH, COOKIE_DOMAIN );
-		if( session_status() == PHP_SESSION_NONE )  session_start();
+	public function add_to_cart( $product_ids ){
 
-		$_SESSION['custom_msg'] = 21;
-	}
+		$wishlist_items = $this->get_cookies();
 
-	private function get_flashdata( $name){
-
-		if( session_status() == PHP_SESSION_NONE )  session_start();
-
-		// $_SESSION['custom_msg'] = 21;
-		var_dump( $_SESSION );
-		die;
-
-		$data = null;
-		if( isset( $_COOKIE[ $this->plugin_name . '_' . $name ] ) ){
-			$data = $_COOKIE[ $this->plugin_name . '_' . $name ];
-
-			// delete cookie
-			setcookie( $this->plugin_name . '_' . $name , null, time() - 3600);				
+		if( $product_ids == 'all' ){
+			$product_ids = array();
+			foreach( $wishlist_items as $product_id => $timestamp ){
+				$product_ids[] = $product_id;
+			}
 		}
-		return $data;
+
+		$msg_success 	= '';
+		$msg_error 		= '';
+
+		foreach( $product_ids as $product_id ){
+
+			if( is_array( $product_id ) ) $product_id = $product_id[0];
+
+			$product = wc_get_product( $product_id );
+
+			if( WC()->cart->add_to_cart( $product_id ) ){
+				$msg_success .= $product->get_name() . ' has been added to cart <br>';
+			}
+			else{
+				$msg_error .= $product->get_name() . ' cannot be added to cart <br>';
+			}
+		}
+
+		WC()->session->set( 'wc_notices', array() ); 
+		
+		if( ! empty( $msg_success ) ){
+			wc_add_notice( $msg_success, 'success' );
+		}
+
+		if( ! empty( $msg_error ) ){
+			wc_add_notice( $msg_error, 'error' );
+		}
 
 	}
-
 
 
 }

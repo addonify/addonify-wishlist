@@ -36,12 +36,19 @@
 		// select all checkbox
 		$body.on('click', 'input.addonify-wishlist-check-all', function(){
 			$('input.addonify-wishlist-product-id').prop('checked', $(this).prop( "checked" ) );
-		})
+		});
 
 		$body.on('click', '.addonify-wishlist-remove-notification', function(){
 			var $parent = $(this).parents('.addonify-wishlist-notification');
 			$parent.remove();
-		})
+		});
+
+
+		// change "add to cart" button from anchor to button
+		var $add_to_cart_btn = $('.addonify-wishlist-items-package .add_to_cart_button');
+		$add_to_cart_btn.each( function(){
+			$(this).replaceWith( '<button type="submit" name="addonify_wishlist_add_to_cart" value="'+ $(this).data('product_id') +'">' + $(this).html() + '</button>' );
+		} );
 
 		// end wishlist page form elements --------------------------------------
 

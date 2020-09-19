@@ -1,12 +1,11 @@
-<?php do_action( 'addonify_wishlist_notification' ); ?>
-
-<h2><?php echo $data['wishlist_name'];?></h2>
+<h2><?php echo esc_html( $data['wishlist_name'] );?></h2>
 
 <div id="addonify-wishlist-container">
 
-    <form action="<?php //bloginfo('url');?>" method="POST" >
+    <form action="" method="POST" >
 
-        <input type="hidden" name="nonce" value="<?php echo $data['nonce'];?>" >
+        <input type="hidden" name="nonce" value="<?php echo esc_html( $data['nonce'] );?>" >
+        <input type="hidden" name="process_addonify_wishlist_form" value="1" >
         
         <div class="addonify-wishlist-items-heading">
             <ul>
@@ -22,7 +21,7 @@
         </div> <!--wishlist-container-heading-->
 
         <?php 
-            if( isset( $data['wishlist_data'] ) ):
+            if( isset( $data['wishlist_data'] ) && count( $data['wishlist_data'] ) > 0 ):
                 foreach( $data['wishlist_data'] as $value ):
         ?>
 
@@ -33,13 +32,17 @@
                     <li class="image"><?php echo $value['image'];?></li>
                     <li class="name"><?php echo $value['title'];?></li>
                     <li class="price"><?php echo $value['price'];?></li>
-                    <li class="date"><?php echo date('F d, Y', $value['date_added'] );?></li>
+                    <li class="date"><?php echo date( 'F d, Y', $value['date_added'] );?></li>
                     <li class="stock"><?php echo $value['stock'];?></li>
                     <li class="cart"><?php echo $value['add_to_cart'];?></li>
                 </ul>
             </div> <!--wishlist-container-heading-->
 
-        <?php endforeach; endif; ?>
+        <?php endforeach; else: ?>
+            <div class="addonify-wishlist-items-package addonify-wishlist-is-empty">
+                    Your wishlist is empty
+            </div> <!--wishlist-container-heading-->
+        <?php endif;?>
 
         <div class="addonify-wishlist-footer-actions">
             <div class="addonify-wfa-packets">
