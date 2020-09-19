@@ -1,0 +1,211 @@
+$bck_color: rgb(41, 42, 48);
+$padding: 15px;
+$thumbnail_height : 48px;
+
+.addonify-overlay-buttons{
+    position: relative;
+
+    .addonify-overlay-btn-wrapper{
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: #1010101a;
+        opacity: 0;
+        transition: 0.4s;
+
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+}
+
+.hidden{
+    display: none;
+}
+
+
+.addonify-add-to-wishlist-btn {
+    button{
+        cursor: pointer;
+        display: inline-block;
+        color: #96588a;
+        
+        &:hover{
+            background-color: transparent;
+        }
+    }
+    
+    button:not(.addonify-overlay-btn){
+        background-color: transparent;
+    }
+    
+    .before-add-to-cart{
+        margin-bottom: 1em;        
+    }
+
+    .after-add-to-cart{
+        margin-top: 1em;        
+    }
+
+    .show-icon{
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='15' viewBox='0 0 16 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.07932 3.43895L7.96445 5.12248L8.84957 3.43895C9.51275 2.17755 10.4836 1.45312 11.6978 1.45312C13.5044 1.45312 14.9289 2.96831 14.9289 5.01137C14.9289 6.29666 14.3361 7.40841 13.0612 8.75274C12.1662 9.69636 11.0302 10.6621 9.66327 11.8241C9.13172 12.276 8.56524 12.7576 7.96443 13.279C7.36408 12.758 6.79793 12.2767 6.26659 11.825C4.90044 10.6637 3.76446 9.69804 2.86924 8.75421C1.59357 7.40928 1 6.29666 1 5.01137C1 2.96801 2.42468 1.45312 4.23111 1.45312C5.44522 1.45312 6.41609 2.17747 7.07932 3.43895Z' stroke='%2396588a' stroke-width='1.5'/%3E%3C/svg%3E%0A");
+        background-repeat: no-repeat;
+        background-position: 0 12px ;
+        min-width: 17px;
+        min-height: 20px;
+    }
+
+    .show-label.show-icon{
+        padding-left: 25px;
+    }
+
+    .show-icon.added-to-wishlist{
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='15' viewBox='0 0 16 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.65713 14.3377C3.16416 10.4063 0 8.32377 0 5.01137C0 2.50652 1.78578 0.453125 4.23111 0.453125C5.92804 0.453125 7.1872 1.49525 7.96445 2.97359C8.74163 1.49535 10.0008 0.453125 11.6978 0.453125C14.1434 0.453125 15.9289 2.50693 15.9289 5.01137C15.9289 8.32337 12.7689 10.4026 8.27176 14.3376C8.09577 14.4916 7.83309 14.4916 7.65713 14.3377Z' fill='%2396588a'/%3E%3C/svg%3E%0A");
+    }
+}
+
+
+#addonify-wishlist-modal-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 99999;
+    background: rgba( 0, 0, 0, 0.4 );
+    display: none;
+
+    .addonify-wishlist-modal-body{
+        width: 350px;
+        height: 300px;
+        background: #fff;
+        box-sizing: border-box;
+        margin: calc( ( 100vh - 300px) / 2 ) auto 0;
+        padding: 40px;
+    }
+
+    #addonify-wishlist-modal-response{
+        text-align: center;
+        height: 105px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .addonify-wishlist-modal-btns button{
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    &.loading .addonify-wishlist-modal-body{
+
+        *{
+            display: none !important;
+        }
+
+        background: #fff url(../../images/loading.gif) no-repeat center;
+    }
+    
+}
+
+body.addonify-wishlist-modal-is-open{
+    overflow: hidden;
+
+    #addonify-wishlist-modal-wrapper{
+        display: block;
+    }
+}
+
+
+
+// wishlist page
+#addonify-wishlist-container{
+
+    ul{
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        *{
+            margin: 0;
+        }
+    }
+
+    .addonify-wishlist-items-heading{
+        background: #efefef;
+        padding: 20px 0;
+    }
+
+    .addonify-wishlist-items-package{
+        padding: 10px 0;
+        background: #fbfbfb;
+    }
+
+    li{
+        display: inline-block;
+    }
+
+    li.checkbox{
+        width: 45px;
+    }
+
+    li.remove{
+        width: 65px;
+    }
+
+    li.name{
+        width: 174px;
+    }
+    
+    li.price{
+        width: 85px;
+    }
+
+    li.date{
+        width: 90px;
+    }
+
+    li.stock{
+        width: 90px;
+    }
+
+    li.cart{
+        width:125px;
+    }
+    
+    li.image{
+        width: 90px;
+        img{
+            max-width: 75px;
+            height: auto;                
+        }
+    }
+
+
+    .addonify-wishlist-footer-actions{
+        overflow: hidden;
+        margin: 20px 0 0;
+        padding: 0 15px;
+
+
+        .addonify-wfa-packets{
+            float: left;
+            width: 50%;
+        }
+
+        select{
+            height: 45px;
+        }
+
+        .addonify-wfa-packets.go-right{
+            text-align: right;
+        }
+    }
+    
+}
