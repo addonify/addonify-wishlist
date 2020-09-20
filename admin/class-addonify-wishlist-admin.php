@@ -644,25 +644,6 @@ class Addonify_Wishlist_Admin {
 		echo ob_get_clean();
 	}
 
-
-	public function overlay_btn_offset_group($arguments){
-		ob_start();
-		require dirname( __FILE__ ) .'/templates/overlay_btn_offset_group.php';
-		echo ob_get_clean();
-	}
-
-	public function text_area($arguments){
-		ob_start();
-		foreach($arguments as $args){
-			$placeholder = isset( $args['placeholder'] ) ? $args['placeholder'] : '';
-			$db_value = get_option($args['name'], $placeholder);
-			$attr = isset( $args['attr'] ) ? $args['attr'] : '';
-
-			require dirname( __FILE__ ) .'/templates/input_textarea.php';
-		}
-		echo ob_get_clean();
-	}
-
 	public function toggle_switch($arguments){
 		foreach($arguments as $args){
 			$args['attr'] = ' class="lc_switch"';
@@ -681,13 +662,6 @@ class Addonify_Wishlist_Admin {
 		echo ob_get_clean();
 	}
 
-	public function checkbox_with_label($args){
-		ob_start();
-		foreach($args as $arg){
-			require dirname( __FILE__ ) .'/templates/checkbox_group.php';
-		}
-		echo ob_get_clean();
-	}
 
 	public function checkbox($args){
 		$default_state = ( array_key_exists('checked', $args) ) ? $args['checked'] : 1;
@@ -729,8 +703,6 @@ class Addonify_Wishlist_Admin {
 		require dirname( __FILE__ ) .'/templates/input_select.php';
 		echo ob_get_clean();
 	}
-
-	
 
 
 }
