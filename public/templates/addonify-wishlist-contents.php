@@ -16,10 +16,10 @@
                 <li class="checkbox" ><input type="checkbox" class="addonify-wishlist-check-all" ></li>
                 <li class="remove"></li>
                 <li class="image"></li>
-                <li class="name">Product Name</li>
-                <li class="price">Unit Price</li>
-                <li class="date">Added Date</li>
-                <li class="stock">Stock</li>
+                <li class="name"><?php _e( 'Product Name', 'addonify-wishlist' );?></li>
+                <li class="price"><?php _e( 'Unit Price', 'addonify-wishlist' );?></li>
+                <li class="date"><?php _e( 'Added Date', 'addonify-wishlist' );?></li>
+                <li class="stock"><?php _e( 'Stock', 'addonify-wishlist' );?></li>
                 <li class="cart"></li>
             </ul>
         </div> <!--addonify-wishlist-items-heading-->
@@ -44,23 +44,23 @@
 
         <?php endforeach; else: ?>
             <div class="addonify-wishlist-items-package addonify-wishlist-is-empty">
-                    Your wishlist is empty
+                <?php _e( 'Your wishlist is empty', 'addonify-wishlist' );?>
             </div> <!--addonify-wishlist-items-package-->
         <?php endif;?>
 
         <div class="addonify-wishlist-footer-actions">
             <div class="addonify-wfa-packets">
                 <select name="addonify_wishlist_action" >
-                    <option value="" >Actions</option>
-                    <option value="add_selected_to_cart" >Add to cart</option>
-                    <option value="remove" >Remove</option>
+                    <option value="" ><?php _e( 'Actions', 'addonify-wishlist' );?></option>
+                    <option value="add_selected_to_cart" ><?php _e( 'Add to cart', 'addonify-wishlist' );?></option>
+                    <option value="remove" ><?php _e( 'Remove', 'addonify-wishlist' );?></option>
                 </select>
-                <button type="submit" >Apply Action</button>
+                <button type="submit" ><?php _e( 'Apply Action', 'addonify-wishlist' );?></button>
             </div> <!--addonify-wfa-packets-->
             
             <div class="addonify-wfa-packets go-right">
-                <button type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_selected_to_cart" >Add Selected to Cart</button>
-                <button type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_all_to_cart" >Add All to Cart</button>
+                <button type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_selected_to_cart" ><?php _e( 'Add Selected to Cart', 'addonify-wishlist' );?></button>
+                <button type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_all_to_cart" ><?php _e( 'Add All to Cart', 'addonify-wishlist' );?></button>
             </div> <!--addonify-wfa-packets-->
             
         <div> <!--addonify-wishlist-footer-actions-->
