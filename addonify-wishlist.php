@@ -81,3 +81,10 @@ function run_addonify_wishlist() {
 
 }
 run_addonify_wishlist();
+
+
+
+// helper functions
+function addonify_wishlist_get_total_items() {
+	return isset( $_COOKIE[ 'addonify-wishlist' ] ) ? count( unserialize( $_COOKIE[ 'addonify-wishlist' ] ) )  : 0;
+}

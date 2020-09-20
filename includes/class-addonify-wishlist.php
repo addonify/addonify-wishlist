@@ -209,10 +209,13 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
 
 
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sticky_sidebar' );
+
+
 		$this->loader->add_action( 'init', $plugin_public, 'generate_cookies', 10 );	
-		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit', 10 );
 		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode', 10 );
-		
+		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit', 10 );
 
 		// add to wishlist
 		$this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
