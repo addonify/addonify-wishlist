@@ -3,8 +3,10 @@
 
 	$( document ).ready(function(){
 
-		var $body	= $( 'body' );
-		var $modal, $modal_response;
+		var $body				= $( 'body' );
+		var $modal 				= $( '#addonify-wishlist-modal-wrapper' );
+		var $modal_response 	= $( '#addonify-wishlist-modal-response' );
+		var $sticky_sidebar_btn = $( '#addonify-wishlist-show-sidebar-btn' );
 
 		init();
 
@@ -29,6 +31,12 @@
 		$body.on('click', '#addonify-wishlist-view-wishlist-btn', function(){
 			window.location.href = addonify_wishlist_object.wishlist_page_url;
 		})
+		
+
+		// show hide sticky sidebar
+		$sticky_sidebar_btn.click( function(){
+			$body.toggleClass('addonify-wishlist-sticky-sidebar-is-visible');
+		} )
 
 
 		// wishlist page form elements --------------------------------------
@@ -43,32 +51,16 @@
 			$parent.remove();
 		});
 
-
-		// change "add to cart" button from anchor to button
-		var $add_to_cart_btn = $('.addonify-wishlist-items-package .add_to_cart_button');
-		$add_to_cart_btn.each( function(){
-			$(this).replaceWith( '<button type="submit" name="addonify_wishlist_add_to_cart" value="'+ $(this).data('product_id') +'">' + $(this).html() + '</button>' );
-		} );
-
 		// end wishlist page form elements --------------------------------------
 
 
 		function init(){
-			// create markups for "after add to wishlist" modal
-			var template = '<div id="addonify-wishlist-modal-wrapper"><div class="addonify-wishlist-modal-body" >';
-				template += '<div id="addonify-wishlist-modal-response"></div><div class="addonify-wishlist-modal-btns">';
-				template += '<button type="button" class="addonify-view-wishlist-btn" id="addonify-wishlist-view-wishlist-btn" >'+ addonify_wishlist_object.view_wishlist_btn_text +'</button>';
-				template += '<button type="button" class="addonify-close-btn" id="addonify-wishlist-close-modal-btn" >Close</button>';
-				template += '</div></div></div>';
-			$body.append( template );
-
-			$modal = $( '#addonify-wishlist-modal-wrapper' );
-			$modal_response = $( '#addonify-wishlist-modal-response' );
-
 			prepare_overlay_buttons();
 		}
 
 
+
+		// "add to wish" button in image overlay mode
 		function prepare_overlay_buttons(){
 
 			var overlay_btn_wrapper_class = 'addonify-overlay-btn-wrapper';
@@ -85,7 +77,7 @@
 					// clone original button
 					var btn_clone = $('button.' + overlay_btn_class, this).clone();
 
-					// delete oroginal buttons
+					// delete original buttons
 					$('button.' + overlay_btn_class, this).remove();
 					
 					// append to wrapper class
@@ -131,10 +123,14 @@
 				$modal.removeClass('loading');
 
 				if( response.success == true ){
-
-					console.log( $(this_sel).length );
 					$(this_sel).addClass('added-to-wishlist');
 				}
+
+				$sticky_sidebar_btn.show();
+
+				// update sidebar contents
+				$('#addonify-wishlist-sidebar-items').append( response.data );
+				
 
 			}, "json" );
 		}

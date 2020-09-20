@@ -328,17 +328,6 @@ class Addonify_Wishlist_Admin {
 					), 
 				),
 				array(
-					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart',
-					'field_label'			=> __('Remove Product from Wishlist if added to cart', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
-						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart', 
-							'checked' 			=> 1,
-						)
-					) 
-				),
-				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'cookies_lifetime',
 					'field_label'			=> __('Delete Wishlist Cookies after', 'addonify-wishlist'),
 					'field_callback'		=> array($this, "text_box"),
@@ -392,6 +381,17 @@ class Addonify_Wishlist_Admin {
 							'default'		 	=> __('My Wishlist', 'addonify-wishlist'),
 						)
 					), 
+				),
+				array(
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart',
+					'field_label'			=> __('Remove Product from Wishlist if added to cart', 'addonify-wishlist'),
+					'field_callback'		=> array($this, "toggle_switch"),
+					'field_callback_args'	=> array( 
+						array(
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart', 
+							'checked' 			=> 1,
+						)
+					) 
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_checkout_if_item_added_to_cart',

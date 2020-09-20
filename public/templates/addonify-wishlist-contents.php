@@ -1,3 +1,7 @@
+<?php
+    // direct access is disabled
+    defined( 'ABSPATH' ) || exit;
+?>
 <h2><?php echo esc_html( $data['wishlist_name'] );?></h2>
 
 <div id="addonify-wishlist-container">
@@ -18,7 +22,7 @@
                 <li class="stock">Stock</li>
                 <li class="cart"></li>
             </ul>
-        </div> <!--wishlist-container-heading-->
+        </div> <!--addonify-wishlist-items-heading-->
 
         <?php 
             if( isset( $data['wishlist_data'] ) && count( $data['wishlist_data'] ) > 0 ):
@@ -36,12 +40,12 @@
                     <li class="stock"><?php echo $value['stock'];?></li>
                     <li class="cart"><?php echo $value['add_to_cart'];?></li>
                 </ul>
-            </div> <!--wishlist-container-heading-->
+            </div> <!--addonify-wishlist-items-package-->
 
         <?php endforeach; else: ?>
             <div class="addonify-wishlist-items-package addonify-wishlist-is-empty">
                     Your wishlist is empty
-            </div> <!--wishlist-container-heading-->
+            </div> <!--addonify-wishlist-items-package-->
         <?php endif;?>
 
         <div class="addonify-wishlist-footer-actions">
@@ -59,8 +63,8 @@
                 <button type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_all_to_cart" >Add All to Cart</button>
             </div> <!--addonify-wfa-packets-->
             
-        <div>
-
+        <div> <!--addonify-wishlist-footer-actions-->
+        
     </form>
 
-</div><!--wishlist-contaienr-->
+</div><!--addonify-wishlist-container-->

@@ -121,6 +121,75 @@ body.addonify-wishlist-modal-is-open{
 }
 
 
+// sticky sidebar
+
+#addonify-wishlist-show-sidebar-btn{
+    position: fixed;
+    right: 0;
+    top: 300px;
+    z-index: 999999;
+}
+
+#addonify-wishlist-sticky-sidebar-container{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #00000025;
+    z-index: 99999;
+    display: none;
+    
+    .addonify-wishlist-ssc-body{
+        padding: 20px;
+        width: 300px;
+        background: #fff;
+        box-shadow: 0 0 6px #00000042;
+        overflow-y:auto;
+        height: 100%;
+        float: right;
+
+        ul, li{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        li{
+            margin-bottom: 40px;
+        }
+    }
+
+
+    .addonify-wishlist-ssc-footer{
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        width: 300px;
+
+        a{
+            display: block;
+            color: #fff;
+            background: #000;
+            padding: 10px 0;
+            text-align: center;
+        }
+    }
+}
+
+body.addonify-wishlist-sticky-sidebar-is-visible{
+
+    overflow: hidden;
+
+    #addonify-wishlist-show-sidebar-btn{
+        right: 300px;
+    }
+
+    #addonify-wishlist-sticky-sidebar-container{
+        display: block;
+    }
+}
+
 
 // wishlist page
 #addonify-wishlist-container{
