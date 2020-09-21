@@ -80,11 +80,17 @@ function run_addonify_wishlist() {
 	$plugin->run();
 
 }
+
 run_addonify_wishlist();
 
 
 
-// helper functions
+// global helper functions
 function addonify_wishlist_get_total_items() {
-	return isset( $_COOKIE[ 'addonify-wishlist' ] ) ? count( unserialize( $_COOKIE[ 'addonify-wishlist' ] ) )  : 0;
+
+	$plugin = new Addonify_Wishlist();
+	$public_class = new Addonify_Wishlist_Public( $plugin->get_plugin_name(), $plugin->get_version() );
+	
+	return count( $public_class->get_all_wishlist() );
+
 }

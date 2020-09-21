@@ -243,7 +243,7 @@ class Addonify_Wishlist_Public {
 			wp_send_json_error( 'Either Product ID is missing or nonce does not match' );
 		}
 
-		$wishlist_cookies = $this->get_cookies();
+		$wishlist_cookies = $this->get_all_wishlist();
 
 		if( ! array_key_exists( $product_id, $wishlist_cookies ) ){
 			$wishlist_cookies[ $product_id ] = time();
@@ -261,17 +261,17 @@ class Addonify_Wishlist_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function generate_cookies(){
+	// public function generate_cookies(){
 
-		if( ! is_user_logged_in() ) return;
+	// 	if( ! is_user_logged_in() ) return;
 		
-		$wishlist_data = get_user_meta( get_current_user_id(), '_'.$this->plugin_name, true );
+	// 	$wishlist_data = $this->get_wishlist_from_database( false ); //get_user_meta( get_current_user_id(), '_'.$this->plugin_name, true );
 
-		if( ! empty( $wishlist_data ) ) {
-			$this->set_cookie( $wishlist_data );
-		}
+	// 	if( ! empty( $wishlist_data ) ) {
+	// 		$this->set_cookie( $wishlist_data );
+	// 	}
 
-	}
+	// }
 	
 
 
@@ -321,12 +321,11 @@ class Addonify_Wishlist_Public {
 	 * @param    $product_id    Product ID
 	 */
 	private function is_item_in_cookies( $product_id ){
-		$wishlist_cookies = $this->get_cookies();
+		$wishlist_cookies = $this->get_all_wishlist();
 		if( array_key_exists( $product_id, $wishlist_cookies ) ) return true;
 		return false;
 
 	}
-
 
 
 	/**
@@ -335,8 +334,43 @@ class Addonify_Wishlist_Public {
 	 * @since    1.0.0
 	 * @param    $product_id    Product ID
 	 */
-	private function get_cookies(){
+	public function get_all_wishlist(){
+
+		$wishlist_from_cookies 	= $this->get_wishlist_from_cookies();
+		$wishlist_from_db 		= $this->get_wishlist_from_database();
+		
+		return array_replace( $wishlist_from_db, $wishlist_from_cookies );
+	}
+
+
+	/**
+	 * Return wishlist product ids in array from cookie or return empty array
+	 *
+	 * @since    1.0.0
+	 * @param    $product_id    Product ID
+	 */
+	private function get_wishlist_from_cookies(){
 		return isset( $_COOKIE[ $this->plugin_name ] ) ? unserialize( $_COOKIE[ $this->plugin_name ] )  : array();
+	}
+
+
+	/**
+	 * Return wishlist product ids in array from database
+	 *
+	 * @since    1.0.0
+	 * @param    $product_id    Product ID
+	 */
+	private function get_wishlist_from_database( $return_unserialized = true, $user_id = null ){
+
+		if( empty( $user_id ) ) $user_id = get_current_user_id();
+
+		$data = get_user_meta( $user_id, '_'.$this->plugin_name, true );
+
+		if( $return_unserialized ){
+			return ( ! empty( $data ) ) ? unserialize( $data )  : array();
+		}
+
+		return ( ! empty( $data ) ) ?  $data  : array();
 	}
 
 
@@ -549,7 +583,7 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_shortcode_contents(){
 
-		$wishlist_items = $this->get_cookies();
+		$wishlist_items = $this->get_all_wishlist();
 		$output_data 	= $this->generate_contents_data( $wishlist_items);
 		$wishlist_name 	= $this->get_db_values('default_wishlist_name', __( 'My Wishlist', 'addonify-wishlist' ) );
 
@@ -580,7 +614,7 @@ class Addonify_Wishlist_Public {
 	 */
 	public function wishlist_sticky_sidebar(){
 
-		$wishlist_items 	= $this->get_cookies();
+		$wishlist_items 	= $this->get_all_wishlist();
 		$wishlist_name 		= $this->get_db_values('default_wishlist_name', __( 'My Wishlist', 'addonify-wishlist' ) );
 		$wishlist_page_url 	= get_page_link( $this->wishlist_page_id );
 		$sidebar_loop 		= $this->get_sticky_sidebar_loop( $wishlist_items );
@@ -588,6 +622,7 @@ class Addonify_Wishlist_Public {
 		ob_start();
 		$this->get_templates( 'addonify-wishlist-sticky-sidebar', true, array( 'loop' => $sidebar_loop, 'wishlist_name' => $wishlist_name, 'wishlist_url' => $wishlist_page_url ) );
 		echo ob_get_clean();
+		
 	}
 
 
@@ -775,7 +810,7 @@ class Addonify_Wishlist_Public {
 	 */
 	private function remove_item_from_wishlist( $product_ids ){
 
-		$wishlist_items = $this->get_cookies();
+		$wishlist_items = $this->get_all_wishlist();
 		$msg = '';
 		
 		foreach( $product_ids as $product_id ){
@@ -799,7 +834,7 @@ class Addonify_Wishlist_Public {
 	 */
 	public function add_to_cart( $product_ids ){
 
-		$wishlist_items = $this->get_cookies();
+		$wishlist_items = $this->get_all_wishlist();
 
 		if( $product_ids == 'all' ){
 			$product_ids = array();
@@ -848,6 +883,27 @@ class Addonify_Wishlist_Public {
 		return ( ! empty( $msg_success ) ) ? true : false;
 
 	}
+
+	
+	/**
+	 * Save wishlist cookies into user meta options after user is logged in
+	 *
+	 * @since    1.0.0
+	 */
+	public function after_user_login( $user_login, $user ){
+
+		$wishlist_from_cookies = $this->get_wishlist_from_cookies();
+
+		if( ! empty( $wishlist_from_cookies ) ){
+			$wishlist_from_db = $this->get_wishlist_from_database( true, $user->ID );
+			$new_data = serialize( array_replace( $wishlist_from_db, $wishlist_from_cookies ) );
+
+			// update database
+			update_user_meta( $user->ID, '_' . $this->plugin_name, $new_data );
+		}
+		
+	}
+
 
 
 }
