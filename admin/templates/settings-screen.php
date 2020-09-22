@@ -57,7 +57,7 @@
             <form method="POST" action="options.php">
             
                 <!-- generate nonce -->
-                <?php settings_fields("compare_products_styles"); ?>
+                <?php settings_fields("wishlist_styles"); ?>
 
                 <div id="addonify-styles-container" class="addonify-content">
 

@@ -49,6 +49,17 @@ class Addonify_Wishlist_Admin {
 	 */
 	private $settings_page_slug = 'addonify_wishlist';
 
+
+	/**
+	 * Default values for input fields in admin screen
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $default_input_values
+	 */
+	private $default_input_values;
+
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -70,10 +81,11 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function enqueue_styles() {
 
+		global $wp_styles;
+
 		// load styles in this plugin page only
 		if( isset($_GET['page']) && $_GET['page'] == $this->settings_page_slug ){
 
-			global $wp_styles;
 
 			// toggle switch
 			wp_enqueue_style( 'lc_switch', plugin_dir_url( __FILE__ ) . 'css/lc_switch.css' );
@@ -86,10 +98,8 @@ class Addonify_Wishlist_Admin {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.css', array(), time(), 'all' );
 		}
 
-		if( ! isset($wp_styles->registered['addonify-icon-fix']) ){
-			// admin menu icon fix
-			wp_enqueue_style( 'addonify-icon-fix', plugin_dir_url( __FILE__ ) . 'css/addonify-icon-fix.css', array(), $this->version, 'all' );
-		}
+		// admin menu icon fix
+		wp_enqueue_style( 'addonify-icon-fix', plugin_dir_url( __FILE__ ) . 'css/addonify-icon-fix.css', array(), $this->version, 'all' );
 
 	}
 
@@ -110,12 +120,14 @@ class Addonify_Wishlist_Admin {
 				// wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
 
 				wp_enqueue_script( 'wp-color-picker' );
+				
 			}
-
+			
 			// toggle switch
 			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), '', false );
+			
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.js', array( 'jquery' ), $this->version, false );
 
 		}
 
@@ -206,6 +218,7 @@ class Addonify_Wishlist_Admin {
 	}
 
 
+
 	/**
 	 * Generate form elements for settings page from array
 	 *
@@ -233,11 +246,10 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_position', 
 							'options' 			=> array(
-								'after_add_to_cart'		=> __('After Add To Cart Button', 'addonify-compare-products'),
-								'before_add_to_cart' 	=> __('Before Add To Cart Button', 'addonify-compare-products'),
-								'overlay_on_image'		=> __('Overlay On The Product Image', 'addonify-compare-products')
+								'after_add_to_cart'		=> __('After Add To Cart Button', 'addonify-wishlist-products'),
+								'before_add_to_cart' 	=> __('Before Add To Cart Button', 'addonify-wishlist-products'),
+								'overlay_on_image'		=> __('Overlay On The Product Image', 'addonify-wishlist-products')
 							),
-							'sanitize_callback'			=> 'sanitize_text_field'
 						),
 					) 
 				),
@@ -260,7 +272,7 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_icon', 
 							'checked' 			=> 1,
-						)
+						),
 					) 
 				),
 				array(
@@ -302,6 +314,7 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'view_wishlist_btn_text', 
 							'default'		 	=> __('View Wishlist', 'addonify-wishlist'),
+							'sanitize_callback'	=> 'validate_view_wishlist_btn_text',
 						)
 					), 
 				),
@@ -313,6 +326,7 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_added_to_wishlist_text', 
 							'default'		 	=> __('{product_name} added to Wishlist', 'addonify-wishlist'),
+							'sanitize_callback'	=> 'validate_product_added_to_wishlist_text',
 						)
 					), 
 				),
@@ -324,6 +338,7 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_already_in_wishlist_text', 
 							'default'		 	=> __('{product_name} already in Wishlist', 'addonify-wishlist'),
+							'sanitize_callback'	=> 'validate_product_already_in_wishlist_text',
 						)
 					), 
 				),
@@ -339,6 +354,7 @@ class Addonify_Wishlist_Admin {
 							'type'				=> 'number',
 							'end_label'			=> 'days',
 							'other_attr'		=> 'min="1"',
+							'sanitize_callback'	=> 'validate_cookies_lifetime',
 						)
 					) 
 				),
@@ -379,6 +395,7 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'default_wishlist_name', 
 							'default'		 	=> __('My Wishlist', 'addonify-wishlist'),
+							'sanitize_callback'	=> 'validate_default_wishlist_name',
 						)
 					), 
 				),
@@ -435,7 +452,6 @@ class Addonify_Wishlist_Admin {
 						array(
 							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'load_styles_from_plugin', 
 							'checked' 			=> 0,
-							'sanitize_callback'	=> 'sanitize_textarea_field'
 						)
 					) 
 				),
@@ -465,74 +481,32 @@ class Addonify_Wishlist_Admin {
 						array(
 							'label'				=> __('Text Color', 'addonify-wishlist'),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_text_color',
-							'default'			=> '#000000',
+							'default'			=> '#96588a',
 						),
 						array(
 							'label'				=> __('Icon Color', 'addonify-wishlist'),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_icon_color',
-							'default'			=> '#eeeeee',
+							'default'			=> '#96588a',
 						),
 					),
 				),
 				array(
-					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'modal_box_color',
-					'field_label'			=> __('Modal Box', 'addonify-wishlist'),
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_colors_hover',
+					'field_label'			=> '',
 					'field_callback'		=> array($this, "color_picker_group"),
 					'field_callback_args'	=> array( 
 						array(
-							'label'				=> __('Overlay Background Color', 'addonify-wishlist'),
-							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'modal_overlay_bck_color',
+							'label'				=> __('Text Color on Hover', 'addonify-wishlist'),
+							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_text_color_hover',
 							'default'			=> '#000000',
 						),
 						array(
-							'label'				=> __('Background Color', 'addonify-wishlist'),
-							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'modal_bck_color',
-							'default'			=> '#ffffff',
-						),
-						
-					),
-				),
-				array(
-					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'table_title_color',
-					'field_label'			=> __('Table Title', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "color_picker_group"),
-					'field_callback_args'	=> array( 
-						array(
-							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'table_title_color',
+							'label'				=> __('Icon Color on Hover', 'addonify-wishlist'),
+							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_icon_color_hover',
 							'default'			=> '#000000',
 						),
-						
 					),
 				),
-				array(
-					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'close_btn_color',
-					'field_label'			=> __('Close Button', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "color_picker_group"),
-					'field_callback_args'	=> array( 
-						array(
-							'label'				=> __('Text Color', 'addonify-wishlist'),
-							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'close_btn_text_color',
-							'default'			=> '#d3ced2',
-						),
-						array(
-							'label'				=> __('Background Color', 'addonify-wishlist'),
-							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'close_btn_bck_color',
-							'default'			=> '#f5c40e',
-						),
-						array(
-							'label'				=> __('Text Color - On Hover', 'addonify-wishlist'),
-							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'close_btn_text_color_hover',
-							'default'			=> '#d3ced2',
-						),
-						array(
-							'label'				=> __('Background Color - On Hover', 'addonify-wishlist'),
-							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'close_btn_bck_color_hover',
-							'default'			=> '#f5c40e',
-						),
-						
-					),
-				),
-				
 			)
 		);
 
@@ -559,13 +533,82 @@ class Addonify_Wishlist_Admin {
 			add_settings_field( $field['field_id'], $field['field_label'], $field['field_callback'], $args['screen'], $args['section_id'], $field['field_callback_args'] );
 			
 			foreach( $field['field_callback_args'] as $sub_field){
+
+				$this->default_input_values[ $sub_field['name'] ] = ( isset( $sub_field['default'] ) ) ? $sub_field['default'] : '';
 				register_setting( $args['settings_group_name'],  $sub_field['name'], array(
-        			'sanitize_callback' => ( isset( $sub_field['sanitize_callback'] )) ? $sub_field['sanitize_callback'] : 'sanitize_text_field'
+        			'sanitize_callback' => ( isset( $sub_field['sanitize_callback'] )) ? array( $this, $sub_field['sanitize_callback'] ) : 'sanitize_text_field'
 				));
 			}
 
 		}
+
 	}
+
+	
+	/**
+	 * Form Validation for Offset From Top
+	 *
+	 * @since    1.0.0
+	 */
+
+	public function validate_view_wishlist_btn_text( $post_data ){
+		return $this->validate_text_field( $post_data, __FUNCTION__ , __( '"View Wishlist button" text cannot be empty.', 'addonify-wishlist' ) );
+	}
+	 
+	public function validate_product_added_to_wishlist_text( $post_data ){
+		return $this->validate_text_field( $post_data, __FUNCTION__, __( '"Product added to Wishlist" text cannot be empty.', 'addonify-wishlist' ) );
+	}
+	
+	public function validate_product_already_in_wishlist_text( $post_data ){
+		return $this->validate_text_field( $post_data, __FUNCTION__, __( '"Product already in Wishlist" text cannot be empty', 'addonify-wishlist' ) );
+	}
+
+	public function validate_cookies_lifetime( $post_data ){
+		return $this->validate_numeric( $post_data, __FUNCTION__, __( '"Delete Wishlist Cookies after" value should be numeric', 'addonify-wishlist' ) );
+	}
+
+	public function validate_default_wishlist_name( $post_data ){
+		return $this->validate_text_field( $post_data, __FUNCTION__, __( '"Default Wishlist name" should not be empty', 'addonify-wishlist' ) );
+	}
+
+	
+
+	private function validate_numeric( $post_data, $name, $msg = null  ){
+
+		if( is_numeric( $post_data ) ){
+			return sanitize_text_field( $post_data );
+		}
+		
+		return $this->validation_response( $name, $msg );
+	}
+
+	private function validate_text_field( $post_data, $name, $msg = null  ){
+
+		if( ! empty( $post_data ) ){
+			return sanitize_text_field( $post_data );
+		}
+
+		return $this->validation_response( $name, $msg );
+	}
+
+	private function validation_response( $name, $msg = NULL ){
+
+		$default_value = $this->default_input_values[ ADDONIFY_WISHLIST_DB_INITIALS . str_replace('validate_', '', $name ) ];
+
+		if( ! $msg ) $msg = __( 'Input field should not be empty.', 'addonify-wishlist' );
+		$msg .= __( ' Default value is used.', 'addonify-wishlist' );
+		
+		add_settings_error(
+			$this->plugin_name,
+			esc_attr( 'settings_updated' ),
+			$msg
+		);
+
+		return $default_value;
+	
+	}
+
+	
 
 
 	/**
@@ -583,7 +626,7 @@ class Addonify_Wishlist_Admin {
 
 
 	/**
-	 * Show error message if woocommerce is not active
+	 * Show admin error message if woocommerce is not active
 	 *
 	 * @since    1.0.0
 	 */
@@ -636,7 +679,6 @@ class Addonify_Wishlist_Admin {
 			if( ! isset( $args['css_class'] ) ) 	$args['css_class'] 	= '';
 			if( ! isset( $args['type'] ) ) 			$args['type']		= 'text';
 			if( ! isset( $args['end_label'] ) ) 	$args['end_label']	= '';
-			if( ! isset( $args['end_label'] ) ) 	$args['end_label']	= '';
 			if( ! isset( $args['other_attr'] ) ) 	$args['other_attr']	= '';
 
 			require dirname( __FILE__ ) .'/templates/input_textbox.php';
@@ -661,7 +703,6 @@ class Addonify_Wishlist_Admin {
 		}
 		echo ob_get_clean();
 	}
-
 
 	public function checkbox($args){
 		$default_state = ( array_key_exists('checked', $args) ) ? $args['checked'] : 1;
@@ -698,7 +739,14 @@ class Addonify_Wishlist_Admin {
 		$args = $arguments[0];
 		$db_value = get_option( $args['name'] );
 
-		if ( ! $db_value ) $db_value = get_option( ADDONIFY_WISHLIST_DB_INITIALS .'page_id' );
+		$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS .'page_id' );
+
+		if ( ! $db_value ) $db_value = $default_wishlist_page_id;
+
+		if( $db_value != $default_wishlist_page_id ) {
+			$args['end_label'] = 'Please insert "[addonify_wishlist]" shortcode into the content area of the page';
+		}
+
 		
 		require dirname( __FILE__ ) .'/templates/input_select.php';
 		echo ob_get_clean();

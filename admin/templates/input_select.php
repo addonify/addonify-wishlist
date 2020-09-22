@@ -16,3 +16,7 @@
     }
     
     echo '</select>';
+
+    if( isset( $args['end_label'] ) ){
+        echo '<span class="label-after-input">'. esc_attr( $args['end_label'] ) .'</span>';
+    }
