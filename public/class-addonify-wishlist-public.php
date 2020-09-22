@@ -40,14 +40,6 @@ class Addonify_Wishlist_Public {
 	 */
 	private $version;
 
-	/**
-	 * State of the plugin
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $enable_plugin    The current state of the plugin
-	 */
-	private $enable_plugin = 1;
 
 	/**
 	  * Wishlist Button Position
@@ -82,7 +74,7 @@ class Addonify_Wishlist_Public {
 	  *
 	  * @since    1.0.0
 	  * @access   private
-	  * @var      string    $button_custom_css_class
+	  * @var      int    $wishlist_page_id
 	  */
 	private $wishlist_page_id;
 
@@ -122,7 +114,7 @@ class Addonify_Wishlist_Public {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/css/addonify-wishlist-public.css', array(), time(), 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/css/addonify-wishlist-public.css', array(), time() );
 
 	}
 
@@ -133,9 +125,8 @@ class Addonify_Wishlist_Public {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), time(), false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, false );
 
-		
 
 		// localize script
 		wp_localize_script( 
@@ -146,7 +137,6 @@ class Addonify_Wishlist_Public {
 				'action'								=> 'add_to_wishlist',
 				'nonce'									=> wp_create_nonce( $this->plugin_name ),
 				'wishlist_page_url'						=> get_page_link( $this->wishlist_page_id ),
-				// 'view_wishlist_btn_text'				=> $this->get_db_values( 'view_wishlist_btn_text' ),
 				'product_added_to_wishlist_text' 		=> $this->get_db_values( 'product_added_to_wishlist_text', __( 'added to Wishlist', 'addonify-wishlist' ) ),
 				'product_already_in_wishlist_text' 		=> $this->get_db_values( 'product_already_in_wishlist_text', __( 'added to Wishlist', 'addonify-wishlist' ) ),
 			)			
@@ -169,7 +159,6 @@ class Addonify_Wishlist_Public {
 	}
 
 	
-
 	
 	/**
 	 * Show button before "add to cart" button
@@ -214,8 +203,8 @@ class Addonify_Wishlist_Public {
 		$css_class[] 			= $this->button_custom_css_class;
 
 		if( $this->btn_label ) 								$css_class[] = 'show-label';
-		if( $this->get_db_values('show_icon') ) 			$css_class[] = 'show-icon';
-		if( $this->is_item_in_cookies( $product_id ) ) 		$css_class[] = 'added-to-wishlist';
+		if( $this->get_db_values('show_icon') ) 			$css_class[] = 'show-icon addonify_icon-heart-outline';
+		if( $this->is_item_in_wishlist( $product_id ) ) 		$css_class[] = 'added-to-wishlist addonify_icon-heart';
 
 		if( ! $this->btn_label && ! $this->get_db_values('show_icon')  ) return;
 
@@ -256,30 +245,10 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * fetch wishlist data from database and generate cookies from it
-	 * Runs on "Init" hook
-	 *
-	 * @since    1.0.0
-	 */
-	// public function generate_cookies(){
-
-	// 	if( ! is_user_logged_in() ) return;
-		
-	// 	$wishlist_data = $this->get_wishlist_from_database( false ); //get_user_meta( get_current_user_id(), '_'.$this->plugin_name, true );
-
-	// 	if( ! empty( $wishlist_data ) ) {
-	// 		$this->set_cookie( $wishlist_data );
-	// 	}
-
-	// }
-	
-
-
-	/**
 	 * Save wishlist data into database and cookies
 	 *
 	 * @since    1.0.0
-	 * @param    $data    data to be saved in database and cookies
+	 * @param    $data    array
 	 */
 	private function save_wishlist_data( $data ) {
 
@@ -302,7 +271,7 @@ class Addonify_Wishlist_Public {
 	 * Set cookie for wishlist into global cookies variables
 	 *
 	 * @since    1.0.0
-	 * @param    $data    data to be inserted in cookies variables
+	 * @param    $data    serialized data
 	 */
 	private function set_cookie( $data ) {
 
@@ -315,12 +284,12 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Check if item is in cookie variable
+	 * Check if item is in wishlist
 	 *
 	 * @since    1.0.0
 	 * @param    $product_id    Product ID
 	 */
-	private function is_item_in_cookies( $product_id ){
+	private function is_item_in_wishlist( $product_id ){
 		$wishlist_cookies = $this->get_all_wishlist();
 		if( array_key_exists( $product_id, $wishlist_cookies ) ) return true;
 		return false;
@@ -329,10 +298,9 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Return wishlist product ids in array from cookie or return empty array
+	 * Return wishlist product ids in array or return empty array
 	 *
 	 * @since    1.0.0
-	 * @param    $product_id    Product ID
 	 */
 	public function get_all_wishlist(){
 
@@ -385,46 +353,19 @@ class Addonify_Wishlist_Public {
 		// do not continue if plugin styles are disabled by user
 		if( ! $this->get_db_values( 'load_styles_from_plugin' ) ) return;
 
-		return;
-
-
-		// add table styles into body class
-		add_filter( 'body_class', function( $classes ) {
-			return array_merge( $classes, array( 'addonify-compare-table-style-' . $this->get_db_values('table_style') ) );
-		} );
-
-
-		$custom_css = $this->get_db_values('custom_css');
 
 		$style_args = array(
-			'button.addonify-cp-button' => array(
-				'background' 	=> 'compare_btn_bck_color',
-				'color' 		=> 'compare_btn_text_color',
-				'left' 			=> 'wishlist_btn_left_offset',
-				'right' 		=> 'wishlist_btn_right_offset',
-				'top' 			=> 'wishlist_btn_top_offset',
-				'bottom'		=> 'wishlist_btn_bottom_offset'
+			'.addonify-add-to-wishlist-btn button' => array(
+				'color' 		=> 'wishlist_btn_text_color',
 			),
-			'#addonify-compare-modal, #addonify-compare-search-modal' => array(
-				'background' 	=> 'modal_overlay_bck_color'
+			'.addonify-add-to-wishlist-btn button.show-icon:before' => array(
+				'color' 	=> 'wishlist_btn_icon_color'
 			),
-			'.addonify-compare-model-inner, .addonify-compare-search-model-inner' => array(
-				'background' 	=> 'modal_bck_color',
+			'.addonify-add-to-wishlist-btn button:hover' => array(
+				'color' 		=> 'wishlist_btn_text_color_hover',
 			),
-			'#addonofy-compare-products-table th a' => array(
-				'color'		 	=> 'table_title_color',
-			),
-			'.addonify-compare-all-close-btn svg' => array(
-				'color' 		=> 'close_btn_text_color',
-			),
-			'.addonify-compare-all-close-btn' => array(
-				'background'	=> 'close_btn_bck_color',
-			),
-			'.addonify-compare-all-close-btn:hover svg' => array(
-				'color'		 	=> 'close_btn_text_color_hover',
-			),
-			'.addonify-compare-all-close-btn:hover' => array(
-				'background' 	=> 'close_btn_bck_color_hover',
+			'.addonify-add-to-wishlist-btn button.show-icon:hover:before' => array(
+				'color' 	=> 'wishlist_btn_icon_color_hover'
 			),
 			
 		);
@@ -432,12 +373,11 @@ class Addonify_Wishlist_Public {
 		$custom_styles_output = $this->generate_styles_markups( $style_args );
 
 		// avoid empty style tags
-		if( $custom_styles_output || $custom_css ){
-			echo "<style id=\"addonify-wishlist-styles\"  media=\"screen\"> \n" . $custom_styles_output .  $custom_css . "\n </style>\n";
+		if( $custom_styles_output ){
+			echo "<style id=\"addonify-wishlist-styles\"  media=\"screen\"> \n" . $custom_styles_output . "\n </style>\n";
 		}
 
 	}
-
 
 
 

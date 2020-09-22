@@ -219,6 +219,11 @@ class Addonify_Wishlist {
 		// capture user login
 		$this->loader->add_action( 'wp_login', $plugin_public, 'after_user_login', 10, 2 );
 
+		// genereate custom styles
+		$this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
+
+		
+
 	}
 
 	/**
