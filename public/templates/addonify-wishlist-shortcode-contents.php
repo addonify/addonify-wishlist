@@ -32,7 +32,7 @@
             <div class="addonify-wishlist-items-package">
                 <ul>
                     <li class="checkbox" ><input type="checkbox" name="product_ids[]" value="<?php echo $value['id'];?>" class="addonify-wishlist-product-id" ></li>
-                    <li class="remove"><button type="submit" name="addonify_wishlist_remove" value="<?php echo $value['id'];?>">x</button></li>
+                    <li class="remove"><?php echo $value['remove_btn'];?></li>
                     <li class="image"><?php echo $value['image'];?></li>
                     <li class="name"><?php echo $value['title'];?></li>
                     <li class="price"><?php echo $value['price'];?></li>

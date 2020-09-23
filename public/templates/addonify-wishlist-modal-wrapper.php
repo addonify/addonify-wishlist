@@ -1,4 +1,4 @@
-<div id="addonify-wishlist-modal-wrapper">
+<div id="addonify-wishlist-modal-wrapper" class="<?php echo sanitize_html_class( $data['css_class'] );?>">
     <div class="addonify-wishlist-modal-body">
         <div id="addonify-wishlist-modal-response"></div><!--addonify-wishlist-modal-response-->
         <div class="addonify-wishlist-modal-btns">

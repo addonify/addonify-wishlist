@@ -7,14 +7,21 @@
 		var $modal 				= $( '#addonify-wishlist-modal-wrapper' );
 		var $modal_response 	= $( '#addonify-wishlist-modal-response' );
 		var $sticky_sidebar_btn = $( '#addonify-wishlist-show-sidebar-btn' );
+		var show_popup			= addonify_wishlist_object.show_popup;
 
 		init();
 
-		$body.on('click', '.addonify-add-to-wishlist-btn button', function(){
+		$body.on('click', '.addonify-add-to-wishlist-btn button', function( e ){
+
+			e.preventDefault();
 
 			if( $( this ).hasClass( 'added-to-wishlist' ) ){
 				// item is already added to wishlist
-				show_modal( addonify_wishlist_object.product_already_in_wishlist_text, $(this).data('product_name') );
+
+				if( show_popup ){
+					show_modal( addonify_wishlist_object.product_already_in_wishlist_text, $(this).data('product_name') );
+				}
+				
 			}
 			else{
 				add_to_wishlist( this );
@@ -56,6 +63,8 @@
 
 		function init(){
 			prepare_overlay_buttons();
+
+			$( '.addonify-add-to-wishlist-btn button.added-to-wishlist' ).attr('disabled', true );
 		}
 
 
@@ -115,15 +124,27 @@
 				nonce	: addonify_wishlist_object.nonce
 			};
 
+			// check if login is required
+			if( is_login_required() ) return;
+
+
 			// mark modal as loading
 			$modal.addClass('loading');
-			show_modal( addonify_wishlist_object.product_added_to_wishlist_text, $(this_sel).data('product_name') );
+
+
+			if( show_popup ){
+				show_modal( addonify_wishlist_object.product_added_to_wishlist_text, $(this_sel).data('product_name') );
+			}
+			else{
+				$(this_sel).text( addonify_wishlist_object.product_adding_to_wishlist_btn_label ).attr('disabled', true );
+			}
+
 
 			$.post( addonify_wishlist_object.ajax_url, data, function( response ) {
 				$modal.removeClass('loading');
 
 				if( response.success == true ){
-					$(this_sel).addClass('added-to-wishlist');
+					$(this_sel).addClass('added-to-wishlist addonify_icon-heart').text( addonify_wishlist_object.product_added_to_wishlist_btn_label );
 				}
 
 				$sticky_sidebar_btn.show();
@@ -144,6 +165,21 @@
 
 		function hide_modal(){
 			$body.removeClass('addonify-wishlist-modal-is-open');
+		}
+
+
+		function is_login_required(){
+			if( ! addonify_wishlist_object.require_login || addonify_wishlist_object.is_logged_in ) return false;
+
+			// show login required popup message
+			var message = '<div>';
+				message += addonify_wishlist_object.login_msg;
+				message += '<br><a href="'+ addonify_wishlist_object.login_url +'">' + addonify_wishlist_object.login_label + '</a>';
+				message += '</div>';
+
+			show_modal( message );
+
+			return true;
 		}
 
 

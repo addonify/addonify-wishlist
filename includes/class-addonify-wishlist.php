@@ -219,10 +219,13 @@ class Addonify_Wishlist {
 		// capture user login
 		$this->loader->add_action( 'wp_login', $plugin_public, 'after_user_login', 10, 2 );
 
+		// catch user login from myaccount in woocommerce
+		$this->loader->add_filter( 'woocommerce_login_redirect', $plugin_public, 'myaccount_login' );
+
+
 		// genereate custom styles
 		$this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
 
-		
 
 	}
 
