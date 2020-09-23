@@ -33,16 +33,20 @@
                 <div class="addonify-content">
                     <!-- display form fields -->
 
-                    <div id="addonify-settings-options-container" class="addonify-section">
+                    <div class="addonify-section">
+                        <?php do_settings_sections($this->settings_page_slug.'-general_options'); ?>
+                    </div>
+
+                    <div class="addonify-section">
                         <?php do_settings_sections($this->settings_page_slug.'-button_settings'); ?>
                     </div>
 
-                    <div class="addonify-section ">
-                        <?php do_settings_sections($this->settings_page_slug.'-after_product_added_to_wishlist'); ?>
+                    <div class="addonify-section">
+                        <?php do_settings_sections($this->settings_page_slug.'-popup_options'); ?>
                     </div>
 
-                    <div  class="addonify-section ">
-                        <?php do_settings_sections($this->settings_page_slug.'-wishlist_details_page'); ?>
+                    <div class="addonify-section">
+                        <?php do_settings_sections($this->settings_page_slug.'-side_wishlist_options'); ?>
                     </div>
 
                 </div><!--addonify-settings-container-->

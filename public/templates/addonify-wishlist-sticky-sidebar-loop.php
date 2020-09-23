@@ -8,7 +8,9 @@
     <li>
         <?php echo $value['image'];?>
         <?php echo $value['title'];?><br>
-        <?php echo $value['price'];?>
+        <?php echo $value['price'];?> <br>
+        <?php echo $value['add_to_cart'];?><br>
+        <?php echo $value['remove_btn'];?>
     </li>
 
 <?php endforeach; $i++; else: ?>
