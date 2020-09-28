@@ -46,7 +46,11 @@
                     </div>
 
                     <div class="addonify-section">
-                        <?php do_settings_sections($this->settings_page_slug.'-side_wishlist_options'); ?>
+                        <?php do_settings_sections($this->settings_page_slug.'-sidebar_options'); ?>
+                    </div>
+
+                    <div class="addonify-section">
+                        <?php do_settings_sections($this->settings_page_slug.'-sidebar_btn_options'); ?>
                     </div>
 
                 </div><!--addonify-settings-container-->

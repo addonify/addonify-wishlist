@@ -206,7 +206,7 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
 		
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sticky_sidebar' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sidebar_template' );
 
 		// $this->loader->add_action( 'init', $plugin_public, 'generate_cookies', 10 );	
 		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode', 10 );
@@ -225,6 +225,15 @@ class Addonify_Wishlist {
 
 		// genereate custom styles
 		$this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
+
+
+		// custom template hooks
+		$this->loader->add_action( 'addonify_wishlist_view_wishlist_btn', $plugin_public, 'addonify_wishlist_view_wishlist_btn' );
+		$this->loader->add_action( 'addonify_wishlist_login_from_modal_btn', $plugin_public, 'addonify_wishlist_login_from_modal_btn', 10, 2 );
+		$this->loader->add_action( 'addonify_wishlist_close_modal_btn', $plugin_public, 'addonify_wishlist_close_modal_btn' );
+
+		// remove custom hooks
+		$this->loader->add_action( 'init', $plugin_public, 'remove_custom_template_hooks' );
 
 
 	}

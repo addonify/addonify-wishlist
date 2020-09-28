@@ -79,10 +79,6 @@ $thumbnail_height : 48px;
         
         &:hover{
             background-color: transparent;
-
-            &:before{
-                content: "\e901";
-            }
         }
     }
     
@@ -110,6 +106,12 @@ $thumbnail_height : 48px;
     .show-label.show-icon{
         background-position: 0 12px;
         padding-left: 25px;
+    }
+
+    .show-icon:hover{
+        &:before{
+            content: "\e901";
+        }
     }
 
 }
@@ -159,14 +161,18 @@ $thumbnail_height : 48px;
 
     &.require-login {
 
-        #addonify-wishlist-modal-response{
-            height: 100%;
-        }
+        // #addonify-wishlist-modal-response{
+        //     height: 100%;
+        // }
 
-        .addonify-wishlist-modal-btns{
-            display: none;
+        // .addonify-wishlist-modal-btns{
+        //     display: none;
+        // }
+        form{
+            margin: 0;
         }
     }
+
     
 }
 

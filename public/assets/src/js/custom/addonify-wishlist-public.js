@@ -171,16 +171,28 @@
 		function is_login_required(){
 			if( ! addonify_wishlist_object.require_login || addonify_wishlist_object.is_logged_in ) return false;
 
-			// show login required popup message
-			var message = '<div>';
-				message += addonify_wishlist_object.login_msg;
-				message += '<br><a href="'+ addonify_wishlist_object.login_url +'">' + addonify_wishlist_object.login_label + '</a>';
-				message += '</div>';
+			if( addonify_wishlist_object.redirect_to_login && ! addonify_wishlist_object.is_logged_in ) {
+				window.location.replace( addonify_wishlist_object.login_url );
+				return true;
+			}
 
-			show_modal( message );
+			show_modal( addonify_wishlist_object.login_msg, '' );
 
 			return true;
 		}
+
+		
+		// make sidebar form ajaxy
+		$body.on( 'submit', '#addonify-wishlist-sidebar-form', function(e){
+			e.preventDefault();
+
+			console.log('continue here');
+
+			$.post( "ajax/test.html", function( data ) {
+				$( ".result" ).html( data );
+			});
+		})
+
 
 
 	})
