@@ -117,7 +117,7 @@ class Addonify_Wishlist_Admin {
 			if( isset( $_GET['tabs'] ) && $_GET['tabs'] == 'styles' ){
 
 				// requires atleast wordpress 4.9.0
-				// wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+				wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
 
 				wp_enqueue_script( 'wp-color-picker' );
 				
@@ -127,7 +127,7 @@ class Addonify_Wishlist_Admin {
 			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), '', false );
 			
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.min.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.js', array( 'jquery' ), time(), false );
 
 		}
 
@@ -337,7 +337,7 @@ class Addonify_Wishlist_Admin {
 		$settings_args = array(
 			'settings_group_name'	=> 'wishlist_settings',
 			'section_id' 			=> 'button_options',
-			'section_label'			=> __('Wishlist Button Options', 'addonify-wishlist'),
+			'section_label'			=> __('Add to Wishlist Button Options', 'addonify-wishlist'),
 			'section_callback'		=> '',
 			'screen'				=> $this->settings_page_slug.'-button_settings',
 			'fields'				=> array(
@@ -481,35 +481,94 @@ class Addonify_Wishlist_Admin {
 
 		$settings_args = array(
 			'settings_group_name'	=> 'wishlist_settings',
-			'section_id' 			=> 'side_wishlist',
-			'section_label'			=> __('Wishlist details page', 'addonify-wishlist'),
+			'section_id' 			=> 'sidebar',
+			'section_label'			=> __('Wishlist Sidebar Options', 'addonify-wishlist'),
 			'section_callback'		=> '',
-			'screen'				=> $this->settings_page_slug.'-side_wishlist_options',
+			'screen'				=> $this->settings_page_slug.'-sidebar_options',
 			'fields'				=> array(
 				array(
-					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_side_wishlist',
-					'field_label'			=> __('Show side Wishlist', 'addonify-wishlist'),
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar',
+					'field_label'			=> __('Show Sidebar', 'addonify-wishlist'),
 					'field_callback'		=> array($this, "toggle_switch"),
 					'field_callback_args'	=> array( 
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_side_wishlist', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar', 
 							'checked' 			=> 1,
 						)
 					) 
 				),
 				array(
-					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'side_wishlist_position',
-					'field_label'			=> __('Side Wishlist position', 'addonify-wishlist'),
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_position',
+					'field_label'			=> __('Sidebar position', 'addonify-wishlist'),
 					'field_callback'		=> array($this, "select"),
 					'field_callback_args'	=> array( 
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'side_wishlist_position', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_position', 
 							'options' 			=> array(
 								'left'			=> 'Left',
 								'right'			=> 'Right',
 							),
 							'default'			=> 'right'
 						)
+					) 
+				),
+				array(
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_title',
+					'field_label'			=> __('Sidebar title', 'addonify-wishlist'),
+					'field_callback'		=> array($this, "text_box"),
+					'field_callback_args'	=> array( 
+						array(
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_title', 
+							'default'			=> __( 'My Wishlist', 'addonify-wishlist' )
+						)
+					) 
+				),	
+			)
+		);
+
+		// create settings fields
+		$this->create_settings( $settings_args );
+
+
+		$settings_args = array(
+			'settings_group_name'	=> 'wishlist_settings',
+			'section_id' 			=> 'sidebar_btn',
+			'section_label'			=> __('Sidebar Show/Hide Button Options', 'addonify-wishlist'),
+			'section_callback'		=> '',
+			'screen'				=> $this->settings_page_slug.'-sidebar_btn_options',
+			'fields'				=> array(
+				
+				array(
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_label',
+					'field_label'			=> __('Button label', 'addonify-wishlist'),
+					'field_callback'		=> array($this, "text_box"),
+					'field_callback_args'	=> array( 
+						array(
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_label', 
+							'default'			=> __( 'Wishlist', 'addonify-wishlist' )
+						)
+					) 
+				),
+				array(
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_show_icon',
+					'field_label'			=> __('Show icon in button', 'addonify-wishlist'),
+					'field_callback'		=> array($this, "toggle_switch"),
+					'field_callback_args'	=> array( 
+						array(
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_show_icon', 
+							'checked' 			=> 1,
+						),
+					) 
+				),
+				array(
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn',
+					'field_label'			=> __('Animate button', 'addonify-wishlist'),
+					'field_callback'		=> array($this, "toggle_switch"),
+					'field_callback_args'	=> array( 
+						array(
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn', 
+							'checked' 			=> 1,
+						),
 					) 
 				),		
 			)
@@ -592,6 +651,18 @@ class Addonify_Wishlist_Admin {
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_icon_color_hover',
 							'default'			=> '#000000',
 						),
+					),
+				),
+				array(
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'custom_css',
+					'field_label'			=> __('Custom CSS', 'addonify-wishlist'),
+					'field_callback'		=> array($this, "text_area"),
+					'field_callback_args'	=> array( 
+						array(
+							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'custom_css',
+							'attr'				=> 'rows="5" class="large-text code"',
+						),
+						
 					),
 				),
 			)
@@ -834,6 +905,18 @@ class Addonify_Wishlist_Admin {
 
 		
 		require dirname( __FILE__ ) .'/templates/input_select.php';
+		echo ob_get_clean();
+	}
+
+	public function text_area($arguments){
+		ob_start();
+		foreach($arguments as $args){
+			$placeholder = isset( $args['placeholder'] ) ? $args['placeholder'] : '';
+			$db_value = get_option($args['name'], $placeholder);
+			$attr = isset( $args['attr'] ) ? $args['attr'] : '';
+
+			require dirname( __FILE__ ) .'/templates/input_textarea.php';
+		}
 		echo ob_get_clean();
 	}
 

@@ -29,6 +29,7 @@ class Addonify_Wishlist_Activator {
 
 		if( get_option( ADDONIFY_WISHLIST_DB_INITIALS .'page_id' ) ) return;
 
+
 		$page_title = __( 'Wishlist', 'addonify-wishlist' );
 
 		// Create page object

@@ -14,6 +14,21 @@
 		}
 
 
+		// code editor
+		if( $('#addonify_wishlist_custom_css').length ) {
+			var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
+			editorSettings.codemirror = _.extend(
+				{},
+				editorSettings.codemirror,
+				{
+					indentUnit: 2,
+					tabSize: 2
+				}
+			);
+			var editor = wp.codeEditor.initialize( $('#addonify_wishlist_custom_css'), editorSettings );
+		}
+
+
 
 		// show hide content colors ------------------------------
 

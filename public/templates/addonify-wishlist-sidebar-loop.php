@@ -1,7 +1,7 @@
 <?php 
-    if( isset( $data['wishlist_data'] ) && count( $data['wishlist_data'] ) > 0 ):
+    if( isset( $wishlist_data ) && count( $wishlist_data ) > 0 ):
         $i = 1;
-        foreach( $data['wishlist_data'] as $value ):
+        foreach( $wishlist_data as $value ):
             if( $i >= 5 ) break;
 ?>
 
@@ -13,6 +13,8 @@
         <?php echo $value['remove_btn'];?>
     </li>
 
-<?php endforeach; $i++; else: ?>
-    <li>Your wishlist is empty</li>
-<?php endif;?>
+<?php 
+            $i++;
+        endforeach;
+    endif;
+?>
