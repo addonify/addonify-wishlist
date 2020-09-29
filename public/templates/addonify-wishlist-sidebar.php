@@ -3,7 +3,7 @@
     defined( 'ABSPATH' ) || exit;
 ?>
 
-<div id="addonify-wishlist-sticky-sidebar-container" class="<?php echo esc_attr( $css_class ); ?>"  >
+<div id="addonify-wishlist-sticky-sidebar-container" class="<?php echo $css_class; ?>"  >
     
     <div class="addonify-wishlist-ssc-body">
 
@@ -15,7 +15,8 @@
 
             <ul id="addonify-wishlist-sidebar-items" >
                 <?php echo $loop; ?>
-            </ul> <!--addonify-wishlist-sidebar-items-->        
+            </ul> <!--addonify-wishlist-sidebar-items-->   
+            
         </form>
 
     </div> <!--addonify-wishlist-ssc-body-->

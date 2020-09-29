@@ -7,6 +7,7 @@
 		var $modal 				= $( '#addonify-wishlist-modal-wrapper' );
 		var $modal_response 	= $( '#addonify-wishlist-modal-response' );
 		var $sticky_sidebar_btn = $( '#addonify-wishlist-show-sidebar-btn' );
+		var $sidebar_ul			= $( '#addonify-wishlist-sidebar-items' );
 		var show_popup			= addonify_wishlist_object.show_popup;
 
 		init();
@@ -144,14 +145,19 @@
 				$modal.removeClass('loading');
 
 				if( response.success == true ){
+					// remove "your wishlist is empty" message
+					$('#addonify-wishlist-sidebar-form .empty-wishlist').remove();
+					
+					// update button 
 					$(this_sel).addClass('added-to-wishlist addonify_icon-heart').text( addonify_wishlist_object.product_added_to_wishlist_btn_label );
+					
+					// update sidebar contents
+					$sidebar_ul.append( response.data.msg );
+					
+					// update sidebar toggle button
+					$sticky_sidebar_btn.removeClass('hidden').find('.addonify-wishlist-count').text( response.data.wishlist_count );
+
 				}
-
-				$sticky_sidebar_btn.show();
-
-				// update sidebar contents
-				$('#addonify-wishlist-sidebar-items').append( response.data );
-				
 
 			}, "json" );
 		}
@@ -183,16 +189,66 @@
 
 		
 		// make sidebar form ajaxy
-		$body.on( 'submit', '#addonify-wishlist-sidebar-form', function(e){
+		$body.on( 'click', '#addonify-wishlist-sidebar-form button', function(e){
 			e.preventDefault();
 
-			console.log('continue here');
+			var $parent = $(this).parents('li');
+			var $notice = $('#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-footer');
 
-			$.post( "ajax/test.html", function( data ) {
-				$( ".result" ).html( data );
-			});
+			// mark as loading
+			$parent.addClass('loading');
+
+			var button = $(this);
+			var data = $('#addonify-wishlist-sidebar-form').serialize() 
+				+ '&' 
+				+ encodeURI(button.attr('name'))
+				+ '='
+				+ encodeURI(button.attr('value'))
+				+'&action=' + encodeURI(addonify_wishlist_object.action_sidebar_form);
+			;
+
+			$.post( addonify_wishlist_object.ajax_url, data, function( response ) {
+				
+				$parent.removeClass('loading');
+
+				var msg = '';
+				if( response.success == true ){
+
+					msg = response.data.msg;
+
+					// remove 'li'
+					$parent.remove();
+
+					// remove item from wishlist
+					if( response.data.remove_wishlist ){
+						
+						// update "add to wishlist" button classes
+						$( 'button.added-to-wishlist[data-product_id="'+ button.attr('value') +'"]' ).removeClass( 'added-to-wishlist addonify_icon-heart' );
+						$sticky_sidebar_btn.find('.addonify-wishlist-count').text( response.data.wishlist_count );
+					}
+
+					if( response.data.wishlist_count < 1 ){
+						$('#addonify-wishlist-sidebar-form').append( '<p class="empty-wishlist">' + addonify_wishlist_object.wishlist_empty_label + '</p>');
+					}
+
+				}
+				else{
+					msg = response.data;
+				}
+
+				// show notification
+				$notice.prepend('<div class="notice">'+ msg +'</div>');
+
+			}, "json" );
+
+
+			// delete noticication after 5 seconds
+			setTimeout(function(){
+				$notice.find('.notice').fadeOut( 'fast', function(){
+					$(this).remove();
+				})
+			}, 5000);
 		})
-
 
 
 	})

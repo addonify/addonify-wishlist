@@ -216,6 +216,15 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
 		$this->loader->add_action( 'wp_ajax_nopriv_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
 
+		// sidebar form submit
+		$this->loader->add_action( 'wp_ajax_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
+		$this->loader->add_action( 'wp_ajax_nopriv_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
+
+		// sidebar form submit
+		$this->loader->add_action( 'wp_ajax_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
+
+
 		// capture user login
 		$this->loader->add_action( 'wp_login', $plugin_public, 'after_user_login', 10, 2 );
 
@@ -228,13 +237,7 @@ class Addonify_Wishlist {
 
 
 		// custom template hooks
-		$this->loader->add_action( 'addonify_wishlist_view_wishlist_btn', $plugin_public, 'addonify_wishlist_view_wishlist_btn' );
-		$this->loader->add_action( 'addonify_wishlist_login_from_modal_btn', $plugin_public, 'addonify_wishlist_login_from_modal_btn', 10, 2 );
-		$this->loader->add_action( 'addonify_wishlist_close_modal_btn', $plugin_public, 'addonify_wishlist_close_modal_btn' );
-
-		// remove custom hooks
-		$this->loader->add_action( 'init', $plugin_public, 'remove_custom_template_hooks' );
-
+		$this->loader->add_action( 'addonify_wishlist_modal_btns', $plugin_public, 'addonify_wishlist_modal_btns_callback', 12 );
 
 	}
 

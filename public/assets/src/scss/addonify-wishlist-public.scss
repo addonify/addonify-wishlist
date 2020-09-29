@@ -15,9 +15,9 @@ $thumbnail_height : 48px;
     font-weight: normal;
     font-style: normal;
     font-display: block;
-  }
+}
   
-  [class^="addonify_icon-"], [class*=" addonify_icon-"] {
+[class^="addonify_icon-"], [class*=" addonify_icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     speak: never;
     font-style: normal;
@@ -29,18 +29,18 @@ $thumbnail_height : 48px;
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .addonify_icon-heart-outline:before {
+}
+
+.addonify_icon-heart-outline:before {
     content: "\e900";
     font-family: 'addonify';
     margin-right: 8px;
-  }
-  .addonify_icon-heart:before {
+}
+.addonify_icon-heart:before {
     content: "\e901";
     font-family: 'addonify';
     margin-right: 8px;
-  }
+}
   
 
 // end icofonts -------------------------------
@@ -67,7 +67,7 @@ $thumbnail_height : 48px;
 }
 
 .hidden{
-    display: none;
+    display: none !important;
 }
 
 
@@ -192,6 +192,10 @@ body.addonify-wishlist-modal-is-open{
     right: 0;
     top: 300px;
     z-index: 999999;
+    cursor: pointer;
+    background: #fff;
+    display: inline-block;
+    padding: 10px;
 
     &.addonify-align-left{
         left: 0;
@@ -232,6 +236,21 @@ body.addonify-wishlist-modal-is-open{
             margin-bottom: 80px;
         }
 
+        li.loading{
+
+            position: relative;
+
+            &:before{
+                content: '';
+                background: #fff url(../../images/loading.gif) no-repeat center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+        }
+
         
     }
 
@@ -250,6 +269,14 @@ body.addonify-wishlist-modal-is-open{
             text-align: center;
         }
     }
+
+    .notice{
+        padding: 10px;
+        text-align: center;
+        background: #ffa622;
+        color: #000;
+    }
+
 
     &.addonify-align-left {
         .addonify-wishlist-ssc-body{

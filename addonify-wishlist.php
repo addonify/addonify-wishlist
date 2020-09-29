@@ -91,6 +91,6 @@ function addonify_wishlist_get_total_items() {
 	$plugin = new Addonify_Wishlist();
 	$public_class = new Addonify_Wishlist_Public( $plugin->get_plugin_name(), $plugin->get_version() );
 	
-	return count( $public_class->get_all_wishlist() );
+	return $public_class->wishlist_item_count;
 
 }

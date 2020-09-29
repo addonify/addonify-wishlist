@@ -4,4 +4,6 @@
 
 ?>
 
-<button type="button" id="addonify-wishlist-show-sidebar-btn" class="<?php echo esc_attr( $css_class );  if( addonify_wishlist_get_total_items() < 1 ) echo ' hidden '; ?>" ><?php echo esc_attr( $label ); ?></button>
+<a id="addonify-wishlist-show-sidebar-btn" class="<?php echo $css_classes; ?>" >
+    <?php echo $label; ?>
+</a>
