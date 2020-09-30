@@ -124,7 +124,7 @@ class Addonify_Wishlist_Admin {
 			}
 			
 			// toggle switch
-			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), '', false );
+			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), $this->version, false );
 			
 
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.js', array( 'jquery' ), time(), false );
