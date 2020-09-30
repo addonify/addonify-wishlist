@@ -7,6 +7,26 @@
 		$('input.lc_switch').lc_switch();
 
 
+		var $require_login_btn = $('#addonify_wishlist_require_login');
+		var $redirect_to_login_btn = $('#addonify_wishlist_redirect_to_login');
+
+		// auto diable "redirect to login" if "require login" is disabled
+		$('body').delegate( '#addonify_wishlist_require_login', 'lcs-off', function() {
+			$redirect_to_login_btn.lcs_off();
+		});
+
+		$('body').delegate( '#addonify_wishlist_redirect_to_login', 'lcs-on', function() {
+
+			if( ! $require_login_btn.is(':checked') ){
+				setTimeout( function(){
+					$redirect_to_login_btn.lcs_off();
+				}, 400 );
+			}
+
+
+		});
+
+
 		// initiate wp color picker
 
 		if( $('.color-picker').length ){

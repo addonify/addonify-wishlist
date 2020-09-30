@@ -208,26 +208,24 @@
 			;
 
 			$.post( addonify_wishlist_object.ajax_url, data, function( response ) {
-				
-				$parent.removeClass('loading');
 
 				var msg = '';
 				if( response.success == true ){
 
 					msg = response.data.msg;
 
-					// remove 'li'
-					$parent.remove();
+					$sticky_sidebar_btn.find('.addonify-wishlist-count').text( response.data.wishlist_count );
 
 					// remove item from wishlist
-					if( response.data.remove_wishlist ){
-						
+					if( response.data.remove_wishlist == 1 ){
+
 						// update "add to wishlist" button classes
-						$( 'button.added-to-wishlist[data-product_id="'+ button.attr('value') +'"]' ).removeClass( 'added-to-wishlist addonify_icon-heart' );
-						$sticky_sidebar_btn.find('.addonify-wishlist-count').text( response.data.wishlist_count );
+						$( 'button.added-to-wishlist[data-product_id="'+ button.attr('value') +'"]' ).removeAttr('disabled').removeClass( 'added-to-wishlist addonify_icon-heart' );
+
+						$parent.remove();
 					}
 
-					if( response.data.wishlist_count < 1 ){
+					if( response.data.wishlist_count < 1 && ! $( '#addonify-wishlist-sidebar-form.empty-wishlist').length ){
 						$('#addonify-wishlist-sidebar-form').append( '<p class="empty-wishlist">' + addonify_wishlist_object.wishlist_empty_label + '</p>');
 					}
 
@@ -236,8 +234,16 @@
 					msg = response.data;
 				}
 
+				$parent.removeClass('loading');
+
 				// show notification
 				$notice.prepend('<div class="notice">'+ msg +'</div>');
+
+				if( response.data.redirect_url != undefined ){
+					setTimeout( function(){
+						window.location.href = response.data.redirect_url;
+					}, 2000 );
+				}
 
 			}, "json" );
 

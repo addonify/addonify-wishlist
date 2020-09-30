@@ -194,9 +194,11 @@ class Addonify_Wishlist {
 
 		// add button after add to cart button
 		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
+		$this->loader->add_action( 'woocommerce_after_add_to_cart_button', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
 
 		// add button before add to cart button
 		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
+		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
 
 		// add button aside image
 		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'show_btn_aside_image_callback' );
@@ -208,9 +210,10 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sidebar_template' );
 
-		// $this->loader->add_action( 'init', $plugin_public, 'generate_cookies', 10 );	
-		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode', 10 );
-		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit', 10 );
+		$this->loader->add_action( 'init', $plugin_public, 'init_callback' );	
+
+		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode' );
+		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit' );
 
 		// add to wishlist
 		$this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
