@@ -31,12 +31,24 @@ const scriptpath = {
 
         'assets/src/js/libraries/*.js',
         'assets/src/js/vendor/*.js',
-        'assets/src/js/custom/*.js'
+        'assets/src/js/custom/*.js',
+        '!./assets/src/js/conditional/**'
     ],
 
     script_dist: "assets/build/js/",
 }
 const output_js_file_name = "addonify-wishlist-public.js"; // what would you like to name your minified bundled js file
+
+// 1.1 # Script files path
+const conditionalscriptspath = {
+
+    con_scripts_src: [
+
+        'assets/src/js/conditional/*.js',
+    ],
+
+    con_scripts_dist: "assets/build/js/conditional/",
+}
 
 // 2# SASS/SCSS file path
 const sasspath = {
@@ -69,6 +81,13 @@ gulp.task('scriptsTask',  function() {
         .pipe(gulp.dest(scriptpath.script_dist));
 });
 
+gulp.task('ConditionalScriptsTask',  function() {
+    return gulp.src(conditionalscriptspath.con_scripts_src)
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(uglify())
+        .pipe(gulp.dest(conditionalscriptspath.con_scripts_dist));
+});
+
 gulp.task('sassTask', function() {
     var onError = function(err) {
         notify.onError({
@@ -98,9 +117,10 @@ gulp.task('dortlTask', function() {
 });
 
 // just hit the command "gulp" it will run the following tasks...
-gulp.task('default', gulp.series('scriptsTask', 'sassTask', (done) => {
+gulp.task('default', gulp.series('scriptsTask', 'ConditionalScriptsTask', 'sassTask', (done) => {
 
     gulp.watch(scriptpath.script_src, gulp.series('scriptsTask'));
+    gulp.watch(conditionalscriptspath.con_scripts_src, gulp.series('ConditionalScriptsTask'));
     gulp.watch(sasspath.sass_src, gulp.series('sassTask'));
     gulp.watch(rtlcsspath.rtlcss_src, gulp.series('dortlTask'));
     done();

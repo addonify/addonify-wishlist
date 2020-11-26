@@ -1,0 +1,68 @@
+#addonify-wishlist-modal-wrapper {
+
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#addonify-wishlist-modal-wrapper .addonify-wishlist-modal-body {
+
+    width: 350px;
+    height: 400px;
+    background: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: calc((100vh - 300px)/2) auto 0;
+    padding: 40px;
+    text-align: center;
+    @include large_drop_shadow();
+}
+
+#addonify-wishlist-modal-wrapper .adfy-wishlist-icon {
+
+    display: inline-block;
+    font-size: 42px;
+    color:red;
+    animation: AddonifyWishlistPulse 0.8s infinite;
+}
+
+#addonify-wishlist-modal-wrapper #addonify-wishlist-modal-response {
+
+    margin:20px 0;
+}
+
+#addonify-wishlist-modal-wrapper .addonify-wishlist-modal-btns button {
+
+    width: 100%;
+    margin-top: 10px
+}
+
+#addonify-wishlist-modal-wrapper.loading .addonify-wishlist-modal-body {
+
+    background: #fff url(../../images/loading.svg) no-repeat 50%
+}
+
+#addonify-wishlist-modal-wrapper.loading .addonify-wishlist-modal-body * {
+
+    display: none !important
+}
+
+#addonify-wishlist-modal-wrapper.require-login form {
+
+    margin: 0
+}
+
+body.addonify-wishlist-modal-is-open {
+
+    overflow: hidden;
+}
+
+body.addonify-wishlist-modal-is-open #addonify-wishlist-modal-wrapper {
+	
+    display: block;
+}
