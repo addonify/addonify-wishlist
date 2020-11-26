@@ -627,12 +627,12 @@ class Addonify_Wishlist_Admin {
 						array(
 							'label'				=> __('Text Color', 'addonify-wishlist'),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_text_color',
-							'default'			=> '#96588a',
+							'default'			=> '#333333',
 						),
 						array(
 							'label'				=> __('Icon Color', 'addonify-wishlist'),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_icon_color',
-							'default'			=> '#96588a',
+							'default'			=> '#333333',
 						),
 					),
 				),
@@ -644,12 +644,12 @@ class Addonify_Wishlist_Admin {
 						array(
 							'label'				=> __('Text Color on Hover', 'addonify-wishlist'),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_text_color_hover',
-							'default'			=> '#000000',
+							'default'			=> '#96588a',
 						),
 						array(
 							'label'				=> __('Icon Color on Hover', 'addonify-wishlist'),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_icon_color_hover',
-							'default'			=> '#000000',
+							'default'			=> '#96588a',
 						),
 					),
 				),

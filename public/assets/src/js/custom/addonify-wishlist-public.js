@@ -12,6 +12,22 @@
 
 		init();
 
+		// tooltip/tippy js
+
+		tippy('.adfy-wishlist-tooltip', {
+            
+            content: "",
+            allowHTML: false,
+            arrow: false,
+            arrowType: 'small',
+            size: 'large',
+            delay: 10,
+            duration: 350,
+            maxWidth: 350,
+            placement: 'left',
+            animation: 'scale'
+        });
+
 		$body.on('click', '.addonify-add-to-wishlist-btn button', function( e ){
 
 			e.preventDefault();
@@ -237,7 +253,7 @@
 				$parent.removeClass('loading');
 
 				// show notification
-				$notice.prepend('<div class="notice">'+ msg +'</div>');
+				$notice.prepend('<div class="notice adfy-wishlist-sidebar-notice"><span>'+ msg +'</span></div>');
 
 				if( response.data.redirect_url != undefined ){
 					setTimeout( function(){
@@ -250,7 +266,9 @@
 
 			// delete noticication after 5 seconds
 			setTimeout(function(){
+
 				$notice.find('.notice').fadeOut( 'fast', function(){
+
 					$(this).remove();
 				})
 			}, 5000);

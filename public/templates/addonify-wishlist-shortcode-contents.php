@@ -4,7 +4,7 @@
 ?>
 <h2><?php echo esc_html( $data['wishlist_name'] );?></h2>
 
-<div id="addonify-wishlist-container">
+<div id="addonify-wishlist-page-container">
 
     <form action="" method="POST" >
 
@@ -55,16 +55,16 @@
                     <option value="add_selected_to_cart" ><?php _e( 'Add to cart', 'addonify-wishlist' );?></option>
                     <option value="remove" ><?php _e( 'Remove', 'addonify-wishlist' );?></option>
                 </select>
-                <button type="submit" ><?php _e( 'Apply Action', 'addonify-wishlist' );?></button>
+                <button class="adfy-wishlist-btn" type="submit" ><?php _e( 'Apply Action', 'addonify-wishlist' );?></button>
             </div> <!--addonify-wfa-packets-->
             
             <div class="addonify-wfa-packets go-right">
-                <button type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_selected_to_cart" ><?php _e( 'Add Selected to Cart', 'addonify-wishlist' );?></button>
-                <button type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_all_to_cart" ><?php _e( 'Add All to Cart', 'addonify-wishlist' );?></button>
+                <button class="adfy-wishlist-btn" type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_selected_to_cart" ><?php _e( 'Add Selected to Cart', 'addonify-wishlist' );?></button>
+                <button class="adfy-wishlist-btn" type="submit" class="addonify_add_to_cart" name="addonify_wishlist_action" value="add_all_to_cart" ><?php _e( 'Add All to Cart', 'addonify-wishlist' );?></button>
             </div> <!--addonify-wfa-packets-->
             
         <div> <!--addonify-wishlist-footer-actions-->
         
     </form>
 
-</div><!--addonify-wishlist-container-->
+</div><!-- addonify-wishlist-page-container -->
