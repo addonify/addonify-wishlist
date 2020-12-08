@@ -17,7 +17,12 @@
                 <ul class="adfy-wishlist-sidebar-items-entry">
                     <?php echo $loop;?>
                 </ul>
-            </div> <!-- addonify-wishlist-sidebar-items-wrapper -->   
+            </div> <!-- addonify-wishlist-sidebar-items-wrapper -->
+
+            <?php if( $total_items < 1 ) :?>
+                <p class="empty-wishlist">Your Wishlist is empty</p> 
+            <?php endif;?>
+
         </form>
     </div> <!--addonify-wishlist-ssc-body-->
 

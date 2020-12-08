@@ -283,30 +283,32 @@ class Addonify_Wishlist_Public {
 		global $product;
 		$product_id = $product->get_id();
 
-		$css_class 				= array();
-		$css_class[] 			= $extra_css_class;
-		$css_class[] 			= $this->button_custom_css_class;
+		$css_class 		= array();
+		$css_class[]	= $extra_css_class;
+		$css_class[]	= $this->button_custom_css_class;
 
 		if( $this->btn_label ) 								$css_class[] = 'show-label';
-		if( $this->get_db_values('show_icon', 1) ) 			$css_class[] = 'show-icon xxxxx-heart-o-xxxxx';
-
+		
 		if( ! $this->btn_label && ! $this->get_db_values('show_icon')  ) return;
-
+		
 		if ( $this->is_item_in_wishlist( $product_id ) ) {
 			$css_class[] = 'added-to-wishlist';
 			
 			if( $this->get_db_values('show_icon', 1) ){
 				$css_class[] = 'show-icon xxxxx-heart-xxxxx';
 			} 
-
+			
 			$btn_label = $this->get_db_values( 'btn_label_if_added_to_wishlist', __( 'Already in Wishlist', 'addonify-wishlist' ) );
 		} 
 		else{
 			$btn_label = $this->btn_label;
 		}
+		
+		$show_icon = intval( $this->get_db_values( 'show_icon', 1 ) );
+
 
 		ob_start();
-		$this->get_templates( 'addonify-add-to-wishlist-button', false, array( 'product_id' => $product_id, 'label' => $btn_label, 'css_class' => implode(' ', $css_class ), 'name' => $product->get_title(), 'btn_position' => $this->btn_position ) );
+		$this->get_templates( 'addonify-add-to-wishlist-button', false, array( 'product_id' => $product_id, 'label' => $btn_label, 'css_class' => implode(' ', $css_class ), 'name' => $product->get_title(), 'btn_position' => $this->btn_position, 'show_icon' => $show_icon ) );
 		echo ob_get_clean();
 
 	}
@@ -680,7 +682,7 @@ class Addonify_Wishlist_Public {
 		ob_start();
 
 		// toggle sidebar button template
-		$this->get_templates( 'addonify-wishlist-sidebar-toggle-button', true, array( 'css_classes' => implode(' ', $css_classes ), 'label' => $btn_label, 'show_icon' => $show_btn_icon ) );
+		$this->get_templates( 'addonify-wishlist-sidebar-toggle-button', true, array( 'css_classes' => implode(' ', $css_classes ), 'label' => $btn_label, 'show_icon' => $show_btn_icon, 'total_items' => $total_items, ) );
 
 		// reset css classes
 		$css_classes = array( $alignment );
