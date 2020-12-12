@@ -7,8 +7,11 @@
 		var $modal 				= $( '#addonify-wishlist-modal-wrapper' );
 		var $modal_response 	= $( '#addonify-wishlist-modal-response' );
 		var $sticky_sidebar_btn = $( '#addonify-wishlist-show-sidebar-btn' );
-		var $sidebar_ul			= $( '#addonify-wishlist-sidebar-items' );
+		var $sidebar_ul			= $( 'ul.adfy-wishlist-sidebar-items-entry' );
 		var show_popup			= addonify_wishlist_object.show_popup;
+
+		// store btn markups for later re-use
+		var add_to_wishlist_btn_markups = $('.adfy-wishlist-btn').first().html();
 
 		init();
 
@@ -160,18 +163,19 @@
 			$.post( addonify_wishlist_object.ajax_url, data, function( response ) {
 				$modal.removeClass('loading');
 
-				if( response.success == true ){
+				if( response.success == true ) {
 					// remove "your wishlist is empty" message
 					$('#addonify-wishlist-sidebar-form .empty-wishlist').remove();
-					
+
+
 					// update button 
-					$(this_sel).addClass('added-to-wishlist addonify_icon-heart').text( addonify_wishlist_object.product_added_to_wishlist_btn_label );
-					
+					$(this_sel).addClass('added-to-wishlist').text( addonify_wishlist_object.product_added_to_wishlist_btn_label );
+
 					// update sidebar contents
 					$sidebar_ul.append( response.data.msg );
-					
+
 					// update sidebar toggle button
-					$sticky_sidebar_btn.removeClass('hidden').find('.addonify-wishlist-count').text( response.data.wishlist_count );
+					$sticky_sidebar_btn.removeClass('hidden').find('.addonify-wishlist-count').text( '(' + response.data.wishlist_count + ')' );
 
 				}
 
@@ -215,6 +219,8 @@
 			$parent.addClass('loading');
 
 			var button = $(this);
+			
+
 			var data = $('#addonify-wishlist-sidebar-form').serialize() 
 				+ '&' 
 				+ encodeURI(button.attr('name'))
@@ -236,8 +242,7 @@
 					if( response.data.remove_wishlist == 1 ){
 
 						// update "add to wishlist" button classes
-						$( 'button.added-to-wishlist[data-product_id="'+ button.attr('value') +'"]' ).removeAttr('disabled').removeClass( 'added-to-wishlist addonify_icon-heart' );
-
+						$( 'button.added-to-wishlist[data-product_id="'+ button.attr('value') +'"]' ).removeAttr('disabled').removeClass( 'added-to-wishlist' ).html( add_to_wishlist_btn_markups );
 						$parent.remove();
 					}
 
