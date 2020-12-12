@@ -909,16 +909,20 @@ class Addonify_Wishlist_Public {
 			// form is not ajax
 			else{
 				// add to cart, with notice shown
-				if( $this->add_to_cart( array( $product_id ) ) ){
-					if( $redirect_to_checkout_after_add_to_cart ){
+				if ( $this->add_to_cart( array( $product_id ) ) ) {
+
+					if ( $redirect_to_checkout_after_add_to_cart ) {
 						wp_redirect( wc_get_checkout_url() );
 						exit;
 					}
+
+
+					$remove_from_cart = intval( $this->get_db_values( 'remove_from_wishlist_if_added_to_cart', 1 ) );
+
 				}
-				else{
-					wp_redirect( $wishlist_page_url );
-					exit;
-				}
+
+				wp_redirect( $wishlist_page_url );
+				exit;
 			}
 
 		}
@@ -980,6 +984,8 @@ class Addonify_Wishlist_Public {
 	 */
 	private function remove_item_from_wishlist( $product_ids, $show_notice = true ){
 
+		// 119
+
 		$wishlist_items = $this->get_all_wishlist();
 		$msg = '';
 		
@@ -992,7 +998,13 @@ class Addonify_Wishlist_Public {
 
 			if ( $show_notice ) {
 				$product = wc_get_product( $product_id );
-				$msg .=  $product->get_name() . ' is removed from wishlist <br>';
+
+				if( $product ) {
+					$msg .=  $product->get_name() . ' is removed from wishlist <br>';
+				}
+				else{
+					$msg .=  'Selected item is removed from wishlist <br>';
+				}
 			}
 		}
 
@@ -1022,7 +1034,7 @@ class Addonify_Wishlist_Public {
 		$msg_error 		= '';
 
 		//  remove from wishlist if added to cart ?
-		$remove_from_cart = $this->get_db_values( 'remove_from_wishlist_if_added_to_cart', 1 );
+		$remove_from_cart = intval( $this->get_db_values( 'remove_from_wishlist_if_added_to_cart', 1 ) );
 
 		foreach( $product_ids as $product_id ){
 
