@@ -20,7 +20,7 @@
  * @subpackage Addonify_Wishlist/admin
  * @author     Adodnify <info@addonify.com>
  */
-class Addonify_Wishlist_Admin {
+class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 
 	/**
 	 * The ID of this plugin.
@@ -57,7 +57,7 @@ class Addonify_Wishlist_Admin {
 	 * @access   private
 	 * @var      string    $default_input_values
 	 */
-	private $default_input_values;
+	protected $default_input_values;
 
 
 	/**
@@ -83,22 +83,21 @@ class Addonify_Wishlist_Admin {
 
 		global $wp_styles;
 
-		// load styles in this plugin page only
-		if( isset($_GET['page']) && $_GET['page'] == $this->settings_page_slug ){
+		// load styles in this plugin page only.
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
 
-
-			// toggle switch
+			// toggle switch.
 			wp_enqueue_style( 'lc_switch', plugin_dir_url( __FILE__ ) . 'css/lc_switch.css' );
 
-			// built in wp color picker
-			// requires atleast wordpress 3.5
+			// built in wp color picker.
+			// requires atleast wordpress 3.5.
 			wp_enqueue_style( 'wp-color-picker' ); 
 
 			// admin css
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.css', array(), time(), 'all' );
 		}
 
-		// admin menu icon fix
+		// admin menu icon fix.
 		wp_enqueue_style( 'addonify-icon-fix', plugin_dir_url( __FILE__ ) . 'css/addonify-icon-fix.css', array(), $this->version, 'all' );
 
 	}
@@ -111,19 +110,19 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		// load scripts in plugin page only
-		if( isset($_GET['page']) && $_GET['page'] == $this->settings_page_slug  ){
+		// load scripts in plugin page only.
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug  ) {
 
-			if( isset( $_GET['tabs'] ) && $_GET['tabs'] == 'styles' ){
+			if ( isset( $_GET['tabs'] ) && $_GET['tabs'] == 'styles' ) {
 
-				// requires atleast wordpress 4.9.0
+				// requires atleast wordpress 4.9.0.
 				wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
 
 				wp_enqueue_script( 'wp-color-picker' );
 				
 			}
 			
-			// toggle switch
+			// toggle switch.
 			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), $this->version, false );
 			
 
@@ -134,51 +133,37 @@ class Addonify_Wishlist_Admin {
 	}
 
 
-
 	/**
-	 * Check if woocommerce is active
+	 * Generate admin menu for this plugin.
 	 *
 	 * @since    1.0.0
 	 */
-	private function is_woocommerce_active() {
-		return ( class_exists( 'woocommerce' ) ) ? true : false;
-	}
+	public function add_menu_callback() {
 
-
-
-	/**
-	 * Generate admin menu for this plugin
-	 *
-	 * @since    1.0.0
-	 */
-	public function add_menu_callback(){
-
-		// do not show menu if woocommerce is not active
+		// do not show menu if woocommerce is not active.
 		if ( ! $this->is_woocommerce_active() )  return; 
 
 		global $menu;
 		$parent_menu_slug = null;
 
-		foreach($menu as $item) {
-			if(strtolower($item[0]) == 'addonify' ) {
+		foreach( $menu as $item ) {
+			if ( strtolower( $item[0] ) == 'addonify' ) {
 
 				$parent_menu_slug = $item[2];
 				break;
 			}
 		}
 
-
-		if( ! $parent_menu_slug ){
-			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array($this, 'get_settings_screen_contents'), plugin_dir_url( __FILE__ ) .'/templates/addonify-logo.svg', 76 );
-
-			add_submenu_page(  $this->settings_page_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array($this, 'get_settings_screen_contents'), 1 );
+		if ( ! $parent_menu_slug ) {
+			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), plugin_dir_url( __FILE__ ) .'/templates/addonify-logo.svg', 76 );
+			add_submenu_page(  $this->settings_page_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 1 );
 
 		}
 		else{
 
-			// sub menu
-			// redirects to main plugin link
-			add_submenu_page(  $parent_menu_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array($this, 'get_settings_screen_contents'), 1 );
+			// sub menu.
+			// redirects to main plugin link.
+			add_submenu_page(  $parent_menu_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 1 );
 			
 		}
 	}
@@ -190,11 +175,11 @@ class Addonify_Wishlist_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	 public function custom_plugin_link_callback( $links, $file ){
+	 public function custom_plugin_link_callback( $links, $file ) {
 		
-		if ( $file == plugin_basename(dirname(__FILE__, 2) . '/addonify-wishlist.php') ) {
-			// add "Settings" link
-			$links[] = '<a href="admin.php?page='. $this->settings_page_slug .'">' . __('Settings','addonify-wishlist') . '</a>';
+		if ( plugin_basename( ADDONIFY_WISHLIST_PLUGIN_PATH . '/addonify-wishlist.php' ) === $file ) {
+			// add "Settings" link.
+			$links[] = '<a href="admin.php?page=' . esc_html( $this->settings_page_slug ) . '">' . __( 'Settings', 'addonify-wishlist' ) . '</a>';
 		}
 		
 		return $links;
@@ -204,17 +189,15 @@ class Addonify_Wishlist_Admin {
 
 	/**
 	 * Get contents from settings page templates and print it
+	 * Called from "add_menu_callback".
 	 *
 	 * @since    1.0.0
 	 */
-	public function get_settings_screen_contents(){
-		$current_tab = ( isset($_GET['tabs']) ) ? $_GET['tabs'] : 'settings';
+	public function get_settings_screen_contents() {
+		$current_tab = ( isset( $_GET['tabs'] ) ) ? $_GET['tabs'] : 'settings';
 		$tab_url = "admin.php?page=$this->settings_page_slug&tabs=";
 
-		ob_start();
-		require_once dirname( __FILE__ ) .'/templates/settings-screen.php';
-		echo ob_get_clean();
-
+		require_once ADDONIFY_WISHLIST_PLUGIN_PATH .'/admin/templates/settings-screen.php';
 	}
 
 
@@ -226,7 +209,6 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function settings_page_ui() {
 
-
 		// ---------------------------------------------
 		// General Options
 		// ---------------------------------------------
@@ -234,82 +216,83 @@ class Addonify_Wishlist_Admin {
 		$settings_args = array(
 			'settings_group_name'	=> 'wishlist_settings',
 			'section_id' 			=> 'general_options',
-			'section_label'			=> __('General Options', 'addonify-wishlist'),
+			'section_label'			=> __( 'General Options', 'addonify-wishlist' ),
 			'section_callback'		=> '',
 			'screen'				=> $this->settings_page_slug.'-general_options',
 			'fields'				=> array(
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'default_wishlist_name',
-					'field_label'			=> __('Wishlist name', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Wishlist name', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'default_wishlist_name', 
-							'default'		 	=> __('My Wishlist', 'addonify-wishlist'),
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'default_wishlist_name',
+							'default'		 	=> __( 'My Wishlist', 'addonify-wishlist' ),
 						)
-					), 
+					),
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page',
-					'field_label'			=> __('Wishlist Page', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "select_page"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Wishlist Page', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "select_page" ),
+					'field_callback_args'	=> array(
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', 
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page',
 						)
-					), 
+					),
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'require_login',
-					'field_label'			=> __('Require Login', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Require Login', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'require_login', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'require_login',
 							'checked' 			=> 1,
 						)
 					) 
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_login',
-					'field_label'			=> __('Redirect to Login Page', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Redirect to Login Page', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_login', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_login',
 							'checked' 			=> 1,
+							'end_label'			=> esc_html('"Require Login" should be "On"'),
 						)
 					) 
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_checkout_if_item_added_to_cart',
-					'field_label'			=> __('Redirect to the checkout page from Wishlist if added to cart', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Redirect to the checkout page from Wishlist if added to cart', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_checkout_if_item_added_to_cart', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_checkout_if_item_added_to_cart',
 							'checked' 			=> 0,
 						)
 					) 
 				),		
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart',
-					'field_label'			=> __('Remove Product from Wishlist if added to cart', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Remove Product from Wishlist if added to cart', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart',
 							'checked' 			=> 1,
 						)
 					) 
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'cookies_lifetime',
-					'field_label'			=> __('Save Wishlist for', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Save Wishlist for', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'cookies_lifetime', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'cookies_lifetime',
 							'default' 			=> 30,
 							'css_class'			=> 'number',
 							'type'				=> 'number',
@@ -320,334 +303,386 @@ class Addonify_Wishlist_Admin {
 					) 
 				),
 				
-
-				
-				
 			)
 		);
 
 		// create settings fields
 		$this->create_settings( $settings_args );
 
-
 		// ---------------------------------------------
 		// Button Options
 		// ---------------------------------------------
 
-		$settings_args = array(
+		$settings_args = array( 
 			'settings_group_name'	=> 'wishlist_settings',
 			'section_id' 			=> 'button_options',
-			'section_label'			=> __('Add to Wishlist Button Options', 'addonify-wishlist'),
+			'section_label'			=> __( 'Add to Wishlist Button Options', 'addonify-wishlist' ),
 			'section_callback'		=> '',
 			'screen'				=> $this->settings_page_slug.'-button_settings',
 			'fields'				=> array(
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_position',
-					'field_label'			=> __('Button position', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "select"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Button position', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "select" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_position', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_position',
 							'options' 			=> array(
-								'after_add_to_cart'		=> __('After Add To Cart Button', 'addonify-wishlist-products'),
-								'before_add_to_cart' 	=> __('Before Add To Cart Button', 'addonify-wishlist-products'),
-								'overlay_on_image'		=> __('Overlay On The Product Image', 'addonify-wishlist-products')
+								'after_add_to_cart'		=> __( 'After Add To Cart Button', 'addonify-wishlist-products' ),
+								'before_add_to_cart' 	=> __( 'Before Add To Cart Button', 'addonify-wishlist-products' ),
+								'overlay_on_image'		=> __( 'Overlay On The Product Image', 'addonify-wishlist-products' )
 							),
 						),
 					) 
 				),
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_label',
-					'field_label'			=> __('Button label', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Button label', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_label', 
-							'default'		 	=> __('Add to Wishlist', 'addonify-wishlist'),
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_label',
+							'default'		 	=> __( 'Add to Wishlist', 'addonify-wishlist' ),
 						)
-					), 
+					),
 				),
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_label_if_added_to_wishlist',
-					'field_label'			=> __('Button label if product is added to Wishlist', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Button label if product is already in Wishlist', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_label_if_added_to_wishlist', 
-							'default'		 	=> __('Already in Wishlist', 'addonify-wishlist'),
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_label_if_added_to_wishlist',
+							'default'		 	=> __( 'Already in Wishlist', 'addonify-wishlist' ),
 						)
-					), 
+					),
 				),
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_icon',
-					'field_label'			=> __('Show icon in button', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Show icon in button', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_icon', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_icon',
 							'checked' 			=> 1,
 						),
 					) 
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_custom_class',
-					'field_label'			=> __('Custom CSS class', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Custom CSS class', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_custom_class', 
-							'default'		 	=> __('', 'addonify-wishlist'),
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'btn_custom_class',
+							'default'		 	=> __( '', 'addonify-wishlist' ),
 						)
-					), 
+					),
 				),
-				
+			
 			),
 		);
 
 		// create settings fields
 		$this->create_settings( $settings_args );
-
 
 		// ---------------------------------------------
 		// Popup Notice Options
 		// ---------------------------------------------
 
-		$settings_args = array(
+		$settings_args = array( 
 			'settings_group_name'	=> 'wishlist_settings',
 			'section_id' 			=> 'popup_options',
-			'section_label'			=> __('Popup Notice Options', 'addonify-wishlist'),
+			'section_label'			=> __( 'Popup Notice Options', 'addonify-wishlist' ),
 			'section_callback'		=> '',
 			'screen'				=> $this->settings_page_slug.'-popup_options',
 			'fields'				=> array(
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_popup',
-					'field_label'			=> __('Show successful popup notice', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Show successful popup notice', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 			=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_popup', 
+							'name' 			=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_popup',
 							'default'		=> 1
 						),
 					) 
 				),
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'view_wishlist_btn_text',
-					'field_label'			=> __('"View Wishlist" button label', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
+					'field_label'			=> __( '"View Wishlist" button label', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
 					'field_callback_args'	=> array( 
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'view_wishlist_btn_text', 
-							'default'		 	=> __('View Wishlist', 'addonify-wishlist'),
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'view_wishlist_btn_text',
+							'default'		 	=> __( 'View Wishlist', 'addonify-wishlist' ),
 							'sanitize_callback'	=> 'validate_view_wishlist_btn_text',
 						)
-					), 
+					),
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_added_to_wishlist_text',
-					'field_label'			=> __('"Product added to Wishlist" text', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( '"Product added to Wishlist" text', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_added_to_wishlist_text', 
-							'default'		 	=> __('{product_name} added to Wishlist', 'addonify-wishlist'),
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_added_to_wishlist_text',
+							'default'		 	=> __( '{product_name} added to Wishlist', 'addonify-wishlist' ),
 							'sanitize_callback'	=> 'validate_product_added_to_wishlist_text',
 						)
-					), 
+					),
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_already_in_wishlist_text',
-					'field_label'			=> __('"Product already in Wishlist" text', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( '"Product already in Wishlist" text', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_already_in_wishlist_text', 
-							'default'		 	=> __('{product_name} already in Wishlist', 'addonify-wishlist'),
+							'name'			 	=> ADDONIFY_WISHLIST_DB_INITIALS . 'product_already_in_wishlist_text',
+							'default'		 	=> __( '{product_name} already in Wishlist', 'addonify-wishlist' ),
 							'sanitize_callback'	=> 'validate_product_already_in_wishlist_text',
 						)
-					), 
+					),
 				),
-				
+			
 			),
 		);
 
 		// create settings fields
 		$this->create_settings( $settings_args );
 
-
-
 		// ---------------------------------------------
-		// Side wishlist options / sticky sidebar
+		// Wishlist Sidebar Options
 		// ---------------------------------------------
 
-		$settings_args = array(
+		$settings_args = array( 
 			'settings_group_name'	=> 'wishlist_settings',
 			'section_id' 			=> 'sidebar',
-			'section_label'			=> __('Wishlist Sidebar Options', 'addonify-wishlist'),
+			'section_label'			=> __( 'Wishlist Sidebar Options', 'addonify-wishlist' ),
 			'section_callback'		=> '',
-			'screen'				=> $this->settings_page_slug.'-sidebar_options',
+			'screen'				=> $this->settings_page_slug . '-sidebar_options',
 			'fields'				=> array(
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar',
-					'field_label'			=> __('Show Sidebar', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
-					'field_callback_args'	=> array( 
-						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar', 
+					'field_label'			=> __( 'Show Sidebar', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array(
+						array( 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar',
 							'checked' 			=> 1,
 						)
-					) 
+					)
 				),
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_position',
-					'field_label'			=> __('Sidebar position', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "select"),
-					'field_callback_args'	=> array( 
-						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_position', 
-							'options' 			=> array(
+					'field_label'			=> __( 'Sidebar position', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "select" ),
+					'field_callback_args'	=> array(
+						array( 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_position',
+							'options' 			=> array( 
 								'left'			=> 'Left',
 								'right'			=> 'Right',
 							),
-							'default'			=> 'right'
-						)
-					) 
-				),
-				array(
+						'default'			=> 'right'
+					)
+				)
+			),
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_title',
-					'field_label'			=> __('Sidebar title', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Sidebar title', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
+					'field_callback_args'	=> array(
 						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_title', 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_title',
 							'default'			=> __( 'My Wishlist', 'addonify-wishlist' )
-						)
+					)
 					) 
 				),	
 			)
 		);
 
-		// create settings fields
+		// create settings fields.
 		$this->create_settings( $settings_args );
 
 
-		$settings_args = array(
+		// ---------------------------------------------
+		// Sidebar Show/Hide Button Options
+		// ---------------------------------------------
+
+		$settings_args = array( 
 			'settings_group_name'	=> 'wishlist_settings',
 			'section_id' 			=> 'sidebar_btn',
-			'section_label'			=> __('Sidebar Show/Hide Button Options', 'addonify-wishlist'),
+			'section_label'			=> __( 'Sidebar Show/Hide Button Options', 'addonify-wishlist' ),
 			'section_callback'		=> '',
 			'screen'				=> $this->settings_page_slug.'-sidebar_btn_options',
-			'fields'				=> array(
+			'fields'				=> array( 
 				
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_label',
-					'field_label'			=> __('Button label', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_box"),
+					'field_label'			=> __( 'Button label', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_box" ),
 					'field_callback_args'	=> array( 
-						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_label', 
+						array( 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_label',
 							'default'			=> __( 'Wishlist', 'addonify-wishlist' )
 						)
-					) 
+					)
 				),
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_show_icon',
-					'field_label'			=> __('Show icon in button', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
+					'field_label'			=> __( 'Show icon in button', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
 					'field_callback_args'	=> array( 
-						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_show_icon', 
+						array( 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_show_icon',
 							'checked' 			=> 1,
 						),
-					) 
+					)
 				),
-				array(
-					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn',
-					'field_label'			=> __('Animate button', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
+				array( 
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+					'field_label'			=> __( 'Select Icon', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "radio_group" ),
 					'field_callback_args'	=> array( 
-						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn', 
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'heart-style-one',
+							'checked' => 1,
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-style-one"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'heart-o-style-one',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-o-style-one"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'heart-o-style-three',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-o-style-three"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'flash',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon flash"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'tools',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon tools"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'circle-with-plus',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon circle-with-plus"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'eye',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon eye"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'loader',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon loader"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'settings',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon settings"></span>',
+						),
+						array( 
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
+							'value' => 'shopping-bag',
+							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon shopping-bag"></span>',
+						),
+					)
+				),
+				array( 
+					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn',
+					'field_label'			=> __( 'Animate button', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
+					'field_callback_args'	=> array( 
+						array( 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn',
 							'checked' 			=> 1,
 						),
-					) 
-				),		
+					)
+				),
 			)
 		);
 
 		// create settings fields
 		$this->create_settings( $settings_args );
-
-
 
 		// ---------------------------------------------
 		// Styles Options
 		// ---------------------------------------------
 
-		$settings_args = array(
+		$settings_args = array( 
 			'settings_group_name'	=> 'wishlist_styles',
 			'section_id' 			=> 'style_options',
-			'section_label'			=> __('STYLE OPTIONS', 'addonify-wishlist'),
+			'section_label'			=> __( 'STYLE OPTIONS', 'addonify-wishlist' ),
 			'section_callback'		=> '',
 			'screen'				=> $this->settings_page_slug.'-styles',
 			'fields'				=> array(
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'load_styles_from_plugin',
-					'field_label'			=> __('Load Styles From Plugin', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "toggle_switch"),
+					'field_label'			=> __( 'Load Styles From Plugin', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "toggle_switch" ),
 					'field_callback_args'	=> array( 
-						array(
-							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'load_styles_from_plugin', 
+						array( 
+							'name' 				=> ADDONIFY_WISHLIST_DB_INITIALS . 'load_styles_from_plugin',
 							'checked' 			=> 0,
 						)
 					) 
 				),
 			)
-		);
+		 );
 
 		// create settings fields
 		$this->create_settings( $settings_args );
-
 
 		// ---------------------------------------------
 		// Content Colors
 		// ---------------------------------------------
 
-		$settings_args = array(
+		$settings_args = array( 
 			'settings_group_name'	=> 'wishlist_styles',
 			'section_id' 			=> 'content_colors',
-			'section_label'			=> __('CONTENT COLORS', 'addonify-wishlist'),
+			'section_label'			=> __( 'CONTENT COLORS', 'addonify-wishlist' ),
 			'section_callback'		=> '',
 			'screen'				=> $this->settings_page_slug.'-content-colors',
-			'fields'				=> array(
-				array(
+			'fields'				=> array( 
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_colors',
-					'field_label'			=> __('Add to Wishlist button', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "color_picker_group"),
-					'field_callback_args'	=> array( 
+					'field_label'			=> __( 'Add to Wishlist button', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "color_picker_group" ),
+					'field_callback_args'	=> array(
 						array(
-							'label'				=> __('Text Color', 'addonify-wishlist'),
+							'label'				=> __( 'Text Color', 'addonify-wishlist' ),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_text_color',
 							'default'			=> '#333333',
 						),
-						array(
-							'label'				=> __('Icon Color', 'addonify-wishlist'),
+						array( 
+							'label'				=> __( 'Icon Color', 'addonify-wishlist' ),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_icon_color',
 							'default'			=> '#333333',
 						),
 					),
 				),
-				array(
+				array( 
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_colors_hover',
 					'field_label'			=> '',
-					'field_callback'		=> array($this, "color_picker_group"),
+					'field_callback'		=> array( $this, "color_picker_group" ),
 					'field_callback_args'	=> array( 
-						array(
-							'label'				=> __('Text Color on Hover', 'addonify-wishlist'),
+						array( 
+							'label'				=> __( 'Text Color on Hover', 'addonify-wishlist' ),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_text_color_hover',
 							'default'			=> '#96588a',
-						),
+						 ),
 						array(
-							'label'				=> __('Icon Color on Hover', 'addonify-wishlist'),
+							'label'				=> __( 'Icon Color on Hover', 'addonify-wishlist' ),
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_btn_icon_color_hover',
 							'default'			=> '#96588a',
 						),
@@ -655,14 +690,14 @@ class Addonify_Wishlist_Admin {
 				),
 				array(
 					'field_id'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'custom_css',
-					'field_label'			=> __('Custom CSS', 'addonify-wishlist'),
-					'field_callback'		=> array($this, "text_area"),
-					'field_callback_args'	=> array( 
-						array(
+					'field_label'			=> __( 'Custom CSS', 'addonify-wishlist' ),
+					'field_callback'		=> array( $this, "text_area" ),
+					'field_callback_args'	=> array(
+						array( 
 							'name'				=> ADDONIFY_WISHLIST_DB_INITIALS . 'custom_css',
 							'attr'				=> 'rows="5" class="large-text code"',
 						),
-						
+					
 					),
 				),
 			)
@@ -676,103 +711,12 @@ class Addonify_Wishlist_Admin {
 
 
 	/**
-	 * This will create settings section, fields and register that settings in a database from the provided array data
+	 * Show notification after form submission.
 	 *
 	 * @since    1.0.0
 	 */
-	private function create_settings($args){
-
-		// define section ---------------------------
-		add_settings_section($args['section_id'], $args['section_label'], $args['section_callback'], $args['screen'] );
-
-		foreach($args['fields'] as $field){
-			
-			// create label
-			add_settings_field( $field['field_id'], $field['field_label'], $field['field_callback'], $args['screen'], $args['section_id'], $field['field_callback_args'] );
-			
-			foreach( $field['field_callback_args'] as $sub_field){
-
-				$this->default_input_values[ $sub_field['name'] ] = ( isset( $sub_field['default'] ) ) ? $sub_field['default'] : '';
-				register_setting( $args['settings_group_name'],  $sub_field['name'], array(
-        			'sanitize_callback' => ( isset( $sub_field['sanitize_callback'] )) ? array( $this, $sub_field['sanitize_callback'] ) : 'sanitize_text_field'
-				));
-			}
-
-		}
-
-	}
-
-	
-	/**
-	 * Form Validation for Offset From Top
-	 *
-	 * @since    1.0.0
-	 */
-
-	public function validate_view_wishlist_btn_text( $post_data ){
-		return $this->validate_text_field( $post_data, __FUNCTION__ , __( '"View Wishlist button" text cannot be empty.', 'addonify-wishlist' ) );
-	}
-	 
-	public function validate_product_added_to_wishlist_text( $post_data ){
-		return $this->validate_text_field( $post_data, __FUNCTION__, __( '"Product added to Wishlist" text cannot be empty.', 'addonify-wishlist' ) );
-	}
-	
-	public function validate_product_already_in_wishlist_text( $post_data ){
-		return $this->validate_text_field( $post_data, __FUNCTION__, __( '"Product already in Wishlist" text cannot be empty', 'addonify-wishlist' ) );
-	}
-
-	public function validate_cookies_lifetime( $post_data ){
-		return $this->validate_numeric( $post_data, __FUNCTION__, __( '"Delete Wishlist Cookies after" value should be numeric', 'addonify-wishlist' ) );
-	}
-
-
-	
-
-	private function validate_numeric( $post_data, $name, $msg = null  ){
-
-		if( is_numeric( $post_data ) ){
-			return sanitize_text_field( $post_data );
-		}
-		
-		return $this->validation_response( $name, $msg );
-	}
-
-	private function validate_text_field( $post_data, $name, $msg = null  ){
-
-		if( ! empty( $post_data ) ){
-			return sanitize_text_field( $post_data );
-		}
-
-		return $this->validation_response( $name, $msg );
-	}
-
-	private function validation_response( $name, $msg = NULL ){
-
-		$default_value = $this->default_input_values[ ADDONIFY_WISHLIST_DB_INITIALS . str_replace('validate_', '', $name ) ];
-
-		if( ! $msg ) $msg = __( 'Input field should not be empty.', 'addonify-wishlist' );
-		$msg .= __( ' Default value is used.', 'addonify-wishlist' );
-		
-		add_settings_error(
-			$this->plugin_name,
-			esc_attr( 'settings_updated' ),
-			$msg
-		);
-
-		return $default_value;
-	
-	}
-
-	
-
-
-	/**
-	 * Show notification after form submission
-	 *
-	 * @since    1.0.0
-	 */
-	public function form_submission_notification_callback(){
-		if( isset($_GET['page']) && $_GET['page'] == $this->settings_page_slug ){
+	public function show_form_submission_notification() {
+		if ( isset( $_GET['page'] ) && $this->settings_page_slug === $_GET['page'] ) {
 			settings_errors();			
 		}
 	}
@@ -785,140 +729,35 @@ class Addonify_Wishlist_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	 public function show_woocommerce_not_active_notice_callback(){
-		 
+	public function show_woocommerce_not_active_notice_callback() {
 
-		if( ! $this->is_woocommerce_active() ){
-			add_action('admin_notices', function() {
-				ob_start();
-				require dirname( __FILE__ ) .'/templates/woocommerce_not_active_notice.php';
-				echo ob_get_clean();
-			});
+		if ( ! $this->is_woocommerce_active() ) {
+			add_action( 'admin_notices', function() {
+				require ADDONIFY_WISHLIST_PLUGIN_PATH .'/admin/templates/woocommerce_not_active_notice.php';
+			} );
 		}
-
-
-		
 
 	}
 
 
 	/**
-	 * Show custom "post status" label after page title
-	 * shows "Addonify Wishlist Page" label after the page title
+	 * Show custom "post status" label after page title in "Pages" admin menu.
+	 * shows "Addonify Wishlist Page" label after the page title.
 	 *
 	 * @since    1.0.0
 	 */
-	function custom_display_post_states_callback( $states, $post ) {
+	function display_custom_post_states_after_page_title( $states, $post ) {
 
 		$wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS .'wishlist_page', get_option( ADDONIFY_WISHLIST_DB_INITIALS .'page_id' ) );
 
-		if( get_post_type( $post->ID ) == 'page' && $post->ID == $wishlist_page_id ){
-			$states[] = __('Addonify Wishlist Page', 'addonify-wishlist'); 
+		if ( get_post_type( $post->ID ) == 'page' && $post->ID == $wishlist_page_id ) {
+			$states[] = __( 'Addonify Wishlist Page', 'addonify-wishlist' ); 
 		}
 	 
 		return $states;
 	}
 
 
-
-	// -------------------------------------------------
-	// form helpers for admin setting screen
-	// -------------------------------------------------
-
-	public function text_box($arguments){
-		ob_start();
-		foreach($arguments as $args){
-			$default = isset( $args['default'] ) ? $args['default'] : '';
-			$db_value = get_option($args['name'], $default);
-
-			if( ! isset( $args['css_class'] ) ) 	$args['css_class'] 	= '';
-			if( ! isset( $args['type'] ) ) 			$args['type']		= 'text';
-			if( ! isset( $args['end_label'] ) ) 	$args['end_label']	= '';
-			if( ! isset( $args['other_attr'] ) ) 	$args['other_attr']	= '';
-
-			require dirname( __FILE__ ) .'/templates/input_textbox.php';
-		}
-		echo ob_get_clean();
-	}
-
-	public function toggle_switch($arguments){
-		foreach($arguments as $args){
-			$args['attr'] = ' class="lc_switch"';
-			$this->checkbox($args);
-		}
-	}
-
-	public function color_picker_group($args){
-		ob_start();
-		foreach($args as $arg){
-			$default =  isset( $arg['default'] )  ? $arg['default'] : '';
-			$db_value = ( get_option( $arg['name'] )) ? get_option( $arg['name'] ) : $default;
-
-			require dirname( __FILE__ ) .'/templates/input_colorpicker.php';
-		}
-		echo ob_get_clean();
-	}
-
-	public function checkbox($args){
-		$default_state = ( array_key_exists('checked', $args) ) ? $args['checked'] : 1;
-		$db_value = get_option($args['name'], $default_state);
-		$is_checked = ( $db_value ) ? 'checked' : '';
-		$attr = ( array_key_exists('attr', $args) ) ? $args['attr'] : '';
-
-		ob_start();
-		require dirname( __FILE__ ) .'/templates/input_checkbox.php';
-		echo ob_get_clean();
-	}
-
-	public function select($arguments){
-		ob_start();
-		foreach($arguments as $args){
-
-			$options = ( array_key_exists('options', $args) ) ? $args['options'] : array();
-			$default = ( array_key_exists('default', $args) ) ? $args['default'] : '';
-			$db_value = get_option( $args['name'], $default );
-			
-			require dirname( __FILE__ ) .'/templates/input_select.php';
-		}
-		echo ob_get_clean();
-	}
-
-	public function select_page( $arguments ){
-
-		ob_start();
-		$options = array();
-
-		foreach( get_pages() as $page ){
-			$options[$page->ID] = $page->post_title;
-		}
-
-		$args = $arguments[0];
-		$db_value = get_option( $args['name'] );
-
-		$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS .'page_id' );
-
-		if ( ! $db_value ) $db_value = $default_wishlist_page_id;
-
-		if( $db_value != $default_wishlist_page_id ) {
-			$args['end_label'] = 'Please insert "[addonify_wishlist]" shortcode into the content area of the page';
-		}
-
-		
-		require dirname( __FILE__ ) .'/templates/input_select.php';
-		echo ob_get_clean();
-	}
-
-	public function text_area($arguments){
-		ob_start();
-		foreach($arguments as $args){
-			$placeholder = isset( $args['placeholder'] ) ? $args['placeholder'] : '';
-			$db_value = get_option($args['name'], $placeholder);
-			$attr = isset( $args['attr'] ) ? $args['attr'] : '';
-
-			require dirname( __FILE__ ) .'/templates/input_textarea.php';
-		}
-		echo ob_get_clean();
-	}
 
 
 }

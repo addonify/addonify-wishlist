@@ -4,7 +4,11 @@
 
     font-weight: normal;
     cursor:pointer;
-	@include transation_delay();
+    @include transation_delay();
+    
+    &.show-label .adfy-wishlist-icon{
+        margin-right: 5px;
+    }
 }
 
 

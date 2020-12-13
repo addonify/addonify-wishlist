@@ -37,6 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'ADDONIFY_WISHLIST_VERSION', '1.0.0' );
 define( 'ADDONIFY_WISHLIST_DB_INITIALS', 'addonify_wishlist_' );
+define( 'ADDONIFY_WISHLIST_PLUGIN_PATH', dirname( __FILE__ ) );
 
 /**
  * The code that runs during plugin activation.
