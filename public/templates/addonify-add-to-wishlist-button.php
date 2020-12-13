@@ -3,8 +3,10 @@
     // direct access is disabled
     defined( 'ABSPATH' ) || exit;
 
+    $label = '<span class="addonify-wishlist-btn-label">' . esc_html( $label ) .' </span>';
+
     if( $show_icon ) {
-        $label = '<span class="icon"><i class="adfy-wishlist-icon heart-o-style-one"></i></span> ' . esc_html( $label );
+        $label = '<i class="icon adfy-wishlist-icon heart-o-style-one"></i> ' . $label;
     }
 
     printf(

@@ -6,8 +6,8 @@
 
 <a id="addonify-wishlist-show-sidebar-btn" class="<?php echo $css_classes; ?>">
     <?php if( $show_icon ) :?>
-        <span class="button-icon"><i class="adfy-wishlist-icon settings"></i> 
+        <span class="button-icon"><i class="adfy-wishlist-icon <?php echo esc_attr( $icon );?>"></i> </span>
     <?php endif;?>
 
-    </span> <span class="button-label"><?php echo $label; ?></span>
+    <span class="button-label"><?php echo $label; ?></span>
 </a>

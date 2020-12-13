@@ -100,6 +100,11 @@ class Addonify_Wishlist {
 	private function load_dependencies() {
 
 		/**
+		 * Helper class.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-helpers.php';
+
+		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
@@ -170,10 +175,10 @@ class Addonify_Wishlist {
 		$this->loader->add_action('admin_init', $plugin_admin, 'show_woocommerce_not_active_notice_callback' );
 
 		// show admin notices after form submission
-		$this->loader->add_action('admin_notices', $plugin_admin, 'form_submission_notification_callback' );
+		$this->loader->add_action('admin_notices', $plugin_admin, 'show_form_submission_notification' );
 
 		// add custom post status "Addonify Wishlist Page" after page name
-		$this->loader->add_filter('display_post_states', $plugin_admin, 'custom_display_post_states_callback', 10, 2 );
+		$this->loader->add_filter('display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
 
 	}
 

@@ -1,7 +1,7 @@
 (function( $ ) {
 	'use strict';
 
-	$( document ).ready(function(){
+	$( document ).ready(function() {
 
 		var $body				= $( 'body' );
 		var $modal 				= $( '#addonify-wishlist-modal-wrapper' );
@@ -10,58 +10,56 @@
 		var $sidebar_ul			= $( 'ul.adfy-wishlist-sidebar-items-entry' );
 		var show_popup			= addonify_wishlist_object.show_popup;
 
-		// store btn markups for later re-use
-		var add_to_wishlist_btn_markups = $('.adfy-wishlist-btn').first().html();
 
 		init();
 
 		// tooltip/tippy js
 
-		tippy('.adfy-wishlist-tooltip', {
-            
-            content: "",
-            allowHTML: false,
-            arrow: false,
-            arrowType: 'small',
-            size: 'large',
-            delay: 10,
-            duration: 350,
-            maxWidth: 350,
-            placement: 'left',
-            animation: 'scale'
-        });
+		// tippy('.adfy-wishlist-tooltip', {
+        //     content: "",
+        //     allowHTML: false,
+        //     arrow: false,
+        //     arrowType: 'small',
+        //     size: 'large',
+        //     delay: 10,
+        //     duration: 350,
+        //     maxWidth: 350,
+        //     placement: 'left',
+        //     animation: 'scale'
+        // });
 
-		$body.on('click', '.addonify-add-to-wishlist-btn button', function( e ){
+		// main "add to wishlist" btn.
+		$body.on('click', '.addonify-add-to-wishlist-btn button', function( e ) {
 
 			e.preventDefault();
 
-			if( $( this ).hasClass( 'added-to-wishlist' ) ){
+			if ( $( this ).hasClass( 'added-to-wishlist' ) ) {
 				// item is already added to wishlist
 
-				if( show_popup ){
+				if ( show_popup ) {
 					show_modal( addonify_wishlist_object.product_already_in_wishlist_text, $(this).data('product_name') );
 				}
 				
 			}
-			else{
+			else {
 				add_to_wishlist( this );
 			}
 		})
 
 		// close viewlist modal
-		$body.on('click', '#addonify-wishlist-close-modal-btn', function(){
+		$body.on('click', '#addonify-wishlist-close-modal-btn', function() {
 			hide_modal();
 		})
 
 
 		// click in "view wishlist" button in modal
-		$body.on('click', '#addonify-wishlist-view-wishlist-btn', function(){
+		$body.on('click', '#addonify-wishlist-view-wishlist-btn', function() {
 			window.location.href = addonify_wishlist_object.wishlist_page_url;
 		})
 		
 
 		// show hide sticky sidebar
-		$sticky_sidebar_btn.click( function(){
+		$sticky_sidebar_btn.click( function() {
 			$body.toggleClass('addonify-wishlist-sticky-sidebar-is-visible');
 		} )
 
@@ -69,11 +67,11 @@
 		// wishlist page form elements --------------------------------------
 
 		// select all checkbox
-		$body.on('click', 'input.addonify-wishlist-check-all', function(){
+		$body.on('click', 'input.addonify-wishlist-check-all', function() {
 			$('input.addonify-wishlist-product-id').prop('checked', $(this).prop( "checked" ) );
 		});
 
-		$body.on('click', '.addonify-wishlist-remove-notification', function(){
+		$body.on('click', '.addonify-wishlist-remove-notification', function() {
 			var $parent = $(this).parents('.addonify-wishlist-notification');
 			$parent.remove();
 		});
@@ -81,7 +79,7 @@
 		// end wishlist page form elements --------------------------------------
 
 
-		function init(){
+		function init() {
 			prepare_overlay_buttons();
 
 			$( '.addonify-add-to-wishlist-btn button.added-to-wishlist' ).attr('disabled', true );
@@ -90,7 +88,7 @@
 
 
 		// "add to wish" button in image overlay mode
-		function prepare_overlay_buttons(){
+		function prepare_overlay_buttons() {
 
 			var overlay_btn_wrapper_class = 'addonify-overlay-btn-wrapper';
 			var overlay_btn_class = 'addonify-overlay-btn';
@@ -98,10 +96,10 @@
 			var $overlay_btn_wrapper_sel = $('.' + overlay_btn_wrapper_class);
 			var $overlay_parent_container = $('.addonify-overlay-buttons');
 
-			if( $overlay_btn_wrapper_sel.length ){
+			if ( $overlay_btn_wrapper_sel.length ) {
 
 				//  wrapper div already exists
-				$overlay_parent_container.each(function(){
+				$overlay_parent_container.each(function() {
 
 					// clone original button
 					var btn_clone = $('button.' + overlay_btn_class, this).clone();
@@ -113,9 +111,9 @@
 					$('.' + overlay_btn_wrapper_class, this).append( btn_clone );
 				})
 			}
-			else{
+			else {
 				// wrap all buttons into a single div
-				$overlay_parent_container.each(function(){
+				$overlay_parent_container.each(function() {
 					$('button.' + overlay_btn_class, this).wrapAll('<div class=" '+ overlay_btn_wrapper_class + ' " />');
 				});
 
@@ -125,9 +123,9 @@
 				$('.' + overlay_btn_wrapper_class).css('height', img_height + 'px');
 
 
-				$('.' + overlay_btn_wrapper_class).hover(function(){
+				$('.' + overlay_btn_wrapper_class).hover(function() {
 					$(this).css('opacity', 1);
-				}, function(){
+				}, function() {
 					$(this).css('opacity', 0);
 				})
 			}
@@ -136,7 +134,9 @@
 		}
 
 
-		function add_to_wishlist( this_sel ){
+
+		// does exactly what function name says.
+		function add_to_wishlist( this_sel ) {
 
 			var data = {
 				action	: addonify_wishlist_object.action,
@@ -145,63 +145,78 @@
 			};
 
 			// check if login is required
-			if( is_login_required() ) return;
-
-
+			if ( is_login_required() ) return;
+			
 			// mark modal as loading
 			$modal.addClass('loading');
 
-
-			if( show_popup ){
+			if ( show_popup ) {
 				show_modal( addonify_wishlist_object.product_added_to_wishlist_text, $(this_sel).data('product_name') );
 			}
-			else{
-				$(this_sel).text( addonify_wishlist_object.product_adding_to_wishlist_btn_label ).attr('disabled', true );
+			else {
+
+				// update btn label
+				$( '.addonify-wishlist-btn-label', this_sel ).text( addonify_wishlist_object.product_adding_to_wishlist_btn_label );
+
+				// disable btn.
+				$(this_sel).attr('disabled', true );
+				
 			}
 
 
 			$.post( addonify_wishlist_object.ajax_url, data, function( response ) {
+				
 				$modal.removeClass('loading');
 
-				if( response.success == true ) {
+				if ( response.success == true ) {
+
 					// remove "your wishlist is empty" message
 					$('#addonify-wishlist-sidebar-form .empty-wishlist').remove();
 
-
 					// update button 
-					$(this_sel).addClass('added-to-wishlist').text( addonify_wishlist_object.product_added_to_wishlist_btn_label );
+					$( this_sel ).addClass('added-to-wishlist');
+					
+					// update label
+					$( '.addonify-wishlist-btn-label', this_sel ).text( addonify_wishlist_object.product_added_to_wishlist_btn_label );
+
+					// update icon
+					$( 'i.icon.heart-o-style-one', this_sel ).removeClass('heart-o-style-one').addClass( 'heart-style-one');
 
 					// update sidebar contents
 					$sidebar_ul.append( response.data.msg );
 
 					// update sidebar toggle button
 					$sticky_sidebar_btn.removeClass('hidden').find('.addonify-wishlist-count').text( '(' + response.data.wishlist_count + ')' );
-
 				}
 
 			}, "json" );
 		}
 
 
-		function show_modal( response_text, product_name ){
+		function show_modal( response_text, product_name ) {
 			$modal_response.html( response_text.replace('{product_name}', product_name ) );
 			$body.addClass('addonify-wishlist-modal-is-open');
 		}
 
 
-		function hide_modal(){
+		function hide_modal() {
 			$body.removeClass('addonify-wishlist-modal-is-open');
 		}
 
 
-		function is_login_required(){
-			if( ! addonify_wishlist_object.require_login || addonify_wishlist_object.is_logged_in ) return false;
+		function is_login_required() {
 
-			if( addonify_wishlist_object.redirect_to_login && ! addonify_wishlist_object.is_logged_in ) {
+			// return false if,
+			// login is not required or user already loggen in.
+			if ( ! addonify_wishlist_object.require_login || addonify_wishlist_object.is_logged_in ) return false;
+
+			// redirect to login, login is required, not logged in
+			if ( addonify_wishlist_object.redirect_to_login && ! addonify_wishlist_object.is_logged_in ) {
 				window.location.replace( addonify_wishlist_object.login_url );
 				return true;
 			}
 
+			// show login modal, even if "Show successful popup notice" is disabled by user.
 			show_modal( addonify_wishlist_object.login_msg, '' );
 
 			return true;
@@ -209,7 +224,9 @@
 
 		
 		// make sidebar form ajaxy
-		$body.on( 'click', '#addonify-wishlist-sidebar-form button', function(e){
+		// also, delete item from wishlist from sidebar
+
+		$body.on( 'click', '#addonify-wishlist-sidebar-form button', function(e) {
 			e.preventDefault();
 
 			var $parent = $(this).parents('li');
@@ -220,38 +237,44 @@
 
 			var button = $(this);
 			
-
+			// get form item
 			var data = $('#addonify-wishlist-sidebar-form').serialize() 
 				+ '&' 
 				+ encodeURI(button.attr('name'))
 				+ '='
 				+ encodeURI(button.attr('value'))
-				+'&action=' + encodeURI(addonify_wishlist_object.action_sidebar_form);
-			;
+				+ '&action=' + encodeURI(addonify_wishlist_object.action_sidebar_form);
+
 
 			$.post( addonify_wishlist_object.ajax_url, data, function( response ) {
 
 				var msg = '';
-				if( response.success == true ){
+				if ( response.success == true ) {
 
 					msg = response.data.msg;
 
 					$sticky_sidebar_btn.find('.addonify-wishlist-count').text( response.data.wishlist_count );
 
 					// remove item from wishlist
-					if( response.data.remove_wishlist == 1 ){
+					if ( response.data.remove_wishlist == 1 ) {
 
 						// update "add to wishlist" button classes
-						$( 'button.added-to-wishlist[data-product_id="'+ button.attr('value') +'"]' ).removeAttr('disabled').removeClass( 'added-to-wishlist' ).html( add_to_wishlist_btn_markups );
+
+						var $the_btn = $( 'button.added-to-wishlist[data-product_id="'+ button.attr('value') +'"]' );
+						
+						$the_btn.find( '.addonify-wishlist-btn-label' ).text( addonify_wishlist_object.add_to_wishlist_btn_text );
+						$the_btn.find( 'i.icon.heart-style-one' ).removeClass('heart-style-one').addClass( 'heart-o-style-one');
+
+						$the_btn.removeAttr('disabled').removeClass( 'added-to-wishlist' );
 						$parent.remove();
 					}
 
-					if( response.data.wishlist_count < 1 && ! $( '#addonify-wishlist-sidebar-form.empty-wishlist').length ){
+					if ( response.data.wishlist_count < 1 && ! $( '#addonify-wishlist-sidebar-form.empty-wishlist').length ) {
 						$('#addonify-wishlist-sidebar-form').append( '<p class="empty-wishlist">' + addonify_wishlist_object.wishlist_empty_label + '</p>');
 					}
 
 				}
-				else{
+				else {
 					msg = response.data;
 				}
 
@@ -260,8 +283,8 @@
 				// show notification
 				$notice.prepend('<div class="notice adfy-wishlist-sidebar-notice"><span>'+ msg +'</span></div>');
 
-				if( response.data.redirect_url != undefined ){
-					setTimeout( function(){
+				if ( response.data.redirect_url != undefined ) {
+					setTimeout( function() {
 						window.location.href = response.data.redirect_url;
 					}, 2000 );
 				}
@@ -270,9 +293,9 @@
 
 
 			// delete noticication after 5 seconds
-			setTimeout(function(){
+			setTimeout(function() {
 
-				$notice.find('.notice').fadeOut( 'fast', function(){
+				$notice.find('.notice').fadeOut( 'fast', function() {
 
 					$(this).remove();
 				})
