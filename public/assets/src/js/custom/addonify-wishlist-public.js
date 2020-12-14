@@ -6,8 +6,10 @@
 		var $body				= $( 'body' );
 		var $modal 				= $( '#addonify-wishlist-modal-wrapper' );
 		var $modal_response 	= $( '#addonify-wishlist-modal-response' );
+		// var $modal_icon			= $( '.adfy-wishlist-icon-entry .adfy-wishlist-icon' );
 		var $sticky_sidebar_btn = $( '#addonify-wishlist-show-sidebar-btn' );
 		var $sidebar_ul			= $( 'ul.adfy-wishlist-sidebar-items-entry' );
+		var $wishlist_count_btn	= $( '.addonify-wishlist-count' );
 		var show_popup			= addonify_wishlist_object.show_popup;
 
 
@@ -146,12 +148,11 @@
 
 			// check if login is required
 			if ( is_login_required() ) return;
-			
-			// mark modal as loading
-			$modal.addClass('loading');
 
 			if ( show_popup ) {
-				show_modal( addonify_wishlist_object.product_added_to_wishlist_text, $(this_sel).data('product_name') );
+				
+				// show product added text in advance
+				show_modal( addonify_wishlist_object.product_added_to_wishlist_text, $(this_sel).data('product_name'), 'success' );
 			}
 			else {
 
@@ -162,7 +163,9 @@
 				$(this_sel).attr('disabled', true );
 				
 			}
-
+			
+			// mark modal as loading
+			$modal.addClass('loading');
 
 			$.post( addonify_wishlist_object.ajax_url, data, function( response ) {
 				
@@ -185,15 +188,24 @@
 					// update sidebar contents
 					$sidebar_ul.append( response.data.msg );
 
-					// update sidebar toggle button
-					$sticky_sidebar_btn.removeClass('hidden').find('.addonify-wishlist-count').text( '(' + response.data.wishlist_count + ')' );
+					// update wishlist_count button
+					$wishlist_count_btn.text( response.data.wishlist_count );
+
+				}
+				else{
+					show_modal( addonify_wishlist_object.wishlist_not_added_label, $(this_sel).data('product_name'), 'error' );
 				}
 
 			}, "json" );
 		}
 
 
-		function show_modal( response_text, product_name ) {
+		function show_modal( response_text, product_name, icon ) {
+			
+			// change icon
+			$( '.adfy-wishlist-icon-entry .adfy-wishlist-icon' ).hide();
+			$( '.adfy-wishlist-icon-entry .adfy-wishlist-icon.adfy-status-' + icon ).show();
+
 			$modal_response.html( response_text.replace('{product_name}', product_name ) );
 			$body.addClass('addonify-wishlist-modal-is-open');
 		}
@@ -217,7 +229,7 @@
 			}
 
 			// show login modal, even if "Show successful popup notice" is disabled by user.
-			show_modal( addonify_wishlist_object.login_msg, '' );
+			show_modal( addonify_wishlist_object.login_msg, '', 'error' );
 
 			return true;
 		}
@@ -253,7 +265,8 @@
 
 					msg = response.data.msg;
 
-					$sticky_sidebar_btn.find('.addonify-wishlist-count').text( response.data.wishlist_count );
+					// update wishlist count.
+					$wishlist_count_btn.text( response.data.wishlist_count );
 
 					// remove item from wishlist
 					if ( response.data.remove_wishlist == 1 ) {
@@ -301,7 +314,6 @@
 				})
 			}, 5000);
 		})
-
 
 	})
 

@@ -20,7 +20,7 @@
             </div> <!-- addonify-wishlist-sidebar-items-wrapper -->
 
             <?php if( $total_items < 1 ) :?>
-                <p class="empty-wishlist">Your Wishlist is empty</p> 
+                <p class="empty-wishlist"><?php echo _e( 'Your wishlist is empty', 'addonify-wishlist'); ?></p> 
             <?php endif;?>
 
         </form>

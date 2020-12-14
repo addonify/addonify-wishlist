@@ -1,8 +1,9 @@
 <?php 
     if( isset( $wishlist_data ) && count( $wishlist_data ) > 0 ):
         $i = 1;
+        $sidebar_max_item = apply_filters( 'addonify_wishlist_sidebar_max_item', 10 );
         foreach( $wishlist_data as $value ):
-            if( $i >= 10 ) break;
+            if( $i >= $sidebar_max_item ) break;
 ?>
     <li class="addonify-wishlist-sidebar-item">
 
