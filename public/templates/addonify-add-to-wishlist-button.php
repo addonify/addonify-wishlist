@@ -6,7 +6,7 @@
     $label = '<span class="addonify-wishlist-btn-label">' . esc_html( $label ) .' </span>';
 
     if( $show_icon ) {
-        $label = '<i class="icon adfy-wishlist-icon heart-o-style-one"></i> ' . $label;
+        $label = '<i class="icon adfy-wishlist-icon ' . esc_attr( $icon ) . '"></i> ' . $label;
     }
 
     printf(

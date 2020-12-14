@@ -1,7 +1,8 @@
 <div id="addonify-wishlist-modal-wrapper" class="<?php echo esc_html( $css_classes );?>">
     <div class="addonify-wishlist-modal-body">
     	<div class="adfy-wishlist-icon-entry">
-            <?php echo apply_filters( 'addonify_wishlist_modal_icon', '<i class="adfy-wishlist-icon heart-o-style-three"></i>' ); ?>
+            <i class="adfy-wishlist-icon adfy-status-success heart-o-style-three" stye="display: none; " ></i>
+            <i class="adfy-wishlist-icon adfy-status-error flash" stye="display: none; " ></i>
     	</div><!-- // adfy-wishlist-icon-entry -->
         <div id="addonify-wishlist-modal-response"></div><!--addonify-wishlist-modal-response-->
         <div class="addonify-wishlist-modal-btns">
