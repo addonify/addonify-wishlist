@@ -83,7 +83,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		// load styles in this plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
 
-
 			// toggle switch.
 			wp_enqueue_style( 'lc_switch', plugin_dir_url( __FILE__ ) . 'css/lc_switch.css', array(), $this->version, 'all' );
 

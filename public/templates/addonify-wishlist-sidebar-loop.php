@@ -22,9 +22,9 @@
 
         <div class="adfy-wishlist-woo-action">
             <div class="adfy-wishlist-row">
-                <div class="adfy-wishlist-col cart-column"><?php echo $value['add_to_cart'];?></div><!-- // adfy-wishlist-col -->
+                <div class="adfy-wishlist-col cart-column"><?php echo $value['add_to_cart'];?></div>
                 <div class="adfy-wishlist-col remove-item-column">
-                    <button type="submit" class="adfy-wishlist-btn addonify-wishlist-icon" name="addonify_wishlist_remove" value="<?php echo $value['id'];?>"><i class="adfy-wishlist-icon trash-2"></i></button>
+                    <?php echo $value['remove_btn'];?>
                 </div>
             </div>
         </div>
