@@ -215,7 +215,6 @@ class Addonify_Wishlist {
 
 		$this->loader->add_action( 'init', $plugin_public, 'init_callback' );
 
-		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode' );
 		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit' );
 
 		// add to wishlist.

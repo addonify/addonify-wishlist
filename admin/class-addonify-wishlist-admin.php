@@ -50,16 +50,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 
 
 	/**
-	 * Default values for input fields in admin screen
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $default_input_values
-	 */
-	protected $default_input_values;
-
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -91,7 +81,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			wp_enqueue_style( 'wp-color-picker' );
 
 			// admin css.
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.min.css', array(), $this->version, 'all' );
 		}
 
 		// admin menu icon fix.
@@ -120,7 +110,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			// toggle switch.
 			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), $this->version, false );
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.min.js', array( 'jquery' ), time(), false );
 
 		}
 
@@ -235,6 +225,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page',
+							'default' => get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' ),
 						),
 					),
 				),
@@ -328,6 +319,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 								'before_add_to_cart' => __( 'Before Add To Cart Button', 'addonify-wishlist-products' ),
 								'overlay_on_image' => __( 'Overlay On The Product Image', 'addonify-wishlist-products' ),
 							),
+							'default' => 'before_add_to_cart',
 						),
 					),
 				),
@@ -464,6 +456,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar',
 							'checked' => 1,
+							'default' => 1,
 						),
 					),
 				),
@@ -696,6 +689,9 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 
 		// create settings fields.
 		$this->create_settings( $settings_args );
+
+		// store default values.
+		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'default_values', $this->default_input_values );
 
 	}
 

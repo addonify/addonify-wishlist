@@ -73,7 +73,6 @@ run_addonify_wishlist();
 
 
 
-// global helper functions.
 if ( ! function_exists( 'addonify_wishlist_get_total_items' ) ) {
 
 	/**

@@ -16,10 +16,11 @@ defined( 'ABSPATH' ) || exit;
 <select name="<?php echo esc_attr( $args['name'] ); ?>" id="<?php echo esc_attr( $args['name'] ); ?>" >
 
 	<?php
+	
 	foreach ( $options as $value => $label ) {
 		echo '<option value=" ' . esc_attr( $value ) . '" ';
 
-		if ( $db_value === $value ) {
+		if ( $db_value == $value ) {
 			echo 'selected';
 		}
 

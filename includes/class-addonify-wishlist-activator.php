@@ -21,7 +21,6 @@
  */
 class Addonify_Wishlist_Activator {
 
-
 	/**
 	 * Tasks that needs to be done during plugin activation.
 	 *

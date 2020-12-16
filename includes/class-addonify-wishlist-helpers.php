@@ -20,6 +20,16 @@
 class Addonify_Wishlist_Helpers {
 
 	/**
+	 * Default values for input fields in admin screen
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $default_input_values
+	 */
+	protected $default_input_values;
+
+
+	/**
 	 * Check if woocommerce is active.
 	 *
 	 * @since    1.0.0
@@ -299,7 +309,11 @@ class Addonify_Wishlist_Helpers {
 
 			$options = ( array_key_exists( 'options', $args ) ) ? $args['options'] : array();
 			$default = ( array_key_exists( 'default', $args ) ) ? $args['default'] : '';
-			$db_value = get_option( $args['name'], $default );
+
+			$db_value = get_option( $args['name'] );
+			if ( empty( $db_value ) ) {
+				$db_value = $default;
+			}
 
 			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-select.php';
 		}
@@ -322,15 +336,14 @@ class Addonify_Wishlist_Helpers {
 		}
 
 		$args = $arguments[0];
+		
 		$db_value = get_option( $args['name'] );
 
-		$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' );
-
-		if ( ! $db_value ) {
-			$db_value = $default_wishlist_page_id;
+		if ( empty( $db_value ) ) {
+			$db_value = $args['default'];
 		}
 
-		if ( $db_value != $default_wishlist_page_id ) {
+		if ( $db_value != $args['default'] ) {
 			$args['end_label'] = 'Please insert "[addonify_wishlist]" shortcode into the content area of the page';
 		}
 
