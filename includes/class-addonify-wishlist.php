@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -87,7 +86,7 @@ class Addonify_Wishlist {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Addonify_Wishlist_Loader. Orchestrates the hooks of the plugin.
-	 * - Addonify_Wishlist_i18n. Defines internationalization functionality.
+	 * - Addonify_Wishlist_I18n. Defines internationalization functionality.
 	 * - Addonify_Wishlist_Admin. Defines all hooks for the admin area.
 	 * - Addonify_Wishlist_Public. Defines all hooks for the public side of the site.
 	 *
@@ -134,7 +133,7 @@ class Addonify_Wishlist {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Addonify_Wishlist_i18n class in order to set the domain and to register the hook
+	 * Uses the Addonify_Wishlist_I18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -142,7 +141,7 @@ class Addonify_Wishlist {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Addonify_Wishlist_i18n();
+		$plugin_i18n = new Addonify_Wishlist_I18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -162,23 +161,23 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		// admin menu
+		// admin menu.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_callback', 20 );
 
-		// custom link in plugins.php page in wp-admin
+		// custom link in plugins.php page in wp-admin.
 		$this->loader->add_action( 'plugin_action_links', $plugin_admin, 'custom_plugin_link_callback', 10, 2 );
 
-		// show settings page ui 
-		$this->loader->add_action("admin_init", $plugin_admin, 'settings_page_ui' );
-		
-		//show notice if woocommerce is not active
-		$this->loader->add_action('admin_init', $plugin_admin, 'show_woocommerce_not_active_notice_callback' );
+		// show settings page ui.
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_page_ui' );
 
-		// show admin notices after form submission
-		$this->loader->add_action('admin_notices', $plugin_admin, 'show_form_submission_notification' );
+		// show notice if woocommerce is not active.
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'show_woocommerce_not_active_notice_callback' );
 
-		// add custom post status "Addonify Wishlist Page" after page name
-		$this->loader->add_filter('display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
+		// show admin notices after form submission.
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'show_form_submission_notification' );
+
+		// add custom post status "Addonify Wishlist Page" after page name.
+		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
 
 	}
 
@@ -206,15 +205,15 @@ class Addonify_Wishlist {
 
 		// add button aside image.
 		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'show_btn_aside_image_callback' );
-		
+
 		// image overlay container .
 		$this->loader->add_action( 'woocommerce_before_shop_loop_item', $plugin_public, 'addonify_overlay_container_start_callback', 10 );
 		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
-		
+
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sidebar_template' );
 
-		$this->loader->add_action( 'init', $plugin_public, 'init_callback' );	
+		$this->loader->add_action( 'init', $plugin_public, 'init_callback' );
 
 		$this->loader->add_action( 'init', $plugin_public, 'register_shortcode' );
 		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit' );

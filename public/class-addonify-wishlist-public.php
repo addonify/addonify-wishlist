@@ -713,6 +713,10 @@ class Addonify_Wishlist_Public {
 
 		$btn_label = apply_filters( 'addonify_wishlist_sidebar_btn_label', $btn_label, $total_items );
 
+		// var_dump( $btn_label );
+		// die;
+
+
 		// sidebar toggle button template.
 		$this->get_templates(
 			'addonify-wishlist-sidebar-toggle-button',
@@ -852,11 +856,12 @@ class Addonify_Wishlist_Public {
 	 */
 	public function remove_from_wishlist_btn_markup( $product_id, $scope ) {
 
+		$css_class = '';
 		if ( 'sidebar' !== $scope ) {
-			$class_class = 'adfy-wishlist-clear-button-style';
+			$css_class = 'adfy-wishlist-clear-button-style';
 		}
 
-		return '<button type="submit" class="adfy-wishlist-btn addonify-wishlist-icon ' . esc_attr( $class_class ) . '" name="addonify_wishlist_remove" value="' . esc_attr( $product_id ) . '"><i class="adfy-wishlist-icon trash-2"></i></button>';
+		return '<button type="submit" class="adfy-wishlist-btn addonify-wishlist-icon ' . esc_attr( $css_class ) . '" name="addonify_wishlist_remove" value="' . esc_attr( $product_id ) . '"><i class="adfy-wishlist-icon trash-2"></i></button>';
 
 	}
 

@@ -151,7 +151,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		}
 
 		if ( ! $parent_menu_slug ) {
-			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), plugin_dir_url( __FILE__ ) . '/templates/addonify-logo.svg', 76 );
+			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), plugin_dir_url( __FILE__ ) . '/images/addonify-logo.svg', 76 );
 			add_submenu_page( $this->settings_page_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 1 );
 
 		} else {
@@ -726,7 +726,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			add_action(
 				'admin_notices',
 				function() {
-					require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/woocommerce_not_active_notice.php';
+					require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/woocommerce-not-active-notice.php';
 				}
 			);
 		}

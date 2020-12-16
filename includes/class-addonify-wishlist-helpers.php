@@ -205,7 +205,7 @@ class Addonify_Wishlist_Helpers {
 				$args['other_attr'] = '';
 			}
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_textbox.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-textbox.php';
 		}
 	}
 
@@ -236,7 +236,7 @@ class Addonify_Wishlist_Helpers {
 			$default = isset( $arg['default'] ) ? $arg['default'] : '';
 			$db_value = ( get_option( $arg['name'] ) ) ? get_option( $arg['name'] ) : $default;
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_colorpicker.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-colorpicker.php';
 		}
 	}
 
@@ -264,7 +264,7 @@ class Addonify_Wishlist_Helpers {
 				$attr .= ' checked ';
 			}
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_radio_group.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-radio-group.php';
 		}
 	}
 
@@ -283,7 +283,7 @@ class Addonify_Wishlist_Helpers {
 		$attr = ( array_key_exists( 'attr', $args ) ) ? $args['attr'] : '';
 		$end_label = ( array_key_exists( 'end_label', $args ) ) ? $args['end_label'] : '';
 
-		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_checkbox.php';
+		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-checkbox.php';
 	}
 
 
@@ -301,7 +301,7 @@ class Addonify_Wishlist_Helpers {
 			$default = ( array_key_exists( 'default', $args ) ) ? $args['default'] : '';
 			$db_value = get_option( $args['name'], $default );
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_select.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-select.php';
 		}
 	}
 
@@ -334,7 +334,7 @@ class Addonify_Wishlist_Helpers {
 			$args['end_label'] = 'Please insert "[addonify_wishlist]" shortcode into the content area of the page';
 		}
 
-		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_select.php';
+		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-select.php';
 	}
 
 
@@ -351,7 +351,7 @@ class Addonify_Wishlist_Helpers {
 			$db_value = get_option( $args['name'], $placeholder );
 			$attr = isset( $args['attr'] ) ? $args['attr'] : '';
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_textarea.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-textarea.php';
 		}
 	}
 

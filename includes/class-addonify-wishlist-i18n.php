@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Define the internationalization functionality
  *
@@ -24,8 +23,7 @@
  * @subpackage Addonify_Wishlist/includes
  * @author     Adodnify <info@addonify.com>
  */
-class Addonify_Wishlist_i18n {
-
+class Addonify_Wishlist_I18n {
 
 	/**
 	 * Load the plugin text domain for translation.
@@ -41,7 +39,5 @@ class Addonify_Wishlist_i18n {
 		);
 
 	}
-
-
 
 }
