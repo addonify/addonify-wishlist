@@ -9,26 +9,11 @@
 		// var $modal_icon			= $( '.adfy-wishlist-icon-entry .adfy-wishlist-icon' );
 		var $sticky_sidebar_btn = $( '#addonify-wishlist-show-sidebar-btn' );
 		var $sidebar_ul			= $( 'ul.adfy-wishlist-sidebar-items-entry' );
-		var $wishlist_count_btn	= $( '.addonify-wishlist-count' );
+		var $wishlist_count_sel	= $( '.addonify-wishlist-count' );
 		var show_popup			= addonify_wishlist_object.show_popup;
 
 
 		init();
-
-		// tooltip/tippy js
-
-		// tippy('.adfy-wishlist-tooltip', {
-        //     content: "",
-        //     allowHTML: false,
-        //     arrow: false,
-        //     arrowType: 'small',
-        //     size: 'large',
-        //     delay: 10,
-        //     duration: 350,
-        //     maxWidth: 350,
-        //     placement: 'left',
-        //     animation: 'scale'
-        // });
 
 		// main "add to wishlist" btn.
 		$body.on('click', '.addonify-add-to-wishlist-btn button', function( e ) {
@@ -189,7 +174,7 @@
 					$sidebar_ul.append( response.data.msg );
 
 					// update wishlist_count button
-					$wishlist_count_btn.text( response.data.wishlist_count );
+					$wishlist_count_sel.text( response.data.wishlist_count );
 
 				}
 				else{
@@ -266,7 +251,7 @@
 					msg = response.data.msg;
 
 					// update wishlist count.
-					$wishlist_count_btn.text( response.data.wishlist_count );
+					$wishlist_count_sel.text( response.data.wishlist_count );
 
 					// remove item from wishlist
 					if ( response.data.remove_wishlist == 1 ) {

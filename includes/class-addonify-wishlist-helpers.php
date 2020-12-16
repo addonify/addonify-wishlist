@@ -20,6 +20,16 @@
 class Addonify_Wishlist_Helpers {
 
 	/**
+	 * Default values for input fields in admin screen
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $default_input_values
+	 */
+	protected $default_input_values;
+
+
+	/**
 	 * Check if woocommerce is active.
 	 *
 	 * @since    1.0.0
@@ -205,7 +215,7 @@ class Addonify_Wishlist_Helpers {
 				$args['other_attr'] = '';
 			}
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_textbox.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-textbox.php';
 		}
 	}
 
@@ -236,7 +246,7 @@ class Addonify_Wishlist_Helpers {
 			$default = isset( $arg['default'] ) ? $arg['default'] : '';
 			$db_value = ( get_option( $arg['name'] ) ) ? get_option( $arg['name'] ) : $default;
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_colorpicker.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-colorpicker.php';
 		}
 	}
 
@@ -264,7 +274,7 @@ class Addonify_Wishlist_Helpers {
 				$attr .= ' checked ';
 			}
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_radio_group.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-radio-group.php';
 		}
 	}
 
@@ -283,7 +293,7 @@ class Addonify_Wishlist_Helpers {
 		$attr = ( array_key_exists( 'attr', $args ) ) ? $args['attr'] : '';
 		$end_label = ( array_key_exists( 'end_label', $args ) ) ? $args['end_label'] : '';
 
-		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_checkbox.php';
+		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-checkbox.php';
 	}
 
 
@@ -299,9 +309,13 @@ class Addonify_Wishlist_Helpers {
 
 			$options = ( array_key_exists( 'options', $args ) ) ? $args['options'] : array();
 			$default = ( array_key_exists( 'default', $args ) ) ? $args['default'] : '';
-			$db_value = get_option( $args['name'], $default );
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_select.php';
+			$db_value = get_option( $args['name'] );
+			if ( empty( $db_value ) ) {
+				$db_value = $default;
+			}
+
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-select.php';
 		}
 	}
 
@@ -322,19 +336,18 @@ class Addonify_Wishlist_Helpers {
 		}
 
 		$args = $arguments[0];
+		
 		$db_value = get_option( $args['name'] );
 
-		$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' );
-
-		if ( ! $db_value ) {
-			$db_value = $default_wishlist_page_id;
+		if ( empty( $db_value ) ) {
+			$db_value = $args['default'];
 		}
 
-		if ( $db_value != $default_wishlist_page_id ) {
+		if ( $db_value != $args['default'] ) {
 			$args['end_label'] = 'Please insert "[addonify_wishlist]" shortcode into the content area of the page';
 		}
 
-		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_select.php';
+		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-select.php';
 	}
 
 
@@ -351,7 +364,7 @@ class Addonify_Wishlist_Helpers {
 			$db_value = get_option( $args['name'], $placeholder );
 			$attr = isset( $args['attr'] ) ? $args['attr'] : '';
 
-			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input_textarea.php';
+			require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-textarea.php';
 		}
 	}
 

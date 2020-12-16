@@ -50,16 +50,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 
 
 	/**
-	 * Default values for input fields in admin screen
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $default_input_values
-	 */
-	protected $default_input_values;
-
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -91,7 +81,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			wp_enqueue_style( 'wp-color-picker' );
 
 			// admin css.
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.min.css', array(), $this->version, 'all' );
 		}
 
 		// admin menu icon fix.
@@ -120,7 +110,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			// toggle switch.
 			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), $this->version, false );
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.min.js', array( 'jquery' ), time(), false );
 
 		}
 
@@ -151,7 +141,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		}
 
 		if ( ! $parent_menu_slug ) {
-			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), plugin_dir_url( __FILE__ ) . '/templates/addonify-logo.svg', 76 );
+			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), plugin_dir_url( __FILE__ ) . '/images/addonify-logo.svg', 76 );
 			add_submenu_page( $this->settings_page_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 1 );
 
 		} else {
@@ -235,6 +225,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page',
+							'default' => get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' ),
 						),
 					),
 				),
@@ -328,6 +319,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 								'before_add_to_cart' => __( 'Before Add To Cart Button', 'addonify-wishlist-products' ),
 								'overlay_on_image' => __( 'Overlay On The Product Image', 'addonify-wishlist-products' ),
 							),
+							'default' => 'before_add_to_cart',
 						),
 					),
 				),
@@ -464,6 +456,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar',
 							'checked' => 1,
+							'default' => 1,
 						),
 					),
 				),
@@ -697,6 +690,9 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		// create settings fields.
 		$this->create_settings( $settings_args );
 
+		// store default values.
+		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'default_values', $this->default_input_values );
+
 	}
 
 
@@ -726,7 +722,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			add_action(
 				'admin_notices',
 				function() {
-					require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/woocommerce_not_active_notice.php';
+					require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/woocommerce-not-active-notice.php';
 				}
 			);
 		}
