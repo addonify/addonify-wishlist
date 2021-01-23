@@ -32,6 +32,7 @@
 				add_to_wishlist( this );
 			}
 		})
+		
 
 		// close viewlist modal
 		$body.on('click', '#addonify-wishlist-close-modal-btn', function() {
@@ -49,6 +50,24 @@
 		$sticky_sidebar_btn.click( function() {
 			$body.toggleClass('addonify-wishlist-sticky-sidebar-is-visible');
 		} )
+
+		// hide sidebar,
+		// if clicked outside sidebar container.
+		$(document).mouseup(function(e) {
+
+			if ( ! $('body').hasClass('addonify-wishlist-sticky-sidebar-is-visible') ) {
+				// do not proceed if sidebar is not open.
+				return;
+			}
+
+			var container = $(".addonify-wishlist-ssc-body, #addonify-wishlist-show-sidebar-btn");
+
+			// if the target of the click isn't the container nor a descendant of the container
+			if ( ! container.is( e.target ) && container.has(e.target).length === 0 )  {
+				// hide sidebar.
+				$body.removeClass('addonify-wishlist-sticky-sidebar-is-visible');
+			}
+		});
 
 
 		// wishlist page form elements --------------------------------------
@@ -121,7 +140,6 @@
 		}
 
 
-
 		// does exactly what function name says.
 		function add_to_wishlist( this_sel ) {
 
@@ -140,6 +158,11 @@
 				show_modal( addonify_wishlist_object.product_added_to_wishlist_text, $(this_sel).data('product_name'), 'success' );
 			}
 			else {
+
+				if ( '1' === addonify_wishlist_object.redirect_to_wishlist_if_popup_disabled ) {
+					// redirect to wishlist page
+					window.location.replace( addonify_wishlist_object.wishlist_page_url );
+				}
 
 				// update btn label
 				$( '.addonify-wishlist-btn-label', this_sel ).text( addonify_wishlist_object.product_adding_to_wishlist_btn_label );

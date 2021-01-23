@@ -141,8 +141,8 @@ class Addonify_Wishlist_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		$this->show_sidebar = $this->get_db_values( 'show_sidebar', 1 );
-		$this->show_popup = $this->get_db_values( 'show_popup', 1 );
+		$this->show_sidebar = $this->get_option( 'show_sidebar', 1 );
+		$this->show_popup = $this->get_option( 'show_popup', 1 );
 
 
 		if ( ! is_admin() ) {
@@ -150,10 +150,10 @@ class Addonify_Wishlist_Public {
 			$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' );
 			$this->wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $default_wishlist_page_id );
 
-			$this->btn_position = $this->get_db_values( 'btn_position', $this->get_default_values( 'btn_position' ) );
-			$this->btn_label = $this->get_db_values( 'btn_label', $this->get_default_values( 'btn_label' ) );
-			$this->button_custom_css_class = $this->get_db_values( 'btn_custom_class', $this->get_default_values( 'btn_custom_class' ) );
-			$this->require_login = $this->get_db_values( 'require_login', 1 );
+			$this->btn_position = $this->get_option( 'btn_position' );
+			$this->btn_label = $this->get_option( 'btn_label' );
+			$this->button_custom_css_class = $this->get_option( 'btn_custom_class' );
+			$this->require_login = $this->get_option( 'require_login', 1 );
 		}
 
 	}
@@ -204,10 +204,11 @@ class Addonify_Wishlist_Public {
 				'login_url' => add_query_arg( 'addonify_wishlist_redirect', home_url( $wp->request ), wc_get_page_permalink( 'myaccount' ) ),
 
 				'show_popup' => $this->show_popup,
+				'redirect_to_wishlist_if_popup_disabled' => $this->get_option( 'redirect_to_wishlist_if_popup_disabled' ),
 
 				'is_logged_in' => is_user_logged_in(),
-				'require_login' => $this->get_db_values( 'require_login', 1 ),
-				'redirect_to_login' => $this->get_db_values( 'redirect_to_login', 1 ),
+				'require_login' => $this->get_option( 'require_login', 1 ),
+				'redirect_to_login' => $this->get_option( 'redirect_to_login', 1 ),
 
 				'login_msg' => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
 
@@ -217,8 +218,8 @@ class Addonify_Wishlist_Public {
 				'wishlist_not_added_label' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
 
 				'add_to_wishlist_btn_text' => $this->btn_label,
-				'product_added_to_wishlist_text' => $this->get_db_values( 'product_added_to_wishlist_text', $this->get_default_values( 'product_added_to_wishlist_text' ) ),
-				'product_already_in_wishlist_text' => $this->get_db_values( 'product_already_in_wishlist_text', $this->get_default_values( 'product_already_in_wishlist_text' ) ),
+				'product_added_to_wishlist_text' => $this->get_option( 'product_added_to_wishlist_text' ),
+				'product_already_in_wishlist_text' => $this->get_option( 'product_already_in_wishlist_text' ),
 			)
 		);
 
@@ -305,7 +306,7 @@ class Addonify_Wishlist_Public {
 			$css_class[] = 'show-label';
 		}
 
-		$show_icon = intval( $this->get_db_values( 'show_icon', 1 ) );
+		$show_icon = intval( $this->get_option( 'show_icon', 1 ) );
 
 		// do not show button if both icon and btn label is disabled by user.
 		if ( ! $this->btn_label && ! $show_icon ) {
@@ -320,7 +321,7 @@ class Addonify_Wishlist_Public {
 			$css_class[] = 'added-to-wishlist';
 
 			// change btn label if btn is already added to wishlist.
-			$btn_label = $this->get_db_values( 'btn_label_if_added_to_wishlist', $this->get_default_values( 'btn_label_if_added_to_wishlist' ) );
+			$btn_label = $this->get_option( 'btn_label_if_added_to_wishlist' );
 			$icon = 'heart-style-one';
 
 			if ( $show_icon ) {
@@ -425,7 +426,7 @@ class Addonify_Wishlist_Public {
 	private function set_cookie( $data ) {
 
 		// add data to user cookies.
-		$cookies_lifetime = $this->get_db_values( 'cookies_lifetime', 30 ) * DAY_IN_SECONDS;
+		$cookies_lifetime = $this->get_option( 'cookies_lifetime', 30 ) * DAY_IN_SECONDS;
 		setcookie( $this->plugin_name, $data, time() + $cookies_lifetime, COOKIEPATH, COOKIE_DOMAIN );
 
 	}
@@ -506,11 +507,11 @@ class Addonify_Wishlist_Public {
 	public function generate_custom_styles_callback() {
 
 		// do not continue if plugin styles are disabled by user.
-		if ( ! $this->get_db_values( 'load_styles_from_plugin' ) ) {
+		if ( ! $this->get_option( 'load_styles_from_plugin' ) ) {
 			return;
 		}
 
-		$custom_css = $this->get_db_values( 'custom_css' );
+		$custom_css = $this->get_option( 'custom_css' );
 
 		$style_args = array(
 			'.addonify-add-to-wishlist-btn button' => array(
@@ -557,10 +558,10 @@ class Addonify_Wishlist_Public {
 				$css_unit = '';
 
 				if ( is_array( $db_field ) ) {
-					$db_value = $this->get_db_values( $db_field[0] );
+					$db_value = $this->get_option( $db_field[0] );
 					$css_unit = $db_field[1];
 				} else {
-					$db_value = $this->get_db_values( $db_field );
+					$db_value = $this->get_option( $db_field );
 				}
 
 				if ( $db_value ) {
@@ -627,13 +628,18 @@ class Addonify_Wishlist_Public {
 
 
 	/**
+	 * Plugin alternative for global "get_option" function.
 	 * Get Database values for selected fields
 	 *
 	 * @since    1.0.0
 	 * @param    string $field_name Database Option Name.
 	 * @param    string $default    Default Value.
 	 */
-	private function get_db_values( $field_name, $default = null ) {
+	private function get_option( $field_name, $default = null ) {
+
+		if ( is_null( $default ) ) {
+			$default = $this->get_default_values( $field_name );
+		}
 		return get_option( ADDONIFY_WISHLIST_DB_INITIALS . $field_name, $default );
 	}
 
@@ -675,7 +681,7 @@ class Addonify_Wishlist_Public {
 
 		$wishlist_items = $this->get_all_wishlist();
 		$output_data = $this->generate_contents_data( $wishlist_items );
-		$wishlist_name = $this->get_db_values( 'default_wishlist_name', $this->get_default_values( 'default_wishlist_name' ) );
+		$wishlist_name = $this->get_option( 'default_wishlist_name' );
 
 		$this->get_templates(
 			'addonify-wishlist-shortcode-contents',
@@ -697,7 +703,7 @@ class Addonify_Wishlist_Public {
 	 */
 	public function wishlist_modal_wrapper() {
 
-		$css_class = ( $this->get_db_values( 'require_login', 1 ) && ! is_user_logged_in() ) ? 'require-login' : '';
+		$css_class = ( $this->get_option( 'require_login', 1 ) && ! is_user_logged_in() ) ? 'require-login' : '';
 
 		$this->get_templates(
 			'addonify-wishlist-modal-wrapper',
@@ -716,24 +722,29 @@ class Addonify_Wishlist_Public {
 	 */
 	public function wishlist_sidebar_template() {
 
+		if ( get_the_ID() === intval( $this->wishlist_page_id ) ) {
+			// do not show sidebar in wishlist page.
+			return;
+		}
+
 		if ( ! $this->show_sidebar ) {
 			return;
 		}
 
 		$wishlist_items = $this->get_all_wishlist();
 
-		$wishlist_name = $this->get_db_values( 'default_wishlist_name', $this->get_default_values( 'default_wishlist_name' ) );
+		$wishlist_name = $this->get_option( 'default_wishlist_name' );
 		$wishlist_page_url = get_page_link( $this->wishlist_page_id );
 
 		$sidebar_loop = $this->get_sticky_sidebar_loop( $wishlist_items );
 
-		$alignment = 'addonify-align-' . $this->get_db_values( 'sidebar_position', $this->get_default_values( 'sidebar_position' ) );
-		$title = $this->get_db_values( 'sidebar_title', $this->get_default_values( 'sidebar_title' ) );
+		$alignment = 'addonify-align-' . $this->get_option( 'sidebar_position' );
+		$title = $this->get_option( 'sidebar_title' );
 
-		$btn_label = esc_attr( $this->get_db_values( 'sidebar_btn_label', $this->get_default_values( 'sidebar_btn_label' ) ) );
+		$btn_label = esc_attr( $this->get_option( 'sidebar_btn_label' ) );
 
-		$show_btn_icon = $this->get_db_values( 'sidebar_show_icon', 1 );
-		$animate_btn = intval( $this->get_db_values( 'sidebar_animate_btn', 1 ) );
+		$show_btn_icon = $this->get_option( 'sidebar_show_icon', 1 );
+		$animate_btn = intval( $this->get_option( 'sidebar_animate_btn', 1 ) );
 
 		$total_items = $this->wishlist_item_count;
 
@@ -754,7 +765,7 @@ class Addonify_Wishlist_Public {
 				'css_classes' => implode( ' ', $css_classes ),
 				'label' => $btn_label,
 				'show_icon' => $show_btn_icon,
-				'icon' => $this->get_db_values( 'sidebar_btn_icon', $this->get_default_values( 'sidebar_btn_icon' ) ),
+				'icon' => $this->get_option( 'sidebar_btn_icon' ),
 			)
 		);
 
@@ -913,8 +924,8 @@ class Addonify_Wishlist_Public {
 		}
 
 		$wishlist_page_url = get_page_link( $this->wishlist_page_id );
-		$redirect_to_checkout_after_add_to_cart = $this->get_db_values( 'redirect_to_checkout_if_item_added_to_cart', 0 );
-		$remove_from_cart = $this->get_db_values( 'remove_from_wishlist_if_added_to_cart', 1 );
+		$redirect_to_checkout_after_add_to_cart = $this->get_option( 'redirect_to_checkout_if_item_added_to_cart', 0 );
+		$remove_from_cart = $this->get_option( 'remove_from_wishlist_if_added_to_cart', 1 );
 
 		// nonce.
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), $this->plugin_name ) ) {
@@ -1006,7 +1017,7 @@ class Addonify_Wishlist_Public {
 						exit;
 					}
 
-					$remove_from_cart = intval( $this->get_db_values( 'remove_from_wishlist_if_added_to_cart', 1 ) );
+					$remove_from_cart = intval( $this->get_option( 'remove_from_wishlist_if_added_to_cart', 1 ) );
 				}
 
 				wp_redirect( $wishlist_page_url );
@@ -1123,7 +1134,7 @@ class Addonify_Wishlist_Public {
 		$msg_error = '';
 
 		// remove from wishlist if added to cart ?.
-		$remove_from_cart = intval( $this->get_db_values( 'remove_from_wishlist_if_added_to_cart', 1 ) );
+		$remove_from_cart = intval( $this->get_option( 'remove_from_wishlist_if_added_to_cart', 1 ) );
 
 		foreach ( $product_ids as $product_id ) {
 
@@ -1215,7 +1226,7 @@ class Addonify_Wishlist_Public {
 		// show "view wishlist" button.
 		if ( ! $this->require_login || is_user_logged_in() ) {
 
-			$view_wishlist_btn_text = $this->get_db_values( 'view_wishlist_btn_text', $this->get_default_values( 'view_wishlist_btn_text' ) );
+			$view_wishlist_btn_text = $this->get_option( 'view_wishlist_btn_text' );
 
 			echo wp_kses_post(
 				apply_filters(
