@@ -110,7 +110,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			// toggle switch.
 			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), $this->version, false );
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.min.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.min.js', array( 'jquery' ), $this->version, false );
 
 		}
 
@@ -236,7 +236,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'require_login',
-							'checked' => 1,
+							'default' => 1,
 						),
 					),
 				),
@@ -247,7 +247,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_login',
-							'checked' => 1,
+							'default' => 1,
 							'end_label' => esc_html( '"Require Login" option should be "On"' ),
 						),
 					),
@@ -259,7 +259,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_checkout_if_item_added_to_cart',
-							'checked' => 0,
+							'default' => 0,
 						),
 					),
 				),
@@ -270,7 +270,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'remove_from_wishlist_if_added_to_cart',
-							'checked' => 1,
+							'default' => 1,
 						),
 					),
 				),
@@ -352,7 +352,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'show_icon',
-							'checked' => 1,
+							'default' => 1,
 						),
 					),
 				),
@@ -392,6 +392,17 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'show_popup',
 							'default' => 1,
+						),
+					),
+				),
+				array(
+					'field_id' => ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_wishlist_if_popup_disabled',
+					'field_label' => __( 'Redirect to Wishlist page', 'addonify-wishlist' ),
+					'field_callback' => array( $this, 'toggle_switch' ),
+					'field_callback_args' => array(
+						array(
+							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'redirect_to_wishlist_if_popup_disabled',
+							'default' => 0,
 						),
 					),
 				),
@@ -455,7 +466,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'show_sidebar',
-							'checked' => 1,
 							'default' => 1,
 						),
 					),
@@ -521,7 +531,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_show_icon',
-							'checked' => 1,
+							'default' => 1,
 						),
 					),
 				),
@@ -533,7 +543,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
 							'value' => 'heart-style-one',
-							'checked' => 1,
+							'default' => 1,
 							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-style-one"></span>',
 						),
 						array(
@@ -590,7 +600,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn',
-							'checked' => 1,
+							'default' => 1,
 						),
 					),
 				),
@@ -618,7 +628,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 					'field_callback_args' => array(
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'load_styles_from_plugin',
-							'checked' => 0,
+							'default' => 0,
 						),
 					),
 				),

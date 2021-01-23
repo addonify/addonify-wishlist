@@ -70,6 +70,10 @@
     margin: 2px 10px 2px 2px;
 }
 
+.addonify-content input.lc_switch{
+    display: none !important;
+}
+
 .addonify-content .checkbox-group label{
     float: left;
 }

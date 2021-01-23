@@ -47,9 +47,38 @@
 			var editor = wp.codeEditor.initialize( $('#addonify_wishlist_custom_css'), editorSettings );
 		}
 
+		// --------------------------------------------
+		// show hide "Redirect to Wishlist page" option
+		// --------------------------------------------
 
+		toggle_option_if_another_option_is_active( '#addonify_wishlist_show_popup', '#addonify_wishlist_redirect_to_wishlist_if_popup_disabled' );
 
-		// show hide content colors ------------------------------
+		function toggle_option_if_another_option_is_active( parent_sel, child_sel ) {
+			let $parent = $(parent_sel);
+			let $child_tr  = $(child_sel).parents('tr');
+
+			show_hide_option();
+
+			$('body').delegate( parent_sel, 'lcs-statuschange', function() {
+				show_hide_option();
+			});
+			
+			function show_hide_option() {
+
+				let state = $parent.is(":checked");
+
+				if ( state ) {
+					$child_tr.slideUp();
+				}
+				else{
+					$child_tr.slideDown();
+				}
+			}
+		}
+
+		// --------------------------------------------
+		// show hide content colors
+		// --------------------------------------------
 
 		let $style_options_sel = $('#addonify_wishlist_load_styles_from_plugin');
 		let $content_colors_sel = $('#addonify-content-colors-container');
@@ -61,7 +90,6 @@
 		$('body').delegate('#addonify_wishlist_load_styles_from_plugin', 'lcs-statuschange', function() {
 			show_hide_content_colors();
 		});
-
 		
 		function show_hide_content_colors() {
 

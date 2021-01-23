@@ -227,6 +227,7 @@ class Addonify_Wishlist_Helpers {
 	 * @param string $arguments Arguments required to generate this field.
 	 */
 	public function toggle_switch( $arguments ) {
+
 		foreach ( $arguments as $args ) {
 			$args['attr'] = ' class="lc_switch"';
 			$this->checkbox( $args );
@@ -287,11 +288,11 @@ class Addonify_Wishlist_Helpers {
 	 */
 	public function checkbox( $args ) {
 
-		$default_state = ( array_key_exists( 'checked', $args ) ) ? $args['checked'] : 1;
-		$db_value = get_option( $args['name'] );
-		$is_checked = ( $db_value ) ? 'checked' : '';
-		$attr = ( array_key_exists( 'attr', $args ) ) ? $args['attr'] : '';
-		$end_label = ( array_key_exists( 'end_label', $args ) ) ? $args['end_label'] : '';
+		$default_state = ( array_key_exists( 'default', $args ) ) ? $args['default'] : 1;
+		$db_value      = (bool) get_option( $args['name'], $default_state );
+		$is_checked    = ( $db_value ) ? 'checked' : '';
+		$attr          = ( array_key_exists( 'attr', $args ) ) ? $args['attr'] : '';
+		$end_label     = ( array_key_exists( 'end_label', $args ) ) ? $args['end_label'] : '';
 
 		require ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/input-checkbox.php';
 	}
