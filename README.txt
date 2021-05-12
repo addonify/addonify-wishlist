@@ -11,15 +11,15 @@ Addonify WooCommerce Wishlist is a powerful toolkit which adds a wishlist functi
 
 == Description ==
 
-Addonify WooCommerce Wishlist is a powerful toolkit which adds a wishlist functionality to your e-commerce shop. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+Addonify Wishlist is a powerful toolkit which adds a wishlist functionality to your e-commerce shop. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
 
-> *A recent research has shown that an online e-commerce store having product wishlist functionality is likely to sell 30% more than the store which doesn't have wishlist functionality.* 
+> *A recent research has shown that an online e-commerce store having product wishlist functionality is likely to sell more than the store which doesn't have wishlist functionality.* 
 
 💰 *Not using a wishlist plugin yet? Let's start using it today. Addonify Wishlist is **FREE** & it will remain **FREE forever.***
 
 Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word.
 
- #### ⏳ FEATURES:
+#### ⏳ FEATURES:
  
 *Below are the main features of Addonify WooCommerce Wishlist*
 
@@ -38,19 +38,19 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
 ✅ Color option for add to wishlist button
 ✅ Helps to increase revenue by improving your e-commerce store user experience
 ✅ Support for custom CSS
-✅ Comprehensive user [*documentation guide*](https://docs.addonify.com/kb/woocommerce-wishlist/) 
+✅ Well documented [*user guide*](https://docs.addonify.com/kb/woocommerce-wishlist/) 
 ✅ Users & developers friendly
 ✅ Light-weight & flexible
 ✅ Coded as per WordPress coding standard
 
- #### 🔔 BENIFITS & IMPORTANCE OF HAVING WISHLIST FUNCTIONALITY:
+#### 🔔 BENIFITS & IMPORTANCE OF HAVING WISHLIST FUNCTIONALITY:
 
- - Save customers time: *Lets assume that you are having 1500+ products in your e-commerce store.*
- - Help to boost revenue: 
- -  Improves overal shopping experience:
+ - **Save customers time:** *Lets assume that you are having 1500+ products in your e-commerce store. *
+ - **Help to boost revenue:** 
+ - **Improves overal shopping experience:**
 
 
- #### ⚔️ DEVELOPER:
+#### ⚔️ DEVELOPER:
 
 Addonify WooCommerce Wishlist is developers friendly. We know that we have wounderful developers all around us who wish to customize or add functionality plugin while using it in their project. This is why we have build Addonify WooCommerce Wishlist *hookable and template overwriteable*. If you are a developer and wish to integrate our plugin in your project do check the [*developer guide here.*](https://docs.addonify.com/kb/woocommerce-wishlist/developer/) 
 
@@ -73,7 +73,7 @@ Here's a sample bug reporting template:
 
 Then, describe the problem that you are facing while using Addonify Wishlist plugin. 
 
- #### 🥇 THINKING OF CONTRIBUATING:
+#### 🥇 THINKING OF CONTRIBUATING:
 
 Addonify Wishlist is a open-source project. If you wish to spare a time making Addonify Wishlist better please feel to create a PR in Addonify Wishlist development [*github repositary*](https://github.com/addonify/addonify-wishlist) or create a support ticket.
 
@@ -81,6 +81,20 @@ Addonify Wishlist is a open-source project. If you wish to spare a time making A
 ####  🎭 TRANSLATION GUIDELINES:
 
 Translating Addonify Wishlist is easy. If you wish add your own language to Addonify Wishist feel free to contribute translating at [*transalte.wordpress.org*](https://translate.wordpress.org/projects/wp-plugins/addonify-wishlist) directly.
+
+== Frequently Asked Questions ==
+
+= Do you have documentation guide? =
+
+Yes, we do have documentation guide. Please visit our [documentation site.](https://docs.addonify.com/kb/woocommerce-wishlist/)
+
+= Will this plugin work without WooCommerce? =
+
+No, this plugin will not work without WooCommerce.
+
+= Will this plugin work with my theme? =
+
+Yes, or might no. Addonify Wishlist should work with all WordPress themes but it might not work for some theme if the theme authors have overwrite the default WooCommerce product listing template. In this case please ask your theme author to make their themes our plugin compitable by following our [*developer documentation guide.*](https://docs.addonify.com/kb/woocommerce-wishlist/) 
 
 == Installation ==
 
