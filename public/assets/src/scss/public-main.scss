@@ -7,19 +7,15 @@
 
 # Since: 22 Nov, 2020
 
-# Last updated: 
+# Last updated: 15 March, 2022
 
 # Current version: 1.0.0
 
 =====================================
 */
 
-// import abstracts 
-
 @import 'abstracts/variables';
 @import 'abstracts/mixins';
-
-// import partials 
 
 @import 'partials/components/buttons';				// buttons
 @import 'partials/components/tooltip';				// tooltip js
@@ -27,11 +23,6 @@
 @import 'partials/layout/wishlist-sidebar';			// sidebar
 @import 'partials/layout/wishlist-page';			// page
 
-// media/responsive
-
 @import 'partials/layout/responsive';				// responsive
-
-
-// import keyframe 
 
 @import 'partials/components/keyframe';				// keyframe
