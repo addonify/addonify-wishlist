@@ -183,9 +183,9 @@ class Addonify_Wishlist_Public {
 
 		global $wp;
 
-		wp_enqueue_script( '__ADDONIFY__CORE__POPPER__', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/popper.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'popper', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/popper.min.js', null, $this->version, false );
 
-		wp_enqueue_script( '__ADDONIFY__CORE__TIPPY__', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/tippy-bundle.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'tippy', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/tippy.min.js', null, $this->version, false );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, false );
 
