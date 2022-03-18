@@ -19,7 +19,7 @@ if ( $show_icon ) {
 }
 
 printf(
-	'<div class="addonify-add-to-wishlist-btn"><button type="button" class="button adfy-wishlist-btn %2$s" data-product_id="%3$s" data-product_name="%4$s"> %1$s</button></div>',
+	'<div class="addonify-add-to-wishlist-btn-wrapper"><button type="button" class="button adfy-wishlist-btn addonify-add-to-wishlist-btn %2$s" data-product_id="%3$s" data-product_name="%4$s"> %1$s</button></div>',
 	wp_kses_post( $label ),
 	esc_attr( $css_class ),
 	esc_attr( $product_id ),
