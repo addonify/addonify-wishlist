@@ -126,6 +126,9 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public.php';
 
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
+
 		$this->loader = new Addonify_Wishlist_Loader();
 
 	}

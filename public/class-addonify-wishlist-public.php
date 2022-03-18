@@ -683,10 +683,13 @@ class Addonify_Wishlist_Public {
 		$output_data = $this->generate_contents_data( $wishlist_items );
 		$wishlist_name = $this->get_option( 'default_wishlist_name' );
 
+		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
+		
 		$this->get_templates(
 			'addonify-wishlist-shortcode-contents',
 			false,
 			array(
+				'wishlist_product_ids' => $wishlist_product_ids,
 				'wishlist_data' => $output_data,
 				'wishlist_name' => $wishlist_name,
 				'nonce' => wp_create_nonce( $this->plugin_name ),
@@ -1044,7 +1047,7 @@ class Addonify_Wishlist_Public {
 
 			// is any product selected ?.
 			if ( ! is_array( $selected_product_ids ) ) {
-				$this->set_flashdata( 'wishlist_action', array( 'You have not selected any products', 'warning' ) );
+				// $this->set_flashdata( 'wishlist_action', array( 'You have not selected any products', 'warning' ) );
 
 				wp_redirect( $wishlist_page_url );
 				exit;
@@ -1134,7 +1137,7 @@ class Addonify_Wishlist_Public {
 		$msg_error = '';
 
 		// remove from wishlist if added to cart ?.
-		$remove_from_cart = intval( $this->get_option( 'remove_from_wishlist_if_added_to_cart', 1 ) );
+		$remove_from_wishlist = intval( $this->get_option( 'remove_from_wishlist_if_added_to_cart', 1 ) );
 
 		foreach ( $product_ids as $product_id ) {
 
@@ -1145,9 +1148,11 @@ class Addonify_Wishlist_Public {
 			$product = wc_get_product( $product_id );
 
 			if ( WC()->cart->add_to_cart( $product_id ) ) {
+				
 				$msg_success .= $product->get_name() . ' ' . __( 'is added to cart', 'addonify-wishlist' ) . '<br>';
 
-				if ( $remove_from_cart ) {
+				if ( $remove_from_wishlist ) {
+
 					$this->remove_item_from_wishlist( array( $product_id ), $show_notice );
 					$msg_success .= $product->get_name() . ' ' . __( 'is removed from wishlist', 'addonify-wishlist' ) . '<br>';
 				}
