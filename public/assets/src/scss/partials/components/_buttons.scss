@@ -1,39 +1,39 @@
-// addonify wishlist button basic style 
+/* -------------------------------------------------------------------------- 
+	#. Wishlist button
+  -------------------------------------------------------------------------- */
 
 .adfy-wishlist-btn {
 
     font-weight: normal;
-    cursor:pointer;
+    cursor: pointer;
     @include transation_delay();
     
-    &.show-label .adfy-wishlist-icon{
+    .show-label .adfy-wishlist-icon {
+
         margin-right: 5px;
     }
 }
-
 
 // button with no button style 
 
 .adfy-wishlist-clear-button-style {
 
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
     color:#333333;
-    cursor:pointer;
-    border-color:none;
-    background-color:transparent;
+    cursor: pointer;
+    border-color: none;
+    background-color: transparent;
 }
 
 .adfy-wishlist-clear-button-style:hover {
 
     color:grey;
-    border-color:none;
-    background-color:transparent;
+    border-color: none;
+    background-color: transparent;
 }
 
 // add to wishlist button
-
-
 
 .addonify-add-to-wishlist-btn button[disabled] {
 
@@ -50,7 +50,6 @@
 
     margin-top: 1em
 }
-
 
 // wishlist overlay button 
 
@@ -70,12 +69,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     @include transation_delay();
 }
 
 .addonify-overlay-buttons .addonify-overlay-btn-wrapper .addonify-overlay-btn {
 
-    opacity:1;
+    opacity: 1;
     @include large_drop_shadow();
 }

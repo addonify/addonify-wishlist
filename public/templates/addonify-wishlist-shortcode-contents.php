@@ -29,9 +29,10 @@ defined( 'ABSPATH' ) || exit;
 			<input type="hidden" name="nonce" value="<?php echo esc_html( $data['nonce'] ); ?>" >
 			<input type="hidden" name="process_addonify_wishlist_form" value="1" >
 
-			<table>
+			<table id="addonify-wishlist-table">
 				<thead class="addonify-wishlist-items-heading">
 					<tr>
+						<th class="remove"></th>
 						<th class="image"><?php echo esc_html__( 'Product Image', 'addonify-wishlist' ); ?></th>
 						<th class="name"><?php echo esc_html__( 'Product Name', 'addonify-wishlist' ); ?></th>
 						<th class="price"><?php echo esc_html__( 'Unit Price', 'addonify-wishlist' ); ?></th>
@@ -46,13 +47,16 @@ defined( 'ABSPATH' ) || exit;
 						$product = wc_get_product( $product_id );
 						?>
 						<tr>
+							<td class="remove">
+								<button type="submit" class="adfy-wishlist-btn addonify-wishlist-icon" name="addonify_wishlist_remove" value="<?php echo esc_attr( $product_id ); ?>"><i class="adfy-wishlist-icon trash-2"></i></button>
+							</td>
 							<td class="image">
 								<?php
 								$product_post_thumbnail_id = $product->get_image_id();
 								if ( $product->get_image() ) {
 									?>
 									<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
-										<?php echo $product->get_image(); ?>
+										<?php echo $product->get_image(array(72, 72)); ?>
 									</a>
 									<?php
 								}
@@ -68,7 +72,6 @@ defined( 'ABSPATH' ) || exit;
 								<?php echo $product->get_stock_status(); ?>
 							</td>
 							<td class="actions">
-								<button type="submit" class="adfy-wishlist-btn addonify-wishlist-icon" name="addonify_wishlist_remove" value="<?php echo esc_attr( $product_id ); ?>"><i class="adfy-wishlist-icon trash-2"></i></button>
 								<?php
 								if ( $product->is_purchasable() && $product->is_in_stock() ) {
 
