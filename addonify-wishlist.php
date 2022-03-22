@@ -73,17 +73,13 @@ run_addonify_wishlist();
 
 
 
-if ( ! function_exists( 'addonify_wishlist_get_total_items' ) ) {
 
-	/**
-	 * Helper function to show total number of items in wishlist.
-	 *
-	 * @since    1.0.0
-	 */
-	function addonify_wishlist_get_total_items() {
-		$plugin = new Addonify_Wishlist();
-		$public_class = new Addonify_Wishlist_Public( $plugin->get_plugin_name(), $plugin->get_version() );
+add_action( 'wp_body_open', function() {
+	// var_dump( addonify_wishlist_is_product_in_wishlist( 247 ) );
 
-		return count( $public_class->get_all_wishlist() );
-	}
-}
+	// var_dump( addonify_wishlist_get_wishlist_items() );
+
+	// var_dump( addonify_wishlist_get_wishlist_items_count() );
+
+	// var_dump( addonify_wishlist_get_button_label( true ) );
+} );
