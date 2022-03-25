@@ -156,13 +156,11 @@
 
                 $modal.removeClass('loading');
 
-                console.log(response);
-
                 if (response.success == true) {
 
                     // Triggering custom event when product is added to wishlist. 
                     // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
-                    $(this_sel).trigger('addonify_added_to_wishlist');
+                    $(document).trigger('addonify_added_to_wishlist', [{ productID: $(this_sel).data('product_id') }]);
 
                     // remove "your wishlist is empty" message
                     $('#addonify-wishlist-sidebar-form .empty-wishlist').remove();
@@ -257,6 +255,7 @@
             $parent.addClass('loading');
 
             var button = $(this);
+            console.log
 
             // get form item
             var data = $('#addonify-wishlist-sidebar-form').serialize() +
@@ -282,7 +281,7 @@
 
                         // Triggering custom event when product is added to wishlist. 
                         // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
-                        $(document).trigger('addonify_removed_from_wishlist');
+                        $(document).trigger('addonify_removed_from_wishlist', [{ productID: button.val() }]);
 
                         // update "add to wishlist" button classes
                         var $the_btn = $('button.added-to-wishlist[data-product_id="' + button.attr('value') + '"]');

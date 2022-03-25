@@ -904,7 +904,7 @@ class Addonify_Wishlist_Public {
 			$css_class = 'adfy-wishlist-clear-button-style';
 		}
 
-		return '<button type="submit" class="adfy-wishlist-btn addonify-wishlist-icon ' . esc_attr( $css_class ) . '" name="addonify_wishlist_remove" value="' . esc_attr( $product_id ) . '"><i class="adfy-wishlist-icon trash-2"></i></button>';
+		return '<button type="submit" class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon ' . esc_attr( $css_class ) . '" name="addonify_wishlist_remove" value="' . esc_attr( $product_id ) . '"><i class="adfy-wishlist-icon trash-2"></i></button>';
 
 	}
 
