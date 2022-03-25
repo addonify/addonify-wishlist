@@ -1,0 +1,278 @@
+
+#addonify-wishlist-show-sidebar-btn {
+
+    @include flex();
+    align-items: center;
+    position: fixed;
+    right: 0;
+    top: 50vh;
+    z-index: 99999;
+    cursor: pointer;
+    background: #FFFFFF;
+    line-height: 1;
+    font-size: 16px;
+    padding: 15px;
+    @include large_drop_shadow();
+}
+
+#addonify-wishlist-show-sidebar-btn .button-icon {
+
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+#addonify-wishlist-show-sidebar-btn.animate-btn .button-icon {
+
+    animation:AddonifyWishlistSpin 0.8s infinite;
+}
+
+#addonify-wishlist-show-sidebar-btn.addonify-align-left {
+
+    left: 0;
+    right: inherit
+}
+
+#addonify-wishlist-sticky-sidebar-container {
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: none;
+    @include transation_delay();
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-body {
+
+    float: right;
+    padding: 30px;
+    width: 400px;
+    background: #fff;
+    overflow-y: auto;
+    height: 100%;
+    @include large_drop_shadow();
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-body li,
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-body ul {
+
+    padding: 0;
+    margin: 0;
+    list-style: none
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-body li {
+
+    margin-bottom: 30px;
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-body li:last-child {
+
+    margin-bottom: 60px
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-body li.loading {
+
+    position: relative
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-body li.loading:before {
+
+    content: "";
+    background: #FFFFFF url(../../images/loading.svg) no-repeat 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0
+}
+
+// side panel footer
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-footer {
+
+    position: fixed;
+    right: 0;
+    bottom: 15px;
+    width: 400px;
+    @include flex();
+    align-items: center;
+    justify-content: center;
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-goto-wishlist-btn {
+
+    color: #FFFFFF;
+    background: #000000;
+    font-size: 16px;
+    line-height:1;
+    text-align: center;
+    padding: 20px 25px;
+    border-radius: 3px;
+    @include drop_shadow();
+    @include transation_delay();
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-goto-wishlist-btn:hover {
+
+    transform: translateY(-5px);
+    @include large_drop_shadow();
+}
+
+#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-goto-wishlist-btn .icon {
+
+    margin-right: 5px;
+}
+
+// side panel alignemt option
+
+#addonify-wishlist-sticky-sidebar-container.addonify-align-left .addonify-wishlist-ssc-body {
+
+    float: left
+}
+
+#addonify-wishlist-sticky-sidebar-container #addonify-wishlist-sidebar-form {
+
+    margin-bottom: 0;
+}
+
+#addonify-wishlist-sticky-sidebar-container.addonify-align-left .addonify-wishlist-ssc-footer {
+
+    left: 0;
+    right: inherit
+}
+
+body.addonify-wishlist-sticky-sidebar-is-visible {
+
+    overflow: hidden
+}
+
+body.addonify-wishlist-sticky-sidebar-is-visible #addonify-wishlist-show-sidebar-btn {
+
+    right: 400px;
+}
+
+body.addonify-wishlist-sticky-sidebar-is-visible #addonify-wishlist-show-sidebar-btn.addonify-align-left {
+
+    left: 400px;
+    right: inherit
+}
+
+body.addonify-wishlist-sticky-sidebar-is-visible #addonify-wishlist-sticky-sidebar-container {
+
+    display: block
+}
+
+// side panel main content 
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-row {
+
+    @include flex();
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: -10px;
+    margin-right:-10px;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-col {
+
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .image-column {
+
+    flex:110px;
+    max-width:100px;
+    padding-right: 0;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .title-price-column {
+
+    flex:0 0 calc( 100% - 110px );
+    max-width: calc( 100% - 110px );
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action .addonify-wishlist-icon {
+
+    font-size: 20px;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-title {
+
+    font-size: 15px;
+    margin-bottom: 5px;
+    line-height:1.3;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-title > a {
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action {
+
+    display: block;
+    margin-top: 15px;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action .adfy-wishlist-btn {
+
+    font-size: 15px;
+    font-weight:normal;
+    height: 43px;
+    line-height:43px;
+    padding:0 20px;
+    border-radius: 2px;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action .cart-column {
+
+    flex:0 0 calc( 100% - 50px );
+    max-width: calc( 100% - 50px );
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action .remove-item-column {
+
+    flex: 0 0 50px;
+    max-width: 50px;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action .cart-column .adfy-wishlist-btn {
+
+    width: 100%;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action .remove-item-column {
+
+    padding-left: 0;
+}
+
+#addonify-wishlist-sidebar-items-wrapper .adfy-wishlist-woo-action .remove-item-column .adfy-wishlist-btn {
+
+    font-size: 18px;
+    padding: 0 20px;
+}
+
+// notice 
+
+#addonify-wishlist-sticky-sidebar-container .notice {
+
+    padding: 13px 20px;
+    text-align: center;
+    color: #26943f;
+    border: 1px solid #c3e6cb;
+    background-color: #d4edda;
+    border-radius: 3px;
+    font-size: 15px;
+    line-height: 1.3;
+    margin-bottom: 15px;
+    animation: AddonifyWishlistFadeInUp 500ms ease-in-out;
+    @include large_drop_shadow();
+}

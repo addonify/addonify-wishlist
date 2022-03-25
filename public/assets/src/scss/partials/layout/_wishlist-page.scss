@@ -18,6 +18,24 @@
             padding: 15px;
         }
 
+        td.price {
+
+            font-weight: bold; 
+
+            ins {
+
+                color: red;
+                background: transparent;
+                background-color: transparent;
+            }
+
+            del {
+
+                font-size: 80%;
+                opacity: 0.9;
+            }
+        }
+
         td.remove {
 
             width: 50px;

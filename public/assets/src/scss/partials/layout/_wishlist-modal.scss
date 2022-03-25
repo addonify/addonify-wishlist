@@ -17,13 +17,13 @@
 #addonify-wishlist-modal-wrapper .addonify-wishlist-modal-body {
 
     width: 350px;
-    height: 400px;
-    background: #fff;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: calc((100vh - 300px)/2) auto 0;
-    padding: 40px;
+    min-height: 350px;
     text-align: center;
+    padding: 30px;
+    margin: calc(( 100vh - 300px ) / 2 ) auto 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: white;
     @include large_drop_shadow();
 }
 
@@ -37,7 +37,7 @@
 
 #addonify-wishlist-modal-wrapper #addonify-wishlist-modal-response {
 
-    margin:20px 0;
+    margin: 20px 0;
 }
 
 #addonify-wishlist-modal-wrapper .addonify-wishlist-modal-btns button {
@@ -48,7 +48,7 @@
 
 #addonify-wishlist-modal-wrapper.loading .addonify-wishlist-modal-body {
 
-    background: #fff url(../../images/loading.svg) no-repeat 50%
+    background: white url(../../images/loading.svg) no-repeat 50%;
 }
 
 #addonify-wishlist-modal-wrapper.loading .addonify-wishlist-modal-body * {
