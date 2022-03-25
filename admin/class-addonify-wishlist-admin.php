@@ -563,16 +563,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 						),
 						array(
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
-							'value' => 'tools',
-							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon tools"></span>',
-						),
-						array(
-							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
-							'value' => 'circle-with-plus',
-							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon circle-with-plus"></span>',
-						),
-						array(
-							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
 							'value' => 'eye',
 							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon eye"></span>',
 						),
@@ -585,22 +575,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
 							'value' => 'settings',
 							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon settings"></span>',
-						),
-						array(
-							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_btn_icon',
-							'value' => 'shopping-bag',
-							'label' => '<span style="font-size: 20px;" class="adfy-wishlist-icon shopping-bag"></span>',
-						),
-					),
-				),
-				array(
-					'field_id' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn',
-					'field_label' => __( 'Animate button', 'addonify-wishlist' ),
-					'field_callback' => array( $this, 'toggle_switch' ),
-					'field_callback_args' => array(
-						array(
-							'name' => ADDONIFY_WISHLIST_DB_INITIALS . 'sidebar_animate_btn',
-							'default' => 1,
 						),
 					),
 				),
