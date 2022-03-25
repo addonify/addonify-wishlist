@@ -751,16 +751,11 @@ class Addonify_Wishlist_Public {
 		$btn_label = esc_attr( $this->get_option( 'sidebar_btn_label' ) );
 
 		$show_btn_icon = $this->get_option( 'sidebar_show_icon', 1 );
-		$animate_btn = intval( $this->get_option( 'sidebar_animate_btn', 1 ) );
 
 		$total_items = $this->wishlist_item_count;
 
 		$css_classes = array( esc_attr( $alignment ) );
 		$css_classes[] = ( $total_items < 1 ) ? 'hidden' : '';
-
-		if ( $animate_btn ) {
-			$css_classes[] = 'animate-btn';
-		}
 
 		$btn_label = apply_filters( 'addonify_wishlist_sidebar_btn_label', $btn_label, $total_items );
 

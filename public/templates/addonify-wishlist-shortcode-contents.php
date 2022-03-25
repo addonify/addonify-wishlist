@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 		count( $data['wishlist_product_ids'] ) > 0 
 	) {
 		?>
-		<form action="" method="POST" >
+		<form action="" method="POST" id="addonify-wishlist-page-form">
 
 			<input type="hidden" name="nonce" value="<?php echo esc_html( $data['nonce'] ); ?>" >
 			<input type="hidden" name="process_addonify_wishlist_form" value="1" >

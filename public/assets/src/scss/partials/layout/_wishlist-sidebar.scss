@@ -18,7 +18,7 @@
     visibility: visible;
     z-index: 99999999;
     margin: 0;
-    padding: 30px 20px;
+    padding: 30px 20px 10px 20px;
     background-color: #FFFFFF;
     @include large_drop_shadow();
     @include transation_delay();
@@ -225,7 +225,7 @@
         @include flex();
         align-items: center;
         justify-content: center;
-        margin-top: 30px;
+        margin-top: 15px;
 
         .addonify-wishlist-goto-wishlist-btn {
 
@@ -241,6 +241,15 @@
             background-color: transparent;
             border-radius: 4px;
             @include transation_delay();
+
+            &:hover {
+
+                color: blue;
+                border-color: blue;
+                box-shadow: none;
+                background: transparent;
+                background-color: transparent;
+            }
         }
     }
 
@@ -274,12 +283,13 @@
 
 #addonify-wishlist-show-sidebar-btn {
 
-    display: inline-flex;
+    @include flex();
     align-items: center;
-    flex-direction: column;
-    gap: 5px;
+    justify-content: center;
+    gap: 10px;
     position: fixed;
-    right: 0;
+    left: auto;
+    right: -40px;
     top: 50vh;
     margin: 0;
     width: auto;
@@ -287,17 +297,18 @@
     padding: 10px 15px;
     cursor: pointer;
     background: #FFFFFF;
-    font-size: 10px;
+    font-size: 11px;
     line-height: 1;
     font-weight: normal;
     letter-spacing: 2px;
     text-transform: uppercase;
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
     z-index: 999999;
+    border-radius: 4px;
 
+    .button-icon,
     .button-label {
 
-        display: inline-flex;
         font-weight: normal;
     }
 
@@ -305,7 +316,7 @@
         
         display: inline-flex;
         font-size: 22px;
-        font-weight: normal;
+        transform: rotate(-90deg);
     }
 }
 
@@ -345,16 +356,10 @@
     z-index: 999999;
 }
 
-.addonify-wishlist-sticky-sidebar-is-visible #addonify-wishlist-show-sidebar-btn[class*="align-left"] {
+#addonify-wishlist-show-sidebar-btn[class*="align-left"] {
 
-    left: 0;
     right: auto;
-}
-
-.addonify-wishlist-sticky-sidebar-is-visible #addonify-wishlist-show-sidebar-btn[class*="align-right"] {
-
-    left: auto;
-    right: 0
+    left: 0;
 }
 
 #addonify-wishlist-sticky-sidebar-container[class*="align-left"] {
@@ -379,4 +384,17 @@
 
     left: auto;
     right: 0;
+}
+
+
+/* -------------------------------------------------------------------------- 
+	#. Responsive
+  -------------------------------------------------------------------------- */
+
+@media( max-width: 575px ) {
+
+    #addonify-wishlist-sticky-sidebar-container {
+
+        max-width: 95vw;
+    }
 }
