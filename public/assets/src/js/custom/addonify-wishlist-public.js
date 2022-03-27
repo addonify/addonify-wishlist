@@ -12,6 +12,7 @@
         var $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
         var $wishlist_count_sel = $('.addonify-wishlist-count');
         var show_popup = addonify_wishlist_object.show_popup;
+        var wishlist_page_table = $('#addonify-wishlist-table');
 
         init();
 
