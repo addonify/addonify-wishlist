@@ -67,8 +67,8 @@
 
                 &:hover {
 
-                    fill: blue;
-                    color: blue;
+                    fill: var(--adfy_wishlist_link_color);
+                    color: var(--adfy_wishlist_link_color);
                     box-shadow: none;
                     background: transparent;
                     background-color: transparent;
@@ -132,11 +132,11 @@
 
                                 > a {
 
-                                    color: #111111;
+                                    color: var(--adfy_wishlist_text_color);
 
                                     &:hover {
 
-                                        color: blue;
+                                        color: var(--adfy_wishlist_link_color);
                                     }
                                 }
                             }
@@ -209,15 +209,43 @@
 
                     position: relative;
 
+                    &::after,
                     &::before {
 
                         content: "";
-                        background: #FFFFFF url(../../images/loading.svg) no-repeat 50%;
+                        @include flex();
+                        justify-content: center;
+                        align-items: center;
                         position: absolute;
-                        top: 0;
                         left: 0;
+                        top: 0;
                         right: 0;
-                        bottom: 0
+                        left: 0;
+                        height: 100%;
+                        width: 100%;
+                        z-index: 2;
+                    }
+
+                    &::before {
+
+                        content: "";
+                        background: white url(../../images/loading.svg) no-repeat 50%;
+                        top: 50%;
+                        left: 50%;
+                        right: auto;
+                        bottom: auto;
+                        height: 30px;
+                        width: 30px;
+                        border-radius: 100%;
+                        transform: translate(-50%, -50%);
+                        animation: AddonifyWishlistSpin 0.7s cubic-bezier(0.37, 0.35, 0.5, 0.44) infinite;
+                    }
+
+                    &::after {
+
+                        content: "";
+                        z-index: 1;
+                        background: rgba(255, 255, 255, 0.9);
                     }
                 }
             }
@@ -284,7 +312,7 @@
         background-color: #f3ffed;
         border: 2px solid #b7eb8f;
         animation: AddonifyWishlistFadeInUp 500ms ease-in-out;
-        @include large_drop_shadow();
+        @include mild_drop_shadow();
 
         svg {
 
