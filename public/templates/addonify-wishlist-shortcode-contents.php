@@ -11,6 +11,8 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
+
+wc_print_notices();
 ?>
 <?php if ( isset( $data['wishlist_name'] ) && $data['wishlist_name'] ) : ?>
 	<h2><?php echo esc_html( $data['wishlist_name'] ); ?></h2>
