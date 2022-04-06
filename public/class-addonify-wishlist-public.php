@@ -774,6 +774,8 @@ class Addonify_Wishlist_Public {
 		// reset css classes.
 		$css_classes = array( $alignment );
 
+		
+
 		// sidebar template.
 		$this->get_templates(
 			'addonify-wishlist-sidebar',
@@ -799,10 +801,14 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_sticky_sidebar_loop( $product_ids ) {
 
+		$wishlist_items = $this->get_all_wishlist();
+
+		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
+
 		$output_data = $this->generate_contents_data( $product_ids, 'sidebar' );
 
 		ob_start();
-		$this->get_templates( 'addonify-wishlist-sidebar-loop', false, array( 'wishlist_data' => $output_data ) );
+		$this->get_templates( 'addonify-wishlist-sidebar-loop', false, array( 'wishlist_product_ids' => $wishlist_product_ids ) );
 		return ob_get_clean();
 	}
 
