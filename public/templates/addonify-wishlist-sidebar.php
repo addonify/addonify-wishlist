@@ -11,6 +11,8 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
+
+
 ?>
 <div id="addonify-wishlist-sticky-sidebar-container" class="<?php echo esc_attr( $css_class ); ?>">
 	<?php do_action( 'addonify_wishlist_after_sidebar_opening_tag' ); ?>

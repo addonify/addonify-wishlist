@@ -71,37 +71,49 @@ wc_print_notices();
 								<?php echo $product->get_price_html(); ?>
 							</td>
 							<td class="stock">
-								<?php echo $product->get_stock_status(); ?>
+								<?php 
+								if ( $product->get_stock_status() ) {
+									switch ( $product->get_stock_status() ) {
+										case 'instock':
+											echo esc_html__( 'In Stock', 'addonify-wishlist' );
+											break;
+										case 'outofstock':
+											echo esc_html__( 'Out of Stock', 'addonify-wishlist' );
+											break;
+										default:
+											break;
+									}
+								}
+								?>
 							</td>
 							<td class="actions">
 								<?php
-								if ( $product->is_purchasable() && $product->is_in_stock() ) {
-
-									if ( in_array( $product->get_type(), array( 'simple', 'external' ) ) ) {
+								if ( in_array( $product->get_type(), array( 'simple', 'external' ) ) ) {
+									if ( $product->is_in_stock() ) {
 										?>
 										<button type="submit" class="button adfy-wishlist-btn" name="addonify_wishlist_add_to_cart" value="<?php echo esc_attr( $product_id ); ?>"><?php echo esc_html( $product->add_to_cart_text() ); ?></button>
 										<?php
-									} else {
-										$add_to_cart_button_classes = array(
-											'button',
-											'adfy-wishlist-btn',
-											'product_type_' . $product->get_type(),
-											$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
-											$product->supports( 'ajax_add_to_cart' ) && $product->is_purchasable() && $product->is_in_stock() ? 'ajax_add_to_cart' : '',
-										);
+									}
+								} else {
+									$add_to_cart_button_classes = array(
+										'button',
+										'adfy-wishlist-btn',
+										'product_type_' . $product->get_type(),
+										$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
+										$product->supports( 'ajax_add_to_cart' ) && $product->is_purchasable() && $product->is_in_stock() ? 'ajax_add_to_cart' : '',
+									);
 
-										$add_to_cart_button_attributes = array(
-											'data-product_id'  => $product->get_id(),
-											'data-product_sku' => $product->get_sku(),
-											'aria-label'       => $product->add_to_cart_description(),
-											'rel'              => 'nofollow',
-										);
-										?>
-										<a href="<?php echo esc_url( $product->add_to_cart_url() ) ?>" class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" <?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>>
-											<?php echo esc_html( $product->add_to_cart_text() ); ?>
-										</a>
-										<?php
-									}										
+									$add_to_cart_button_attributes = array(
+										'data-product_id'  => $product->get_id(),
+										'data-product_sku' => $product->get_sku(),
+										'aria-label'       => $product->add_to_cart_description(),
+										'rel'              => 'nofollow',
+									);
+									?>
+									<a href="<?php echo esc_url( $product->add_to_cart_url() ) ?>" class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" <?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>>
+										<?php echo esc_html( $product->add_to_cart_text() ); ?>
+									</a>
+									<?php
 								}
 								?>
 							</td>

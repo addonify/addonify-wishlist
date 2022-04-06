@@ -74,9 +74,9 @@ if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 
 
 /**
- * Get wislist button label.
+ * Get wishlist button label.
  * 
- * If $in_wislist is true, then already in wishlist button label will be returned. Else, active wishlist button label  * will be returned.
+ * If $in_wishlist is true, then already in wishlist button label will be returned. Else, active wishlist button label  * will be returned.
  * 
  * @since 1.0.0
  * @param boolean $in_wishlist.
@@ -89,5 +89,26 @@ if ( ! function_exists( 'addonify_wishlist_get_button_label' ) ) {
 		$addonify_db_initial = ADDONIFY_WISHLIST_DB_INITIALS;
 
 		return  ( ! $in_wishlist ) ? get_option( "{$addonify_db_initial}btn_label" ) : get_option( "{$addonify_db_initial}btn_label_if_added_to_wishlist" );
+	}
+}
+
+
+/**
+ * Get wishlist page url.
+ * 
+ * @since 1.0.0
+ * @return string|boolean $wishlist_page_url Wishlist page url if found else false.
+ */
+if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_url' ) ) {
+
+	function addonify_wishlist_get_wishlist_page_url() {
+
+		$wislist_page = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page' );
+
+		if ( $wislist_page ) {
+			return get_permalink( $wislist_page );
+		} else {
+			return false;
+		}
 	}
 }

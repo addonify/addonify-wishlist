@@ -1,7 +1,7 @@
-(function ($) {
+(function($) {
     'use strict';
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         var $body = $('body');
         var $modal = $('#addonify-wishlist-modal-wrapper');
@@ -17,7 +17,7 @@
         init();
 
         // main "add to wishlist" btn.
-        $body.on('click', '.addonify-add-to-wishlist-btn', function (e) {
+        $body.on('click', '.addonify-add-to-wishlist-btn', function(e) {
 
             e.preventDefault();
 
@@ -39,23 +39,23 @@
 
 
         // close viewlist modal
-        $body.on('click', '#addonify-wishlist-close-modal-btn', function () {
+        $body.on('click', '#addonify-wishlist-close-modal-btn', function() {
             hide_modal();
         })
 
 
         // click in "view wishlist" button in modal
-        $body.on('click', '#addonify-wishlist-view-wishlist-btn', function () {
+        $body.on('click', '#addonify-wishlist-view-wishlist-btn', function() {
             window.location.href = addonify_wishlist_object.wishlist_page_url;
         })
 
 
         // show hide sticky sidebar
-        $sticky_sidebar_btn.click(function () {
+        $sticky_sidebar_btn.click(function() {
             $body.toggleClass('addonify-wishlist-sticky-sidebar-is-visible');
         })
 
-        $close_sticky_sidebar_btn.on('click', function () {
+        $close_sticky_sidebar_btn.on('click', function() {
 
             if ($body.hasClass('addonify-wishlist-sticky-sidebar-is-visible')) {
 
@@ -65,7 +65,7 @@
 
         // hide sidebar,
         // if clicked outside sidebar container.
-        $(document).mouseup(function (e) {
+        $(document).mouseup(function(e) {
 
             if (!$('body').hasClass('addonify-wishlist-sticky-sidebar-is-visible')) {
                 // do not proceed if sidebar is not open.
@@ -84,7 +84,7 @@
 
         // wishlist page form elements --------------------------------------
 
-        $body.on('click', '.addonify-wishlist-remove-notification', function () {
+        $body.on('click', '.addonify-wishlist-remove-notification', function() {
             var $parent = $(this).parents('.addonify-wishlist-notification');
             $parent.remove();
         });
@@ -112,7 +112,7 @@
             if ($overlay_btn_wrapper_sel.length) {
 
                 //  wrapper div already exists
-                $overlay_parent_container.each(function () {
+                $overlay_parent_container.each(function() {
 
                     // clone original button
                     var btn_clone = $('button.' + overlay_btn_class, this).clone();
@@ -125,7 +125,7 @@
                 })
             } else {
                 // wrap all buttons into a single div
-                $overlay_parent_container.each(function () {
+                $overlay_parent_container.each(function() {
                     $('button.' + overlay_btn_class, this).wrapAll('<div class=" ' + overlay_btn_wrapper_class + ' " />');
                 });
 
@@ -135,9 +135,9 @@
                 $('.' + overlay_btn_wrapper_class).css('height', img_height + 'px');
 
 
-                $('.' + overlay_btn_wrapper_class).hover(function () {
+                $('.' + overlay_btn_wrapper_class).hover(function() {
                     $(this).css('opacity', 1);
-                }, function () {
+                }, function() {
                     $(this).css('opacity', 0);
                 })
             }
@@ -161,7 +161,7 @@
             // mark modal as loading
             $modal.addClass('loading');
 
-            $.post(addonify_wishlist_object.ajax_url, data, function (response) {
+            $.post(addonify_wishlist_object.ajax_url, data, function(response) {
 
                 $modal.removeClass('loading');
 
@@ -195,7 +195,7 @@
                     }
 
                     // update sidebar contents
-                    $sidebar_ul.append(response.data.msg);
+                    $sidebar_ul.html('').append(response.data.msg);
 
                     // update wishlist_count button
                     $wishlist_count_sel.text(response.data.wishlist_count);
@@ -254,7 +254,7 @@
         // make sidebar form ajaxy
         // also, delete item from wishlist from sidebar
 
-        $body.on('click', '#addonify-wishlist-sidebar-form button', function (e) {
+        $body.on('click', '#addonify-wishlist-sidebar-form button', function(e) {
             e.preventDefault();
 
             var $parent = $(this).parents('li');
@@ -275,7 +275,7 @@
                 '&action=' + encodeURI(addonify_wishlist_object.action_sidebar_form);
 
 
-            $.post(addonify_wishlist_object.ajax_url, data, function (response) {
+            $.post(addonify_wishlist_object.ajax_url, data, function(response) {
 
                 var msg = '';
                 if (response.success == true) {
@@ -316,7 +316,7 @@
                 $notice.prepend('<div class="notice adfy-wishlist-sidebar-notice"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" /></svg><span>' + msg + '</span></div> ');
 
                 if (response.data.redirect_url != undefined) {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.href = response.data.redirect_url;
                     }, 2000); // 2000
                 }
@@ -325,9 +325,9 @@
 
 
             // delete notification after 5 seconds
-            setTimeout(function () {
+            setTimeout(function() {
 
-                $notice.find('.notice').fadeOut('fast', function () {
+                $notice.find('.notice').fadeOut('fast', function() {
 
                     $(this).remove();
                 })
