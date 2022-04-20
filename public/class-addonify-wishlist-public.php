@@ -688,6 +688,8 @@ class Addonify_Wishlist_Public {
 		$wishlist_name = $this->get_option( 'default_wishlist_name' );
 
 		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
+
+		ob_start();
 		
 		$this->get_templates(
 			'addonify-wishlist-shortcode-contents',
@@ -699,6 +701,8 @@ class Addonify_Wishlist_Public {
 				'nonce' => wp_create_nonce( $this->plugin_name ),
 			)
 		);
+
+		return ob_get_clean();
 
 	}
 
