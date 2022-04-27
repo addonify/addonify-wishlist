@@ -68,3 +68,107 @@
         }
     }
 }
+
+
+/* -------------------------------------------------------------------------- 
+	#. Media Query
+  -------------------------------------------------------------------------- */
+
+@media ( max-width: 768px ) {
+
+
+    #addonify-wishlist-page-container {
+
+         #addonify-wishlist-table {
+
+            thead {
+
+                display: none;
+            }
+
+            tbody {
+
+                tr {
+
+                    @include flex();
+                    position: relative;
+                    flex-direction: column;
+                    margin-bottom: 30px;
+                    padding: 20px 20px 20px 90px;
+                    border: 1px solid #EEEEEE;
+                    border-radius: 5px;
+
+                    td {
+
+                        padding: 10px 0;
+                        border: none;
+                        border-bottom: 1px dotted #EEEEEE;
+
+                        &:last-child {
+
+                            padding-bottom: 0;
+                            border-bottom: none
+                        } 
+                    }
+
+                    td.remove {
+
+                        position: absolute;
+                        top: 15px;
+                        left: auto;
+                        right: 10px;
+                        width: 30px;
+                        padding: 0;
+                        border: 0;
+                    }
+
+                    td.image {
+
+                        position: absolute;
+                        display: inline-flex;
+                        left: 20px;
+                        right: auto;
+                        top: 30px;
+                        border: 0;
+                        padding: 0;
+                        width: 55px;
+                        overflow: hidden;
+
+                        a {
+
+                            display: inline-flex;
+
+                            img {
+
+                                display: inline-flex;
+                                width: 55px;
+                                object-fit: cover;
+                                object-position: center;
+                                border-radius: 2px;
+                            }
+                        }
+                    }
+
+                    td.name {
+
+                        padding-right: 40px;
+                    }
+
+                    td.actions {
+
+                        .adfy-wishlist-btn {
+
+                            height: auto;
+                            padding: 13px 15px;
+                        }
+                    }
+
+                    &:last-child {
+
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

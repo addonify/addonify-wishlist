@@ -70,3 +70,16 @@ body.addonify-wishlist-modal-is-open #addonify-wishlist-modal-wrapper {
 	
     display: block;
 }
+
+/* -------------------------------------------------------------------------- 
+	#. Media Query
+  -------------------------------------------------------------------------- */
+
+@media ( max-width: 575px ) {
+
+    #addonify-wishlist-modal-wrapper .addonify-wishlist-modal-body {
+
+        width: 85vw;
+        padding: 20px;
+    }
+}
