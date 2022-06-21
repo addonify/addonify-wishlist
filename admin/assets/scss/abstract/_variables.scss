@@ -1,0 +1,99 @@
+/*================================================================
+[Define variables]
+==================================================================*/
+//
+// Since: 1.0.0
+// usage = color:var(--addonify_primary_color);
+/*==================================================================*/
+
+:root {
+  
+  /* -------------------------------------------------------------------------- 
+	  Colors variables
+  -------------------------------------------------------------------------- */
+
+  // Base colors
+  --addonify_primary_color: #0286e7;
+  --addonify_seconary_color: #28a745;
+  --addonify_base_text_color: #585858;
+  --addonify_base_heading_color: #4A4A4A;
+  --addonify_base_link_color: #0366E0; // default link color
+  --addonify_base_link_hover_color: var(--addonify_seconary_color);
+  --addonify_body_background_color: white;
+  --addonify_border_color: #d5d5d5;
+  --addonify_inputs_border_color: #d5d5d5; // for inputs, selects & textarea
+
+  // Buttons
+  --addonify_button_text_color: white;
+  --addonify_button_background_color: #0286e7;
+  --addonify_button_hover_text_color: white;
+  --addonify_button_hover_background_color: #28a745;
+  --addonify_button_border_color: transparent;
+  --addonify_button_hover_border_color: transparent;
+  --addonify_button_border_width: 0;
+  --addonify_button_border_style: solid;
+
+  --addonify_text_button_color: var(--addonify_primary_color);
+  --addonify_text_button_hover_color: var(--addonify_seconary_color);
+  --addonify_text_button_underline_color: var(--addonify_primary_color);
+  --addonify_text_button_hover_underline_color: var(--addonify_seconary_color);
+  --addonify_text_button_underline_height: 3px;
+
+  --addonify_button_is_link_style_text_color: #ef2c2c;
+  --addonify_button_is_link_style_hover_text_color: #1e73be;
+  --addonify_button_is_link_style_underline_color: #ef2c2c;
+  --addonify_button_is_link_style_hover_underline_color: #1e73be;
+
+  /* -------------------------------------------------------------------------- 
+	  Typography variables
+  -------------------------------------------------------------------------- */
+
+  // typography
+  --addonify_system_font_family: system ui, -apple-system, BlinkMacSystemFont, Helvetica, Inter, Arial, Roboto, Segoe ui, sans-serif; // websafe
+  --addonify_text_emphasis_font_family: 'DM Mono', monospace;
+  --addonify_monospace_font_family: 'DM Mono', monospace;
+
+  --addonify_base_font_size: 1.125rem; // 15px: 0.9375rem [16px: 1rem]
+  --addonify_base_font_weight: normal;
+  --addonify_base_letter_spacing: 0.50px; // -0.0311em is best for inter
+  --addonify_base_font_line_height: 1.6;
+  --addonify_base_font_family: 'Inter', sans-serif;
+
+  --addonify_heading_h1_font_size: 2.25rem; 
+  --addonify_heading_h2_font_size: 1.75rem; 
+  --addonify_heading_h3_font_size: 1.5rem; 
+  --addonify_heading_h4_font_size: 1.25rem;
+  --addonify_heading_h5_font_size: 1.125rem;
+  --addonify_heading_h6_font_size: 1rem; 
+
+  --addonify_heading_font_weight: 500;
+  --addonify_heading_letter_spacing: 0; // -0.0415625em is best for inter
+  --addonify_heading_line_height: 1.2;
+  --addonify_heading_font_family: 'Inter', sans-serif;
+  
+
+  --addonify_button_font_size: 15px; // 14px: 15px: 0.9375rem [16px: 1rem]
+  --addonify_button_font_weight: normal;
+  --addonify_button_line_height: 1;
+
+  --addonify_entry_single_title_font_size: 2.25rem; 
+
+  /* -------------------------------------------------------------------------- 
+	  Border radius
+  -------------------------------------------------------------------------- */
+  --addonify_buttons_border_radius: 4px;
+  --addonify_inputs_border_radius: 4px;
+
+  /* -------------------------------------------------------------------------- 
+	  Grid
+  -------------------------------------------------------------------------- */
+  --addonify_grid_gutter_width: 30px;
+  --addonify_grid_gutter_width_none: 0;
+
+  /* -------------------------------------------------------------------------- 
+	  Containers
+  -------------------------------------------------------------------------- */
+  --addonify_container_width: 1000px;
+  --addonify_container_width_narrow: 800px;
+  --addonify_container_width_wide: 100%;
+}

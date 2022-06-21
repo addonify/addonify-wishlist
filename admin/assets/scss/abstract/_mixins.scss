@@ -1,0 +1,150 @@
+/* -------------------------------------------------------------------------- 
+	Mixin: Better Font Randering
+  -------------------------------------------------------------------------- */
+
+@mixin better_font_rendering() {
+
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+@function make_rem($pxValue) {
+    @return #{stripUnit($pxValue) / stripUnit($html-font-size)}rem;
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Flex
+  -------------------------------------------------------------------------- */
+
+@mixin flex() {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Grid
+  -------------------------------------------------------------------------- */
+
+@mixin grid() {
+
+    display: grid;
+}
+
+@mixin grid_column_gap($gap) {
+
+    grid-gap: #{$gap};
+}
+
+@mixin grid_row_gap($gap) {
+
+    row-gap: #{$gap};
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Transitions
+  -------------------------------------------------------------------------- */
+
+@mixin transation_delay() {
+
+    transition: all 0.5s ease;
+}
+
+@mixin transation_delay_dymanic($value) {
+
+    transition: all $value ease;
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Visibility
+  -------------------------------------------------------------------------- */
+
+@mixin visibility_hidden () {
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+@mixin visibility_visible () {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Animations
+  -------------------------------------------------------------------------- */
+
+@mixin scale ($value) {
+
+    transform: scale($value);
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: WooCommerce product columns.
+  -------------------------------------------------------------------------- */
+
+@mixin grid_columns($columns) {
+
+  @if $columns == 1 {
+      grid-template-columns: repeat(1, 1fr);
+  }
+  @else if $columns == 2 {
+      grid-template-columns: repeat(2, 1fr);
+  }
+  @else if $columns == 3 {
+      grid-template-columns: repeat(3, 1fr);
+  }
+  @else if $columns == 4 {
+      grid-template-columns: repeat(4, 1fr);
+  }
+  @else if $columns == 5 {
+      grid-template-columns: repeat(5, 1fr);
+  }
+  @else if $columns == 6 {
+      grid-template-columns: repeat(6, 1fr);
+  }
+  @else {
+      grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Screen reader text
+  -------------------------------------------------------------------------- */
+
+@mixin screen_reader_text() {
+
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Clearfix
+  -------------------------------------------------------------------------- */
+
+@mixin clearfix() {
+
+  &::before,
+	&::after {
+
+		content: "";
+		display: table;
+	}
+
+	&::after {
+
+		clear: both;
+	}
+}

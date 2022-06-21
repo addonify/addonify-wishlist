@@ -1,4 +1,4 @@
-=== Addonify Wishlist ===
+=== Addonify WooCommerce Wishlist ===
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, woocommerce, ecommerce, e-commerce, product wishlist
 Requires at least: 5.0.0

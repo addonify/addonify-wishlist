@@ -6,12 +6,10 @@ const shell = require('gulp-shell');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const postcss = require('gulp-postcss');
-const replace = require('gulp-replace');
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
 const rtlcss = require('gulp-rtlcss');
 const rename = require('gulp-rename');
-const wpPot = require('gulp-wp-pot');
 const autoprefixer = require('autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass')(require('sass'));
@@ -79,22 +77,7 @@ const rtlcsspath = {
     rtlcss_dist: "./public/assets/build/css/", // where would you like to save your generated RTL CSS
 }
 
-// 4# path of php files to generate WordPress POT file
-
-var project__name = 'Addonify Wishlist';
-var project__text__domain = 'addonify-wishlist';
-
-var php__file__path = [
-
-    './*.php',
-    './**.php',
-    './**/*.php',
-    '!./github/**',
-    '!./node_modules/*.php',
-    '!./.git/*.php',
-]
-
-// 5# zip file path
+// 4# zip file path
 
 var output__compressed__file = 'addonify-wishlist.zip';
 
@@ -109,13 +92,17 @@ const source__files__folders__to__compress = {
         '!./.github/**',
         '!./.vscode',
         '!./public/assets/src/**',
+        '!./admin/src/**',
+        '!./admin/assets/scss/**',
         '!./gulpfile.js',
         '!./package.json',
         '!./package-lock.json',
         '!./node_modules/**',
         '!./composer.json',
         '!./composer.lock',
-        '!./sftp-config.json'
+        '!./sftp-config.json',
+        '!./webpack.mix.js',
+        '!./babelrc',
     ],
 
     path__to__save__production__zip: "./",
@@ -196,17 +183,6 @@ gulp.task('dortlTask', function () {
         .pipe(gulp.dest(rtlcsspath.rtlcss_dist)); // Output RTL stylesheets.
 });
 
-// Task to generate WordPress POT file
-
-gulp.task('makeWPPot', function () {
-    return gulp.src(php__file__path)
-        .pipe(wpPot({
-            domain: project__text__domain,
-            package: project__name
-        }))
-        .pipe(gulp.dest('./languages/' + project__text__domain + '.pot'));
-});
-
 // Task to generate Production Zip File 
 
 gulp.task('zipProductionFiles', function () {
@@ -220,21 +196,15 @@ gulp.task('zipProductionFiles', function () {
 //=========================================
 //
 // 1. Command: gulp assets
-// 2. Command: gulp makepot
-// 3. Command: gulp zip
+// 2. Command: gulp zip
 //
 //=========================================
 
 
 gulp.task('default', shell.task(
 
-    'echo ===== ⛔️ Ooops! gulp default command is disabled in this project. These are the available commands: gulp assets, gulp zip & gulp makepot. =====',
+    'echo ===== ⛔️ Ooops! gulp default command is disabled in this project. These are the available commands: gulp assets & gulp zip =====',
 ));
-
-gulp.task('makepot', gulp.series('makeWPPot', (done) => {
-
-    done();
-}));
 
 gulp.task('zip', gulp.series('zipProductionFiles', (done) => {
 

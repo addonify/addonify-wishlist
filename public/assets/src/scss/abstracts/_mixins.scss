@@ -1,5 +1,20 @@
 /* -------------------------------------------------------------------------- 
-	#. Mixins
+	Mixin: Better Font Randering
+  -------------------------------------------------------------------------- */
+
+@mixin better_font_rendering() {
+
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+@function rem($px) {
+
+    @return #{stripUnit($px) / stripUnit($html-font-size)}rem;
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Flex box
   -------------------------------------------------------------------------- */
 
 @mixin flex () {
@@ -8,6 +23,62 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 }
+
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Grid
+  -------------------------------------------------------------------------- */
+
+@mixin grid() {
+
+    display: grid;
+}
+
+@mixin grid_columns($columns) {
+
+  @if $columns == 1 {
+      grid-template-columns: repeat(1, 1fr);
+  }
+  @else if $columns == 2 {
+      grid-template-columns: repeat(2, 1fr);
+  }
+  @else if $columns == 3 {
+      grid-template-columns: repeat(3, 1fr);
+  }
+  @else if $columns == 4 {
+      grid-template-columns: repeat(4, 1fr);
+  }
+  @else if $columns == 5 {
+      grid-template-columns: repeat(5, 1fr);
+  }
+  @else if $columns == 6 {
+      grid-template-columns: repeat(6, 1fr);
+  }
+  @else {
+      grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Visibility
+  -------------------------------------------------------------------------- */
+
+@mixin visibility_hidden () {
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+@mixin visibility_visible () {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Animations & transation
+  -------------------------------------------------------------------------- */
 
 @mixin transation_delay () {
 
@@ -25,36 +96,46 @@
     @include transation_delay();
 }
 
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Position
+  -------------------------------------------------------------------------- */
+
 @mixin position ( $top, $bottom, $left, $right ) {
 	
-	 top: $top;
-	 bottom: $bottom;
-	 left: $left;
-	 right: $right;
-	 transform:translateY(-50%);
+	top: $top;
+	bottom: $bottom;
+	left: $left;
+	right: $right;
+	transform:translateY(-50%);
 }
 
 @mixin position_topnleft () {
 	
-	 top: 50%;
-	 left: 50%;
+	top: 50%;
+	left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
 
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Overlay
+  -------------------------------------------------------------------------- */
+
 @mixin overlay () {
 
-	 top: 0;
-	 bottom: 0;
-	 left: 0;
-	 right: 0;
-	 background:rgba(0, 0, 0, 0.8);
-	 @include transation_delay();
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background:rgba(0, 0, 0, 0.8);
+	@include transation_delay();
 }
 
-@mixin border_radius ( $radius ) {
 
-    border-radius: $radius;
-}
+/* -------------------------------------------------------------------------- 
+	Mixin: Drop shadow
+  -------------------------------------------------------------------------- */
 
 @mixin drop_shadow () {
 
@@ -71,3 +152,58 @@
     box-shadow: 0px 0px 65px rgba(0, 0, 0, 0.1);
 }
 
+/* -------------------------------------------------------------------------- 
+	Mixin: Clearfix
+  -------------------------------------------------------------------------- */
+
+@mixin clearfix() {
+
+  	&::before,
+	&::after {
+
+		content: "";
+		display: table;
+	}
+
+	&::after {
+
+		clear: both;
+	}
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Breakpoints
+  -------------------------------------------------------------------------- */
+
+@mixin breakpoint($point) {
+  /* Wide */
+  @if $point == wide {
+    @media (max-width: 1440px) {
+      @content;
+    }
+  }
+  /* Ipad Pro */
+  @else if $point == ipadpro {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  }
+  /* Medium */
+  @else if $point == medium {
+    @media (max-width: 991px) {
+      @content;
+    }
+  }
+  /* Ipad */
+  @else if $point == ipad {
+    @media ( max-width: 768px ) {
+      @content;
+    }
+  }
+  /* Mobile */
+  @else if $point == mobile {
+    @media ( max-width: 575px ) {
+      @content;
+    }
+  }
+}
