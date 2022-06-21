@@ -1,9 +1,7 @@
 <script setup>
-	import { useOptionsStore } from "../stores/options";
+	import { useOptionsStore } from "../../stores/options";
 	let { __, _x, _n, _nx } = wp.i18n;
 	let store = useOptionsStore();
-	let documentationLinkLabel = adfy_wp_locolizer.documentation_link_label;
-	let saveButtonLabel = adfy_wp_locolizer.save_button_label;
 </script>
 
 <template>
@@ -57,11 +55,11 @@
 			<div class="adfy-col end">
 				<div class="buttons">
 					<a
-						href="https://docs.addonify.com/kb/woocommerce-quick-view/"
+						href="https://docs.addonify.com/kb/woocommerce-wihlist/"
 						class="adfy-button fake-button has-underline"
 						target="_blank"
 					>
-						{{ __("Documentation", "addonify-quick-view") }}
+						{{ __("Documentation", "addonify-wishlist") }}
 					</a>
 					<button
 						type="submit"
@@ -81,7 +79,7 @@
 								></path>
 							</svg>
 						</span>
-						{{ __("Save Options", "addonify-quick-view") }}
+						{{ __("Save Options", "addonify-wishlist") }}
 					</button>
 				</div>
 			</div>

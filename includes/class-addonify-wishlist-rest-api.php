@@ -7,7 +7,7 @@
  * @since      1.0.7
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/includes
- * @author     Addonify <info@addonify.com>
+ * @author     Addonify <contact@addonify.com>
  */
 if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 

@@ -1,6 +1,6 @@
 <script setup>
 	import { onMounted } from "vue";
-	import Loading from "../Loading.vue";
+	import Loading from "../layouts/Loading.vue";
 	import { Check, Close } from "@element-plus/icons-vue";
 	import { useOptionsStore } from "../../stores/options";
 	let store = useOptionsStore();

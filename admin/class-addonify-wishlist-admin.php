@@ -16,7 +16,7 @@
  *
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/admin
- * @author     Adodnify <info@addonify.com>
+ * @author     Adodnify <contact@addonify.com>
  */
 class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 
@@ -73,15 +73,10 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		// load styles in this plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
 
-			// toggle switch.
-			wp_enqueue_style( 'lc_switch', plugin_dir_url( __FILE__ ) . 'css/lc_switch.css', array(), $this->version, 'all' );
-
-			// built in wp color picker.
-			// requires atleast wordpress 3.5.
-			wp_enqueue_style( 'wp-color-picker' );
-
 			// admin css.
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.min.css', array(), $this->version, 'all' );
+			//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.min.css', array(), $this->version, 'all' );
+
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
 		}
 	}
 
@@ -102,7 +97,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 
 			wp_enqueue_script( "{$this->plugin_name}-main", plugin_dir_url( __FILE__ ) . 'assets/js/main.js', array("{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ), $this->version, true );
 
-			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WIHSLIST_LOCOLIZER', array(
+			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WISHLIST_LOCOLIZER', array(
 				'admin_url'  						=> admin_url( '/' ),
 				'ajax_url'   						=> admin_url( 'admin-ajax.php' ),
 				'rest_namespace' 					=> 'addonify_wishlist_options_api',
@@ -177,13 +172,13 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 	 * @since    1.0.0
 	 */
 	public function get_settings_screen_contents() {
-		$current_tab = ( isset( $_GET['tabs'] ) ) ? sanitize_text_field( wp_unslash( $_GET['tabs'] ) ) : 'settings';
-		$tab_url = "admin.php?page=$this->settings_page_slug&tabs=";
+		//$current_tab = ( isset( $_GET['tabs'] ) ) ? sanitize_text_field( wp_unslash( $_GET['tabs'] ) ) : 'settings';
+		//$tab_url = "admin.php?page=$this->settings_page_slug&tabs=";
 
-		require_once ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/settings-screen.php';
+		//require_once ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/settings-screen.php';
 
 		?>
-			<!--<div id="___adfy-wishlist-app___"></div>-->
+			<div id="___adfy-wishlist-app___"></div>
 		<?php
 	}
 	

@@ -16,7 +16,7 @@
  *
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/public
- * @author     Adodnify <info@addonify.com>
+ * @author     Adodnify <contact@addonify.com>
  */
 class Addonify_Wishlist_Public {
 
