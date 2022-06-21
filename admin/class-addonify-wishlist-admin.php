@@ -83,10 +83,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 			// admin css.
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.min.css', array(), $this->version, 'all' );
 		}
-
-		// admin menu icon fix.
-		wp_enqueue_style( 'addonify-icon-fix', plugin_dir_url( __FILE__ ) . 'css/addonify-icon-fix.css', array(), $this->version, 'all' );
-
 	}
 
 
@@ -100,20 +96,21 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		// load scripts in plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
 
-			if ( isset( $_GET['tabs'] ) && 'styles' === $_GET['tabs'] ) {
+			wp_enqueue_script( "{$this->plugin_name}-manifest", plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js', null, $this->version, true );
 
-				// requires atleast wordpress 4.9.0.
-				wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
-				wp_enqueue_script( 'wp-color-picker' );
-			}
+			wp_enqueue_script( "{$this->plugin_name}-vendor", plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js', array(  "{$this->plugin_name}-manifest" ), $this->version, true );
 
-			// toggle switch.
-			wp_enqueue_script( 'lc_switch', plugin_dir_url( __FILE__ ) . 'js/lc_switch.min.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( "{$this->plugin_name}-main", plugin_dir_url( __FILE__ ) . 'assets/js/main.js', array("{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ), $this->version, true );
 
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/addonify-wishlist-admin.min.js', array( 'jquery' ), $this->version, false );
-
+			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WIHSLIST_LOCOLIZER', array(
+				'admin_url'  						=> admin_url( '/' ),
+				'ajax_url'   						=> admin_url( 'admin-ajax.php' ),
+				'rest_namespace' 					=> 'addonify_wishlist_options_api',
+				'version_number' 					=> $this->version,
+			) );
 		}
 
+		wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
 	}
 
 
@@ -141,7 +138,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		}
 
 		if ( ! $parent_menu_slug ) {
-			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), plugin_dir_url( __FILE__ ) . '/images/addonify-logo.svg', 76 );
+			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 'dashicons-superhero', 70 );
 			add_submenu_page( $this->settings_page_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 1 );
 
 		} else {
@@ -173,7 +170,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 	}
 
 
-
 	/**
 	 * Get contents from settings page templates and print it
 	 * Called from "add_menu_callback".
@@ -185,9 +181,12 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 		$tab_url = "admin.php?page=$this->settings_page_slug&tabs=";
 
 		require_once ADDONIFY_WISHLIST_PLUGIN_PATH . '/admin/templates/settings-screen.php';
+
+		?>
+			<!--<div id="___adfy-wishlist-app___"></div>-->
+		<?php
 	}
-
-
+	
 
 	/**
 	 * Generate form elements for settings page from array

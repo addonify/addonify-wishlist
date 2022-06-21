@@ -14,13 +14,12 @@
 =====================================
 */
 
-@import 'abstracts/variables';
-@import 'abstracts/mixins';
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
 
 @import 'partials/components/buttons';				// buttons
 @import 'partials/components/tooltip';				// tooltip js
 @import 'partials/layout/wishlist-modal';			// modal
 @import 'partials/layout/wishlist-sidebar';			// sidebar
 @import 'partials/layout/wishlist-page';			// page
-
 @import 'partials/components/keyframe';				// keyframe

@@ -1,0 +1,57 @@
+/* -------------------------------------------------------------------------- 
+	Header
+  -------------------------------------------------------------------------- */
+
+.adfy-header {
+
+    display: block;
+    position: fixed;
+    z-index: 100;
+    left: 160px;
+    right: 0;
+    top: 30px;
+    padding: 10px 30px 10px 30px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: white;
+
+    .adfy-row {
+
+        @include grid();
+        grid-template-columns: 160px auto;
+        column-gap: 30px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .start {
+
+        .branding {
+
+            .adfy-link {
+
+                display: inline-flex;
+                
+                img {
+
+                    display: inline-flex;
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+
+    .end {
+
+        @include flex();
+        align-items: center;
+        justify-content: flex-end;
+
+        .buttons {
+
+            @include flex();
+            align-items: center;
+            justify-content: flex-end;
+            gap: 30px;
+        }
+    }
+}
