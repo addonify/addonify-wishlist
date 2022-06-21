@@ -56,19 +56,19 @@
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    font-family: var(--cc_system_font_family);
-    font-weight: var(--cc_system_font_family);
-    font-size: var(--cc_button_font_size);
+    font-family: var(--addonify_system_font_family);
+    font-weight: var(--addonify_system_font_family);
+    font-size: var(--addonify_button_font_size);
     font-weight: normal;
-    fill: var(--cc_button_text_color);
-    color: var(--cc_button_text_color);
-    line-height: var(--cc_button_line_height);
+    fill: var(--addonify_button_text_color);
+    color: var(--addonify_button_text_color);
+    line-height: var(--addonify_button_line_height);
     padding: 15px 20px;
-    border-width: var(--cc_button_border_width);
-    border-style: var(--cc_button_border_style);
-    border-color: var(--cc_button_border_color);
-    background-color: var(--cc_button_background_color);
-    border-radius: var(--cc_buttons_border_radius);
+    border-width: var(--addonify_button_border_width);
+    border-style: var(--addonify_button_border_style);
+    border-color: var(--addonify_button_border_color);
+    background-color: var(--addonify_button_background_color);
+    border-radius: var(--addonify_buttons_border_radius);
     cursor: pointer;
     text-decoration: none;
     transition: all 0.5s ease;
@@ -80,10 +80,10 @@
 
     &:hover {
 
-        fill: var(--cc_button_hover_text_color);
-        color: var(--cc_button_hover_text_color);
-        border-color: var(--cc_button_hover_border_color);
-        background-color: var(--cc_button_hover_background_color);
+        fill: var(--addonify_button_hover_text_color);
+        color: var(--addonify_button_hover_text_color);
+        border-color: var(--addonify_button_hover_border_color);
+        background-color: var(--addonify_button_hover_background_color);
         text-decoration: none;
     }
 }
@@ -127,15 +127,15 @@
     height: auto;
     padding: 0;
     border-radius: 0;
-    fill: var(--cc_base_text_color);
-    color: var(--cc_base_text_color);
+    fill: var(--addonify_base_text_color);
+    color: var(--addonify_base_text_color);
     border: none;
     background-color: transparent;
 
     &:hover {
 
-        fill: var(--cc_secondary_color);
-        color: var(--cc_secondary_color);
+        fill: var(--addonify_secondary_color);
+        color: var(--addonify_secondary_color);
         border: none;
         text-decoration: none;
         background-color: transparent;
@@ -192,13 +192,13 @@
 
 .adfy-button.fake-button.has-underline:hover {
 
-    fill: var(--cc_primary_color);
-    color: var(--cc_primary_color);
+    fill: var(--addonify_primary_color);
+    color: var(--addonify_primary_color);
 }
 
 .adfy-button.fake-button.has-underline:hover::before {
 
     transform: scale(1);
     transform-origin: left center;
-    background-color: var(--cc_primary_color);
+    background-color: var(--addonify_primary_color);
 }

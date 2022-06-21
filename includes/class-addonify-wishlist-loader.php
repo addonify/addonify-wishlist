@@ -18,7 +18,7 @@
  *
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/includes
- * @author     Adodnify <info@addonify.com>
+ * @author     Adodnify <contact@addonify.com>
  */
 class Addonify_Wishlist_Loader {
 

@@ -11,7 +11,7 @@ mix.disableNotifications();
 */
 
 //mix.alias({
-//    '@': path.join(__dirname, 'admin/src/')
+//    '@': path.join(__dirname, 'admin/src')
 //});
 
 /**

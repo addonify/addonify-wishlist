@@ -5,7 +5,7 @@
     position: relative;
     margin: 0 0 0 -20px;
     padding: 0;
-    font-weight: var(--cc_system_font_family);
+    font-weight: var(--addonify_system_font_family);
     font-weight: normal;
     box-sizing: border-box;
     @include better_font_rendering();
@@ -36,7 +36,7 @@
         .end {
 
             padding-left: 60px;
-            border-left: 1px solid var(--cc_border_color);
+            border-left: 1px solid var(--addonify_border_color);
         }
     }
 }
@@ -64,9 +64,9 @@
                 gap: 10px;
                 align-items: center;
                 padding: 12px 15px 10px 15px;
-                font-family: var(--cc_system_font_family);
-                fill: var(--cc_base_text_color);
-                color: var(--cc_base_text_color);
+                font-family: var(--addonify_system_font_family);
+                fill: var(--addonify_base_text_color);
+                color: var(--addonify_base_text_color);
                 font-weight: normal;
                 font-size: 15px;
                 line-height: 1;
@@ -86,8 +86,8 @@
 
                 &:hover {
 
-                    fill: var(--cc_base_text_color);
-                    color: var(--cc_base_text_color);
+                    fill: var(--addonify_base_text_color);
+                    color: var(--addonify_base_text_color);
                     background-color: white;
                     text-decoration: none;
                     box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.10);
@@ -101,8 +101,8 @@
 
             .router-link-active {
 
-                fill: var(--cc_primary_color);
-                color: var(--cc_primary_color);
+                fill: var(--addonify_primary_color);
+                color: var(--addonify_primary_color);
                 background-color: white;
                 box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.10);
             }
@@ -126,7 +126,7 @@
     display: block;
     padding: 0;
     margin: 0 0 15px 5px;
-    font-family: var(--cc_system_font_family);
+    font-family: var(--addonify_system_font_family);
     font-size: 15px;
     line-height: 1.3;
     font-weight: 500;
@@ -154,7 +154,7 @@
         align-items: center;
         gap: 5px;
         margin: 0;
-        font-family: var(--cc_system_font_family);
+        font-family: var(--addonify_system_font_family);
         font-size: 15px;
         line-height: 1.3;
         font-weight: 500;

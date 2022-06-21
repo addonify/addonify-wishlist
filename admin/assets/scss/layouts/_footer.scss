@@ -50,7 +50,7 @@
                     gap: 3px;
                     text-decoration: none;
                     color: #888888;
-                    font-family: var(--cc_system_font_family);
+                    font-family: var(--addonify_system_font_family);
                     font-size: 14px;
                     font-weight: normal;
                     line-height: 1;
@@ -58,8 +58,8 @@
 
                     &:hover {
 
-                        fill: var(--cc_base_link_hover_color);
-                        color: var(--cc_base_link_hover_color);
+                        fill: var(--addonify_base_link_hover_color);
+                        color: var(--addonify_base_link_hover_color);
                         text-decoration: none;
                     }
 
@@ -91,7 +91,7 @@
 
             margin: 0;
             color: #888888;
-            font-family: var(--cc_system_font_family);
+            font-family: var(--addonify_system_font_family);
             font-size: 14px;
             font-weight: normal;
         }

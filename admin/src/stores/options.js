@@ -3,7 +3,7 @@ let { isEqual, cloneDeep } = lodash;
 let { apiFetch } = wp;
 import { ElMessage } from 'element-plus'
 
-let BASE_API_URL = adfy_wp_locolizer.rest_namespace;
+let BASE_API_URL = ADDONIFY_WISHLIST_LOCOLIZER.rest_namespace;
 let oldOptions = {};
 
 export const useOptionsStore = defineStore({
@@ -35,13 +35,13 @@ export const useOptionsStore = defineStore({
             apiFetch({
                 path: BASE_API_URL + '/get_options',
                 method: 'GET',
-            }).then( (res) => {
+            }).then((res) => {
                 let settingsValues = res.settings_values;
                 this.data = res.tabs;
                 this.options = settingsValues;
                 oldOptions = cloneDeep(settingsValues);
                 this.isLoading = false;
-            } );
+            });
         },
 
         // ⚡️ Handle update options & map the values to the options object.
@@ -72,7 +72,7 @@ export const useOptionsStore = defineStore({
                 data: {
                     settings_values: payload
                 }
-            }).then( (res) => {
+            }).then((res) => {
 
                 this.isSaving = false; // Saving is completed here.
                 this.message = res.message; // Set the message to be displayed to the user.
@@ -93,7 +93,7 @@ export const useOptionsStore = defineStore({
                 }
 
                 this.fetchOptions(); // Fetch options again.
-            } );
+            });
         },
     },
 });

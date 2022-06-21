@@ -14,11 +14,7 @@ const autoprefixer = require('autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass')(require('sass'));
 
-// npm init
-
-// npm install gulp@4.0.2 gulp-shell gulp-sourcemaps gulp-sass sass gulp-concat gulp-uglify gulp-postcss autoprefixer cssnano gulp-replace gulp-notify gulp-plumber gulp-rtlcss gulp-rename gulp-wp-pot gulp-zip -g
-
-// npm install gulp@4.0.2 gulp-shell gulp-sourcemaps gulp-sass sass gulp-concat gulp-uglify gulp-postcss autoprefixer cssnano gulp-replace gulp-notify gulp-plumber gulp-rtlcss gulp-rename gulp-wp-pot gulp-zip --save-dev
+// npm install gulp@4.0.2 gulp-shell gulp-sourcemaps gulp-sass sass gulp-concat gulp-uglify gulp-postcss autoprefixer cssnano gulp-notify gulp-plumber gulp-rtlcss gulp-rename gulp-zip --save-dev
 
 /*
 ===========================================================
@@ -176,7 +172,7 @@ gulp.task('conditionalSassTask', function () {
 
 // Task to convert LTR css to RTL
 
-gulp.task('dortlTask', function () {
+gulp.task('doRtlTask', function () {
     return gulp.src(rtlcsspath.rtlcss_src)
         .pipe(rtlcss()) // Convert to RTL.
         .pipe(rename({ suffix: '-rtl' })) // Append "-rtl" to the filename.
@@ -195,8 +191,8 @@ gulp.task('zipProductionFiles', function () {
 // = C O M M A N D S                      = 
 //=========================================
 //
-// 1. Command: gulp assets
-// 2. Command: gulp zip
+// 1. Command: gulp assets [Compile all public assets]
+// 2. Command: gulp zip [Zip production build]
 //
 //=========================================
 
@@ -211,11 +207,11 @@ gulp.task('zip', gulp.series('zipProductionFiles', (done) => {
     done();
 }));
 
-gulp.task('assets', gulp.series('scriptsTask', 'conditionalScriptsTask', 'sassTask', 'conditionalSassTask', 'dortlTask', (done) => {
+gulp.task('assets', gulp.series('scriptsTask', 'conditionalScriptsTask', 'sassTask', 'conditionalSassTask', 'doRtlTask', (done) => {
 
     gulp.watch(scriptpath.script_src, gulp.series('scriptsTask'));
     gulp.watch(sasspath.sass_src, gulp.series('sassTask'));
-    gulp.watch(rtlcsspath.rtlcss_src, gulp.series('dortlTask'));
+    gulp.watch(rtlcsspath.rtlcss_src, gulp.series('doRtlTask'));
     gulp.watch(conditional__sass__path.conditional__sass__src, gulp.series('conditionalSassTask'));
     gulp.watch(conditional__script__path.conditional__script__src, gulp.series('conditionalScriptsTask'));
     done();
