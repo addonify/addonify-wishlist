@@ -77,7 +77,7 @@ class Addonify_Wishlist {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
+		$this->rest_api();
 	}
 
 	/**
@@ -126,8 +126,11 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/settings.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/helpers.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-rest-api.php';
 
 		$this->loader = new Addonify_Wishlist_Loader();
 
@@ -182,6 +185,18 @@ class Addonify_Wishlist {
 		// add custom post status "Addonify Wishlist Page" after page name.
 		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
 
+	}
+
+
+	/**
+	 * Register rest api endpoints for admin settings page.
+	 *
+	 * @since    1.0.7
+	 * @access   private
+	 */
+	private function rest_api() {
+
+		$plugin_rest = new Addonify_Wishlist_Rest_API();
 	}
 
 	/**
