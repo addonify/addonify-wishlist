@@ -112,3 +112,47 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_url' ) ) {
 		}
 	}
 }
+
+
+
+if ( ! function_exists( 'addonify_wishlist_get_pages' ) ) {
+
+	function addonify_wishlist_get_pages() {
+
+		$pages  =  get_pages();
+
+		$page_list = array();
+
+		if( ! empty( $pages ) ) {
+
+			foreach( $pages as $page ) {
+
+				$page_list[ $page->ID ] = $page->post_title;
+			}
+		}
+
+		return $page_list;
+	}
+} 
+
+
+
+
+if ( ! function_exists( 'addonify_wishlist_get_sidebar_icons' ) ) {
+
+	function addonify_wishlist_get_sidebar_icons() {
+
+		return apply_filters( 
+			'addonify_wishlist/sidebar_icons', 
+			array(
+				'heart-style-one' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-style-one"></span>',
+				'heart-o-style-one' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-o-style-one"></span>',
+				'heart-o-style-three' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-o-style-three"></span>',
+				'flash' => '<span style="font-size: 20px;" class="adfy-wishlist-icon flash"></span>',
+				'eye' => '<span style="font-size: 20px;" class="adfy-wishlist-icon eye"></span>',
+				'loader' => '<span style="font-size: 20px;" class="adfy-wishlist-icon loader"></span>',
+				'settings' => '<span style="font-size: 20px;" class="adfy-wishlist-icon settings"></span>'
+			) 
+		);
+	}
+}

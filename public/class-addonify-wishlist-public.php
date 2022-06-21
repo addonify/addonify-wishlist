@@ -145,16 +145,14 @@ class Addonify_Wishlist_Public {
 		$this->show_popup = $this->get_option( 'show_popup', 1 );
 
 
-		if ( ! is_admin() ) {
+		$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' );
+		
+		$this->wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $default_wishlist_page_id );
 
-			$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' );
-			$this->wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $default_wishlist_page_id );
-
-			$this->btn_position = $this->get_option( 'btn_position' );
-			$this->btn_label = $this->get_option( 'btn_label' );
-			$this->button_custom_css_class = $this->get_option( 'btn_custom_class' );
-			$this->require_login = $this->get_option( 'require_login', 1 );
-		}
+		$this->btn_position = $this->get_option( 'btn_position' );
+		$this->btn_label = $this->get_option( 'btn_label' );
+		$this->button_custom_css_class = $this->get_option( 'btn_custom_class' );
+		$this->require_login = $this->get_option( 'require_login', 1 );
 
 	}
 
@@ -685,7 +683,6 @@ class Addonify_Wishlist_Public {
 
 		$wishlist_items = $this->get_all_wishlist();
 		$output_data = $this->generate_contents_data( $wishlist_items );
-		$wishlist_name = $this->get_option( 'default_wishlist_name' );
 
 		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
 
@@ -697,7 +694,6 @@ class Addonify_Wishlist_Public {
 			array(
 				'wishlist_product_ids' => $wishlist_product_ids,
 				'wishlist_data' => $output_data,
-				'wishlist_name' => $wishlist_name,
 				'nonce' => wp_create_nonce( $this->plugin_name ),
 			)
 		);
