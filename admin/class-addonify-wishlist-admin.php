@@ -88,14 +88,38 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 	 */
 	public function enqueue_scripts() {
 
+		wp_register_script( 
+			"{$this->plugin_name}-manifest", 
+			plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js', 
+			null, 
+			$this->version, 
+			true 
+		);
+
+		wp_register_script( 
+			"{$this->plugin_name}-vendor", 
+			plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js', 
+			array(  "{$this->plugin_name}-manifest" ), 
+			$this->version, 
+			true 
+		);
+
+		wp_register_script( 
+			"{$this->plugin_name}-main", 
+			plugin_dir_url( __FILE__ ) . 'assets/js/main.js', 
+			array("{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ), 
+			$this->version, 
+			true 
+		);
+
 		// load scripts in plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
 
-			wp_enqueue_script( "{$this->plugin_name}-manifest", plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js', null, $this->version, true );
+			wp_enqueue_script( "{$this->plugin_name}-manifest" );
 
-			wp_enqueue_script( "{$this->plugin_name}-vendor", plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js', array(  "{$this->plugin_name}-manifest" ), $this->version, true );
+			wp_enqueue_script( "{$this->plugin_name}-vendor" );
 
-			wp_enqueue_script( "{$this->plugin_name}-main", plugin_dir_url( __FILE__ ) . 'assets/js/main.js', array("{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ), $this->version, true );
+			wp_enqueue_script( "{$this->plugin_name}-main" );
 
 			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WISHLIST_LOCOLIZER', array(
 				'admin_url'  						=> admin_url( '/' ),
