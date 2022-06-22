@@ -75,7 +75,7 @@ run_addonify_wishlist();
 
 
 add_action( 'wp_body_open', function() {
-	// var_dump( get_nav_menu_locations() );
+	// var_dump(  );
 
 	// var_dump( addonify_wishlist_get_wishlist_items() );
 
