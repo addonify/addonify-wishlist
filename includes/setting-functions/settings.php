@@ -12,9 +12,9 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/custom-css.php';
 
 
-if ( ! function_exists( 'addnify_wishlist_setting_defaults' ) ) {
+if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 
-    function addnify_wishlist_setting_defaults( $setting_id = '' ) {
+    function addonify_wishlist_settings_defaults( $setting_id = '' ) {
 
         $defaults = apply_filters( 
             'addonify_wishlist/setting_defaults',  
@@ -64,7 +64,7 @@ if ( ! function_exists( 'addonify_wishlist_get_option' ) ) {
 
     function addonify_wishlist_get_option( $setting_id ) {
 
-        return get_option( ADDONIFY_WISHLIST_DB_INITIALS . $setting_id, addonify_wishlist_setting_defaults( $setting_id ) );
+        return get_option( ADDONIFY_WISHLIST_DB_INITIALS . $setting_id, addonify_wishlist_settings_defaults( $setting_id ) );
     }
 }
 
@@ -73,11 +73,11 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_values' ) ) {
 
     function addonify_wishlist_get_settings_values() {
 
-        if ( addnify_wishlist_setting_defaults() ) {
+        if ( addonify_wishlist_settings_defaults() ) {
 
             $settings_values = array();
 
-            foreach ( addnify_wishlist_setting_defaults() as $id => $value ) {
+            foreach ( addonify_wishlist_settings_defaults() as $id => $value ) {
 
                 $settings_values[$id] = addonify_wishlist_get_option( $id );
             }
