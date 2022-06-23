@@ -75,7 +75,7 @@ run_addonify_wishlist();
 
 
 add_action( 'wp_body_open', function() {
-	// var_dump(  );
+	var_dump( addonify_wishlist_get_option('wishlist_btn_icon_color') );
 
 	// var_dump( addonify_wishlist_get_wishlist_items() );
 

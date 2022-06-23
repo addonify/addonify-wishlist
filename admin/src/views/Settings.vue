@@ -1,5 +1,5 @@
 <script setup>
-	import Settings from "../components/form/Settings.vue";
+	import Settings from "../components/Settings.vue";
 	import Navigation from "../components/layouts/Navigation.vue";
 </script>
 

@@ -228,6 +228,19 @@
     }
 }
 
+.option-box.radio-input-group {
+
+    .adfy-col {
+
+        .input {
+            @include flex();
+            gap: 20px;
+            align-items: center;
+            justify-content: stretch;
+        }
+    }
+}
+
 [class*="page_addonify_wishlist"] #wpbody-content {
 
     padding-bottom: 30px;

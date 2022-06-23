@@ -145,13 +145,13 @@ if ( ! function_exists( 'addonify_wishlist_get_sidebar_icons' ) ) {
 		return apply_filters( 
 			'addonify_wishlist/sidebar_icons', 
 			array(
-				'heart-style-one' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-style-one"></span>',
-				'heart-o-style-one' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-o-style-one"></span>',
-				'heart-o-style-three' => '<span style="font-size: 20px;" class="adfy-wishlist-icon heart-o-style-three"></span>',
-				'flash' => '<span style="font-size: 20px;" class="adfy-wishlist-icon flash"></span>',
-				'eye' => '<span style="font-size: 20px;" class="adfy-wishlist-icon eye"></span>',
-				'loader' => '<span style="font-size: 20px;" class="adfy-wishlist-icon loader"></span>',
-				'settings' => '<span style="font-size: 20px;" class="adfy-wishlist-icon settings"></span>'
+				'heart-style-one' => '<i class="adfy-wishlist-icon heart-style-one"></i>',
+				'heart-o-style-one' => '<i class="adfy-wishlist-icon heart-o-style-one"></i>',
+				'heart-o-style-three' => '<i class="adfy-wishlist-icon heart-o-style-three"></i>',
+				'flash' => '<i class="adfy-wishlist-icon flash"></i>',
+				'eye' => '<i class="adfy-wishlist-icon eye"></i>',
+				'loader' => '<i class="adfy-wishlist-icon loader"></i>',
+				'settings' => '<i class="adfy-wishlist-icon settings"></i>'
 			) 
 		);
 	}

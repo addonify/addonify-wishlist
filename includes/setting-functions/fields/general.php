@@ -6,61 +6,53 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 
         return array(
             'enable_wishlist' => array(
-                'label'			=> __( 'Enable Wishlist', 'addonify-wishlist' ),
+                'label'			  => __( 'Enable wishlist', 'addonify-wishlist' ),
                 'description'     => __( 'Once enabled, it will be visible in product catalog.', 'addonify-wishlist' ),
                 'type'            => 'switch',
+                'className'      => '',
                 'value' => addonify_wishlist_get_option( 'enable_wishlist' )
             ),
             'wishlist_page' => array(
                 'type' => 'select',
-                'label' => __( 'Wishlist Page', 'addonify-wishlist' ),
-                'description' => '',
+                'className'      => '',
+                'label' => __( 'Wishlist page', 'addonify-wishlist' ),
+                'description' => 'Select a page to display wishlist table.',
                 'choices' => addonify_wishlist_get_pages(),
                 'value' => addonify_wishlist_get_option( 'wishlist_page' )
             ),
-            'login_heading' => array(
-                'type' => 'heading',
-                'label' => __( 'Login Action', 'addonify-wishlist' ),
-                'description' => '',
-            ),
             'require_login' => array(
                 'type' => 'switch',
-                'label' => __( 'Require Login', 'addonify-wishlist' ),
-                'description' => '',
+                'label' => __( 'Require login', 'addonify-wishlist' ),
+                'description' => 'Allow only logged-in users to add products in wishlist.',
                 'value' => addonify_wishlist_get_option( 'require_login' )
             ),
             'redirect_to_login' => array(
                 'type' => 'switch',
-                'label' => __( 'Redirect to Login Page', 'addonify-wishlist' ),
-                'description' => '',
+                'className'      => '',
+                'label' => __( 'Redirect to login page', 'addonify-wishlist' ),
+                'description' => 'Redirect to login if non logged-in user tries to add product in wishlist.',
                 'value' => addonify_wishlist_get_option( 'redirect_to_login' )
-            ),
-            'wishlist_add_to_cart_heading' => array(
-                'type' => 'heading',
-                'label' => __( 'Wishlist Add to Cart Action', 'addonify-wishlist' ),
-                'description' => '',
             ),
             'redirect_to_checkout_if_item_added_to_cart' => array(
                 'type' => 'switch',
-                'label' => __( 'Redirect to the checkout page from Wishlist if added to cart', 'addonify-wishlist' ),
-                'description' => '',
+                'className'      => '',
+                'label' => __( 'Redirect to the checkout', 'addonify-wishlist' ),
+                'description' => 'Redirect to the checkout page if wishlist item is added to cart.',
                 'value' => addonify_wishlist_get_option( 'redirect_to_checkout_if_item_added_to_cart' )
             ),
             'remove_from_wishlist_if_added_to_cart' => array(
                 'type' => 'switch',
-                'label' => __( 'Remove Product from Wishlist if added to cart', 'addonify-wishlist' ),
-                'description' => '',
+                'className'      => '',
+                'label' => __( 'Remove product from wishlist', 'addonify-wishlist' ),
+                'description' => 'Remove product from wishlist if it is added to cart.',
                 'value' => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' )
-            ),
-            'wishlist_cookie_heading' => array(
-                'type' => 'heading',
-                'label' => __( 'Wishlist Cookie', 'addonify-wishlist' ),
-                'description' => '',
             ),
             'cookies_lifetime' => array(
                 'type' => 'number',
-                'label' => __( 'Save Wishlist for', 'addonify-wishlist' ),
-                'description' => '',
+                'className'      => '',
+                'type_style' => 'toggle', // 'default', 'toggle' & slider
+                'label' => __( 'Save wishlist for [ x ] days', 'addonify-wishlist' ),
+                'description' => 'For how many days do you wish to save wishlist in browser cookie?',
                 'value' => addonify_wishlist_get_option( 'cookies_lifetime' )
             ),
         );

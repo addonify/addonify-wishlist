@@ -7,6 +7,8 @@ if ( ! function_exists( 'addonify_wishlist_custom_css_settings_fields' ) ) {
         return array(
             'custom_css' => array(
                 'type' => 'textarea',
+                'className' => 'custom-html-option',
+                'inputClassName' => 'custom-css-box',
                 'label' => __( 'Custom CSS', 'addonify-wishlist' ),
                 'description' => '',
                 'value' => addonify_wishlist_get_option( 'custom_css' )
