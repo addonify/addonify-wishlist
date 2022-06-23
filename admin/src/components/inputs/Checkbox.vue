@@ -10,8 +10,8 @@
 		get() {
 			return props.modelValue;
 		},
-		set(value) {
-			emit("update:modelValue", value);
+		set(newValue) {
+			emit("update:modelValue", newValue);
 		},
 	});
 </script>

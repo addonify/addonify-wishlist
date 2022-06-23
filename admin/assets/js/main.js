@@ -312,7 +312,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'Number',
   props: {
-    modelValue: String
+    modelValue: [String, Number] // loose strict checking.
+
   },
   emits: ["update:modelValue"],
   setup: function setup(__props, _ref) {
@@ -323,10 +324,10 @@ __webpack_require__.r(__webpack_exports__);
 
     var value = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
       get: function get() {
-        return props.modelValue;
+        return parseInt(props.modelValue);
       },
-      set: function set(value) {
-        emit("update:modelValue", value);
+      set: function set(newValue) {
+        emit("update:modelValue", newValue);
       }
     });
     var __returned__ = {
@@ -360,7 +361,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'NumberInputButton',
   props: {
-    modelValue: [String, Number]
+    modelValue: [String, Number] // loose strict checking.
+
   },
   emits: ["update:modelValue"],
   setup: function setup(__props, _ref) {
@@ -371,10 +373,10 @@ __webpack_require__.r(__webpack_exports__);
 
     var value = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
       get: function get() {
-        return props.modelValue;
+        return parseInt(props.modelValue);
       },
-      set: function set(value) {
-        emit("update:modelValue", value);
+      set: function set(newValue) {
+        emit("update:modelValue", newValue);
       }
     });
     var __returned__ = {
@@ -418,18 +420,18 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var props = __props; // Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
 
-    var bindModel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
+    var vModalValue = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
       get: function get() {
         return props.modelValue;
       },
-      set: function set(value) {
-        emit("update:modelValue", value);
+      set: function set(newValue) {
+        emit("update:modelValue", newValue);
       }
     });
     var __returned__ = {
       props: props,
       emit: emit,
-      bindModel: bindModel,
+      vModalValue: vModalValue,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -467,18 +469,18 @@ __webpack_require__.r(__webpack_exports__);
     expose();
     var props = __props; // Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
 
-    var bindModel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
+    var vModalVal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)({
       get: function get() {
         return props.modelValue;
       },
-      set: function set(value) {
-        emit("update:modelValue", value);
+      set: function set(newValue) {
+        emit("update:modelValue", newValue);
       }
     });
     var __returned__ = {
       props: props,
       emit: emit,
-      bindModel: bindModel,
+      vModalVal: vModalVal,
       computed: vue__WEBPACK_IMPORTED_MODULE_0__.computed
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -525,8 +527,8 @@ __webpack_require__.r(__webpack_exports__);
       get: function get() {
         return props.modelValue;
       },
-      set: function set(value) {
-        emit("update:modelValue", value);
+      set: function set(newValue) {
+        emit("update:modelValue", newValue);
       }
     });
     var __returned__ = {
@@ -690,8 +692,8 @@ __webpack_require__.r(__webpack_exports__);
       get: function get() {
         return props.modelValue;
       },
-      set: function set(value) {
-        emit("update:modelValue", value);
+      set: function set(newValue) {
+        emit("update:modelValue", newValue);
       }
     });
     var __returned__ = {
@@ -1176,7 +1178,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     modelValue: $setup.value,
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.value = $event;
-    })
+    }),
+    min: 0
   }, null, 8
   /* PROPS */
   , ["modelValue"]);
@@ -1204,7 +1207,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.value = $event;
     }),
-    size: "large"
+    size: "large",
+    min: 0,
+    max: 365
   }, null, 8
   /* PROPS */
   , ["modelValue"]);
@@ -1231,9 +1236,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.choices, function (value, key) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_el_radio_group, {
-      modelValue: $setup.bindModel,
+      modelValue: $setup.vModalValue,
       "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-        return $setup.bindModel = $event;
+        return $setup.vModalValue = $event;
       })
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1285,9 +1290,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.choices, function (value, key) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_el_radio_group, {
-      modelValue: $setup.bindModel,
+      modelValue: $setup.vModalVal,
       "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-        return $setup.bindModel = $event;
+        return $setup.vModalVal = $event;
       })
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1345,7 +1350,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.value = $event;
     }),
-    placeholder: $setup.__('Select', 'addonify-wishlist')
+    placeholder: $setup.__('Select', 'addonify-wishlist'),
+    size: "large"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.choices, function (label, key) {
@@ -1499,7 +1505,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.value = $event;
     }),
-    placeholder: $setup.__('Please enter...', 'addonify-wishlist')
+    placeholder: $setup.__('Please enter...', 'addonify-wishlist'),
+    size: "large"
   }, null, 8
   /* PROPS */
   , ["modelValue", "placeholder"]);
@@ -1872,89 +1879,107 @@ var _hoisted_9 = {
   "class": "unsupported-control-text"
 };
 var _hoisted_10 = {
-  href: "https://docs.addonify.com/kb/woocommerce-wishlist/developer/adding-field/",
+  href: "https://docs.addonify.com/kb/woocommerce-wishlist/developer/add-setting-fields/",
   "class": "adfy-button fake-button has-underline forward-to-doc-link",
   target: "_blank"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_el_tag = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("el-tag");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$setup.props.section.title !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h3", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.props.section.title), 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.section.fields, function (field, fieldId) {
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.section.fields, function (field, fieldKey) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["adfy-option-columns option-box", field.className])
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [field.label !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.label), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [field.label !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.label) + " ", 1
     /* TEXT */
-    )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), field.description !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.description), 1
+    ), field.hasOwnProperty('badge') && field.badge !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_el_tag, {
+      key: 0,
+      type: "success",
+      effect: "light",
+      round: ""
+    }, {
+      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.badge), 1
+        /* TEXT */
+        )];
+      }),
+      _: 2
+      /* DYNAMIC */
+
+    }, 1024
+    /* DYNAMIC_SLOTS */
+    )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), field.description !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.description), 1
     /* TEXT */
     )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [field.type == 'switch' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Switch"], {
       key: 0,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       }
     }, null, 8
     /* PROPS */
     , ["modelValue", "onUpdate:modelValue"])) : field.type == 'text' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Text"], {
       key: 1,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       }
     }, null, 8
     /* PROPS */
     , ["modelValue", "onUpdate:modelValue"])) : field.type == 'number' && field.type_style == 'toggle' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["NumberInputButton"], {
       key: 2,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       }
     }, null, 8
     /* PROPS */
     , ["modelValue", "onUpdate:modelValue"])) : field.type == 'number' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Number"], {
       key: 3,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       }
     }, null, 8
     /* PROPS */
     , ["modelValue", "onUpdate:modelValue"])) : field.type == 'select' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Select"], {
       key: 4,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       },
       choices: field.choices
     }, null, 8
     /* PROPS */
     , ["modelValue", "onUpdate:modelValue", "choices"])) : field.type == 'radio' && field.type_style == 'radio_icon' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["RadioIcon"], {
       key: 5,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       },
       choices: field.choices
     }, null, 8
     /* PROPS */
     , ["modelValue", "onUpdate:modelValue", "choices"])) : field.type == 'radio' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Radio"], {
       key: 6,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       },
       choices: field.choices
     }, null, 8
     /* PROPS */
     , ["modelValue", "onUpdate:modelValue", "choices"])) : field.type == 'textarea' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Textarea"], {
       key: 7,
-      modelValue: $setup.props.reactiveState[fieldId],
+      modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {
-        return $setup.props.reactiveState[fieldId] = $event;
+        return $setup.props.reactiveState[fieldKey] = $event;
       },
       className: field.inputClassName
     }, null, 8
     /* PROPS */
-    , ["modelValue", "onUpdate:modelValue", "className"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ❌ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.__("Input is not supported.", "addonify-wishist")) + " ", 1
+    , ["modelValue", "onUpdate:modelValue", "className"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ❌ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.__("Input is not supported.", "addonify-wishist")) + " ", 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.__("Check docs", "addonify-wishist")), 1
     /* TEXT */

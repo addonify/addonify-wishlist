@@ -7,9 +7,10 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
         return array(
             'enable_wishlist' => array(
                 'label'			  => __( 'Enable wishlist', 'addonify-wishlist' ),
-                'description'     => __( 'Once enabled, it will be visible in product catalog.', 'addonify-wishlist' ),
+                'description'     => __( 'If disabled, addonify wishlist plugin functionality will not be functional.', 'addonify-wishlist' ),
                 'type'            => 'switch',
                 'className'      => '',
+                'badge'          => 'Required',
                 'value' => addonify_wishlist_get_option( 'enable_wishlist' )
             ),
             'wishlist_page' => array(

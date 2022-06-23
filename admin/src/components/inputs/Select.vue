@@ -13,13 +13,17 @@
 		get() {
 			return props.modelValue;
 		},
-		set(value) {
-			emit("update:modelValue", value);
+		set(newValue) {
+			emit("update:modelValue", newValue);
 		},
 	});
 </script>
 <template>
-	<el-select v-model="value" :placeholder="__('Select', 'addonify-wishlist')">
+	<el-select
+		v-model="value"
+		:placeholder="__('Select', 'addonify-wishlist')"
+		size="large"
+	>
 		<el-option
 			v-for="(label, key) in props.choices"
 			:label="label"

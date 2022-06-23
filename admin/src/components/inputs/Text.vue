@@ -11,8 +11,8 @@
 		get() {
 			return props.modelValue;
 		},
-		set(value) {
-			emit("update:modelValue", value);
+		set(newValue) {
+			emit("update:modelValue", newValue);
 		},
 	});
 </script>
@@ -20,5 +20,6 @@
 	<el-input
 		v-model="value"
 		:placeholder="__('Please enter...', 'addonify-wishlist')"
+		size="large"
 	/>
 </template>

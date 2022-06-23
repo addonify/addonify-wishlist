@@ -7,17 +7,17 @@
 
 	// Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
 	let emit = defineEmits(["update:modelValue"]);
-	let bindModel = computed({
+	let vModalValue = computed({
 		get() {
 			return props.modelValue;
 		},
-		set(value) {
-			emit("update:modelValue", value);
+		set(newValue) {
+			emit("update:modelValue", newValue);
 		},
 	});
 </script>
 <template>
-	<el-radio-group v-model="bindModel" v-for="(value, key) in props.choices">
+	<el-radio-group v-model="vModalValue" v-for="(value, key) in props.choices">
 		<el-radio :label="key">{{ value }}</el-radio>
 	</el-radio-group>
 </template>

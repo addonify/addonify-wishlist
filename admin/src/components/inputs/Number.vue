@@ -1,20 +1,20 @@
 <script setup>
 	import { computed } from "vue";
 	let props = defineProps({
-		modelValue: String,
+		modelValue: [String, Number], // loose strict checking.
 	});
 
 	// Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
 	let emit = defineEmits(["update:modelValue"]);
 	let value = computed({
 		get() {
-			return props.modelValue;
+			return parseInt(props.modelValue);
 		},
-		set(value) {
-			emit("update:modelValue", value);
+		set(newValue) {
+			emit("update:modelValue", newValue);
 		},
 	});
 </script>
 <template>
-	<el-input type="number" v-model="value" />
+	<el-input type="number" v-model="value" :min="0" />
 </template>
