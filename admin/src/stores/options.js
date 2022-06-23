@@ -1,8 +1,9 @@
+import { toRaw } from 'vue';
 import { defineStore } from 'pinia'
-let { isEqual, cloneDeep } = lodash;
-let { apiFetch } = wp;
 import { ElMessage } from 'element-plus'
 
+let { isEqual, cloneDeep } = lodash;
+let { apiFetch } = wp;
 let BASE_API_URL = ADDONIFY_WISHLIST_LOCOLIZER.rest_namespace;
 let oldOptions = {};
 
@@ -36,10 +37,10 @@ export const useOptionsStore = defineStore({
                 path: BASE_API_URL + '/get_options',
                 method: 'GET',
             }).then((res) => {
-                let settingsValues = res.settings_values;
+                this.options = res.settings_values;
                 this.data = res.tabs;
-                this.options = settingsValues;
-                oldOptions = cloneDeep(settingsValues);
+                oldOptions = cloneDeep(res.settings_values);
+                //console.log(oldOptions);
                 this.isLoading = false;
             });
         },

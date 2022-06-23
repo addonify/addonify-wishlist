@@ -1,6 +1,6 @@
 <script setup>
 	import Navigation from "../components/layouts/Navigation.vue";
-	import StyleForm from "../components/form/Styles.vue";
+	import StyleForm from "../components/inputs/Styles.vue";
 </script>
 
 <template>

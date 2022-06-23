@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'addonifywishlist';
+    src: url('./addonifywishlist.eot?cn6gow');
+    src: url('./addonifywishlist.eot?cn6gow#iefix') format('embedded-opentype'),
+        url('./addonifywishlist.ttf?cn6gow') format('truetype'),
+        url('./addonifywishlist.woff?cn6gow') format('woff'),
+        url('./addonifywishlist.svg?cn6gow#addonifywishlist') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.adfy-wishlist-icon {
+
+    font-family: 'addonifywishlist';
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    @include better_font_rendering();
+}
+
+.heart-style-one:before {
+    content: "\f004";
+}
+
+.heart-o-style-one:before {
+    content: "\f08a";
+}
+
+.heart-style-two:before {
+    content: "\e911";
+}
+
+.heart-o-style-two:before {
+    content: "\e910";
+}
+
+.flash:before {
+    content: "\e912";
+}
+
+.hour-glass:before {
+    content: "\e913";
+}
+
+.thumbs-down:before {
+    content: "\e914";
+}
+
+.tools:before {
+    content: "\e907";
+}
+
+.user:before {
+    content: "\e917";
+}
+
+.users:before {
+    content: "\e918";
+}
+
+.circle-with-plus:before {
+    content: "\e919";
+}
+
+.circle-with-minus:before {
+    content: "\e91a";
+}
+
+.pencil:before {
+    content: "\e91b";
+}
+
+.heart-o-style-three:before {
+    content: "\e916";
+}
+
+.alert-triangle:before {
+    content: "\e900";
+}
+
+.chevron-down:before {
+    content: "\e902";
+}
+
+.chevron-left:before {
+    content: "\e903";
+}
+
+.chevron-right:before {
+    content: "\e904";
+}
+
+.chevron-up:before {
+    content: "\e905";
+}
+
+.eye:before {
+    content: "\e906";
+}
+
+.link:before {
+    content: "\e908";
+}
+
+.loader:before {
+    content: "\e909";
+}
+
+.lock:before {
+    content: "\e90a";
+}
+
+.log-in:before {
+    content: "\e90b";
+}
+
+.log-out:before {
+    content: "\e90c";
+}
+
+.settings:before {
+    content: "\e90d";
+}
+
+.check:before {
+    content: "\e901";
+}
+
+.x:before {
+    content: "\e90f";
+}
+
+.trash-2:before {
+    content: "\e90e";
+}
+
+.shopping-bag:before {
+    content: "\e915";
+}
+
+.external-link:before {
+    content: "\e91c";
+}

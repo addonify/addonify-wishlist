@@ -27,18 +27,18 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
                 'remove_from_wishlist_if_added_to_cart' => true,
                 'cookies_lifetime' => 30,
                 'btn_position' => 'before_add_to_cart',
-                'btn_label' => __( 'Add to Wishlist', 'addonify-wishlist' ),
-                'btn_label_if_added_to_wishlist' => __( 'Already in Wishlist', 'addonify-wishlist' ),
+                'btn_label' => __( 'Add to wishlist', 'addonify-wishlist' ),
+                'btn_label_if_added_to_wishlist' => __( 'Already in wishlist', 'addonify-wishlist' ),
                 'show_icon' => true,
                 'btn_custom_class' => '',
                 'show_popup' => true,
                 'redirect_to_wishlist_if_popup_disabled' => false,
-                'view_wishlist_btn_text' => __( 'View Wishlist', 'addonify-wishlist' ),
-                'product_added_to_wishlist_text' => __( '{product_name} added to Wishlist', 'addonify-wishlist' ),
-                'product_already_in_wishlist_text' => __( '{product_name} already in Wishlist', 'addonify-wishlist' ),
+                'view_wishlist_btn_text' => __( 'View wishlist', 'addonify-wishlist' ),
+                'product_added_to_wishlist_text' => __( '{product_name} added to wishlist', 'addonify-wishlist' ),
+                'product_already_in_wishlist_text' => __( '{product_name} already in wishlist', 'addonify-wishlist' ),
                 'show_sidebar' => true,
                 'sidebar_position' => 'right',
-                'sidebar_title' => __( 'My Wishlist', 'addonify-wishlist' ),
+                'sidebar_title' => __( 'My wishlist', 'addonify-wishlist' ),
                 'sidebar_btn_label' => __( 'Wishlist', 'addonify-wishlist' ),
                 'sidebar_show_icon' => true,
                 'sidebar_btn_icon' => 'heart-style-one',
@@ -54,10 +54,6 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
         return ( $setting_id && isset( $defaults[ $setting_id ] ) ) ? $defaults[ $setting_id ] : $defaults;
     }
 }
-
-
-
-
 
 
 if ( ! function_exists( 'addonify_wishlist_get_option' ) ) {
@@ -77,9 +73,22 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_values' ) ) {
 
             $settings_values = array();
 
+            $setting_fields = addonify_wishlist_settings_fields();
+
             foreach ( addonify_wishlist_settings_defaults() as $id => $value ) {
 
-                $settings_values[$id] = addonify_wishlist_get_option( $id );
+                $setting_type = $setting_fields[$id];
+
+                switch ( $setting_type ) {
+                    case 'switch':
+                        $settings_values[$id] = ( addonify_wishlist_get_option( $id ) == '1' ) ? true : false;
+                        break;
+                    case 'number':
+                        $settings_values[$id] = addonify_wishlist_get_option( $id );
+                        break;
+                    default:
+                        $settings_values[$id] = addonify_wishlist_get_option( $id );
+                }
             }
 
             return $settings_values;
@@ -96,7 +105,7 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
             is_array( $settings ) &&
             count( $settings ) > 0
         ) {
-            $setting_fields = addonify_wishlist_setting_fields();
+            $setting_fields = addonify_wishlist_settings_fields();
 
             foreach ( $settings as $id => $value ) {
 
@@ -134,7 +143,6 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
         }        
     }
 }
-
 
 
 if ( ! function_exists( 'addonify_wishlist_settings_fields' ) ) {
@@ -180,12 +188,17 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
                         'add_to_wishlist_button' => array(
                             'title' => __('Add to Wishlist Button Options', 'addonify-wishlist' ),
                             'description' => '',
-                            'fields' => addonify_quick_view_button_settings_fields(),
+                            'fields' => addonify_wishlist_button_settings_fields(),
                         ),
                         'modal_notice' => array(
                             'title' => __('Popup Notice Options', 'addonify-wishlist' ),
                             'description' => '',
                             'fields' => addonify_wishlist_modal_notice_settings_fields(),
+                        ),
+                        'sidebar' => array(
+                            'title' => __('Wishlist Sidebar Options', 'addonify-wishlist' ),
+                            'description' => '',
+                            'fields' => addonify_wishlist_sidebar_settings_fields(),
                         )
                     )
                 ),
