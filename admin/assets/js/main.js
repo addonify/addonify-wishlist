@@ -125,6 +125,29 @@ var useOptionsStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
     // ⚡️ Check if we need to save the options.
     needSave: function needSave(state) {
       return !isEqual(state.options, oldOptions) ? true : false;
+    },
+    // ⚡️ Get state based on supplied arg.
+    getState: function getState(state) {
+      return function (arg) {
+        var returnVal = true;
+
+        if (arg.hasOwnProperty('dependent')) {
+          var dependent = arg.dependent;
+          dependent.map(function (id) {
+            if (returnVal == false && state.options[id] == true) {
+              returnVal = false;
+            } else if (returnVal == false && state.options[id] == false) {
+              returnVal = false;
+            } else if (returnVal == true && state.options[id] == true) {
+              returnVal = true;
+            } else {
+              returnVal = false;
+            }
+          });
+        }
+
+        return returnVal;
+      };
     }
   },
   actions: {
@@ -892,14 +915,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _inputs_Switch_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../inputs/Switch.vue */ "./admin/src/components/inputs/Switch.vue");
-/* harmony import */ var _inputs_Text_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../inputs/Text.vue */ "./admin/src/components/inputs/Text.vue");
-/* harmony import */ var _inputs_Number_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inputs/Number.vue */ "./admin/src/components/inputs/Number.vue");
-/* harmony import */ var _inputs_NumberInputButton_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../inputs/NumberInputButton.vue */ "./admin/src/components/inputs/NumberInputButton.vue");
-/* harmony import */ var _inputs_Textarea_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../inputs/Textarea.vue */ "./admin/src/components/inputs/Textarea.vue");
-/* harmony import */ var _inputs_Select_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../inputs/Select.vue */ "./admin/src/components/inputs/Select.vue");
-/* harmony import */ var _inputs_Radio_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../inputs/Radio.vue */ "./admin/src/components/inputs/Radio.vue");
-/* harmony import */ var _inputs_RadioIcon_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../inputs/RadioIcon.vue */ "./admin/src/components/inputs/RadioIcon.vue");
+/* harmony import */ var _stores_options__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../stores/options */ "./admin/src/stores/options.js");
+/* harmony import */ var _inputs_Switch_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../inputs/Switch.vue */ "./admin/src/components/inputs/Switch.vue");
+/* harmony import */ var _inputs_Text_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inputs/Text.vue */ "./admin/src/components/inputs/Text.vue");
+/* harmony import */ var _inputs_Number_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../inputs/Number.vue */ "./admin/src/components/inputs/Number.vue");
+/* harmony import */ var _inputs_NumberInputButton_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../inputs/NumberInputButton.vue */ "./admin/src/components/inputs/NumberInputButton.vue");
+/* harmony import */ var _inputs_Textarea_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../inputs/Textarea.vue */ "./admin/src/components/inputs/Textarea.vue");
+/* harmony import */ var _inputs_Select_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../inputs/Select.vue */ "./admin/src/components/inputs/Select.vue");
+/* harmony import */ var _inputs_Radio_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../inputs/Radio.vue */ "./admin/src/components/inputs/Radio.vue");
+/* harmony import */ var _inputs_RadioIcon_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../inputs/RadioIcon.vue */ "./admin/src/components/inputs/RadioIcon.vue");
+
  // Regular switch.
 
  // Input type text.
@@ -920,6 +945,7 @@ __webpack_require__.r(__webpack_exports__);
   __name: 'Section',
   props: {
     section: Object,
+    sectionId: String,
     reactiveState: Object
   },
   setup: function setup(__props, _ref) {
@@ -931,20 +957,23 @@ __webpack_require__.r(__webpack_exports__);
         _x = _wp$i18n._x,
         _n = _wp$i18n._n,
         _nx = _wp$i18n._nx;
+    var store = (0,_stores_options__WEBPACK_IMPORTED_MODULE_0__.useOptionsStore)();
     var __returned__ = {
       __: __,
       _x: _x,
       _n: _n,
       _nx: _nx,
+      store: store,
       props: props,
-      Switch: _inputs_Switch_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      Text: _inputs_Text_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      Number: _inputs_Number_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      NumberInputButton: _inputs_NumberInputButton_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-      Textarea: _inputs_Textarea_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-      Select: _inputs_Select_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-      Radio: _inputs_Radio_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-      RadioIcon: _inputs_RadioIcon_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+      useOptionsStore: _stores_options__WEBPACK_IMPORTED_MODULE_0__.useOptionsStore,
+      Switch: _inputs_Switch_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+      Text: _inputs_Text_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      Number: _inputs_Number_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      NumberInputButton: _inputs_NumberInputButton_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      Textarea: _inputs_Textarea_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+      Select: _inputs_Select_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      Radio: _inputs_Radio_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+      RadioIcon: _inputs_RadioIcon_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
@@ -1142,13 +1171,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "adfy-settings-form",
     "class": "adfy-form",
     onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.store.data.settings.sections, function (section) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Section"], {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.store.data.settings.sections, function (section, sectionId) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Section"], {
       section: section,
-      reactiveState: $setup.store.options
+      reactiveState: $setup.store.options,
+      sectionId: sectionId
     }, null, 8
     /* PROPS */
-    , ["section", "reactiveState"])]);
+    , ["section", "reactiveState", "sectionId"])]);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 32
@@ -1848,8 +1878,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  key: 0,
-  "class": "option-box-title"
+  "class": "adfy-options-item"
 };
 var _hoisted_2 = {
   "class": "adfy-options"
@@ -1886,10 +1915,13 @@ var _hoisted_10 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_el_tag = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("el-tag");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$setup.props.section.title !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h3", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.props.section.title), 1
-  /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.section.fields, function (field, fieldKey) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$setup.props.section.title !== '' ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h3", {
+    key: 0,
+    "class": "option-box-title"
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.props.section.title), 513
+  /* TEXT, NEED_PATCH */
+  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.props.sectionId == 'general' ? true : $setup.store.options.enable_wishlist]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.props.section.fields, function (field, fieldKey) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["adfy-option-columns option-box", field.className])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [field.label !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.label) + " ", 1
     /* TEXT */
@@ -1985,10 +2017,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     )]))])])], 2
     /* CLASS */
-    )]);
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" // adfy-options ")], 512
+    /* NEED_PATCH */
+    )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, fieldKey === 'enable_wishlist' ? true : $setup.store.getState(field)]]);
   }), 256
   /* UNKEYED_FRAGMENT */
-  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" // adfy-options ")], 64
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" // adfy-options-item ")], 64
   /* STABLE_FRAGMENT */
   );
 }
