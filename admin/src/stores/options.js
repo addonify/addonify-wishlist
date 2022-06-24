@@ -27,6 +27,39 @@ export const useOptionsStore = defineStore({
 
             return !isEqual(state.options, oldOptions) ? true : false;
         },
+
+        // ⚡️ Get state based on supplied arg.
+        getState: (state) => (arg) => {
+
+            let returnVal = true;
+
+            if (arg.hasOwnProperty('dependent')) {
+
+                let dependent = arg.dependent;
+
+                dependent.map((id) => {
+
+                    if (returnVal == false && state.options[id] == true) {
+
+                        returnVal = false;
+
+                    } else if (returnVal == false && state.options[id] == false) {
+
+                        returnVal = false;
+
+                    } else if (returnVal == true && state.options[id] == true) {
+
+                        returnVal = true;
+
+                    } else {
+
+                        returnVal = false;
+                    }
+                });
+            }
+
+            return returnVal;
+        },
     },
     actions: {
 

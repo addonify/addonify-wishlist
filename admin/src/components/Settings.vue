@@ -12,11 +12,15 @@
 <template>
 	<Loading v-if="store.isLoading" />
 	<form v-else id="adfy-settings-form" class="adfy-form" @submit.prevent>
-		<div
+		<section
 			class="options-section"
-			v-for="section in store.data.settings.sections"
+			v-for="(section, sectionId) in store.data.settings.sections"
 		>
-			<Section :section="section" :reactiveState="store.options" />
-		</div>
+			<Section
+				:section="section"
+				:reactiveState="store.options"
+				:sectionId="sectionId"
+			/>
+		</section>
 	</form>
 </template>
