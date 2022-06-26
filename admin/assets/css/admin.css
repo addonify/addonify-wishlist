@@ -488,7 +488,7 @@
   grid-template-columns: repeat(2, 1fr);
   -moz-column-gap: 30px;
        column-gap: 30px;
-  row-gap: 20px;
+  row-gap: 30px;
 }
 .option-box.fullwidth .right .input-group .input {
   display: flex;

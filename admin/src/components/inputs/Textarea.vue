@@ -1,8 +1,9 @@
 <script setup>
 	import { computed } from "vue";
 	let props = defineProps({
-		modelValue: [String],
+		modelValue: String,
 		className: String,
+		placeholder: String,
 	});
 	// Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
 	let emit = defineEmits(["update:modelValue"]);
@@ -21,8 +22,20 @@
 		:class="className"
 		type="textarea"
 		rows="10"
-		placeholder="#app { color: blue; }"
+		:placeholder="
+			props.placeholder
+				? props.placeholder
+				: __('Enter text here...', 'addonify_wishlist')
+		"
 		resize="vertical"
 		input-style="display:block;width: 100%;"
 	/>
 </template>
+<style>
+	.adfy-options .el-textarea__inner {
+		display: block;
+		width: 100%;
+		font-family: monospace;
+		min-height: 200px;
+	}
+</style>

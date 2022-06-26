@@ -84,8 +84,9 @@ if ( ! function_exists( 'addonify_wishlist_general_styles_settings_fields' ) ) {
         return array(
             'load_styles_from_plugin' => array(
                 'type' => 'switch',
-                'label' => __( 'Load CSS Styles From Plugin', 'addonify-wishlist' ),
-                'description' => '',
+                'className'      => '',
+                'label' => __( 'Enable plugin styles', 'addonify-wishlist' ),
+                'description' => 'If enabled, the colors selected below will be applied to the quick view modal & elements.',
                 'value' => addonify_wishlist_get_option( 'load_styles_from_plugin' )
             )
         );

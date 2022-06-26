@@ -154,16 +154,6 @@ if ( ! function_exists( 'addonify_wishlist_settings_fields' ) ) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 /**
  * Define settings sections and respective settings fields.
  * 
@@ -203,21 +193,23 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
                     )
                 ),
                 'styles' => array(
-                    'title' => __( 'Styles', 'addonify-wishlist' ),
                     'sections' => array(
                         'general' => array(
-                            'title' => __( 'Style Options', 'addonify-wishlist' ),
+                            'title' => __( 'General', 'addonify-wishlist' ),
                             'description' => '',
                             'fields' => addonify_wishlist_general_styles_settings_fields(),
                         ),
                         'add_to_wishlist_button' => array(
-                            'title' => __( 'Add to Wishlist Button', 'addonify-wishlist' ),
-                            'description' => '',
+                            'title' => __( 'Add to Wishlist Button Color', 'addonify-wishlist' ),
+                            'description' => 'Change the look & feel of add to wishlist button.',
+                            'type' => 'options-box',
+                            'dependent'  => array('load_styles_from_plugin'),
                             'fields' => addonify_wishlist_add_to_wishlist_button_styles_settings_fields()
                         ),
                         'custom_css' => array(
-                            'title' => __( 'Custom CSS', 'addonify-wishlist' ),
+                            'title' => __( 'Developer', 'addonify-wishlist' ),
                             'description' => '',
+                            'dependent'  => array('load_styles_from_plugin'),
                             'fields' => addonify_wishlist_custom_css_settings_fields()
                         )
                     )

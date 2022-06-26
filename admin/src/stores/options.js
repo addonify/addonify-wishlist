@@ -28,8 +28,8 @@ export const useOptionsStore = defineStore({
             return !isEqual(state.options, oldOptions) ? true : false;
         },
 
-        // ⚡️ Get state based on supplied arg.
-        getState: (state) => (arg) => {
+        // ⚡️ Hide/Show option fields based on dependent field value.
+        optionBoxVisibility: (state) => (arg) => {
 
             let returnVal = true;
 
@@ -64,7 +64,7 @@ export const useOptionsStore = defineStore({
     actions: {
 
         // ⚡️ Use Axios to get options from api.
-        async fetchOptions() {
+        fetchOptions() {
 
             apiFetch({
                 path: BASE_API_URL + '/get_options',
@@ -73,7 +73,7 @@ export const useOptionsStore = defineStore({
                 this.options = res.settings_values;
                 this.data = res.tabs;
                 oldOptions = cloneDeep(res.settings_values);
-                //console.log(oldOptions);
+                console.log(res);
                 this.isLoading = false;
             });
         },
@@ -96,7 +96,7 @@ export const useOptionsStore = defineStore({
         },
 
         // ⚡️ Update options using Axios.
-        async updateOptions(payload) {
+        updateOptions(payload) {
 
             this.isSaving = true; // Set saving to true.
 
