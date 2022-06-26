@@ -3,17 +3,12 @@
 	import Switch from "../../inputs/Switch.vue";
 	import Color from "../../inputs/Color.vue";
 	import Textarea from "../../inputs/Textarea.vue";
-	import { useOptionsStore } from "../../../stores/options";
 	let { __, _x, _n, _nx } = wp.i18n;
-	let store = useOptionsStore();
 	let props = defineProps({
 		section: Object,
 		sectionId: String,
 		reactiveState: Object,
 	});
-
-	let parentOption = "load_styles_from_plugin";
-	console.log(props.sectionId);
 </script>
 <template>
 	<h3 class="option-box-title" v-if="props.section.title !== ''">

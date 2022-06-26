@@ -1,9 +1,6 @@
 <script setup>
 	import Field from "./design/Field.vue";
 	import FieldsBox from "./design/FieldsBox.vue";
-	import { useOptionsStore } from "../../stores/options";
-	let { __, _x, _n, _nx } = wp.i18n;
-	let store = useOptionsStore();
 
 	let props = defineProps({
 		section: Object,
