@@ -7,10 +7,11 @@ if ( ! function_exists( 'addonify_wishlist_custom_css_settings_fields' ) ) {
         return array(
             'custom_css' => array(
                 'type' => 'textarea',
-                'className' => 'custom-html-option',
-                'inputClassName' => 'custom-css-box',
+                'className' => 'custom-css-box fullwidth',
+                'inputClassName' => 'custom-css-textarea',
                 'label' => __( 'Custom CSS', 'addonify-wishlist' ),
-                'description' => '',
+                'description' => 'If required, you may add your own custom CSS code here.',
+                'placeholder' => '#app { color: blue; }',
                 'value' => addonify_wishlist_get_option( 'custom_css' )
             )
         );

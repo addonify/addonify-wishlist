@@ -4,6 +4,7 @@
 
 	let props = defineProps({
 		modelValue: String,
+		placeholder: String,
 	});
 	// Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
 	let emit = defineEmits(["update:modelValue"]);
@@ -19,7 +20,11 @@
 <template>
 	<el-input
 		v-model="value"
-		:placeholder="__('Please enter...', 'addonify-wishlist')"
+		:placeholder="
+			props.placeholder
+				? props.placeholder
+				: __('Enter text here...', 'addonify_wishlist')
+		"
 		size="large"
 	/>
 </template>

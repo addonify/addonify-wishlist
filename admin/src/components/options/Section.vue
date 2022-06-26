@@ -30,7 +30,11 @@
 	<div
 		v-for="(field, fieldKey) in props.section.fields"
 		class="adfy-options-item"
-		v-show="fieldKey === 'enable_wishlist' ? true : store.getState(field)"
+		v-show="
+			fieldKey === 'enable_wishlist'
+				? true
+				: store.optionBoxVisibility(field)
+		"
 	>
 		<div class="adfy-options">
 			<div
@@ -70,6 +74,7 @@
 						<Text
 							v-else-if="field.type == 'text'"
 							v-model="props.reactiveState[fieldKey]"
+							:placeholder="field.placeholder"
 						/>
 						<NumberInputButton
 							v-else-if="
@@ -104,6 +109,7 @@
 							v-else-if="field.type == 'textarea'"
 							v-model="props.reactiveState[fieldKey]"
 							:className="field.inputClassName"
+							:placeholder="field.placeholder"
 						/>
 						<span v-else class="unsupported-control-text">
 							❌

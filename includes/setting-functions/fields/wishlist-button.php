@@ -25,6 +25,16 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
                 'dependent'  => array('enable_wishlist'),
                 'value' => addonify_wishlist_get_option( 'btn_label' )
             ),
+             'btn_custom_class' => array(
+                'type' => 'text',
+                'className' => '',
+                'placeholder' => 'my_button rounded_button',
+                'label' => __( 'CSS class', 'addonify-wishlist' ),
+                'badge' => 'Optional',
+                'description' => 'If required, add custom CSS class to add to wishlist button seperated with space.',
+                'dependent'  => array('enable_wishlist'),
+                'value' => addonify_wishlist_get_option( 'btn_custom_class' )
+            ), 
             'btn_label_if_added_to_wishlist' => array(
                 'type' => 'text',
                 'className' => '',
@@ -64,29 +74,31 @@ if ( ! function_exists( 'addonify_wishlist_add_to_wishlist_button_styles_setting
         return array(
             'wishlist_btn_text_color' => array(
                 'type' => 'color',
-                'label' => __( 'Label Color', 'addonify-wishlist' ),
+                'label' => __( 'Label color', 'addonify-wishlist' ),
+                'isAlphaPicker' => true,
+                'className' => '',
                 'value' => addonify_wishlist_get_option( 'wishlist_btn_text_color' )
             ),
             'wishlist_btn_icon_color' => array(
                 'type' => 'color',
-                'label' => __( 'Icon Color', 'addonify-wishlist' ),
+                'label' => __( 'Icon color', 'addonify-wishlist' ),
+                'isAlphaPicker' => true,
+                'className' => '',
                 'value' => addonify_wishlist_get_option( 'wishlist_btn_icon_color' )
             ),
             'wishlist_btn_text_color_hover' => array(
                 'type' => 'color',
-                'label' => __( 'Label on Hover Color', 'addonify-wishlist' ),
+                'label' => __( 'Label on Hover color', 'addonify-wishlist' ),
+                'isAlphaPicker' => true,
+                'className' => '',
                 'value' => addonify_wishlist_get_option( 'wishlist_btn_text_color_hover' )
             ),
             'wishlist_btn_icon_color_hover' => array(
                 'type' => 'color',
-                'label' => __( 'Icon on Hover Color', 'addonify-wishlist' ),
+                'label' => __( 'Icon on Hover color', 'addonify-wishlist' ),
+                'isAlphaPicker' => true,
+                'className' => '',
                 'value' => addonify_wishlist_get_option( 'wishlist_btn_icon_color_hover' )
-            ), 
-            'btn_custom_class' => array(
-                'type' => 'text',
-                'label' => __( 'Custom CSS class', 'addonify-wishlist' ),
-                'description' => '',
-                'value' => addonify_wishlist_get_option( 'btn_custom_class' )
             ),    
         );
     }
