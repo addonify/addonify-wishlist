@@ -21,8 +21,8 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
             array(
                 'enable_wishlist' => true,
                 'wishlist_page' => '',
-                'require_login' => true,
-                'redirect_to_login' => true,
+                'require_login' => false,
+                'redirect_to_login' => false,
                 'redirect_to_checkout_if_item_added_to_cart' => false,
                 'remove_from_wishlist_if_added_to_cart' => true,
                 'cookies_lifetime' => 30,

@@ -20,7 +20,7 @@
 			</aside>
 			<section class="adfy-col end site-primary">
 				<Loading v-if="store.isLoading" />
-				<Form id="adfy-styles-form" class="adfy-form" v-else>
+				<Form v-else id="adfy-styles-form" class="adfy-form">
 					<section
 						class="options-section"
 						v-for="section in store.data.styles"
