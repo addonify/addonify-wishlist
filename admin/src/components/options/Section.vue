@@ -91,6 +91,7 @@
 							v-else-if="field.type == 'select'"
 							v-model="props.reactiveState[fieldKey]"
 							:choices="field.choices"
+							:placeholder="field.placeholder"
 						/>
 						<RadioIcon
 							v-else-if="

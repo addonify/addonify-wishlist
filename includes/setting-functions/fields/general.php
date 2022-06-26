@@ -16,6 +16,7 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
             'wishlist_page' => array(
                 'type' => 'select',
                 'className'      => '',
+                'placeholder'   => __('Select a page', 'addonify-wishlist'),
                 'label' => __( 'Wishlist page', 'addonify-wishlist' ),
                 'description' => 'Select a page to display wishlist table.',
                 'dependent'  => array('enable_wishlist'),
@@ -86,7 +87,7 @@ if ( ! function_exists( 'addonify_wishlist_general_styles_settings_fields' ) ) {
                 'type' => 'switch',
                 'className'      => '',
                 'label' => __( 'Enable plugin styles', 'addonify-wishlist' ),
-                'description' => 'If enabled, the colors selected below will be applied to the quick view modal & elements.',
+                'description' => 'If enabled, the colors selected below will be applied.',
                 'value' => addonify_wishlist_get_option( 'load_styles_from_plugin' )
             )
         );

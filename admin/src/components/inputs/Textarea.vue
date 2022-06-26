@@ -25,7 +25,7 @@
 		:placeholder="
 			props.placeholder
 				? props.placeholder
-				: __('Enter text here...', 'addonify_wishlist')
+				: __('Enter text here...', 'addonify-wishlist')
 		"
 		resize="vertical"
 		input-style="display:block;width: 100%;"
