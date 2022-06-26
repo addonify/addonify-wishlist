@@ -504,7 +504,8 @@ __webpack_require__.r(__webpack_exports__);
   __name: 'Select',
   props: {
     modelValue: [Number, String],
-    choices: [Object, Array]
+    choices: [Object, Array],
+    placeholder: String
   },
   emits: ["update:modelValue"],
   setup: function setup(__props, _ref) {
@@ -1525,7 +1526,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.value = $event;
     }),
-    placeholder: $setup.__('Select', 'addonify-wishlist'),
+    placeholder: $setup.props.placeholder ? $setup.props.placeholder : $setup.__('Select', 'addonify-wishlist'),
     size: "large"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -1601,7 +1602,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $setup.value = $event;
     }),
-    placeholder: $setup.props.placeholder ? $setup.props.placeholder : $setup.__('Enter text here...', 'addonify_wishlist'),
+    placeholder: $setup.props.placeholder ? $setup.props.placeholder : $setup.__('Enter text here...', 'addonify-wishlist'),
     size: "large"
   }, null, 8
   /* PROPS */
@@ -1633,7 +1634,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($props.className),
     type: "textarea",
     rows: "10",
-    placeholder: $setup.props.placeholder ? $setup.props.placeholder : _ctx.__('Enter text here...', 'addonify_wishlist'),
+    placeholder: $setup.props.placeholder ? $setup.props.placeholder : _ctx.__('Enter text here...', 'addonify-wishlist'),
     resize: "vertical",
     "input-style": "display:block;width: 100%;"
   }, null, 8
@@ -2073,10 +2074,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return $setup.props.reactiveState[fieldKey] = $event;
       },
-      choices: field.choices
+      choices: field.choices,
+      placeholder: field.placeholder
     }, null, 8
     /* PROPS */
-    , ["modelValue", "onUpdate:modelValue", "choices"])) : field.type == 'radio' && field.type_style == 'radio_icon' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["RadioIcon"], {
+    , ["modelValue", "onUpdate:modelValue", "choices", "placeholder"])) : field.type == 'radio' && field.type_style == 'radio_icon' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["RadioIcon"], {
       key: 5,
       modelValue: $setup.props.reactiveState[fieldKey],
       "onUpdate:modelValue": function onUpdateModelValue($event) {

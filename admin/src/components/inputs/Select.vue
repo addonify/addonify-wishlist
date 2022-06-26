@@ -5,6 +5,7 @@
 	let props = defineProps({
 		modelValue: [Number, String],
 		choices: [Object, Array],
+		placeholder: String,
 	});
 
 	// Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
@@ -21,7 +22,11 @@
 <template>
 	<el-select
 		v-model="value"
-		:placeholder="__('Select', 'addonify-wishlist')"
+		:placeholder="
+			props.placeholder
+				? props.placeholder
+				: __('Select', 'addonify-wishlist')
+		"
 		size="large"
 	>
 		<el-option
