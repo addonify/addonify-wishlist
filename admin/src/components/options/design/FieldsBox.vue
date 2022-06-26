@@ -1,10 +1,6 @@
 <script setup>
 	import Color from "../../inputs/Color.vue";
-	import Text from "../../inputs/Text.vue";
-	import Switch from "../../inputs/Switch.vue";
-	import { useOptionsStore } from "../../../stores/options";
 	let { __, _x, _n, _nx } = wp.i18n;
-	let store = useOptionsStore();
 	let props = defineProps({
 		section: Object,
 		sectionId: String,

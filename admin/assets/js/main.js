@@ -1065,12 +1065,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _inputs_Color_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../inputs/Color.vue */ "./admin/src/components/inputs/Color.vue");
-/* harmony import */ var _inputs_Text_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../inputs/Text.vue */ "./admin/src/components/inputs/Text.vue");
-/* harmony import */ var _inputs_Switch_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../inputs/Switch.vue */ "./admin/src/components/inputs/Switch.vue");
-/* harmony import */ var _stores_options__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../stores/options */ "./admin/src/stores/options.js");
-
-
-
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'FieldsBox',
@@ -1088,18 +1082,13 @@ __webpack_require__.r(__webpack_exports__);
         _x = _wp$i18n._x,
         _n = _wp$i18n._n,
         _nx = _wp$i18n._nx;
-    var store = (0,_stores_options__WEBPACK_IMPORTED_MODULE_3__.useOptionsStore)();
     var __returned__ = {
       __: __,
       _x: _x,
       _n: _n,
       _nx: _nx,
-      store: store,
       props: props,
-      Color: _inputs_Color_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-      Text: _inputs_Text_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-      Switch: _inputs_Switch_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-      useOptionsStore: _stores_options__WEBPACK_IMPORTED_MODULE_3__.useOptionsStore
+      Color: _inputs_Color_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
       enumerable: false,
