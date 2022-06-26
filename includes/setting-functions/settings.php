@@ -77,7 +77,7 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_values' ) ) {
 
             foreach ( addonify_wishlist_settings_defaults() as $id => $value ) {
 
-                $setting_type = $setting_fields[$id];
+                $setting_type = $setting_fields[$id]['type'];
 
                 switch ( $setting_type ) {
                     case 'switch':
@@ -111,7 +111,7 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
 
                 $sanitized_value = null;
 
-                $setting_type = $setting_fields[$id];
+                $setting_type = $setting_fields[$id]['type'];
 
                 switch ( $setting_type ) {
                     case 'text':
@@ -121,15 +121,18 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
                         $sanitized_value = sanitize_textarea_field( $value );
                         break;
                     case 'switch':
-                        $sanitized_value = wp_validate_boolean( $value );
+                        $sanitized_value = ( $value == true ) ? '1' : '0';
                         break;
                     case 'number':
                         $sanitized_value = absint( $value );
+                        break;
                     case 'color':
                         $sanitized_value = sanitize_text_field( $value );
+                        break;
                     case 'select':
                         $setting_choices = $setting_fields[$id]['choices'];
                         $sanitized_value = ( array_key_exists( $value, $setting_choices ) ) ? sanitize_text_field( $value ) : $setting_choices[0];
+                        break;
                     default:
                         $sanitized_value = sanitize_text_field( $value );
                 }
