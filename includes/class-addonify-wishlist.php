@@ -173,9 +173,6 @@ class Addonify_Wishlist {
 		// custom link in plugins.php page in wp-admin.
 		$this->loader->add_action( 'plugin_action_links', $plugin_admin, 'custom_plugin_link_callback', 10, 2 );
 
-		// show settings page ui.
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_page_ui' );
-
 		// show notice if woocommerce is not active.
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'show_woocommerce_not_active_notice_callback' );
 
@@ -254,7 +251,7 @@ class Addonify_Wishlist {
 		$this->loader->add_filter( 'woocommerce_login_redirect', $plugin_public, 'myaccount_login' );
 
 		// genereate custom styles.
-		$this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
+		// $this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
 
 		// custom template hooks.
 		$this->loader->add_action( 'addonify_wishlist_modal_generate_action_btns', $plugin_public, 'generate_modal_action_btns', 12 );

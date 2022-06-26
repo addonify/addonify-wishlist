@@ -31,7 +31,7 @@ class Addonify_Wishlist_Activator {
 		// create page only once.
 		// do not regenerate even if plugin is deleted by user.
 
-		if ( get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' ) ) {
+		if ( get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page' ) ) {
 			
 			return;
 		}
@@ -50,7 +50,7 @@ class Addonify_Wishlist_Activator {
 		// Insert the post into the database.
 		$page_id = wp_insert_post( $new_page );
 
-		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id', $page_id );
+		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $page_id );
 	}
 
 }
