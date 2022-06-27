@@ -204,7 +204,7 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
                         ),
                         'add_to_wishlist_button' => array(
                             'title' => __( 'Add to Wishlist Button Color', 'addonify-wishlist' ),
-                            'description' => 'Change the look & feel of add to wishlist button.',
+                            'description' => __( 'Change the look & feel of add to wishlist button.', 'addonify-wishlist' ),
                             'type' => 'options-box',
                             'dependent'  => array('load_styles_from_plugin'),
                             'fields' => addonify_wishlist_add_to_wishlist_button_styles_settings_fields()

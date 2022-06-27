@@ -6,13 +6,13 @@ if ( ! function_exists( 'addonify_wishlist_custom_css_settings_fields' ) ) {
 
         return array(
             'custom_css' => array(
-                'type' => 'textarea',
-                'className' => 'custom-css-box fullwidth',
-                'inputClassName' => 'custom-css-textarea',
-                'label' => __( 'Custom CSS', 'addonify-wishlist' ),
-                'description' => 'If required, you may add your own custom CSS code here.',
-                'placeholder' => '#app { color: blue; }',
-                'value' => addonify_wishlist_get_option( 'custom_css' )
+                'type'              => 'textarea',
+                'className'         => 'custom-css-box fullwidth',
+                'inputClassName'    => 'custom-css-textarea',
+                'label'             => __( 'Custom CSS', 'addonify-wishlist' ),
+                'description'       => __( 'If required, you may add your own custom CSS code here.', 'addonify-wishlist' ),
+                'placeholder'       => '#app { color: blue; }',
+                'value'             => addonify_wishlist_get_option( 'custom_css' )
             )
         );
     }
