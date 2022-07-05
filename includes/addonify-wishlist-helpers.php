@@ -370,3 +370,14 @@ class Addonify_Wishlist_Helpers {
 	}
 
 }
+
+
+
+
+if ( ! function_exists( 'addonify_wishlist_is_ajax_enabled' ) ) {
+
+	function addonify_wishlist_is_ajax_enabled() {
+
+		return apply_filters( 'addonify_wishlist/ajaxify_wishlist_form', false );	
+	}
+}

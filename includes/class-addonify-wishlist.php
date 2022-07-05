@@ -101,7 +101,7 @@ class Addonify_Wishlist {
 		/**
 		 * Helper class.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-helpers.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helpers.php';
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -207,54 +207,56 @@ class Addonify_Wishlist {
 
 		$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'actions_init', 20 );
 
-		// add button after add to cart button.
-		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
-		$this->loader->add_action( 'woocommerce_after_add_to_cart_button', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
+		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		// add button before add to cart button.
-		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
-		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
+		// // add button after add to cart button.
+		// $this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
+		// $this->loader->add_action( 'woocommerce_after_add_to_cart_button', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
 
-		// add button aside image.
-		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'show_btn_aside_image_callback' );
+		// // add button before add to cart button.
+		// $this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
+		// $this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
 
-		// image overlay container .
-		$this->loader->add_action( 'woocommerce_before_shop_loop_item', $plugin_public, 'addonify_overlay_container_start_callback', 10 );
-		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
+		// // add button aside image.
+		// $this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'show_btn_aside_image_callback' );
 
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sidebar_template' );
+		// // image overlay container .
+		// $this->loader->add_action( 'woocommerce_before_shop_loop_item', $plugin_public, 'addonify_overlay_container_start_callback', 10 );
+		// $this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
 
-		$this->loader->add_action( 'init', $plugin_public, 'init_callback' );
+		// $this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
+		// $this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sidebar_template' );
 
-		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit' );
+		// $this->loader->add_action( 'init', $plugin_public, 'init_callback' );
 
-		// add to wishlist.
-		$this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
+		// $this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit' );
 
-		// sidebar form submit.
-		$this->loader->add_action( 'wp_ajax_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
-		$this->loader->add_action( 'wp_ajax_nopriv_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
+		// // add to wishlist.
+		// $this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
+		// $this->loader->add_action( 'wp_ajax_nopriv_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
 
-		// sidebar form submit.
-		$this->loader->add_action( 'wp_ajax_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
+		// // sidebar form submit.
+		// $this->loader->add_action( 'wp_ajax_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
+		// $this->loader->add_action( 'wp_ajax_nopriv_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
 
-		// capture user login.
-		$this->loader->add_action( 'wp_login', $plugin_public, 'after_user_login', 10, 2 );
+		// // sidebar form submit.
+		// $this->loader->add_action( 'wp_ajax_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
+		// $this->loader->add_action( 'wp_ajax_nopriv_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
 
-		// catch user login from myaccount in woocommerce.
-		$this->loader->add_filter( 'woocommerce_login_redirect', $plugin_public, 'myaccount_login' );
+		// // capture user login.
+		// $this->loader->add_action( 'wp_login', $plugin_public, 'after_user_login', 10, 2 );
 
-		// genereate custom styles.
-		// $this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
+		// // catch user login from myaccount in woocommerce.
+		// $this->loader->add_filter( 'woocommerce_login_redirect', $plugin_public, 'myaccount_login' );
 
-		// custom template hooks.
-		$this->loader->add_action( 'addonify_wishlist_modal_generate_action_btns', $plugin_public, 'generate_modal_action_btns', 12 );
+		// // genereate custom styles.
+		// // $this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
+
+		// // custom template hooks.
+		// $this->loader->add_action( 'addonify_wishlist_modal_generate_action_btns', $plugin_public, 'generate_modal_action_btns', 12 );
 
 	}
 

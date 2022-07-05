@@ -1,4 +1,5 @@
 === Addonify WooCommerce Wishlist ===
+
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, woocommerce, ecommerce, e-commerce, product wishlist
 Requires at least: 5.0.0
@@ -7,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Addonify WooCommerce Wishlist is a powerful toolkit which adds a wishlist functionality to your e-commerce shop.
+Addonify WooCommerce Wishlist is a simple yet powerful tool that adds a wishlist functionality to your e-commerce shop.
 
 == Description ==
 

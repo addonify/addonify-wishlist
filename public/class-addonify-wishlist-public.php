@@ -40,73 +40,23 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Wishlist Button Position
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $btn_position    Display Position for the Compare button
-	 */
-	private $btn_position;
-
-
-	/**
-	 * Wishlist Button Label
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $btn_label    Label for the Wishlist button
-	 */
-	private $btn_label;
-
-
-	/**
-	 * Custom CSS class name for "add to wishlist" button
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $button_custom_css_class
-	 */
-	private $button_custom_css_class;
-
-
-	/**
-	 * Wishlist_page_id
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      int    $wishlist_page_id
-	 */
-	private $wishlist_page_id;
-
-
-	/**
-	 * Require Login ?
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      int    $require_login
-	 */
-	private $require_login;
-
-
-	/**
 	 * Total items in wishlist
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      int    $wishlist_item_count
+	 * @var      int    $wishlist_items_count
 	 */
-	public $wishlist_item_count;
+	public $wishlist_items_count;
 
 
 	/**
-	 * Default values from admin settings field
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      array    $default_values Default value from options fields in admin settings.
+	 * Wishlist items.
+	 * 
+	 * @since 1.0.0
+	 * @access private
+	 * @var array $wishlist_items
 	 */
-	public $default_values;
+	private $wishlist_items = array();
 
 
 	/**
@@ -120,18 +70,63 @@ class Addonify_Wishlist_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
-
-		$default_wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' );
-		
-		$this->wishlist_page_id = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $default_wishlist_page_id );
-
-		$this->btn_position = $this->get_option( 'btn_position' );
-		$this->btn_label = $this->get_option( 'btn_label' );
-		$this->button_custom_css_class = $this->get_option( 'btn_custom_class' );
-		$this->require_login = $this->get_option( 'require_login', 1 );
-
 	}
+
+
+	public function actions_init() {
+
+		if ( 
+			! class_exists( 'WooCommerce' ) ||  
+			(int) addonify_wishlist_get_option( 'enable_wishlist' ) != 1
+		) {
+			return;
+		}
+
+		$this->wishlist_items = $this->get_wishlist();
+
+		$this->wishlist_items_count = is_array( $this->wishlist_items ) ? count( $this->wishlist_items ) : 0;
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+
+
+		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'after_add_to_cart' ) {
+			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 15 );
+			add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'render_add_to_wishlist_button' ) );
+		}
+
+		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'before_add_to_cart' ) {
+			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 5 );
+			add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'render_add_to_wishlist_button' ) );
+		}
+		
+		add_action( 'wp_footer', array( $this, 'wishlist_modal_wrapper' ) );
+		add_action( 'wp_footer', array( $this, 'wishlist_sidebar_template' ) );
+
+		add_action( 'wp_ajax_addonify_add_to_wishlist', array( $this, 'ajax_add_to_wishlist_handler' ) );
+		add_action( 'wp_ajax_nopriv_addonify_add_to_wishlist', array( $this, 'ajax_add_to_wishlist_handler' ) );
+
+		add_action( 'wp_ajax_addonify_add_to_cart_from_wishlist', array( $this, 'ajax_add_to_cart_handler' ) );
+		add_action( 'wp_ajax_nopriv_addonify_add_to_cart_from_wishlist', array( $this, 'ajax_add_to_cart_handler' ) );
+
+		add_action( 'wp_ajax_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
+		add_action( 'wp_ajax_nopriv_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
+
+		add_action( 'wp_login', array( $this, 'after_user_login' ), 10, 2 );
+		
+		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
+
+		add_action( 'addonify_wishlist_modal_generate_action_btns', array( $this, 'generate_modal_action_btns' ), 12 );
+
+		// add_action( 'wp_head', array( $this, 'generate_custom_styles_callback' ) );
+
+		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
+
+		add_action( 'addonify_wishlist/before_wishlist_form', array( $this, 'ajaxify_wishlist_form' ) );
+
+		add_action( 'wp', array( $this, 'init_actions' ) );
+	}
+
 
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
@@ -149,7 +144,23 @@ class Addonify_Wishlist_Public {
 		}
 
 		wp_enqueue_style( 'addonify-wishlist-icon', plugin_dir_url( __FILE__ ) . 'assets/fonts/addonify-wishlist-icon.min.css', array(), $this->version );
+
+		if ( (int) addonify_wishlist_get_option( 'load_styles_from_plugin' ) === 1 ) {
+
+			$inline_css = $this->dynamic_css();
+
+			$custom_css = addonify_wishlist_get_option( 'custom_css' );
+
+			if ( $custom_css ) {
+				$inline_css .= $custom_css;
+			}
+			
+			$inline_css = $this->minify_css( $inline_css );
+
+			wp_add_inline_style( $this->plugin_name, $inline_css );
+		}
 	}
+
 
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
@@ -170,286 +181,576 @@ class Addonify_Wishlist_Public {
 
 		wp_localize_script(
 			$this->plugin_name,
-			'addonify_wishlist_object',
+			'addonifyWishlistJSObject',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce' => wp_create_nonce( $this->plugin_name ),
-
-				'action' => 'add_to_wishlist',
-				'action_sidebar_form' => 'sidebar_form',
-				'action_wishlist_items_count' => 'wishlist_items_count',
-
-				'wishlist_page_url' => ( addonify_wishlist_get_option( 'wishlist_page' ) ) ? get_permalink( (int) addonify_wishlist_get_option( 'wishlist_page' ) ) : '',
-				'login_url' => add_query_arg( 'addonify_wishlist_redirect', home_url( $wp->request ), wc_get_page_permalink( 'myaccount' ) ),
-
-				'show_popup' => addonify_wishlist_get_option( 'show_popup' ),
-				'redirect_to_wishlist_if_popup_disabled' => addonify_wishlist_get_option( 'redirect_to_wishlist_if_popup_disabled' ),
-
-				'is_logged_in' => is_user_logged_in(),
-				'require_login' => addonify_wishlist_get_option( 'require_login' ),
-				'redirect_to_login' => addonify_wishlist_get_option( 'redirect_to_login' ),
-
-				'login_msg' => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
-
-				'product_added_to_wishlist_btn_label' => __( 'Added to Wishlist', 'addonify-wishlist' ),
-				'product_adding_to_wishlist_btn_label' => __( 'Adding to Wishlist', 'addonify-wishlist' ),
-				'wishlist_empty_label' => __( 'Your Wishlist is empty', 'addonify-wishlist' ),
-				'wishlist_not_added_label' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
-
-				'add_to_wishlist_btn_text' => addonify_wishlist_get_option( 'btn_label' ),
-				'product_added_to_wishlist_text' => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
-				'product_already_in_wishlist_text' => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
+				'addToWishlistAction' => 'addonify_add_to_wishlist',
+				'removeFromWishlistAfterAddedToCart' => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
+				'loginMessage' => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),	
+				'addedToWishlistText' => __( "Added to Wishlist", 'addonify-wishlist' ),
+				'initialAddToWishlistButtonLabel' => addonify_wishlist_get_option( 'btn_label' ),
+				'alreadyInWishlistText' => __( "Already in Wishlist", 'addonify-wishlist' ),
+				'popupAddedToWishlistText' => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
+				'popupAlreadyInWishlistText' => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),			
+				'emptyWishlistText' => __( 'Your Wishlist is empty', 'addonify-wishlist' ),
 			)
 		);
 
 	}
 
 	/**
-	 * Functions to run oninit
+	 * Functions to run on init.
 	 *
 	 * @since    1.0.0
 	 */
-	public function init_callback() {
+	public function init_actions() {
 
-		// update wishlist count.
-		$this->wishlist_item_count = count( $this->get_all_wishlist() );
+		global $wp;
 
-		// register shortcode
-		$this->register_shortcode();
+		// Remove product from the wishlist.
+		// Only works if removal is done on form submit.
+		if ( 
+			isset( $_POST['addonify-remove-from-wishlist'] ) && 
+			! empty( $_POST['addonify-remove-from-wishlist'] )
+		) {
 
-	}
+			// If nonce is not valid, display error message and return.
+			if ( 
+				! isset( $_POST['nonce'] ) &&
+				empty( $_POST['nonce'] ) &&
+				! wp_verify_nonce( $_POST['nonce'], $this->plugin_name )
+			) {
+				wc_add_notice( __( "Invalid security token.", 'addonify-wishlist' ), 'error' );
+				return;
+			}
+
+			$product_id = (int) wp_unslash( $_POST['addonify-remove-from-wishlist'] );
+
+			$product = wc_get_product( $product_id );
+
+			// Remove product from the wishlist.
+			if ( $this->remove_from_wishlist( $product_id ) ) {
+
+				wc_add_notice( __( "{$product->get_title()} is removed from the wishlist.", "addonify-wishlist" ), 'success' );
+			} else {
+
+				wc_add_notice( __( "{$product->get_title()} is not in the wishlist.", "addonify-wishlist" ), 'error' );
+			}
+
+			wp_redirect( home_url( $wp->request ) );
+			exit;
+		}
 
 
+		// Remove product from the wishlist and add the product into cart.
+		// Only works if add to cart is done on form submit.
+		if (
+			isset( $_POST['addonify-add-to-cart-from-wishlist'] ) &&
+			! empty( $_POST['addonify-add-to-cart-from-wishlist'] )
+		) {
 
-	/**
-	 * Show button after "cart to cart" button
-	 *
-	 * @since    1.0.0
-	 */
-	public function show_btn_after_add_to_cart_btn_callback() {
+			// If nonce is not valid, display error message and return.
+			if ( 
+				! isset( $_POST['nonce'] ) &&
+				empty( $_POST['nonce'] ) &&
+				! wp_verify_nonce( $_POST['nonce'], $this->plugin_name )
+			) {
+				wc_add_notice( __( "Invalid security token.", 'addonify-wishlist' ), 'error' );
+				return;
+			}
 
-		if ( 'after_add_to_cart' === $this->btn_position ) {
-			$this->show_btn_markups( 'after-add-to-cart' );
+			$product_id = (int) wp_unslash( $_POST['addonify-add-to-cart-from-wishlist'] );
+
+			$product = wc_get_product( $product_id );
+
+			// Add product into the cart.
+			if ( $this->add_to_cart( $product_id ) ) {
+
+				$notice = __( "{$product->get_title()} is added to the cart.", 'addonify-wishlist' );
+
+				// Remove product from the wishlist.
+				if ( (int) addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ) == 1 ) {				
+
+					if ( $this->remove_from_wishlist( $product_id ) ) {
+
+						$notice .= '<br>' . __( "{$product->get_title()} has been removed from the wishlist.", 'addonify-wishlist' );
+					} else {
+						$notice .= '<br>' . __( "Error removing {$product->get_title()} from the wishlist.", 'addonify-wishlist' );
+					}				
+				}
+
+				wc_add_notice( $notice, 'success' );
+
+				// If redirect to checkout is enabled, redirect to checkout page.
+				if ( 
+					(int) addonify_wishlist_get_option( 'redirect_to_checkout_if_product_added_to_cart' ) == 1 && 
+					get_option( 'woocommerce_checkout_page_id' )
+				) {
+
+					wp_safe_redirect( wc_get_checkout_url() );
+					exit;
+				} 
+
+				wp_redirect( home_url( $wp->request ) );
+				exit;
+			} else {
+
+				$notice = __( "Error adding {$product->get_title()} to the cart.", 'addonify-wishlist' );
+
+				wc_add_notice( $notice, 'error' );
+			}
+		}
+
+		// Add product to the wishlist.
+		if ( 
+			isset( $_GET['addonify-add-to-wishlist'] ) && 
+			! empty( $_GET['addonify-add-to-wishlist'] ) 
+		) {
+			$product_id = (int) wp_unslash( $_GET['addonify-add-to-wishlist'] );
+
+			$product = wc_get_product( $product_id ); 
+
+			if ( $this->add_to_wishlist( $product_id ) ) {
+				
+				if ( 
+					addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) == 'redirect_to_wishlist_page' &&
+					(int) addonify_wishlist_get_option( 'wishlist_page' )
+				) {
+
+					$wishlist_page_id = (int) addonify_wishlist_get_option( 'wishlist_page' );
+					wp_redirect( get_permalink( $wishlist_page_id ) );
+					exit;
+				} else {
+
+					$notice = '<a href="' . esc_url( get_permalink( (int) addonify_wishlist_get_option( 'wishlist_page' ) ) ) . '" class="button wc-forward" tabindex="1">' . esc_html__( 'View Wishlist', 'addonify-wishlist' ) . '</a>';  
+
+					$notice .= __( "{$product->get_title()} is added to the wishlist.", "addonify-wishlist" );
+
+					wc_add_notice( $notice, 'success' );
+				}
+			} else {
+
+				wc_add_notice( __( "{$product->get_title()} is already in the wishlist.", "addonify-wishlist" ), 'error' );
+
+				if ( 
+					addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) == 'redirect_to_wishlist_page' &&
+					(int) addonify_wishlist_get_option( 'wishlist_page' )
+				) {
+
+					$wishlist_page_id = (int) addonify_wishlist_get_option( 'wishlist_page' );
+					wp_redirect( get_permalink( $wishlist_page_id ) );
+					exit;
+				}
+			}
 		}
 	}
 
 
-
 	/**
-	 * Show button before "add to cart" button
-	 *
-	 * @since    1.0.0
+	 * Render add to wishlist button in products loop.
+	 * 
+	 * @since 1.0.0
 	 */
-	public function show_btn_before_add_to_cart_btn_callback() {
-		if ( 'before_add_to_cart' === $this->btn_position ) {
-			$this->show_btn_markups( 'before-add-to-cart' );
-		}
-	}
+	public function render_add_to_wishlist_button() {
 
-
-
-	/**
-	 * Show button on top of image
-	 *
-	 * @since    1.0.0
-	 */
-	public function show_btn_aside_image_callback() {
-
-		if ( 'overlay_on_image' !== $this->btn_position ) {
+		// Return if button label and icon is not set.
+		if ( 
+			! addonify_wishlist_get_option( 'btn_label' ) &&
+			! (int) addonify_wishlist_get_option( 'show_icon' ) == 1
+		) {
 			return;
 		}
-
-		$this->show_btn_markups( 'addonify-overlay-btn overlay-on-image' );
-
-	}
-
-
-
-	/**
-	 * Generate "add to wishlist" button content
-	 *
-	 * @since    1.0.0
-	 * @param    string $extra_css_class    CSS classes to be passed into templates.
-	 */
-	private function show_btn_markups( $extra_css_class = '' ) {
 
 		global $product;
-		$product_id = $product->get_id();
 
-		$css_class = array();
-		$css_class[] = $extra_css_class;
-		$css_class[] = $this->button_custom_css_class;
+		$add_to_wishlist_button_args = array(
+			'product_id' => $product->get_id(),
+			'button_label' => addonify_wishlist_get_option( 'btn_label' ),
+			'button_classes' => array( 'button', 'adfy-wishlist-btn', 'addonify-add-to-wishlist-btn' ),
+			'product_name' => $product->get_title(),
+			'display_icon' => addonify_wishlist_get_option( 'show_icon' ),
+			'icon' => 'heart-o-style-one',
+			'redirect_to_login' => false,
+			'login_url' => '',
+			'require_login' => false,
+			'display_popup_notice' => false
+		);
 
-		if ( $this->btn_label ) {
-			// used to add margin into icon.
-			$css_class[] = 'show-label';
+		// Add class, 'after-add-to-cart', if button is to be displayed after add to cart button.
+		if ( addonify_wishlist_get_option( 'btn_position' ) == 'after_add_to_cart' ) {
+
+			$add_to_wishlist_button_args['button_classes'][] = 'after-add-to-cart';
 		}
 
-		$show_icon = (int) addonify_wishlist_get_option( 'show_icon' );
+		// Add class, 'before-add-to-cart', if button is to be displayed before add to cart button.
+		if ( addonify_wishlist_get_option( 'btn_position' ) == 'before_add_to_cart' ) {
 
-		// do not show button if both icon and btn label is disabled by user.
-		if ( ! $this->btn_label && ! $show_icon ) {
-			return;
+			$add_to_wishlist_button_args['button_classes'][] = 'before-add-to-cart';
 		}
 
-		$btn_label = $this->btn_label;
-		$icon = 'heart-o-style-one';
+		// Add class, 'show', if there is button label.
+		if ( addonify_wishlist_get_option( 'btn_label' ) ) {
 
-		if ( $this->is_item_in_wishlist( $product_id ) ) {
+			$add_to_wishlist_button_args['button_classes'][] = 'show-label';
+		}
 
-			$css_class[] = 'added-to-wishlist';
+		// If product is already in the wishlist, add a class, set button label and set button icon.
+		if ( addonify_wishlist_is_product_in_wishlist( $product->get_id() ) ) {
 
-			// change btn label if btn is already added to wishlist.
-			$btn_label = addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' );
-			$icon = 'heart-style-one';
+			$add_to_wishlist_button_args['button_classes'][] = 'added-to-wishlist';
 
-			if ( $show_icon ) {
-				$css_class[] = 'show-icon xxxxx-heart-xxxxx';
+			$add_to_wishlist_button_args['button_label'] = addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' );
+
+			$add_to_wishlist_button_args['icon'] = 'heart-style-one';
+
+			if ( (int) addonify_wishlist_get_option( 'show_icon' ) == 1 ) {
+
+				$add_to_wishlist_button_args['button_classes'][] = 'show-icon xxxxx-heart-xxxxx';
+			}
+		}
+
+		// Add custom CSS class to the button if set.
+		if ( addonify_wishlist_get_option( 'btn_custom_class' ) ) {
+
+			$add_to_wishlist_button_args['button_classes'][] = addonify_wishlist_get_option( 'btn_custom_class' );
+		}
+
+		// Set button properties check the need of user login.
+		if ( 
+			(int) addonify_wishlist_get_option( 'require_login' ) == 1 &&
+			! is_user_logged_in()
+		) {
+
+			$add_to_wishlist_button_args['require_login'] = true;
+
+			if ( addonify_wishlist_get_option( 'if_not_login_action' ) == 'show_popup' ) {
+
+				$add_to_wishlist_button_args['button_classes'][] = 'addonify-wishlist-login-popup-enabled';
+			} else {
+
+				$add_to_wishlist_button_args['login_url'] = ( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url();
+			}
+		} else {
+			if ( addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) == 'show_popup_notice' ) {
+
+				$add_to_wishlist_button_args['display_popup_notice'] = true;
+
+				$add_to_wishlist_button_args['button_classes'][] = 'addonify-wishlist-ajax-add-to-wishlist';
 			}
 		}
 
 		$this->get_templates(
 			'addonify-add-to-wishlist-button',
 			false,
-			array(
-				'product_id' => $product_id,
-				'label' => $btn_label,
-				'css_class' => implode( ' ', $css_class ),
-				'name' => $product->get_title(),
-				'btn_position' => $this->btn_position,
-				'show_icon' => $show_icon,
-				'icon' => $icon,
-			)
+			apply_filters( 'addonify_wishlist/add_to_wishlist_button_args', $add_to_wishlist_button_args )
 		);
-
 	}
 
 
+	/**
+	 * Add product into the wishlist if product is not in the wishlist.
+	 * 
+	 * @since 1.0.0
+	 * @param int $product_id
+	 * @return boolean true if added successfully otherwise false. 
+	 */
+	public function add_to_wishlist( $product_id ) {
+
+		if ( ! array_key_exists( $product_id, $this->wishlist_items ) ) {
+
+			$this->wishlist_items[ $product_id ] = time();
+
+			return $this->save_wishlist_items( $this->wishlist_items );
+		} 
+
+		return false;
+	}
+
 
 	/**
-	 * Ajax callback function
-	 * Adds items to wishlist cookie
-	 * Returns markups for selected product to show in sticky sidebar
-	 *
-	 * @since    1.0.0
+	 * Remove product from the wishlist if product is already in the wishlist.
+	 * 
+	 * @since 1.0.0
+	 * @param int $product_id
+	 * @return boolean true if removed successfully otherwise false. 
 	 */
-	public function add_to_wishlist_callback() {
+	public function remove_from_wishlist( $product_id ) {
+
+		if ( array_key_exists( $product_id, $this->wishlist_items ) ) {
+
+			unset( $this->wishlist_items[ $product_id ] );
+
+			return $this->save_wishlist_items( $this->wishlist_items );
+		}
+
+		return false;
+	} 
+
+
+	/**
+	 * Add product into the cart.
+	 * 
+	 * @since 1.0.0
+	 * @param int $product_id
+	 * @return boolean true if added successfully otherwise false. 
+	 */
+	public function add_to_cart( $product_id ) {
+
+		global $woocommerce;
+
+		if ( $woocommerce->cart->add_to_cart( $product_id ) ) {
+
+			return true;
+		} 
+		
+		return false;
+	}
+
+
+	/**
+	 * Callback function to handle ajax request to add product into the cart.
+	 * 
+	 * @since 1.0.0
+	 * @return array mixed. 
+	 */
+	public function ajax_add_to_cart_handler() {
+
+		// Check if nonce is valid.
+		if ( 
+			! isset( $_POST['nonce'] ) ||
+			empty( $_POST['nonce'] ) ||
+			! wp_verify_nonce( $_POST['nonce'], $this->plugin_name )
+		 ) {
+			return wp_send_json( array(
+				'success' => false,
+				'message' => __( 'Missing or invalid secutiry token.', 'addonify-wishlist' )
+			) );
+		}
+
+		// Check if product id is set.
+		if (
+			! isset( $_POST['productId'] ) ||
+			empty( $_POST['productId'] ) 
+		) {
+			return wp_send_json( array(
+				'success' => false,
+				'message' => __( 'Missing product id.', 'addonify-wishlist' )
+			) );
+		}
+
+		$product = wc_get_product( (int) wp_unslash( $_POST['productId'] ) );
+
+		// Add product into the cart and remove product from the wishlist.
+		if ( $this->add_to_cart( $product->get_id() ) ) {
+
+			if ( (int) addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ) == 1 ) {	
+
+				$this->remove_from_wishlist( $product->get_id() );
+			}
+
+			return wp_send_json( array(
+				'success' => true,
+				'message' => __( "{$product->get_title()} is added to cart.", "addonify-wishlist" ),
+				'wishlist_count' => $this->wishlist_items_count
+			) );
+		}
+
+		return wp_send_json( array(
+			'success' => false,
+			'message' => __( "Error adding {$product->get_title()} to the cart.", "addonify-wishlist" )
+		) );
+	}
+
+
+	/**
+	 * Callback function to handle ajax request to remove product from the cart.
+	 * 
+	 * @since 1.0.0
+	 * @return array mixed. 
+	 */
+	public function ajax_remove_from_wishlist_handler() {
+
+		// Check if nonce is valid.
+		if ( 
+			! isset( $_POST['nonce'] ) ||
+			empty( $_POST['nonce'] ) ||
+			! wp_verify_nonce( $_POST['nonce'], $this->plugin_name )
+		 ) {
+			return wp_send_json( array(
+				'success' => false,
+				'message' => __( 'Missing or invalid secutiry token.', 'addonify-wishlist' )
+			) );
+		}
+
+		// Check if product id is set.
+		if (
+			! isset( $_POST['productId'] ) ||
+			empty( $_POST['productId'] ) 
+		) {
+			return wp_send_json( array(
+				'success' => false,
+				'message' => __( 'Missing product id.', 'addonify-wishlist' )
+			) );
+		}
+
+		$product = wc_get_product( (int) wp_unslash( $_POST['productId'] ) );
+
+		// Remove product from the wishlist.
+		if ( $this->remove_from_wishlist( $product->get_id() ) ) {
+
+			return wp_send_json( array(
+				'success' => true,
+				'message' => __( "{$product->get_title()} is removed from wishlist.", "addonify-wishlist" ),
+				'wishlist_count' => $this->wishlist_items_count
+			) );
+		}
+
+		return wp_send_json( array(
+			'success' => false,
+			'message' => __( "Error removing {$product->get_title()} from the wishlist.", "addonify-wishlist" )
+		) );
+	}
+
+	/**
+	 * Callback function to handle ajax request to add product to the cart.
+	 * 
+	 * @since 1.0.0
+	 * @return array mixed. 
+	 */
+	public function ajax_add_to_wishlist_handler() {
 
 		$product_id = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
-		if ( ! $product_id || ! $nonce || ! wp_verify_nonce( $nonce, $this->plugin_name ) ) {
+		// Check if product id and nonce is set and valid.
+		if ( 
+			! $product_id || 
+			! $nonce || 
+			! wp_verify_nonce( $nonce, $this->plugin_name ) 
+		) {
 			wp_send_json_error( 'Either Product ID is missing or nonce does not match' );
 		}
 
-		$wishlist_cookies = $this->get_all_wishlist();
+		// Check if product is already in the wishlist.
+		if ( array_key_exists( $product_id, $this->wishlist_items ) ) {
 
-		if ( ! array_key_exists( $product_id, $wishlist_cookies ) ) {
-			$wishlist_cookies[ $product_id ] = time();
-			$this->save_wishlist_data( $wishlist_cookies );
+			return wp_send_json(
+				array(
+					'success' => true,
+					'message' => addonify_wishlist_get_option( 'product_already_in_wishlist_text' )
+				)
+			);
 		}
 
-		$return_data = '';
+		// Add product into the wishlist.
+		$this->wishlist_items[ $product_id ] = time();
 
-		if ( (int) addonify_wishlist_get_option( 'show_sidebar' ) == 1 ) {
-			$return_data = $this->get_sticky_sidebar_loop( array( $product_id => time() ) );
+		// Save the wishlist.
+		if ( $this->save_wishlist_items( $this->wishlist_items ) ) {
+
+			$sidebar_data = $this->get_sticky_sidebar_loop();
+
+			return wp_send_json(
+				array(
+					'success'			=> true,
+					'sidebar_data' 		=> $sidebar_data,
+					'wishlist_count' 	=> $this->wishlist_items_count,
+					'message' 			=> addonify_wishlist_get_option( 'product_added_to_wishlist_text' )
+				)
+			);
+		} else {
+			return wp_send_json(
+				array(
+					'success' => false,
+					'message' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' )
+				)
+			);
 		}
-
-		// update wishlist count.
-		$this->wishlist_item_count++;
-
-		wp_send_json_success(
-			array(
-				'msg' => $return_data,
-				'wishlist_count' => $this->wishlist_item_count,
-			)
-		);
-
 	}
 
 
 
 	/**
-	 * Save wishlist data into database and cookies
+	 * Save wishlist data into the user meta and cookie.
 	 *
 	 * @since    1.0.0
 	 * @param    array $data Data to be saved as wishlist.
+	 * @return 	 boolean true if saved successfully, false otherwise.
 	 */
-	private function save_wishlist_data( $data ) {
+	private function save_wishlist_items( $data ) {
+
+		$return_boolean = false;
 
 		do_action( 'addonify_wishlist_before_adding_to_wishlist' );
 
 		$data = serialize( $data );
 
-		// add data to user cookies.
-		$this->set_cookie( $data );
-
-		// if user is logged in then save same data into database.
 		if ( is_user_logged_in() ) {
-			$user_id = get_current_user_id();
-			update_user_meta( $user_id, '_' . $this->plugin_name, $data );
+
+			$return_boolean = ( $this->set_cookie( $data ) && update_user_meta( get_current_user_id(), '_' . $this->plugin_name, $data ) ) ? true : false;
+		} else {
+			
+			$return_boolean = $this->set_cookie( $data );
 		}
+
+		$this->wishlist_items_count = count( $this->wishlist_items );
 
 		do_action( 'addonify_wishlist_after_adding_to_wishlist' );
 
+		return $return_boolean;
 	}
 
 
 
 	/**
-	 * Set cookie for wishlist into global cookies variables
+	 * Set cookie for wishlist into global cookie variable.
 	 *
 	 * @since    1.0.0
 	 * @param    array $data serialized data.
+	 * @return 	 boolean true if cookie is set, false otherwise.
 	 */
 	private function set_cookie( $data ) {
 
 		// add data to user cookies.
 		$cookies_lifetime = (int) addonify_wishlist_get_option( 'cookies_lifetime' ) * DAY_IN_SECONDS;
-		setcookie( $this->plugin_name, $data, time() + $cookies_lifetime, COOKIEPATH, COOKIE_DOMAIN );
 
+		return setcookie( $this->plugin_name, $data, time() + $cookies_lifetime, COOKIEPATH, COOKIE_DOMAIN );
 	}
 
 
 	/**
-	 * Check if item is in wishlist
+	 * Return wishlist. 
+	 * If cookie wishlist and user meta wishlist do not match, user meta wishlist is updated with cookie wishlist.
 	 *
 	 * @since    1.0.0
-	 * @param    int $product_id Product ID.
+	 * @return  array $wishlist_items.
 	 */
-	private function is_item_in_wishlist( $product_id ) {
+	public function get_wishlist() {
 
-		$wishlist_cookies = $this->get_all_wishlist();
+		$cookie_wishlist = $this->get_wishlist_from_cookies();
 
-		if ( array_key_exists( $product_id, $wishlist_cookies ) ) {
-			return true;
+		if ( is_user_logged_in() ) {
+
+			$user_meta_wishlist = $this->get_wishlist_from_database();
+			if ( $cookie_wishlist !== $user_meta_wishlist ) {
+
+				$this->save_wishlist_items( $cookie_wishlist );
+			} 
 		}
 
-		return false;
-
+		return $cookie_wishlist;
 	}
 
 
 	/**
-	 * Return all wishlist product ids in array or return empty array
+	 * Return wishlist from cookies.
 	 *
 	 * @since    1.0.0
-	 */
-	public function get_all_wishlist() {
-
-		$wishlist_from_cookies = $this->get_wishlist_from_cookies();
-		$wishlist_from_db = $this->get_wishlist_from_database();
-
-		return array_replace( $wishlist_from_db, $wishlist_from_cookies );
-	}
-
-
-	/**
-	 * Return wishlist product ids in array from cookie or return empty array
-	 *
-	 * @since    1.0.0
+	 * @return 	array $wishlist_items.
 	 */
 	private function get_wishlist_from_cookies() {
+
 		return isset( $_COOKIE[ $this->plugin_name ] ) ? unserialize( sanitize_text_field( wp_unslash( $_COOKIE[ $this->plugin_name ] ) ) ) : array();
 	}
 
@@ -458,22 +759,19 @@ class Addonify_Wishlist_Public {
 	 * Return wishlist product ids in array from database
 	 *
 	 * @since    1.0.0
-	 * @param    boolean $return_unserialized    should it return unserialized data?.
-	 * @param    int     $user_id    user ID.
+	 * @return 	array $wishlist_items.
 	 */
-	private function get_wishlist_from_database( $return_unserialized = true, $user_id = null ) {
+	private function get_wishlist_from_database() {
 
-		if ( empty( $user_id ) ) {
-			$user_id = get_current_user_id();
+		$current_user_id = get_current_user_id();
+
+		if ( $current_user_id !== 0 ) {
+			$wishlist_data = get_user_meta( $current_user_id, '_' . $this->plugin_name, true );
+
+			return $wishlist_data ? unserialize( $wishlist_data ) : array();
 		}
 
-		$data = get_user_meta( $user_id, '_' . $this->plugin_name, true );
-
-		if ( $return_unserialized ) {
-			return ( ! empty( $data ) ) ? unserialize( $data ) : array();
-		}
-
-		return ( ! empty( $data ) ) ? $data : array();
+		return array();
 	}
 
 
@@ -526,6 +824,7 @@ class Addonify_Wishlist_Public {
 	 * @param    array $style_args    Style args to be processed.
 	 */
 	private function generate_styles_markups( $style_args ) {
+
 		$custom_styles_output = '';
 
 		foreach ( $style_args as $css_sel => $property_value ) {
@@ -559,107 +858,13 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Print opening tag of image overlay container
-	 *
-	 * @since    1.0.0
-	 */
-	public function addonify_overlay_container_start_callback() {
-
-		// do not continue if overlay is already added by another addonify plugin.
-		if ( defined( 'ADDONIFY_OVERLAY_IS_ADDED' ) && 'wishlist' !== ADDONIFY_OVERLAY_ADDED_BY ) {
-			return;
-		}
-
-		if ( 'overlay_on_image' === $this->btn_position ) {
-
-			if ( ! defined( 'ADDONIFY_OVERLAY_IS_ADDED' ) ) {
-				define( 'ADDONIFY_OVERLAY_IS_ADDED', 1 );
-			}
-
-			if ( ! defined( 'ADDONIFY_OVERLAY_ADDED_BY' ) ) {
-				define( 'ADDONIFY_OVERLAY_ADDED_BY', 'wishlist' );
-			}
-
-			echo '<div class="addonify-overlay-buttons">';
-		}
-	}
-
-
-
-	/**
-	 * Print closing tag of the image overlay container
-	 *
-	 * @since    1.0.0
-	 */
-	public function addonify_overlay_container_end_callback() {
-
-		// do not continue of overlay is alrady added by another addonify plugin.
-		if ( defined( 'ADDONIFY_OVERLAY_IS_ADDED' ) && 'wishlist' !== ADDONIFY_OVERLAY_ADDED_BY ) {
-			return;
-		}
-
-		if ( 'overlay_on_image' === $this->btn_position ) {
-			echo '</div>';
-		}
-
-	}
-
-
-
-	/**
-	 * Plugin alternative for global "get_option" function.
-	 * Get Database values for selected fields
-	 *
-	 * @since    1.0.0
-	 * @param    string $field_name Database Option Name.
-	 * @param    string $default    Default Value.
-	 */
-	private function get_option( $field_name, $default = null ) {
-
-		// if ( is_null( $default ) ) {
-		// 	$default = $this->get_default_values( $field_name );
-		// }
-		// return get_option( ADDONIFY_WISHLIST_DB_INITIALS . $field_name, $default );
-	}
-
-
-	/**
-	 * Get Default values for selected fields
-	 *
-	 * @since    1.0.0
-	 * @param    string $field_name Database Option Name.
-	 */
-	private function get_default_values( $field_name ) {
-
-		// if( empty( $this->default_values ) ) {
-		// 	$this->default_values = get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'default_values' );
-		// }
-
-		// return $this->default_values[ ADDONIFY_WISHLIST_DB_INITIALS . $field_name ];
-	}
-
-
-	/**
-	 * Register shortcode to use in comparision page
-	 * Runs on "Init" hook
-	 *
-	 * @since    1.0.0
-	 */
-	private function register_shortcode() {
-		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
-	}
-
-
-
-	/**
 	 * Gather shortcode contents and display template
 	 *
 	 * @since    1.0.0
 	 */
 	public function get_shortcode_contents() {
 
-		$wishlist_items = $this->get_all_wishlist();
-		$output_data = $this->generate_contents_data( $wishlist_items );
+		$wishlist_items = $this->wishlist_items;
 
 		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
 
@@ -670,18 +875,16 @@ class Addonify_Wishlist_Public {
 			false,
 			array(
 				'wishlist_product_ids' => $wishlist_product_ids,
-				'wishlist_data' => $output_data,
 				'nonce' => wp_create_nonce( $this->plugin_name ),
 			)
 		);
 
 		return ob_get_clean();
-
 	}
 
 
 	/**
-	 * Output template for showing "added to wishlist" modal
+	 * Render template for showing "added to wishlist" modal
 	 *
 	 * @since    1.0.0
 	 */
@@ -700,7 +903,7 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Output template for showing sticky sidebar
+	 * Render template for showing sticky sidebar
 	 *
 	 * @since    1.0.0
 	 */
@@ -715,26 +918,11 @@ class Addonify_Wishlist_Public {
 			return;
 		}
 
-		$wishlist_items = $this->get_all_wishlist();
-
-		$wishlist_name = $this->get_option( 'default_wishlist_name' );
-		$wishlist_page_url = ( addonify_wishlist_get_option( 'wishlist_page' ) ) ? get_permalink( addonify_wishlist_get_option( 'wishlist_page' ) ) : '';
-
-		$sidebar_loop = $this->get_sticky_sidebar_loop( $wishlist_items );
-
 		$alignment = 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' );
-		$title = addonify_wishlist_get_option( 'sidebar_title' );
 
-		$btn_label = esc_attr( addonify_wishlist_get_option( 'sidebar_btn_label' ) );
+		$css_classes = array( $alignment );
 
-		$show_btn_icon = (int) addonify_wishlist_get_option( 'sidebar_show_icon' );
-
-		$total_items = $this->wishlist_item_count;
-
-		$css_classes = array( esc_attr( $alignment ) );
-		$css_classes[] = ( $total_items < 1 ) ? 'hidden' : '';
-
-		$btn_label = apply_filters( 'addonify_wishlist_sidebar_btn_label', $btn_label, $total_items );
+		$css_classes[] = ( $this->wishlist_items_count < 1 ) ? 'hidden' : '';
 
 		// sidebar toggle button template.
 		$this->get_templates(
@@ -742,427 +930,48 @@ class Addonify_Wishlist_Public {
 			true,
 			array(
 				'css_classes' => implode( ' ', $css_classes ),
-				'label' => $btn_label,
-				'show_icon' => $show_btn_icon,
-				'icon' => $this->get_option( 'sidebar_btn_icon' ),
+				'label' => addonify_wishlist_get_option( 'sidebar_btn_label' ),
+				'show_icon' => (int) addonify_wishlist_get_option( 'sidebar_show_icon' ),
+				'icon' => addonify_wishlist_get_option( 'sidebar_btn_icon' ),
 			)
 		);
-
-		// reset css classes.
-		$css_classes = array( $alignment );
-
-		
 
 		// sidebar template.
 		$this->get_templates(
 			'addonify-wishlist-sidebar',
 			true,
 			array(
-				'total_items' => $total_items,
-				'css_class' => implode( ' ', $css_classes ),
-				'title' => $title,
-				'loop' => $sidebar_loop,
-				'wishlist_url' => $wishlist_page_url,
-				'alignment' => $alignment,
-				'nonce' => wp_create_nonce( $this->plugin_name ),
+				'total_items' => $this->wishlist_items_count,
+				'css_class' => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' ),
+				'title' => addonify_wishlist_get_option( 'sidebar_title' ),
+				'loop' => $this->get_sticky_sidebar_loop(),
+				'wishlist_url' => ( addonify_wishlist_get_option( 'wishlist_page' ) ) ? get_permalink( addonify_wishlist_get_option( 'wishlist_page' ) ) : '',
+				'alignment' => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' )
 			)
 		);
 	}
 
 
 	/**
-	 * Return template for sticky sidebar loop
+	 * Render template for sticky sidebar loop.
 	 *
 	 * @since    1.0.0
-	 * @param    array $product_ids Product IDs.
 	 */
-	public function get_sticky_sidebar_loop( $product_ids ) {
+	public function get_sticky_sidebar_loop() {
 
-		$wishlist_items = $this->get_all_wishlist();
+		$wishlist_items = $this->wishlist_items;
 
 		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
 
-		$output_data = $this->generate_contents_data( $product_ids, 'sidebar' );
-
 		ob_start();
-		$this->get_templates( 'addonify-wishlist-sidebar-loop', false, array( 'wishlist_product_ids' => $wishlist_product_ids ) );
+			$this->get_templates( 'addonify-wishlist-sidebar-loop', false, array( 'wishlist_product_ids' => $wishlist_product_ids ) );
 		return ob_get_clean();
 	}
 
 
-
 	/**
-	 * Generate data to be used in wishlist shortcode template
-	 *
-	 * @since    1.0.0
-	 * @param      string $selected_product_ids Product ids.
-	 * @param      string $scope                Where is this method being used?.
-	 */
-	private function generate_contents_data( $selected_product_ids, $scope = 'shortcode' ) {
-
-		$sel_products_data = array();
-
-		if ( is_array( $selected_product_ids ) && ( count( $selected_product_ids ) > 0 ) ) {
-
-			$i = 0;
-
-			foreach ( $selected_product_ids as $product_id => $timestamp ) {
-
-				$product = wc_get_product( $product_id );
-
-				$in_stock_text = __( 'In Stock', 'addonify-wishlist' );
-				$out_of_stock_text = __( 'Out of Stock', 'addonify-wishlist' );
-
-				// if product is empty, remove it from wishlist.
-				// item has been removed from admin.
-
-				$parent_product = false;
-
-				if ( ! $product ) {
-					$sel_products_data[ $i ]['id'] = $product_id;
-					$sel_products_data[ $i ]['image'] = '';
-					$sel_products_data[ $i ]['title'] = __( 'Item not available', 'addonify-wishlist' );
-					$sel_products_data[ $i ]['price'] = '';
-					$sel_products_data[ $i ]['date_added'] = apply_filters( 'addonify_wishlist_product_added_date', gmdate( 'F d, Y', $timestamp ), $timestamp );
-					$sel_products_data[ $i ]['stock'] = '';
-					$sel_products_data[ $i ]['add_to_cart'] = '';
-					$sel_products_data[ $i ]['remove_btn'] = apply_filters( 'addonify_wishlist_remove_product_btn', $this->remove_from_wishlist_btn_markup( $product_id, $scope ) );
-				} else {
-					$sel_products_data[ $i ]['id'] = $product_id;
-					$sel_products_data[ $i ]['image'] = apply_filters( 'addonify_wishlist_product_image', '<a href="' . $product->get_permalink() . '" >' . $product->get_image( 'woocommerce_thumbnail', array( 'draggable' => 'false' ) ) . '</a>', $product_id );
-					$sel_products_data[ $i ]['title'] = apply_filters( 'addonify_wishlist_product_name', '<a href="' . $product->get_permalink() . '" >' . wp_strip_all_tags( $product->get_formatted_name() ) . '</a>', $product_id );
-					$sel_products_data[ $i ]['price'] = apply_filters( 'addonify_wishlist_price_html', $product->get_price_html(), $product_id );
-					$sel_products_data[ $i ]['date_added'] = apply_filters( 'addonify_wishlist_product_added_date', gmdate( 'F d, Y', $timestamp ), $timestamp );
-
-					$stock_availability_text = ( 'instock' === $product->get_stock_status() ) ? '<span class="stock in-stock">' . $in_stock_text . '</span>' : '<span class="stock out-of-stock">' . $out_of_stock_text . '</span>';
-
-					$sel_products_data[ $i ]['stock'] = apply_filters( 'addonify_wishlist_stock_label', $stock_availability_text, $product_id );
-					$sel_products_data[ $i ]['add_to_cart'] = apply_filters( 'addonify_wishlist_add_to_cart_btn', $this->add_to_cart_btn_markup( $product ), $product_id );
-					$sel_products_data[ $i ]['remove_btn'] = apply_filters( 'addonify_wishlist_remove_product_btn', $this->remove_from_wishlist_btn_markup( $product_id, $scope ) );
-				}
-
-				$i++;
-			}
-		}
-
-		return $sel_products_data;
-
-	}
-
-
-	/**
-	 * Return proper markups for "Add to cart" button to be used in wishlist loop
-	 * Used in "Wishlist" page.
-	 *
-	 * @since    1.0.0
-	 * @param    object $product Product Object.
-	 */
-	public function add_to_cart_btn_markup( $product ) {
-
-		if ( 'instock' !== $product->get_stock_status() ) {
-			return '';
-		}
-
-		if ( in_array( $product->get_type(), array( 'simple', 'variable' ) ) ) {
-			return '<button type="submit" class="button adfy-wishlist-btn" name="addonify_wishlist_add_to_cart" value="' . $product->get_id() . '">' . __( 'Add to cart', 'addonify-wishlist' ) . '</button>';
-		} else {
-			return do_shortcode( '[add_to_cart id="' . $product->get_id() . '" show_price="false" style="" ]' );
-		}
-
-	}
-
-
-	/**
-	 * Return proper markups for "Remove" button to be used in wishlist loop
-	 *
-	 * @since    1.0.0
-	 * @param    int    $product_id Product ID.
-	 * @param    string $scope      Where is this method being used?.
-	 */
-	public function remove_from_wishlist_btn_markup( $product_id, $scope ) {
-
-		$css_class = '';
-		if ( 'sidebar' !== $scope ) {
-			$css_class = 'adfy-wishlist-clear-button-style';
-		}
-
-		return '<button type="submit" class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon ' . esc_attr( $css_class ) . '" name="addonify_wishlist_remove" value="' . esc_attr( $product_id ) . '"><i class="adfy-wishlist-icon trash-2"></i></button>';
-
-	}
-
-
-	/**
-	 * Capture form submitted through "wishlist" page and process necessary actions
-	 *
-	 * @since    1.0.0
-	 */
-	public function process_wishlist_form_submit() {
-
-		// should we process this request ?.
-		if ( ! isset( $_POST['process_addonify_wishlist_form'] ) ) {
-			return;
-		}
-
-		$form_is_ajax = false;
-		if ( 'ajax' === sanitize_text_field( wp_unslash( $_POST['process_addonify_wishlist_form'] ) ) ) {
-			$form_is_ajax = true;
-		}
-
-		$wishlist_page_url = addonify_wishlist_get_option( 'wishlist_page' ) ? get_permalink( addonify_wishlist_get_option( 'wishlist_page' ) ) : '';
-		$redirect_to_checkout_after_add_to_cart = addonify_wishlist_get_option( 'redirect_to_checkout_if_item_added_to_cart', 0 );
-		$remove_from_cart = addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart', 1 );
-
-		// nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), $this->plugin_name ) ) {
-
-			if ( $form_is_ajax ) {
-				wp_send_json_error( __( 'Page has expired. Please try again', 'addonify-wishlist' ) );
-			} else {
-
-				wc_add_notice( __( 'Page has expired. Please try again', 'addonify-wishlist' ), 'error' );
-
-				wp_redirect( $wishlist_page_url );
-				exit;
-			}
-		}
-
-		// remove single product.
-		if ( isset( $_POST['addonify_wishlist_remove'] ) && ! empty( $_POST['addonify_wishlist_remove'] ) ) {
-
-			$product_id = sanitize_text_field( wp_unslash( $_POST['addonify_wishlist_remove'] ) );
-
-			// no need to check if item exists or not in wishlist.
-			// because, user wants to delete it anyway.
-
-			if ( $form_is_ajax ) {
-
-				// remove item without showing notice.
-				$this->remove_item_from_wishlist( array( sanitize_text_field( wp_unslash( $_POST['addonify_wishlist_remove'] ) ) ), false );
-
-				wp_send_json_success(
-					array(
-						'remove_wishlist' => 1,
-						'wishlist_count' => $this->wishlist_item_count,
-						'msg' => __( 'Product removed from your wishlist!', 'addonify-wishlist' ),
-					)
-				);
-			} else {
-
-				// remove item with notice.
-				$this->remove_item_from_wishlist( array( sanitize_text_field( wp_unslash( $_POST['addonify_wishlist_remove'] ) ) ) );
-
-				wp_redirect( $wishlist_page_url );
-				exit;
-			}
-		}
-
-		// add to cart single product.
-		if ( isset( $_POST['addonify_wishlist_add_to_cart'] ) && ! empty( $_POST['addonify_wishlist_add_to_cart'] ) ) {
-
-			$product_id = sanitize_text_field( wp_unslash( $_POST['addonify_wishlist_add_to_cart'] ) );
-
-			if ( $form_is_ajax ) {
-
-				// add item to cart without showing notice.
-				if ( $this->add_to_cart( array( $product_id ), false ) ) {
-
-					$msg = array( __( 'Product is added to cart', 'addonify-wishlist' ) );
-
-					if ( $remove_from_cart ) {
-						$msg[] = __( 'and removed from wishlist.', 'addonify-wishlist' );
-					}
-
-					$return_data = array(
-						'remove_wishlist' => $remove_from_cart,
-						'wishlist_count' => $this->wishlist_item_count,
-						'msg' => implode( ' ', $msg ),
-					);
-
-					if ( $redirect_to_checkout_after_add_to_cart ) {
-						$msg[] = __( 'Redirecting to checkout page', 'addonify-wishlist' );
-						$redirect_url = wc_get_checkout_url();
-
-						$return_data['msg'] = implode( ' ', $msg );
-						$return_data['redirect_url'] = $redirect_url;
-					}
-
-					wp_send_json_success( $return_data );
-
-				} else {
-					wp_send_json_error( __( 'Product is not added to cart', 'addonify-wishlist' ) );
-				}
-			} else {
-
-				// form is not ajax.
-				// add to cart, with notice shown.
-				if ( $this->add_to_cart( array( $product_id ) ) ) {
-
-					if ( $redirect_to_checkout_after_add_to_cart ) {
-						wp_redirect( wc_get_checkout_url() );
-						exit;
-					}
-
-					$remove_from_cart = (int) addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' );
-				}
-
-				wp_redirect( $wishlist_page_url );
-				exit;
-			}
-		}
-
-		// addonify-wishlist-footer-actions.
-		if ( isset( $_POST['addonify_wishlist_action'] ) && ! empty( $_POST['addonify_wishlist_action'] ) ) {
-
-			// add all to cart.
-			if ( 'add_all_to_cart' === $_POST['addonify_wishlist_action'] ) {
-
-				if ( $this->add_to_cart( 'all' ) && $redirect_to_checkout_after_add_to_cart ) {
-					wp_redirect( wc_get_checkout_url() );
-				} else {
-					wp_redirect( $wishlist_page_url );
-				}
-
-				exit;
-			}
-
-			$selected_product_ids = isset( $_POST['product_ids'] ) ? sanitize_text_field( wp_unslash( $_POST['product_ids'] ) ) : '';
-
-			// is any product selected ?.
-			if ( ! is_array( $selected_product_ids ) ) {
-				// $this->set_flashdata( 'wishlist_action', array( 'You have not selected any products', 'warning' ) );
-
-				wp_redirect( $wishlist_page_url );
-				exit;
-			}
-
-			// remove selected.
-			if ( 'remove' === $_POST['addonify_wishlist_action'] ) {
-				$this->remove_item_from_wishlist( $selected_product_ids );
-			} elseif ( 'add_selected_to_cart' === $_POST['addonify_wishlist_action'] ) {
-
-				// add selected to cart.
-				if ( $this->add_to_cart( $selected_product_ids ) && $redirect_to_checkout_after_add_to_cart ) {
-					wp_redirect( wc_get_checkout_url() );
-					exit;
-				}
-			}
-
-			wp_redirect( $wishlist_page_url );
-			exit;
-		}
-
-	}
-
-
-
-	/**
-	 * Remove product from wishlist cookies and database
-	 *
-	 * @since    1.0.0
-	 * @param    array $product_ids Product IDs.
-	 * @param    array $show_notice Show admin notice after item is removed from wishlist or not.
-	 */
-	private function remove_item_from_wishlist( $product_ids, $show_notice = true ) {
-
-		do_action( 'addonify_wishlist_before_removing_from_wishlist', $product_ids, $show_notice );
-
-		$wishlist_items = $this->get_all_wishlist();
-		$msg = '';
-
-		foreach ( $product_ids as $product_id ) {
-
-			unset( $wishlist_items[ $product_id ] );
-
-			// update wishlist count.
-			$this->wishlist_item_count--;
-
-			if ( $show_notice ) {
-				$product = wc_get_product( $product_id );
-
-				if ( $product ) {
-					$msg .= $product->get_name() . ' is removed from wishlist <br>';
-				} else {
-					$msg .= 'Selected item is removed from wishlist <br>';
-				}
-			}
-		}
-
-		if ( $show_notice ) {
-			wc_add_notice( $msg, 'success' );
-		}
-
-		$this->save_wishlist_data( $wishlist_items );
-
-		do_action( 'addonify_wishlist_after_removing_from_wishlist' );
-	}
-
-
-	/**
-	 * Add product to cart and show proper noticications
-	 *
-	 * @since    1.0.0
-	 * @param    array   $product_ids Product IDs.
-	 * @param    boolean $show_notice Show admin notice if item is added to cart or not.
-	 */
-	public function add_to_cart( $product_ids, $show_notice = true ) {
-
-		$wishlist_items = $this->get_all_wishlist();
-
-		if ( 'all' === $product_ids ) {
-			$product_ids = array();
-			foreach ( $wishlist_items as $product_id => $timestamp ) {
-				$product_ids[] = $product_id;
-			}
-		}
-
-		$msg_success = '';
-		$msg_error = '';
-
-		// remove from wishlist if added to cart ?.
-		$remove_from_wishlist = ( int ) addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' );
-
-		foreach ( $product_ids as $product_id ) {
-
-			if ( is_array( $product_id ) ) {
-				$product_id = $product_id[0];
-			}
-
-			$product = wc_get_product( $product_id );
-
-			if ( WC()->cart->add_to_cart( $product_id ) ) {
-				
-				$msg_success .= $product->get_name() . ' ' . __( 'is added to cart', 'addonify-wishlist' ) . '<br>';
-
-				if ( $remove_from_wishlist ) {
-
-					$this->remove_item_from_wishlist( array( $product_id ), $show_notice );
-					$msg_success .= $product->get_name() . ' ' . __( 'is removed from wishlist', 'addonify-wishlist' ) . '<br>';
-				}
-			} else {
-				$msg_error .= $product->get_name() . ' ' . __( 'cannot be added to cart', 'addonify-wishlist' ) . '<br>';
-			}
-		}
-
-		if ( $show_notice ) {
-			WC()->session->set( 'wc_notices', array() );
-
-			if ( ! empty( $msg_success ) ) {
-				wc_add_notice( $msg_success, 'success' );
-			}
-
-			if ( ! empty( $msg_error ) ) {
-				wc_add_notice( $msg_error, 'error' );
-			}
-		}
-
-		return ( ! empty( $msg_success ) ) ? true : false;
-
-	}
-
-
-
-	/**
-	 * Save wishlist cookies into user meta options after user is logged in
+	 * Check if user meta wishlist and cookie wishlist are same.
+	 * If not, then update user meta wishlist with cookie wishlist.
 	 *
 	 * @since    1.0.0
 	 * @param    string $user_login User Login.
@@ -1170,14 +979,15 @@ class Addonify_Wishlist_Public {
 	 */
 	public function after_user_login( $user_login, $user ) {
 
-		$wishlist_from_cookies = $this->get_wishlist_from_cookies();
+		$wishlist_cookies = $this->get_wishlist_from_cookies();
 
-		if ( ! empty( $wishlist_from_cookies ) ) {
-			$wishlist_from_db = $this->get_wishlist_from_database( true, $user->ID );
-			$new_data = serialize( array_replace( $wishlist_from_db, $wishlist_from_cookies ) );
+		$user_wishlist_data = $this->get_wishlist_from_database();
 
-			// update database.
-			update_user_meta( $user->ID, '_' . $this->plugin_name, $new_data );
+		if ( $wishlist_cookies !== $user_wishlist_data ) {
+
+			$wishlist_data = serialize( $wishlist_cookies );
+
+			update_user_meta( $user->ID, '_' . $this->plugin_name, $wishlist_data );
 		}
 	}
 
@@ -1190,14 +1000,13 @@ class Addonify_Wishlist_Public {
 	 * @param    string $redirect Redirect url.
 	 */
 	public function myaccount_login( $redirect ) {
+
 		if ( isset( $_GET['addonify_wishlist_redirect'] ) && ! empty( $_GET['addonify_wishlist_redirect'] ) ) {
 			$redirect = sanitize_text_field( wp_unslash( $_GET['addonify_wishlist_redirect'] ) );
 		}
 
 		return $redirect;
-
 	}
-
 
 
 	/**
@@ -1209,37 +1018,41 @@ class Addonify_Wishlist_Public {
 	 */
 	public function generate_modal_action_btns() {
 
-		// if login is not required or user already logged in.
-		// show "view wishlist" button.
-		if ( ! $this->require_login || is_user_logged_in() ) {
+		// If login is not required, display link button to wishlist page.
+		if ( 
+			(int) addonify_wishlist_get_option( 'require_login' ) == 0 || 
+			is_user_logged_in() 
+		) {
 
-			$view_wishlist_btn_text = addonify_wishlist_get_option( 'view_wishlist_btn_text' );
+			$wishlist_page_url = ( addonify_wishlist_get_option( 'wishlist_page' ) ) ? get_permalink( (int) addonify_wishlist_get_option( 'wishlist_page' ) ) : '';
 
-			echo wp_kses_post(
-				apply_filters(
-					'addonify_wishlist_modal_add_to_wishlist_btn',
-					'<button type="button" class="adfy-wishlist-btn addonify-view-wishlist-btn" id="addonify-wishlist-view-wishlist-btn">' . $view_wishlist_btn_text . '</button>',
-					$view_wishlist_btn_text
-				)
+			$view_wishlist_button_label = addonify_wishlist_get_option( 'view_wishlist_btn_text' );
+
+			echo apply_filters(
+				'addonify_wishlist_modal_add_to_wishlist_btn',
+				'<a href="' . esc_url( $wishlist_page_url ) . '"><button type="button" class="adfy-wishlist-btn addonify-view-wishlist-btn">' . $view_wishlist_button_label . '</button></a>'
 			);
 		}
 
 		// login is required.
 		// show login button.
-		if ( $this->require_login && ! is_user_logged_in() ) {
+		if ( 
+			(int) addonify_wishlist_get_option( 'require_login' ) == 1 && 
+			! is_user_logged_in() 
+		) {
 
 			global $wp;
 
 			$redirect_url = add_query_arg(
 				'addonify_wishlist_redirect',
 				home_url( $wp->request ),
-				wc_get_page_permalink( 'myaccount' )
+				( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url()
 			);
 
 			echo wp_kses_post(
 				apply_filters(
 					'addonify_wishlist_modal_login_btn',
-					'<a href="' . esc_url( $redirect_url ) . '"><button type="button" class="adfy-wishlist-btn addonify-view-wishlist-btn" id="addonify-wishlist-close-modal-btn">' . __( 'Login', 'addonify-wishlist' ) . '</button></a>'
+					'<a href="' . esc_url( $redirect_url ) . '"><button type="button" class="adfy-wishlist-btn addonify-view-wishlist-btn">' . __( 'Login', 'addonify-wishlist' ) . '</button></a>'
 				)
 			);
 		}
@@ -1251,18 +1064,93 @@ class Addonify_Wishlist_Public {
 				'<button type="button" class="adfy-wishlist-btn addonify-wishlist-close-btn" id="addonify-wishlist-close-modal-btn">' . __( 'Close', 'addonify-wishlist' ) . '</button>'
 			)
 		);
+	}
 
+	/**
+	 * Add nonce field in wishlist form.
+	 * 
+	 * @since 1.0.0
+	 */
+	public function ajaxify_wishlist_form() {
+		?>
+		<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( $this->plugin_name ) ); ?>">
+		<?php
 	}
 
 
+	/**
+	 * Print dynamic CSS generated from settings page.
+	 */
+	public function dynamic_css() {
+
+		$css_values = array(
+			'--addonify-wishlist_wishlist_btn_text_color' => addonify_wishlist_get_option('wishlist_btn_text_color' ),
+			'--addonify-wishlist_wishlist_btn_icon_color' => addonify_wishlist_get_option('wishlist_btn_icon_color' ),
+			'--addonify-wishlist_wishlist_btn_text_color_hover' => addonify_wishlist_get_option('wishlist_btn_text_color_hover' ),
+			'--addonify-wishlist_wishlist_btn_icon_color_hover' => addonify_wishlist_get_option('wishlist_btn_icon_color_hover' ),
+			'--addonify-wishlist_wishlist_btn_bg_color' => addonify_wishlist_get_option('wishlist_btn_bg_color' ),
+			'--addonify-wishlist_wishlist_btn_bg_color_hover' => addonify_wishlist_get_option('wishlist_btn_bg_color_hover' ),
+			'--addonify-wishlist_popup_modal_bg_color' => addonify_wishlist_get_option('popup_modal_bg_color' ),
+			'--addonify-wishlist_popup_modal_icon_color' => addonify_wishlist_get_option('popup_modal_icon_color' ),
+			'--addonify-wishlist_popup_modal_btn_text_color' => addonify_wishlist_get_option('popup_modal_btn_text_color' ),
+			'--addonify-wishlist_popup_modal_btn_text_color_hover' => addonify_wishlist_get_option('popup_modal_btn_text_color_hover' ),
+			'--addonify-wishlist_popup_modal_btn_bg_color' => addonify_wishlist_get_option('popup_modal_btn_bg_color' ),
+			'--addonify-wishlist_popup_modal_btn_bg_color_hover' => addonify_wishlist_get_option('popup_modal_btn_bg_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_toggle_btn_label_color' => addonify_wishlist_get_option('sidebar_modal_toggle_btn_label_color' ),
+			'--addonify-wishlist_sidebar_modal_toggle_btn_label_color_hover' => addonify_wishlist_get_option('sidebar_modal_toggle_btn_label_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_toggle_btn_bg_color' => addonify_wishlist_get_option('sidebar_modal_toggle_btn_bg_color' ),
+			'--addonify-wishlist_sidebar_modal_toggle_btn_bg_color_hover' => addonify_wishlist_get_option('sidebar_modal_toggle_btn_bg_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_bg_color' => addonify_wishlist_get_option('sidebar_modal_bg_color' ),
+			'--addonify-wishlist_sidebar_modal_title_color' => addonify_wishlist_get_option('sidebar_modal_title_color' ),
+			'--addonify-wishlist_sidebar_modal_empty_text_color' => addonify_wishlist_get_option('sidebar_modal_empty_text_color' ),
+			'--addonify-wishlist_sidebar_modal_close_icon_color' => addonify_wishlist_get_option('sidebar_modal_close_icon_color' ),
+			'--addonify-wishlist_sidebar_modal_close_icon_color_hover' => addonify_wishlist_get_option('sidebar_modal_close_icon_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_product_title_color' => addonify_wishlist_get_option('sidebar_modal_product_title_color' ),
+			'--addonify-wishlist_sidebar_modal_product_regular_price_color' => addonify_wishlist_get_option('sidebar_modal_product_regular_price_color' ),
+			'--addonify-wishlist_sidebar_modal_product_sale_price_color' => addonify_wishlist_get_option('sidebar_modal_product_sale_price_color' ),
+			'--addonify-wishlist_sidebar_modal_product_add_to_cart_label_color' => addonify_wishlist_get_option('sidebar_modal_product_add_to_cart_label_color' ),
+			'--addonify-wishlist_sidebar_modal_product_add_to_cart_label_color_hover' => addonify_wishlist_get_option('sidebar_modal_product_add_to_cart_label_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_product_add_to_cart_bg_color' => addonify_wishlist_get_option('sidebar_modal_product_add_to_cart_bg_color' ),
+			'--addonify-wishlist_sidebar_modal_product_add_to_cart_bg_color_hover' => addonify_wishlist_get_option('sidebar_modal_product_add_to_cart_bg_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_product_remove_from_wishlist_icon_color' => addonify_wishlist_get_option('sidebar_modal_product_remove_from_wishlist_icon_color' ),
+			'--addonify-wishlist_sidebar_modal_view_wishlist_btn_label_color' => addonify_wishlist_get_option('sidebar_modal_view_wishlist_btn_label_color' ),
+			'--addonify-wishlist_sidebar_modal_view_wishlist_btn_label_color_hover' => addonify_wishlist_get_option('sidebar_modal_view_wishlist_btn_label_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_view_wishlist_btn_bg_color' => addonify_wishlist_get_option('sidebar_modal_view_wishlist_btn_bg_color' ),
+			'--addonify-wishlist_sidebar_modal_view_wishlist_btn_bg_color_hover' => addonify_wishlist_get_option('sidebar_modal_view_wishlist_btn_bg_color_hover' ),
+			'--addonify-wishlist_sidebar_modal_notification_text_color' => addonify_wishlist_get_option('sidebar_modal_notification_text_color' ),
+			'--addonify-wishlist_sidebar_modal_notification_bg_color' => addonify_wishlist_get_option('sidebar_modal_notification_bg_color' ),
+		);
+
+		$css = ':root {';
+
+		foreach ( $css_values as $key => $value ) {
+			if ( $value ) {
+				$css .= $key . ': ' . $value . ';';
+			}
+		}
+
+		$css .= '}';
+
+		return $css;
+	}
+
 
 	/**
-	 * Get total wishlis count in json request
-	 *
-	 * @since    1.0.0
+	 * Minify the dynamic css.
+	 * 
+	 * @param string $css css to minify.
+	 * @return string minified css.
 	 */
-	public function get_total_items_count_callback() {
-		wp_send_json_success( count( $this->get_all_wishlist() ) );
+	public function minify_css( $css ) {
+
+		$css = preg_replace( '/\s+/', ' ', $css );
+		$css = preg_replace( '/\/\*[^\!](.*?)\*\//', '', $css );
+		$css = preg_replace( '/(,|:|;|\{|}) /', '$1', $css );
+		$css = preg_replace( '/ (,|;|\{|})/', '$1', $css );
+		$css = preg_replace( '/(:| )0\.([0-9]+)(%|em|ex|px|in|cm|mm|pt|pc)/i', '${1}.${2}${3}', $css );
+		$css = preg_replace( '/(:| )(\.?)0(%|em|ex|px|in|cm|mm|pt|pc)/i', '${1}0', $css );
+
+		return trim( $css );
 	}
 
 
@@ -1291,5 +1179,5 @@ class Addonify_Wishlist_Public {
 		} else {
 			require $template_path;
 		}
-	}
+	}	
 }
