@@ -11,9 +11,8 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
-
-
 ?>
+<div id="addonify-wishlist-sticky-sidebar-overlay"></div>
 <div id="addonify-wishlist-sticky-sidebar-container" class="<?php echo esc_attr( $css_class ); ?>">
 	<?php do_action( 'addonify_wishlist_after_sidebar_opening_tag' ); ?>
 	<div class="addonify-wishlist-ssc-body">
@@ -34,16 +33,16 @@ defined( 'ABSPATH' ) || exit;
 				</svg>
 			</button>
 		</div>
+
 		<form action="" method="POST" id="addonify-wishlist-sidebar-form">
-			<input type="hidden" name="nonce" value="<?php echo esc_attr( $nonce ); ?>">
-			<input type="hidden" name="process_addonify_wishlist_form" value="ajax">
+			<?php do_action( 'addonify_wishlist/before_wishlist_form' ); ?>
 			<div id="addonify-wishlist-sidebar-items-wrapper">
 				<ul class="adfy-wishlist-sidebar-items-entry">
 					<?php echo wp_kses_post( $loop ); ?>
 				</ul>
 			</div>
 			<?php if ( $total_items < 1 ) : ?>
-			<p class="empty-wishlist">
+			<p id="addonify-empty-wishlist-para" class="empty-wishlist">
 				<?php echo esc_html_e( 'Your wishlist is empty', 'addonify-wishlist' ); ?>
 			</p>
 			<?php endif; ?>
@@ -57,4 +56,3 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<?php do_action( 'addonify_wishlist_before_sidebar_closing_tag' ); ?>
 </div>
-<div id="addonify-wishlist-sticky-sidebar-overlay"></div>

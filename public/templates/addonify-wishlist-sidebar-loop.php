@@ -21,7 +21,7 @@ if (
 
 		$product = wc_get_product( $product_id );
 		?>
-		<li class="addonify-wishlist-sidebar-item">
+		<li class="addonify-wishlist-sidebar-item" data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>">
 			<div class="adfy-wishlist-row">
 				<div class="adfy-wishlist-col image-column">
 					<div class="adfy-wishlist-woo-image">
@@ -48,18 +48,38 @@ if (
 					<div class="adfy-wishlist-col cart-column">
 						<?php
 						if ( in_array( $product->get_type(), array( 'simple', 'external' ) ) ) {
+
 							if ( $product->is_in_stock() ) {
-								?>
-								<button type="submit" class="button adfy-wishlist-btn" name="addonify_wishlist_add_to_cart" value="<?php echo esc_attr( $product_id ); ?>"><?php echo esc_html( $product->add_to_cart_text() ); ?></button>
-								<?php
+
+								if ( (int) addonify_wishlist_get_option( 'ajaxify_add_to_cart' ) == 1 ) {
+									?>
+									<button 
+										class="button adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-ajax-add-to-cart addonify-wishlist-sidebar-button" 
+										name="addonify_wishlist_add_to_cart" 
+										value="<?php echo esc_attr( $product_id ); ?>">
+											<?php echo esc_html( $product->add_to_cart_text() ); ?>
+									</button>
+									<?php
+								} else {
+									?>
+									<button 
+										type="submit" 
+										class="button adfy-wishlist-btn addonify-wishlist-add-to-cart"
+										name="addonify-add-to-cart-from-wishlist"
+										value="<?php echo esc_attr( $product->get_id() ); ?>"
+									>
+										<?php echo esc_html( $product->add_to_cart_text() ); ?>
+									</button>
+									<?php
+								}
 							}
 						} else {
 							$add_to_cart_button_classes = array(
 								'button',
-								'adfy-wishlist-btn',
+								'adfy-wishlist-btn addonify-wishlist-add-to-cart',
 								'product_type_' . $product->get_type(),
-								$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
-								$product->supports( 'ajax_add_to_cart' ) && $product->is_purchasable() && $product->is_in_stock() ? 'ajax_add_to_cart' : '',
+								$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : ''
+								
 							);
 
 							$add_to_cart_button_attributes = array(
@@ -69,7 +89,11 @@ if (
 								'rel'              => 'nofollow',
 							);
 							?>
-							<a href="<?php echo esc_url( $product->add_to_cart_url() ) ?>" class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" <?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>>
+							<a 
+								href="<?php echo esc_url( $product->add_to_cart_url() ) ?>" 
+								class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" 
+								<?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>
+							>
 								<?php echo esc_html( $product->add_to_cart_text() ); ?>
 							</a>
 							<?php
@@ -77,7 +101,30 @@ if (
 						?>
 					</div>
 					<div class="adfy-wishlist-col remove-item-column">
-						<button type="submit" class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon" name="addonify_wishlist_remove" value="<?php echo esc_attr( $product->get_id() ); ?>"><i class="adfy-wishlist-icon trash-2"></i></button>
+						<?php 
+						if ( (int) addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ) == 1 ) {
+							?>
+							<button
+								class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon addonify-wishlist-ajax-remove-from-wishlist addonify-wishlist-sidebar-button"
+								name="addonify_wishlist_remove" 
+								value="<?php echo esc_attr( $product->get_id() ); ?>"
+							>
+								<i class="adfy-wishlist-icon trash-2"></i>
+							</button>
+							<?php
+						} else {
+							?>
+							<button 
+								type="submit"
+								class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon"
+								name="addonify-remove-from-wishlist"
+								value="<?php echo esc_attr( $product->get_id() ); ?>"
+							>
+								<i class="adfy-wishlist-icon trash-2"></i>
+							</button>
+							<?php
+						}
+						?>						
 					</div>
 				</div>
 			</div>

@@ -47,11 +47,9 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
                 $this->rest_namespace,
                 '/get_options',
                 array(
-                    array(
-                        'methods'   => 'GET',
-                        'callback'  => array( $this, 'rest_handler_get_settings_fields' ),
-                        'permission_callback' => array( $this, 'permission_callback' ),
-                    )
+                    'methods'   => 'GET',
+                    'callback'  => array( $this, 'rest_handler_get_settings_fields' ),
+                    'permission_callback' => array( $this, 'permission_callback' ),
                 )
             );
 
@@ -59,11 +57,9 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
                 $this->rest_namespace,
                 '/update_options',
                 array(
-                    array(
-                        'methods'   => \WP_REST_Server::CREATABLE,
-                        'callback'  => array( $this, 'rest_handler_update_options' ),
-                        'permission_callback' => array( $this, 'permission_callback' )
-                    )
+                    'methods'   => \WP_REST_Server::CREATABLE,
+                    'callback'  => array( $this, 'rest_handler_update_options' ),
+                    'permission_callback' => array( $this, 'permission_callback' )
                 )
             );
         }

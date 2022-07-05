@@ -12,16 +12,54 @@
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
 
-$label = '<span class="addonify-wishlist-btn-label">' . $label . ' </span>';
+$label = ( $button_label ) ? '<span class="addonify-wishlist-btn-label">' . $button_label . ' </span>' : '';
 
-if ( $show_icon ) {
+// If icon is enabled, icon is displayed before the button lable.
+if ( $display_icon ) {
 	$label = '<i class="icon adfy-wishlist-icon ' . $icon . '"></i> ' . $label;
 }
 
-printf(
-	'<div class="addonify-add-to-wishlist-btn-wrapper"><button type="button" class="button adfy-wishlist-btn addonify-add-to-wishlist-btn %2$s" data-product_id="%3$s" data-product_name="%4$s"> %1$s</button></div>',
-	wp_kses_post( $label ),
-	esc_attr( $css_class ),
-	esc_attr( $product_id ),
-	esc_attr( $name )
-);
+if ( $require_login == true ) {
+	if ( $login_url ) {
+		?>
+		<a 
+			href="<?php echo esc_url( $login_url ); ?>" 
+			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>"
+		>
+			<?php echo wp_kses_post( $label ); ?>
+		</a>
+		<?php
+	} else {
+		?>
+		<button
+			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
+			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
+			data-product_name="<?php echo esc_attr( $product_name ); ?>"
+		>
+			<?php echo wp_kses_post( $label ); ?>
+		</button>
+		<?php
+	}
+} else {
+
+	if ( $display_popup_notice ) {
+		?>
+		<button 
+			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
+			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
+			data-product_name="<?php echo esc_attr( $product_name ); ?>"
+		>
+			<?php echo wp_kses_post( $label ); ?>
+		</button>
+		<?php
+	} else {
+		?>
+		<a 
+			href="?addonify-add-to-wishlist=<?php echo esc_attr( $product_id ); ?>"
+			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
+		>
+			<?php echo wp_kses_post( $label ); ?>
+		</a>
+		<?php
+	}
+}
