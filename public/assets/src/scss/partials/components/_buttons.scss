@@ -1,20 +1,17 @@
 /* -------------------------------------------------------------------------- 
-	#. Wishlist button
+	#. Button General
   -------------------------------------------------------------------------- */
 
 .adfy-wishlist-btn {
 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
     font-weight: normal;
     cursor: pointer;
     @include transation_delay();
-    
-    .show-label .adfy-wishlist-icon {
-
-        margin-right: 5px;
-    }
 }
-
-// button with no button style 
 
 .adfy-wishlist-clear-button-style {
 
@@ -24,57 +21,39 @@
     cursor: pointer;
     border-color: none;
     background-color: transparent;
+
+    &:hover {
+
+        color: grey;
+        border-color: none;
+        background-color: transparent;
+    }
 }
 
-.adfy-wishlist-clear-button-style:hover {
+/* -------------------------------------------------------------------------- 
+	#. Add to Wishlist button
+  -------------------------------------------------------------------------- */
 
-    color:grey;
-    border-color: none;
-    background-color: transparent;
-}
+.addonify-add-to-wishlist-btn  {
 
-// add to wishlist button
+    color: var(--adfy_wishlist_wishlist_btn_text_color);
+    background: transparent;
+    background-color: var(--adfy_wishlist_wishlist_btn_bg_color);
 
-.addonify-add-to-wishlist-btn button[disabled] {
+    .icon {
 
-	cursor: not-allowed;
-    opacity: 0.6 !important
-}
+        color: var(--adfy_wishlist_wishlist_btn_icon_color);
+    }
 
-.addonify-add-to-wishlist-btn .before-add-to-cart {
+    &:hover {
 
-    margin-bottom: 1em
-}
+        color: var(--adfy_wishlist_wishlist_btn_text_color_hover);
+        background: transparent;
+        background-color: var(--adfy_wishlist_wishlist_btn_bg_color_hover);
 
-.addonify-add-to-wishlist-btn .after-add-to-cart {
+        .icon {
 
-    margin-top: 1em
-}
-
-// wishlist overlay button 
-
-.addonify-overlay-buttons {
-
-    position: relative;
-}
-
-.addonify-overlay-buttons .addonify-overlay-btn-wrapper {
-
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.8);
-    @include transation_delay();
-}
-
-.addonify-overlay-buttons .addonify-overlay-btn-wrapper .addonify-overlay-btn {
-
-    opacity: 1;
-    @include large_drop_shadow();
+            color: var(--adfy_wishlist_wishlist_btn_icon_color_hover);
+        }
+    }
 }

@@ -238,8 +238,7 @@
             // change icon
             $('.adfy-wishlist-icon-entry .adfy-wishlist-icon').hide();
             $('.adfy-wishlist-icon-entry .adfy-wishlist-icon.adfy-status-' + icon).show();
-
-            $modal_response.html(response_text.replace('{product_name}', product_name));
+            $modal_response.html("<p class='response-text'>" + response_text.replace('{product_name}', product_name) + "</p>");
             $body.addClass('addonify-wishlist-modal-is-open');
         }
 
