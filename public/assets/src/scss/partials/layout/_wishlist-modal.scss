@@ -59,6 +59,15 @@
             }
         }
 
+        #addonify-wishlist-modal-response {
+
+            .response-text {
+
+                margin: 0;
+                padding: 0;
+            }
+        }
+
         .addonify-wishlist-modal-btns {
             
             @include grid();
