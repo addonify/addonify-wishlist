@@ -89,10 +89,23 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_modal_styles_settings_fields'
     function addonify_wishlist_sidebar_modal_styles_settings_fields() {
 
         return array(
-            
+            'sidebar_modal_overlay_bg_color' => array(
+                'type'                        => 'color',
+                'label'                       => __( 'Overlay Background Color', 'addonify-wishlist' ),
+                'isAlphaPicker'               => true,
+                'className'                   => '',
+                'value'                       => addonify_wishlist_get_option( 'sidebar_modal_bg_color' )
+            ),
             'sidebar_modal_bg_color' => array(
                 'type'                        => 'color',
                 'label'                       => __( 'Background Color', 'addonify-wishlist' ),
+                'isAlphaPicker'               => true,
+                'className'                   => '',
+                'value'                       => addonify_wishlist_get_option( 'sidebar_modal_bg_color' )
+            ),
+            'sidebar_modal_general_border_color' => array(
+                'type'                        => 'color',
+                'label'                       => __( 'General Border Color', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'sidebar_modal_bg_color' )
@@ -200,6 +213,13 @@ if ( ! function_exists( 'addonify_wishlist_product_content_styles_settings_field
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'sidebar_modal_product_title_color' )
             ),
+            'sidebar_modal_product_title_color_hover' => array(
+                'type'                        => 'color',
+                'label'                       => __( 'Title Color on Hover', 'addonify-wishlist' ),
+                'isAlphaPicker'               => true,
+                'className'                   => '',
+                'value'                       => addonify_wishlist_get_option( 'sidebar_modal_product_title_color' )
+            ),
             'sidebar_modal_product_regular_price_color' => array(
                 'type'                        => 'color',
                 'label'                       => __( 'Regular Price Color', 'addonify-wishlist' ),
@@ -245,6 +265,13 @@ if ( ! function_exists( 'addonify_wishlist_product_content_styles_settings_field
             'sidebar_modal_product_remove_from_wishlist_icon_color' => array(
                 'type'                        => 'color',
                 'label'                       => __( 'Remove Icon Color', 'addonify-wishlist' ),
+                'isAlphaPicker'               => true,
+                'className'                   => '',
+                'value'                       => addonify_wishlist_get_option( 'sidebar_modal_product_remove_from_wishlist_icon_color' )
+            ),
+            'sidebar_modal_product_remove_from_wishlist_icon_color_hover' => array(
+                'type'                        => 'color',
+                'label'                       => __( 'Remove Icon Color on Hover', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'sidebar_modal_product_remove_from_wishlist_icon_color' )
