@@ -9,9 +9,9 @@
 	import Select from "../inputs/Select.vue"; // Input type select.
 	import Radio from "../inputs/Radio.vue"; // Input type radio.
 	import RadioIcon from "../inputs/RadioIcon.vue"; // Input type radio with icons.
-	let { __, _x, _n, _nx } = wp.i18n;
-	let store = useOptionsStore();
+	import InvalidControl from "../inputs/InvalidControl.vue";
 
+	let store = useOptionsStore();
 	let props = defineProps({
 		section: Object,
 		sectionId: String,
@@ -124,22 +124,7 @@
 							:className="field.inputClassName"
 							:placeholder="field.placeholder"
 						/>
-						<span v-else class="unsupported-control-text">
-							❌
-							{{
-								__(
-									"Input is not supported.",
-									"addonify-wishist"
-								)
-							}}
-							<a
-								href="https://docs.addonify.com/kb/woocommerce-wishlist/developer/"
-								class="adfy-button fake-button has-underline forward-to-doc-link"
-								target="_blank"
-							>
-								{{ __("Check docs", "addonify-wishist") }}
-							</a>
-						</span>
+						<InvalidControl v-else />
 					</div>
 				</div>
 			</div>
