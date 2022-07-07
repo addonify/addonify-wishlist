@@ -74,42 +74,42 @@ if ( ! function_exists( 'addonify_wishlist_add_to_wishlist_button_styles_setting
         return array(
             'wishlist_btn_text_color' => array(
                 'type'                        => 'color',
-                'label'                       => __( 'Label color', 'addonify-wishlist' ),
+                'label'                       => __( 'Label Color', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'wishlist_btn_text_color' )
             ),
             'wishlist_btn_text_color_hover' => array(
                 'type'                        => 'color',
-                'label'                       => __( 'On Hover Label color', 'addonify-wishlist' ),
+                'label'                       => __( 'On Hover Label Color', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'wishlist_btn_text_color_hover' )
             ),
             'wishlist_btn_icon_color' => array(
                 'type'                        => 'color',
-                'label'                       => __( 'Icon color', 'addonify-wishlist' ),
+                'label'                       => __( 'Icon Color', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'wishlist_btn_icon_color' )
             ),            
             'wishlist_btn_icon_color_hover' => array(
                 'type'                        => 'color',
-                'label'                       => __( 'On Hover Icon color', 'addonify-wishlist' ),
+                'label'                       => __( 'On Hover Icon Color', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'wishlist_btn_icon_color_hover' )
             ), 
             'wishlist_btn_bg_color' => array(
                 'type'                        => 'color',
-                'label'                       => __( 'Background color', 'addonify-wishlist' ),
+                'label'                       => __( 'Background Color', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'wishlist_btn_bg_color' )
             ),
             'wishlist_btn_bg_color_hover' => array(
                 'type'                        => 'color',
-                'label'                       => __( 'On Hover Background color', 'addonify-wishlist' ),
+                'label'                       => __( 'On Hover Background Color', 'addonify-wishlist' ),
                 'isAlphaPicker'               => true,
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'wishlist_btn_bg_color_hover' )

@@ -171,10 +171,6 @@ class Addonify_Wishlist_Public {
 
 		global $wp;
 
-		wp_enqueue_script( 'popper', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/popper.min.js', null, $this->version, true );
-
-		wp_enqueue_script( 'tippy', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/tippy.min.js', null, $this->version, true );
-
 		wp_enqueue_script( 'perfect-scrollbar', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/perfect-scrollbar.min.js', null, $this->version, true );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, true );
@@ -1100,7 +1096,9 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_wishlist_btn_icon_color_hover' => addonify_wishlist_get_option('wishlist_btn_icon_color_hover' ),
 			'--adfy_wishlist_wishlist_btn_bg_color' => addonify_wishlist_get_option('wishlist_btn_bg_color' ),
 			'--adfy_wishlist_wishlist_btn_bg_color_hover' => addonify_wishlist_get_option('wishlist_btn_bg_color_hover' ),
+			'--adfy_wishlist_sidebar_modal_overlay_bg_color' => addonify_wishlist_get_option('sidebar_modal_overlay_bg_color' ),
 			'--adfy_wishlist_popup_modal_bg_color' => addonify_wishlist_get_option('popup_modal_bg_color' ),
+			'--adfy_wishlist_border_color' => addonify_wishlist_get_option('sidebar_modal_general_border_color' ),
 			'--adfy_wishlist_popup_modal_icon_color' => addonify_wishlist_get_option('popup_modal_icon_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color' => addonify_wishlist_get_option('popup_modal_btn_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color_hover' => addonify_wishlist_get_option('popup_modal_btn_text_color_hover' ),
@@ -1116,6 +1114,7 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_sidebar_modal_close_icon_color' => addonify_wishlist_get_option('sidebar_modal_close_icon_color' ),
 			'--adfy_wishlist_sidebar_modal_close_icon_color_hover' => addonify_wishlist_get_option('sidebar_modal_close_icon_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_product_title_color' => addonify_wishlist_get_option('sidebar_modal_product_title_color' ),
+			'--adfy_wishlist_sidebar_modal_product_title_color_hover' => addonify_wishlist_get_option('sidebar_modal_product_title_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_product_regular_price_color' => addonify_wishlist_get_option('sidebar_modal_product_regular_price_color' ),
 			'--adfy_wishlist_sidebar_modal_product_sale_price_color' => addonify_wishlist_get_option('sidebar_modal_product_sale_price_color' ),
 			'--adfy_wishlist_sidebar_modal_product_add_to_cart_label_color' => addonify_wishlist_get_option('sidebar_modal_product_add_to_cart_label_color' ),
@@ -1123,6 +1122,7 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_sidebar_modal_product_add_to_cart_bg_color' => addonify_wishlist_get_option('sidebar_modal_product_add_to_cart_bg_color' ),
 			'--adfy_wishlist_sidebar_modal_product_add_to_cart_bg_color_hover' => addonify_wishlist_get_option('sidebar_modal_product_add_to_cart_bg_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color' => addonify_wishlist_get_option('sidebar_modal_product_remove_from_wishlist_icon_color' ),
+			'--adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color_hover' => addonify_wishlist_get_option('sidebar_modal_product_remove_from_wishlist_icon_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_view_wishlist_btn_label_color' => addonify_wishlist_get_option('sidebar_modal_view_wishlist_btn_label_color' ),
 			'--adfy_wishlist_sidebar_modal_view_wishlist_btn_label_color_hover' => addonify_wishlist_get_option('sidebar_modal_view_wishlist_btn_label_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_view_wishlist_btn_bg_color' => addonify_wishlist_get_option('sidebar_modal_view_wishlist_btn_bg_color' ),

@@ -158,7 +158,7 @@
 
 @mixin clearfix() {
 
-  	&::before,
+  &::before,
 	&::after {
 
 		content: "";
