@@ -67,4 +67,7 @@
     --adfy_wishlist_sidebar_overlay_zindex: 10000000000000000;
     --adfy_wishlist_sidebar_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) + 10 );
     --adfy_wishlist_sidebar_trigger_button_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) - 1 );
+
+    // Position offset.
+    --adfy_wishlist_sidebar_btn_position_offset: -40;
 }

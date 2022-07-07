@@ -39,7 +39,9 @@
 	#. Add to Wishlist button
   -------------------------------------------------------------------------- */
 
-.addonify-add-to-wishlist-btn  {
+.addonify-add-to-wishlist-btn,
+.woocommerce ul.products li.product .addonify-add-to-wishlist-btn, 
+.woocommerce-page ul.products li.product .addonify-add-to-wishlist-btn {
 
     color: var(--adfy_wishlist_wishlist_btn_text_color);
     background: transparent;

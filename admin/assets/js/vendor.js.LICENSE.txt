@@ -18,7 +18,7 @@
  * MIT Licensed
  */
 
-/*! Element Plus Icons Vue v2.0.5 */
+/*! Element Plus Icons Vue v2.0.6 */
 
 /**
  * Checks if an event is supported in the current execution environment.

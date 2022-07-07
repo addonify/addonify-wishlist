@@ -40,6 +40,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
                 'sidebar_position' => 'right',
                 'sidebar_title' => __( 'My wishlist', 'addonify-wishlist' ),
                 'sidebar_btn_label' => __( 'Wishlist', 'addonify-wishlist' ),
+                'sidebar_btn_position_offset' => -40,
                 'sidebar_show_icon' => true,
                 'sidebar_btn_icon' => 'heart-style-one',
                 'ajaxify_remove_from_wishlist_button' => false,
@@ -160,7 +161,7 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
                         $sanitized_value = ( $value == true ) ? '1' : '0';
                         break;
                     case 'number':
-                        $sanitized_value = absint( $value );
+                        $sanitized_value = (int) $value;
                         break;
                     case 'color':
                         $sanitized_value = sanitize_text_field( $value );
