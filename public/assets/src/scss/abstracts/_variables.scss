@@ -4,36 +4,6 @@
 
 :root {
 
-    // Base colors.
-    --adfy_wishlist_text_color: #111111;
-    --adfy_wishlist_link_color: blue;
-    --adfy_wishlist_link_hover_color: #111111;
-
-    // Button colors.
-    --adfy_wishlist_button_color: #333333;
-    --adfy_wishlist_button_hover_color: #111111;
-    --adfy_wishlist_button_text_color: #111111;
-    --adfy_wishlist_button_text_hover_color: #111111;
-    --adfy_wishlist_button_border_color: transparent;
-    --adfy_wishlist_button_border_hover_color: transparent;
-    --adfy_wishlist_button_border_radius: 0;
-    --adfy_wishlist_button_border_width: 0;
-    --adfy_wishlist_button_border_style: solid;
-
-    // Modal box colors.
-    --adfy_wishlist_popup_notice_text_color: #333333;
-    --adfy_wishlist_popup_notice_background_color: #FFFFFF;
-    --adfy_wishlist_notice_popup_icon_color: #858585;
-    --adfy_wishlist_notice_popup_button_color: white;
-    --adfy_wishlist_notice_popup_button_hover_color: white;
-    --adfy_wishlist_notice_popup_button_background_color: rgba(150, 88, 138, 1);
-    --adfy_wishlist_notice_popup_button_background_hover_color: rgb(154, 60, 135);
-
-
-    /**
-    * #. Development
-    */
-
     // Button colors.
 
     --adfy_wishlist_wishlist_btn_text_color: white;
@@ -41,7 +11,7 @@
     --adfy_wishlist_wishlist_btn_text_color_hover: white;
     --adfy_wishlist_wishlist_btn_icon_color_hover: white;
     --adfy_wishlist_wishlist_btn_bg_color: #444444;
-    --adfy_wishlist_wishlist_btn_bg_color_hover: #111111;
+    --adfy_wishlist_wishlist_btn_bg_color_hover: #2274FB;
 
     // Popup Modal Colors.
 
@@ -76,6 +46,7 @@
     --adfy_wishlist_sidebar_modal_product_add_to_cart_bg_color_hover: #2274FB;
 
     --adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color: #9f9f9f;
+    --adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color_hover: #2274FB;
 
     --adfy_wishlist_sidebar_modal_view_wishlist_btn_label_color: #444444;
     --adfy_wishlist_sidebar_modal_view_wishlist_btn_label_color_hover: #2274FB;
@@ -88,9 +59,9 @@
     // Border
     --adfy_wishlist_border_color: #F5F5F5;
 
-    // zindex
+    // z-index
     --adfy_wishlist_popup_modal_zindex: 1000000000000000;
-    --adfy_wishlist_sidebar_overlay_zindex: calc( var(--adfy_wishlist_popup_modal_zindex) + 10 );
+    --adfy_wishlist_sidebar_overlay_zindex: 10000000000000000;
     --adfy_wishlist_sidebar_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) + 10 );
     --adfy_wishlist_sidebar_trigger_button_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) - 1 );
 }

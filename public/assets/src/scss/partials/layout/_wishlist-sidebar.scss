@@ -7,7 +7,7 @@
     @include flex();
     flex-direction: column;
     justify-content: space-between;
-    gap: 30px;
+    gap: 40px;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -23,6 +23,7 @@
     @include visibility_visible();
     @include breakpoint(mobile) {
 
+        gap: 30px;
         max-width: 90vw;
     }
 
@@ -185,6 +186,20 @@
 
                                     margin: 0;
                                 }
+
+                                .adfy-wishlist-btn {
+
+                                    color: var(--adfy_wishlist_sidebar_modal_product_add_to_cart_label_color);
+                                    background: transparent;
+                                    background-color: var(--adfy_wishlist_sidebar_modal_product_add_to_cart_bg_color);
+
+                                    &:hover {
+
+                                        color: var(--adfy_wishlist_sidebar_modal_product_add_to_cart_label_color_hover);
+                                        background: transparent;
+                                        background-color: var(--adfy_wishlist_sidebar_modal_product_add_to_cart_bg_color_hover);
+                                    }
+                                }
                             }
 
                             .remove-item-column {
@@ -203,7 +218,7 @@
 
                                     &:hover {
 
-                                        color: black;
+                                        color: var(--adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color_hover);
                                         box-shadow: none;
                                         border: none;
                                         background-color: transparent;
@@ -383,6 +398,7 @@
     transform: rotate(90deg);
     background: transparent;
     background-color: var(--adfy_wishlist_sidebar_modal_toggle_btn_bg_color);
+    z-index: var(--adfy_wishlist_sidebar_trigger_button_zindex);
     @include transation_delay();
 
     .button-icon,
