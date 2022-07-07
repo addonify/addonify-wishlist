@@ -96,6 +96,11 @@
                 ajaxData,
                 function (response) {
                     if (response.success) {
+                        
+                        // Triggering custom event when product is added to wishlist. 
+                        // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
+                        $(document).trigger('addonify_added_to_wishlist', [{ productID: $(this_sel).data('product_id') }]);
+
                         if (addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart == '1' && parentProductRow) {
 
                             parentProductRow.remove();
