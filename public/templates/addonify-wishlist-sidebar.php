@@ -21,15 +21,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php echo esc_attr( $title ); ?>
 			</h3>
 			<button id="close-adfy-wishlist-sidebar-button" class="button">
-				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
-					<g>
-						<path d="M30.2,57.2c-0.7,0-1.4-0.2-2-0.7L3.5,36.7c-1.4-1.1-2.2-2.8-2.2-4.7s0.8-3.5,2.2-4.7L28.2,7.5c1-0.8,2.2-0.9,3.3-0.4
-                        c1.1,0.5,1.8,1.6,1.8,2.8v11.1c8.5,1.2,16.2,5,22,10.7c3.9,4,5.9,7.8,7,13.4c0.2,1.3,0.4,3.4,0.4,6.4c0,1.2-0.6,2.3-1.6,2.8
-                        c-1,0.6-2.3,0.5-3.2-0.1c-9-5.8-17.4-9.3-24.5-10.2V54c0,1.2-0.7,2.3-1.8,2.8C31.1,57.1,30.7,57.2,30.2,57.2z M29.9,10.7L5.7,30.1
-                        c-0.6,0.5-0.9,1.2-0.9,1.9c0,0.8,0.3,1.5,0.9,1.9l24.2,19.4V42.2c0-0.5,0.2-0.9,0.6-1.3c0.4-0.3,0.8-0.5,1.3-0.5
-                        c9.9,0.6,20.3,6,27.5,10.6c-0.1-2.4-0.2-4.2-0.4-5.1c-1-5-2.6-8.1-6-11.7c-5.5-5.5-13.2-9-21.4-9.9c-0.9-0.1-1.6-0.8-1.6-1.7V10.7z
-                        "></path>
-					</g>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
 				</svg>
 			</button>
 		</div>
@@ -50,8 +42,12 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<div class="addonify-wishlist-ssc-footer">
 		<a href="<?php echo esc_url( $wishlist_url ); ?>" class="addonify-wishlist-goto-wishlist-btn">
-			<span class="icon"><i class="adfy-wishlist-icon external-link"></i></span>
-			<?php esc_html_e( 'View all Wishlist', 'addonify-wishlist' ); ?>
+			<?php esc_html_e( 'View all wishlist', 'addonify-wishlist' ); ?>
+			<span class="icon">
+				<svg viewBox="0 0 64 64" xml:space="preserve">
+					<path d="M61.5,28.5l-6.9-8.2c-0.6-0.7-1.7-0.8-2.5-0.2c-0.7,0.6-0.8,1.7-0.2,2.5l6.5,7.7H3c-1,0-1.8,0.8-1.8,1.8c0,1,0.8,1.8,1.8,1.8h55.4l-6.5,7.7c-0.6,0.7-0.5,1.8,0.2,2.5c0.3,0.3,0.7,0.4,1.1,0.4c0.5,0,1-0.2,1.3-0.6l6.9-8.2C63.2,33.5,63.2,30.5,61.5,28.5z"/>
+				</svg>
+			</span>
 		</a>
 	</div>
 	<?php do_action( 'addonify_wishlist_before_sidebar_closing_tag' ); ?>
