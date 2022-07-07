@@ -684,11 +684,9 @@ class Addonify_Wishlist_Public {
 
 		do_action( 'addonify_wishlist_before_adding_to_wishlist' );
 
-		$data = serialize( $data );
-
 		if ( is_user_logged_in() ) {
 
-			$return_boolean = ( $this->set_cookie( $data ) && update_user_meta( get_current_user_id(), '_' . $this->plugin_name, $data ) ) ? true : false;
+			$return_boolean = ( $this->set_cookie( $data ) && update_user_meta( get_current_user_id(), '_' . $this->plugin_name, serialize( $data ) ) ) ? true : false;
 		} else {
 			
 			$return_boolean = $this->set_cookie( $data );
@@ -712,10 +710,22 @@ class Addonify_Wishlist_Public {
 	 */
 	private function set_cookie( $data ) {
 
-		// add data to user cookies.
-		$cookies_lifetime = (int) addonify_wishlist_get_option( 'cookies_lifetime' ) * DAY_IN_SECONDS;
+		if ( 
+			is_array( $data ) &&
+			count( $data ) > 0
+		) {
+			// Set browser cookie if there are products in the wishlist.
+			$cookies_lifetime = (int) addonify_wishlist_get_option( 'cookies_lifetime' ) * DAY_IN_SECONDS;
 
-		return setcookie( $this->plugin_name, $data, time() + $cookies_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+			return setcookie( $this->plugin_name, serialize( $data ), time() + $cookies_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+		} else {
+
+			// Remove browser cookie if are no products in the wishlist.
+			if ( isset( $_COOKIE[ $this->plugin_name ] ) ) {
+				
+				return setcookie( $this->plugin_name, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN );
+			}
+		}
 	}
 
 
