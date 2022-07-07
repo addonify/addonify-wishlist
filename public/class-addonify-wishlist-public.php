@@ -171,10 +171,6 @@ class Addonify_Wishlist_Public {
 
 		global $wp;
 
-		wp_enqueue_script( 'popper', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/popper.min.js', null, $this->version, true );
-
-		wp_enqueue_script( 'tippy', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/tippy.min.js', null, $this->version, true );
-
 		wp_enqueue_script( 'perfect-scrollbar', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/perfect-scrollbar.min.js', null, $this->version, true );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, true );
