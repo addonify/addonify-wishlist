@@ -343,25 +343,27 @@
 
     .notice {
 
-        @include flex();
+        @include grid();
+        grid-template-columns: 16px auto;
         align-items: center;
-        justify-content: flex-start;
-        gap: 10px;
+        justify-content: start;
+        column-gap: 10px;
         font-size: 14px;
         font-weight: normal;
-        line-height: 18px;
+        line-height: 1.4;
         letter-spacing: 0;
         margin: 5px 0;
-        padding: 12px 15px;
+        padding: 15px;
         border-radius: 3px;
         color: var(--adfy_wishlist_sidebar_modal_notification_text_color);
         fill: var(--adfy_wishlist_sidebar_modal_notification_text_color);
         background-color: var(--adfy_wishlist_sidebar_modal_notification_bg_color);
         animation: AddonifyWishlistFadeInUp 500ms linear;
-        @include mild_drop_shadow();
+        box-shadow: 0 1px 2px rgba( 0, 0, 0, 0.1 );
 
         svg {
 
+            display: inline-flex;
             width: 16px;
             height: 16px;
         }
