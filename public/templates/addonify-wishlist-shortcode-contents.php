@@ -86,7 +86,9 @@ if ( function_exists( 'wc_print_notices' ) ) {
 								?>
 							</td>
 							<td class="name">
-								<?php echo $product->get_title(); ?>
+								<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
+									<?php echo $product->get_title(); ?>
+								</a>
 							</td>
 							<td class="price">
 								<?php echo $product->get_price_html(); ?>

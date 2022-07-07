@@ -38,7 +38,11 @@ if (
 					</div>
 				</div>
 				<div class="adfy-wishlist-col title-price-column">
-					<div class="adfy-wishlist-woo-title"><?php echo $product->get_title(); ?></div>
+					<div class="adfy-wishlist-woo-title">
+						<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
+							<?php echo $product->get_title(); ?>
+						</a>
+					</div>
 					<div class="adfy-wishlist-woo-price"><?php echo $product->get_price_html(); ?></div>
 				</div>
 			</div>
