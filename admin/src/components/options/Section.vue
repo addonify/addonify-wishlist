@@ -4,6 +4,7 @@
 	import Text from "../inputs/Text.vue"; // Input type text.
 	import Number from "../inputs/Number.vue"; // Input type number.
 	import NumberInputButton from "../inputs/NumberInputButton.vue"; // Input type number with + & - buttons.
+	import NumberInputSlider from "../inputs/NumberInputSlider.vue"; // Input type number with range slider.
 	import Textarea from "../inputs/Textarea.vue"; // Input type textarea.
 	import Select from "../inputs/Select.vue"; // Input type select.
 	import Radio from "../inputs/Radio.vue"; // Input type radio.
@@ -79,9 +80,20 @@
 						<NumberInputButton
 							v-else-if="
 								field.type == 'number' &&
-								field.type_style == 'toggle'
+								field.typeStyle == 'toggle'
 							"
 							v-model="props.reactiveState[fieldKey]"
+						/>
+						<NumberInputSlider
+							v-else-if="
+								field.type == 'number' &&
+								field.typeStyle == 'slider'
+							"
+							v-model="props.reactiveState[fieldKey]"
+							:minVal="field.typeMinVal"
+							:maxVal="field.typeMaxVal"
+							:step="field.typeStepVal"
+							:toolTipText="field.typeToolTipText"
 						/>
 						<Number
 							v-else-if="field.type == 'number'"
@@ -96,7 +108,7 @@
 						<RadioIcon
 							v-else-if="
 								field.type == 'radio' &&
-								field.type_style == 'radio_icon'
+								field.typeStyle == 'radio_icon'
 							"
 							v-model="props.reactiveState[fieldKey]"
 							:choices="field.choices"
@@ -121,7 +133,7 @@
 								)
 							}}
 							<a
-								href="https://docs.addonify.com/kb/woocommerce-wishlist/developer/add-setting-fields/"
+								href="https://docs.addonify.com/kb/woocommerce-wishlist/developer/"
 								class="adfy-button fake-button has-underline forward-to-doc-link"
 								target="_blank"
 							>

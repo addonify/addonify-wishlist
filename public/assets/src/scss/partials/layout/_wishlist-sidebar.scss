@@ -382,10 +382,10 @@
     gap: 10px;
     position: fixed;
     left: auto;
-    right: -40px;
+    right: calc(var(--adfy_wishlist_sidebar_btn_position_offset) * 1px);
     top: 50vh;
     padding: 10px;
-    width: 120px;
+    width: auto;
     height: auto;
     white-space: nowrap;
     overflow: hidden;
@@ -476,7 +476,7 @@
 #addonify-wishlist-show-sidebar-btn[class*="align-left"] {
 
     right: auto;
-    left: -40px;
+    left: calc(var(--adfy_wishlist_sidebar_btn_position_offset) * 1px);
 }
 
 #addonify-wishlist-sticky-sidebar-container[class*="align-left"] {

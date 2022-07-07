@@ -46,7 +46,7 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
             'cookies_lifetime' => array(
                 'type'          => 'number',
                 'className'     => '',
-                'type_style'    => 'toggle', // 'default', 'toggle' & slider
+                'typeStyle'    => 'toggle', // 'default', 'toggle' & slider
                 'label'         => __( 'Save Wishlist Cookie for [ x ] days', 'addonify-wishlist' ),
                 'dependent'     => array('enable_wishlist'),
                 'description'   => __( 'Set the number of days to save the Wishlist data in browser cookie.', 'addonify-wsihlist' ),

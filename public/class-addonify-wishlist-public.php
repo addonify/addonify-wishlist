@@ -1104,6 +1104,7 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_popup_modal_btn_text_color_hover' => addonify_wishlist_get_option('popup_modal_btn_text_color_hover' ),
 			'--adfy_wishlist_popup_modal_btn_bg_color' => addonify_wishlist_get_option('popup_modal_btn_bg_color' ),
 			'--adfy_wishlist_popup_modal_btn_bg_color_hover' => addonify_wishlist_get_option('popup_modal_btn_bg_color_hover' ),
+			'--adfy_wishlist_sidebar_btn_position_offset' => addonify_wishlist_get_option('sidebar_btn_position_offset' ),
 			'--adfy_wishlist_sidebar_modal_toggle_btn_label_color' => addonify_wishlist_get_option('sidebar_modal_toggle_btn_label_color' ),
 			'--adfy_wishlist_sidebar_modal_toggle_btn_label_color_hover' => addonify_wishlist_get_option('sidebar_modal_toggle_btn_label_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_toggle_btn_bg_color' => addonify_wishlist_get_option('sidebar_modal_toggle_btn_bg_color' ),
