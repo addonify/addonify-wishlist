@@ -1,6 +1,7 @@
 <script setup>
 	import Color from "../../inputs/Color.vue";
-	let { __, _x, _n, _nx } = wp.i18n;
+	import InvalidControl from "../../inputs/InvalidControl.vue";
+
 	let props = defineProps({
 		section: Object,
 		sectionId: String,
@@ -35,22 +36,7 @@
 							:showAlpha="field.isAlphaPicker"
 							:label="field.label"
 						/>
-						<span v-else class="unsupported-control-text">
-							❌
-							{{
-								__(
-									"Input is not supported.",
-									"addonify-wishist"
-								)
-							}}
-							<a
-								href="https://docs.addonify.com/kb/woocommerce-wishlist/developer/add-setting-fields/"
-								class="adfy-button fake-button has-underline forward-to-doc-link"
-								target="_blank"
-							>
-								{{ __("Check docs", "addonify-wishist") }}
-							</a>
-						</span>
+						<InvalidControl v-else />
 					</div>
 				</div>
 			</div>

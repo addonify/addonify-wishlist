@@ -3,6 +3,7 @@
 	import Switch from "../../inputs/Switch.vue";
 	import Color from "../../inputs/Color.vue";
 	import Textarea from "../../inputs/Textarea.vue";
+	import InvalidControl from "../../inputs/InvalidControl.vue";
 	let { __, _x, _n, _nx } = wp.i18n;
 	let props = defineProps({
 		section: Object,
@@ -62,17 +63,7 @@
 						v-model="props.reactiveState[fieldKey]"
 						:showAlpha="field.isAlphaPicker"
 					/>
-					<span v-else class="unsupported-control-text">
-						❌
-						{{ __("Input is not supported.", "addonify-wishist") }}
-						<a
-							href="https://docs.addonify.com/kb/woocommerce-wishlist/developer/add-setting-fields/"
-							class="adfy-button fake-button has-underline forward-to-doc-link"
-							target="_blank"
-						>
-							{{ __("Check docs", "addonify-wishist") }}
-						</a>
-					</span>
+					<InvalidControl v-else />
 				</div>
 			</div>
 		</div>
