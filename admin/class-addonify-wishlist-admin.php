@@ -18,7 +18,7 @@
  * @subpackage Addonify_Wishlist/admin
  * @author     Adodnify <contact@addonify.com>
  */
-class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
+class Addonify_Wishlist_Admin {
 
 	/**
 	 * Settings page slug
@@ -72,9 +72,6 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 
 		// load styles in this plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
-
-			// admin css.
-			//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/addonify-wishlist-admin.min.css', array(), $this->version, 'all' );
 
 			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'assets/fonts/icon.css', array(), $this->version, 'all' );
 
@@ -143,7 +140,7 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 	public function add_menu_callback() {
 
 		// do not show menu if woocommerce is not active.
-		if ( ! $this->is_woocommerce_active() ) {
+		if ( ! class_exists( 'woocommerce' ) ) {
 			return;
 		}
 
@@ -198,22 +195,11 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 	 * @since    1.0.0
 	 */
 	public function get_settings_screen_contents() {
-
 		?>
-			<div id="___adfy-wishlist-app___"></div>
+		<div id="___adfy-wishlist-app___"></div>
 		<?php
 	}
 
-	/**
-	 * Show notification after form submission.
-	 *
-	 * @since    1.0.0
-	 */
-	public function show_form_submission_notification() {
-		if ( isset( $_GET['page'] ) && $this->settings_page_slug === $_GET['page'] ) {
-			settings_errors();
-		}
-	}
 
 	/**
 	 * Show admin error message if woocommerce is not active
@@ -222,7 +208,8 @@ class Addonify_Wishlist_Admin extends Addonify_Wishlist_Helpers {
 	 */
 	public function show_woocommerce_not_active_notice_callback() {
 
-		if ( ! $this->is_woocommerce_active() ) {
+		if ( ! class_exists( 'woocommerce' ) ) {
+
 			add_action(
 				'admin_notices',
 				function() {

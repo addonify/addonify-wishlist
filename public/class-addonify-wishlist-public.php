@@ -120,7 +120,7 @@ class Addonify_Wishlist_Public {
 
 		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
 
-		add_action( 'addonify_wishlist/before_wishlist_form', array( $this, 'ajaxify_wishlist_form' ) );
+		add_action( 'addonify_wishlist/before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
 
 		add_action( 'wp', array( $this, 'init_actions' ) );
 	}
@@ -448,11 +448,9 @@ class Addonify_Wishlist_Public {
 	 */
 	public function render_add_to_wishlist_button_single() {
 
-		if ( is_product() ) {
-			echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
-			$this->render_add_to_wishlist_button();
-			echo '</div>';
-		}
+		echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
+		$this->render_add_to_wishlist_button();
+		echo '</div>';
 	}
 
 

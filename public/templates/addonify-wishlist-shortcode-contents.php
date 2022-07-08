@@ -18,6 +18,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 ?>
 
 <div id="addonify-wishlist-page-container">
+	<?php do_action( 'addonify_wishlist/before_wishlist_form' ); ?>
 	<?php
 	if ( 
 		isset( $data['wishlist_product_ids'] ) &&
@@ -27,7 +28,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 		?>
 		<form action="" method="POST" id="addonify-wishlist-page-form">
 
-			<?php do_action( 'addonify_wishlist/before_wishlist_form' ); ?>
+			<?php do_action( 'addonify_wishlist/before_wishlist_form_table' ); ?>
 
 			<table id="addonify-wishlist-table">
 				<thead class="addonify-wishlist-items-heading">
@@ -170,11 +171,13 @@ if ( function_exists( 'wc_print_notices' ) ) {
 					}
 					?>
 				</tbody>
-			</table>		
+			</table>
+			<?php do_action( 'addonify_wishlist/after_wishlist_form_table' ); ?>		
 		</form>
 		<?php 
 	} else {
 		echo esc_html__( 'Your wishlist is empty.', 'addonify-wishlist' );
 	}
 	?>
+	<?php do_action( 'addonify_wishlist/after_wishlist_form' ); ?>
 </div>
