@@ -1,6 +1,6 @@
 <script setup>
 	import { useOptionsStore } from "../../stores/options";
-	let { __, _x, _n, _nx } = wp.i18n;
+	let { __ } = wp.i18n;
 	let store = useOptionsStore();
 </script>
 

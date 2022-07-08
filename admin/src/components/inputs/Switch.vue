@@ -1,6 +1,8 @@
 <script setup>
 	import { computed } from "vue";
+	import { ElSwitch } from "element-plus";
 	import { Check, Close } from "@element-plus/icons-vue";
+
 	let props = defineProps({
 		modelValue: [Boolean, Number, String], // loose strict.
 	});

@@ -47,3 +47,20 @@ mix.sass('admin/assets/scss/index.scss', 'admin/assets/css/admin.css');
 */
 
 mix.extract();
+
+
+/**
+*
+* Extend Mix
+*/
+
+mix.webpackConfig(webpack => {
+    return {
+        plugins: [
+            require('unplugin-element-plus/webpack')({
+                // options
+            }),
+        ]
+    };
+});
+

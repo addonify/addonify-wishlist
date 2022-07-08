@@ -1,6 +1,6 @@
 <script setup>
 	import Navigation from "../components/layouts/Navigation.vue";
-	let { __, _x, _n, _nx } = wp.i18n;
+	let { __ } = wp.i18n;
 </script>
 
 <template>
@@ -10,7 +10,7 @@
 				<Navigation />
 			</aside>
 			<section class="adfy-col end site-primary">
-				<p>{{ __("Coming soon.....", "addonify-quick-view") }}</p>
+				<p>{{ __("Coming soon.....", "addonify-wishist") }}</p>
 			</section>
 		</main>
 	</section>

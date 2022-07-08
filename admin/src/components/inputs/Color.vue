@@ -1,5 +1,6 @@
 <script setup>
 	import { computed } from "vue";
+	import { ElColorPicker } from "element-plus";
 
 	let props = defineProps({
 		colorVal: String,

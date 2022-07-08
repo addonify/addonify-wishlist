@@ -1,5 +1,6 @@
 <script setup>
 	import { computed } from "vue";
+	import { ElInputNumber } from "element-plus";
 
 	let props = defineProps({
 		modelValue: [String, Number], // loose strict checking.
