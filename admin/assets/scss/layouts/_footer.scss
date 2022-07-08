@@ -1,0 +1,99 @@
+.adfy-colopon {
+
+    display: block;
+    margin: 100px 30px 0 30px;
+
+    .adfy-row {
+
+        @include grid();
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 30px;
+        align-items: center;
+        justify-content: space-between;
+
+        .left {
+
+            .text {
+
+                display: inline-block;
+                align-items: center;
+                gap: 10px;
+
+                .version {
+
+                    font-size: 12px;
+                    font-weight: normal;
+                    line-height: 1;
+                    padding: 6px 10px 4px 10px;
+                    color: #888888;
+                    border-radius: 20px;
+                    background-color: #DDDDDD;
+                }
+            }
+        }
+
+        .right {
+
+            @include flex();
+            align-items: center;
+            justify-content: flex-end;
+
+            .text {
+
+                display: inline-block;
+                align-items: center;
+                
+                .adfy-link {
+
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 3px;
+                    text-decoration: none;
+                    color: #888888;
+                    font-family: var(--addonify_system_font_family);
+                    font-size: 14px;
+                    font-weight: normal;
+                    line-height: 1;
+                    @include transation_delay();
+
+                    &:hover {
+
+                        fill: var(--addonify_base_link_hover_color);
+                        color: var(--addonify_base_link_hover_color);
+                        text-decoration: none;
+                    }
+
+                    &:focus {
+
+                        outline: none;
+                        border: none;
+                        box-shadow: none;
+                    }
+
+                    .icon {
+
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0;
+
+                        .dashicons {
+
+                            font-size: 14px;
+                            width: 16px;
+                            height: 14px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .text {
+
+            margin: 0;
+            color: #888888;
+            font-family: var(--addonify_system_font_family);
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
+}

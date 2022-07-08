@@ -1,51 +1,26 @@
-// pulse 
+/* -------------------------------------------------------------------------- 
+	#. Pulse
+  -------------------------------------------------------------------------- */
 
-@-webkit-keyframes AddonifyWishlistPulse {
+@keyframes AddonifyWishlistPulse {
     0% {
-        -moz-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
         transform: scale(0.9);
     }
 
     70% {
-        -moz-transform: scale(1);
-        -ms-transform: scale(1);
-        -webkit-transform: scale(1);
         transform: scale(1);
         box-shadow: 0 0 0 50px rgba(90, 153, 212, 0);
     }
 
     100% {
-        -moz-transform: scale(0.9);
-        -ms-transform: scale(0.9);
-        -webkit-transform: scale(0.9);
         transform: scale(0.9);
         box-shadow: 0 0 0 0 rgba(90, 153, 212, 0);
     }
 }
 
-// spin 
-
-@-moz-keyframes AddonifyWishlistSpin {
-    from {
-        -moz-transform: rotate(0deg);
-    }
-
-    to {
-        -moz-transform: rotate(360deg);
-    }
-}
-
-@-webkit-keyframes AddonifyWishlistSpin {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
+/* -------------------------------------------------------------------------- 
+	#. Spin
+  -------------------------------------------------------------------------- */
 
 @keyframes AddonifyWishlistSpin {
     from {
@@ -57,20 +32,10 @@
     }
 }
 
-// fadeinup 
+/* -------------------------------------------------------------------------- 
+	#. FadeInUp
+  -------------------------------------------------------------------------- */
 
-@-webkit-keyframes AddonifyWishlistFadeInUp {
-    0% {
-        opacity: 0;
-        -webkit-transform: translateY(40px);
-    }
-    100% {
-        opacity: 1;
-        -webkit-transform: translateY(0);
-    }
-}
-
-/* Standard syntax */
 @keyframes AddonifyWishlistFadeInUp {
     0% {
         opacity: 0;

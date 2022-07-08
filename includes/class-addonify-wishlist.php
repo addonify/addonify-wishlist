@@ -24,7 +24,7 @@
  * @since      1.0.0
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/includes
- * @author     Adodnify <info@addonify.com>
+ * @author     Adodnify <contact@addonify.com>
  */
 class Addonify_Wishlist {
 
@@ -77,7 +77,7 @@ class Addonify_Wishlist {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
+		$this->rest_api();
 	}
 
 	/**
@@ -97,11 +97,6 @@ class Addonify_Wishlist {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
-		/**
-		 * Helper class.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-helpers.php';
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -126,8 +121,11 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/settings.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/helpers.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-rest-api.php';
 
 		$this->loader = new Addonify_Wishlist_Loader();
 
@@ -170,18 +168,24 @@ class Addonify_Wishlist {
 		// custom link in plugins.php page in wp-admin.
 		$this->loader->add_action( 'plugin_action_links', $plugin_admin, 'custom_plugin_link_callback', 10, 2 );
 
-		// show settings page ui.
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_page_ui' );
-
 		// show notice if woocommerce is not active.
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'show_woocommerce_not_active_notice_callback' );
-
-		// show admin notices after form submission.
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'show_form_submission_notification' );
 
 		// add custom post status "Addonify Wishlist Page" after page name.
 		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
 
+	}
+
+
+	/**
+	 * Register rest api endpoints for admin settings page.
+	 *
+	 * @since    1.0.7
+	 * @access   private
+	 */
+	private function rest_api() {
+
+		$plugin_rest = new Addonify_Wishlist_Rest_API();
 	}
 
 	/**
@@ -195,55 +199,7 @@ class Addonify_Wishlist {
 
 		$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
-		// add button after add to cart button.
-		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
-		$this->loader->add_action( 'woocommerce_after_add_to_cart_button', $plugin_public, 'show_btn_after_add_to_cart_btn_callback', 20 );
-
-		// add button before add to cart button.
-		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
-		$this->loader->add_action( 'woocommerce_before_add_to_cart_button', $plugin_public, 'show_btn_before_add_to_cart_btn_callback' );
-
-		// add button aside image.
-		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'show_btn_aside_image_callback' );
-
-		// image overlay container .
-		$this->loader->add_action( 'woocommerce_before_shop_loop_item', $plugin_public, 'addonify_overlay_container_start_callback', 10 );
-		$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'addonify_overlay_container_end_callback', 10 );
-
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sidebar_template' );
-
-		$this->loader->add_action( 'init', $plugin_public, 'init_callback' );
-
-		$this->loader->add_action( 'wp', $plugin_public, 'process_wishlist_form_submit' );
-
-		// add to wishlist.
-		$this->loader->add_action( 'wp_ajax_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_add_to_wishlist', $plugin_public, 'add_to_wishlist_callback' );
-
-		// sidebar form submit.
-		$this->loader->add_action( 'wp_ajax_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
-		$this->loader->add_action( 'wp_ajax_nopriv_sidebar_form', $plugin_public, 'process_wishlist_form_submit' );
-
-		// sidebar form submit.
-		$this->loader->add_action( 'wp_ajax_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wishlist_items_count', $plugin_public, 'get_total_items_count_callback' );
-
-		// capture user login.
-		$this->loader->add_action( 'wp_login', $plugin_public, 'after_user_login', 10, 2 );
-
-		// catch user login from myaccount in woocommerce.
-		$this->loader->add_filter( 'woocommerce_login_redirect', $plugin_public, 'myaccount_login' );
-
-		// genereate custom styles.
-		$this->loader->add_action( 'wp_head', $plugin_public, 'generate_custom_styles_callback' );
-
-		// custom template hooks.
-		$this->loader->add_action( 'addonify_wishlist_modal_generate_action_btns', $plugin_public, 'generate_modal_action_btns', 12 );
-
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'actions_init', 20 );
 	}
 
 	/**
@@ -252,6 +208,7 @@ class Addonify_Wishlist {
 	 * @since    1.0.0
 	 */
 	public function run() {
+
 		$this->loader->run();
 	}
 
@@ -263,6 +220,7 @@ class Addonify_Wishlist {
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
+
 		return $this->plugin_name;
 	}
 
@@ -273,6 +231,7 @@ class Addonify_Wishlist {
 	 * @return    Addonify_Wishlist_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
+
 		return $this->loader;
 	}
 
@@ -283,7 +242,8 @@ class Addonify_Wishlist {
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {
+
 		return $this->version;
 	}
-
 }
+

@@ -1,0 +1,252 @@
+
+#___adfy-wishlist-app___ {
+
+    display: block;
+    position: relative;
+    margin: 0 0 0 -20px;
+    padding: 0;
+    font-weight: var(--addonify_system_font_family);
+    font-weight: normal;
+    box-sizing: border-box;
+    @include better_font_rendering();
+
+    * {
+
+        box-sizing: border-box;
+        @include better_font_rendering();
+    }
+
+    .adfy-container {
+
+        margin: 0 auto;
+        width: 100%;
+        max-width: 1000px;
+        min-height: 100vh;
+    }
+
+    .main-content {
+
+        @include grid();
+        grid-template-columns: 180px auto;
+        column-gap: 60px;
+        align-items: stretch;
+        justify-content: stretch;
+        margin: 120px 0 0 0;
+
+        .end {
+
+            padding-left: 60px;
+            border-left: 1px solid var(--addonify_border_color);
+        }
+    }
+}
+
+.adfy-navigation {
+
+    .navigation {
+
+        @include flex();
+        flex-direction: column;
+        gap: 10px;
+        margin: 0;
+        list-style: none;
+
+        li {
+
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+
+            a {
+
+                @include flex();
+                gap: 10px;
+                align-items: center;
+                padding: 12px 15px 10px 15px;
+                font-family: var(--addonify_system_font_family);
+                fill: var(--addonify_base_text_color);
+                color: var(--addonify_base_text_color);
+                font-weight: normal;
+                font-size: 15px;
+                line-height: 1;
+                transition: all 0.5s ease;
+                border-radius: 4px;
+                text-decoration: none;
+                background-color: transparent;
+
+                .icon {
+
+                    svg {
+
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+
+                &:hover {
+
+                    fill: var(--addonify_base_text_color);
+                    color: var(--addonify_base_text_color);
+                    background-color: white;
+                    text-decoration: none;
+                    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.10);
+                }
+
+                &:focus {
+
+                    outline: 0;
+                }
+            }
+
+            .router-link-active {
+
+                fill: var(--addonify_primary_color);
+                color: var(--addonify_primary_color);
+                background-color: white;
+                box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.10);
+            }
+        }
+    }
+}
+
+.adfy-options {
+
+    display: block;
+    position: relative;
+    margin: 0 0 30px 0;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #DDDDDD;
+    background-color: white;
+}
+
+.option-box-title {
+
+    display: block;
+    padding: 0;
+    margin: 0 0 15px 5px;
+    font-family: var(--addonify_system_font_family);
+    font-size: 15px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: #787878;   
+}
+
+.option-box {
+
+    @include grid();
+    grid-template-columns: auto 300px;
+    column-gap: 40px;
+    align-items: center;
+
+    .right {
+
+        @include flex();
+        justify-content: flex-end;
+        padding: 0;
+        border: none;
+    }
+
+    .option-label {
+
+        @include flex();
+        align-items: center;
+        gap: 5px;
+        margin: 0;
+        font-family: var(--addonify_system_font_family);
+        font-size: 15px;
+        line-height: 1.3;
+        font-weight: 500;
+        color: #444444;
+
+        .badge {
+
+            display: inline-flex;
+            align-items: center;
+            font-size: 12px;
+            line-height: 1;
+            font-weight: normal;
+            padding: 4px 7px 3px 7px;
+            border-radius: 20px;
+            color: white;
+            background-color: red;
+        }
+    }
+
+    .option-description {
+
+        display: block;
+        margin: 10px 0 0 0;
+        font-family: Helvetica, 'Helvetica neue', Arial, System ui, sans-serif;
+        font-size: 13px;
+        line-height: 1.3;
+        font-weight: normal;
+        color: #7a7a7a;
+    }
+}
+
+.option-box.fullwidth {
+
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: stretch;
+    column-gap: 0;
+    row-gap: 15px;
+
+    .left {
+
+        display: block;
+        width: 100%;
+
+        .label {
+
+            border-bottom: 1px solid #ededed;
+            padding-bottom: 20px;
+        }
+    }
+
+    .right {
+        
+        display: block;
+        width: 100%;
+        justify-content: flex-start;
+
+        .input-group {
+
+            @include grid();
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 30px;
+            row-gap: 30px;
+
+            .input {
+
+                @include flex();
+                gap: 10px;
+                align-items: center;
+            }
+        }
+    }
+}
+
+.option-box.radio-input-group {
+
+    .adfy-col {
+
+        .input {
+            @include flex();
+            gap: 20px;
+            align-items: center;
+            justify-content: stretch;
+        }
+    }
+}
+
+[class*="page_addonify_wishlist"] #wpbody-content {
+
+    padding-bottom: 30px;
+}
+
+[class*="page_addonify_wishlist"] #wpfooter {
+
+    display: none;
+}

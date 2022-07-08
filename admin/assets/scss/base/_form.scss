@@ -1,0 +1,204 @@
+/* -------------------------------------------------------------------------- 
+	Forms
+  -------------------------------------------------------------------------- */
+
+[class*="page_addonify_wishlist"] {
+
+    input[type=date], 
+    input[type=datetime-local], 
+    input[type=datetime], 
+    input[type=email], 
+    input[type=month], 
+    input[type=number], 
+    input[type=password], 
+    input[type=search], 
+    input[type=tel], 
+    input[type=text], 
+    input[type=time], 
+    input[type=url], 
+    input[type=week] {
+
+        padding: 0;
+        margin: 0;
+        line-height: var(--el-input-inner-height);
+        --el-input-inner-height: calc(var(--el-input-height, 32px) - 2px);
+        min-height: auto;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        background-color: transparent;
+        color: var(--el-input-text-color,var(--el-text-color-regular));
+
+        &:focus {
+
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    input.readonly, 
+    input[readonly], 
+    textarea.readonly, 
+    textarea[readonly] {
+
+        -el-input-inner-height: calc(var(--el-input-height, 40px) - 2px);
+        background-color: transparent;
+    }
+}
+
+/* -------------------------------------------------------------------------- 
+	Button
+  -------------------------------------------------------------------------- */
+
+.adfy-button {
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: var(--addonify_system_font_family);
+    font-weight: var(--addonify_system_font_family);
+    font-size: var(--addonify_button_font_size);
+    font-weight: normal;
+    fill: var(--addonify_button_text_color);
+    color: var(--addonify_button_text_color);
+    line-height: var(--addonify_button_line_height);
+    padding: 15px 20px;
+    border-width: var(--addonify_button_border_width);
+    border-style: var(--addonify_button_border_style);
+    border-color: var(--addonify_button_border_color);
+    background-color: var(--addonify_button_background_color);
+    border-radius: var(--addonify_buttons_border_radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.5s ease;
+
+    .icon {
+
+        margin-right: 5px;
+    }
+
+    &:hover {
+
+        fill: var(--addonify_button_hover_text_color);
+        color: var(--addonify_button_hover_text_color);
+        border-color: var(--addonify_button_hover_border_color);
+        background-color: var(--addonify_button_hover_background_color);
+        text-decoration: none;
+    }
+}
+
+.adfy-button:disabled {
+
+    cursor: not-allowed;
+    color: #ababab;
+    fill: #ababab;
+    background-color: #c5c5c5;
+}
+
+.adfy-button .loading-icon {
+
+	display: none;
+}
+
+.adfy-button .loading-icon svg {
+
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    color: white;
+    animation: spinner 1s linear infinite;
+}
+
+.adfy-button[loading="true"] {
+
+    display: inline-flex;
+    gap: 10px;
+    cursor: not-allowed;
+}
+
+.adfy-button[loading="true"] .loading-icon {
+
+    display: inline-flex;
+}
+
+.adfy-button.fake-button {
+
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    fill: var(--addonify_base_text_color);
+    color: var(--addonify_base_text_color);
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+
+        fill: var(--addonify_secondary_color);
+        color: var(--addonify_secondary_color);
+        border: none;
+        text-decoration: none;
+        background-color: transparent;
+    }
+
+    &:focus {
+
+        text-decoration: none;
+        outline: none;
+        background-color: transparent;
+    }
+}
+
+.adfy-button.fake-button.has-underline {
+
+    position: relative;
+}
+
+.adfy-button.fake-button.has-underline::after,
+.adfy-button.fake-button.has-underline::before  {
+
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: currentColor;
+}
+
+.adfy-button.fake-button.has-underline::before {
+
+    content: "";
+    z-index: 1;
+    background-color: currentColor;
+    transform-origin: right center;
+    transform: scaleX(0);
+    will-change: scale;
+    transition: transform .26s cubic-bezier(.25,.8,.25,1);
+    -webkit-backface-visibility: hidden;
+}
+
+.adfy-button.fake-button.has-underline::after {
+
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    opacity: 0.5;
+    background-color: currentColor;
+}
+
+.adfy-button.fake-button.has-underline:hover {
+
+    fill: var(--addonify_primary_color);
+    color: var(--addonify_primary_color);
+}
+
+.adfy-button.fake-button.has-underline:hover::before {
+
+    transform: scale(1);
+    transform-origin: left center;
+    background-color: var(--addonify_primary_color);
+}

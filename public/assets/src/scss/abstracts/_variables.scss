@@ -4,21 +4,72 @@
 
 :root {
 
-    // Base colors.
-    --adfy_wishlist_text_color: #111111;
-    --adfy_wishlist_link_color: blue;
-    --adfy_wishlist_link_hover_color: #111111;
-
     // Button colors.
-    --adfy_wishlist_button_color: #111111;
-    --adfy_wishlist_button_hover_color: #111111;
-    --adfy_wishlist_button_text_color: #111111;
-    --adfy_wishlist_button_text_hover_color: #111111;
-    --adfy_wishlist_button_border_color: #111111;
-    --adfy_wishlist_button_border_hover_color: #111111;
-    --adfy_wishlist_button_border_radius: 0;
-    --adfy_wishlist_button_border_width: 0;
-    --adfy_wishlist_button_border_style: solid;
 
-    // 
+    --adfy_wishlist_wishlist_btn_text_color: white;
+    --adfy_wishlist_wishlist_btn_icon_color: white;
+    --adfy_wishlist_wishlist_btn_text_color_hover: white;
+    --adfy_wishlist_wishlist_btn_icon_color_hover: white;
+    --adfy_wishlist_wishlist_btn_bg_color: #444444;
+    --adfy_wishlist_wishlist_btn_bg_color_hover: #2274FB;
+
+    // Popup Modal Colors.
+
+    --adfy_wishlist_popup_modal_bg_color: white;
+    --adfy_wishlist_popup_modal_overlay_bg_color: rgba(0, 0, 0, 0.8);
+    --adfy_wishlist_popup_modal_icon_color: #7E7E7E;
+    --adfy_wishlist_popup_modal_text_color: #444444;
+    --adfy_wishlist_popup_modal_btn_text_color: #444444;
+    --adfy_wishlist_popup_modal_btn_text_color_hover: #444444;
+    --adfy_wishlist_popup_modal_btn_bg_color: #444444;
+    --adfy_wishlist_popup_modal_btn_bg_color_hover: #2274FB;
+
+    // Sidebar Colors.
+
+    --adfy_wishlist_sidebar_modal_toggle_btn_label_color: #444444;
+    --adfy_wishlist_sidebar_modal_toggle_btn_label_color_hover: #2274FB;
+    --adfy_wishlist_sidebar_modal_toggle_btn_bg_color: rgba(255, 255, 255, 0);
+    --adfy_wishlist_sidebar_modal_toggle_btn_bg_color_hover: rgba(255, 255, 255, 0);
+    
+    --adfy_wishlist_sidebar_modal_overlay_bg_color: rgba(255, 255, 255, 0.96);
+    --adfy_wishlist_sidebar_modal_bg_color: white;
+
+    --adfy_wishlist_sidebar_modal_title_color: #444444;
+    --adfy_wishlist_sidebar_modal_empty_text_color: #444444;
+
+    --adfy_wishlist_sidebar_modal_close_icon_color: #444444;
+    --adfy_wishlist_sidebar_modal_close_icon_color_hover: #2274FB;
+
+    --adfy_wishlist_sidebar_modal_product_title_color: #444444;
+    --adfy_wishlist_sidebar_modal_product_title_color_hover: #2274FB;
+    --adfy_wishlist_sidebar_modal_product_regular_price_color: #444444;
+    --adfy_wishlist_sidebar_modal_product_sale_price_color: #FF0000;
+
+    --adfy_wishlist_sidebar_modal_product_add_to_cart_label_color: white;
+    --adfy_wishlist_sidebar_modal_product_add_to_cart_label_color_hover: white;
+    --adfy_wishlist_sidebar_modal_product_add_to_cart_bg_color: #444444;
+    --adfy_wishlist_sidebar_modal_product_add_to_cart_bg_color_hover: #2274FB;
+
+    --adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color: #9f9f9f;
+    --adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color_hover: #2274FB;
+
+    --adfy_wishlist_sidebar_modal_view_wishlist_btn_label_color: #444444;
+    --adfy_wishlist_sidebar_modal_view_wishlist_btn_label_color_hover: #2274FB;
+    --adfy_wishlist_sidebar_modal_view_wishlist_btn_bg_color: rgba(255, 255, 255, 0);
+    --adfy_wishlist_sidebar_modal_view_wishlist_btn_bg_color_hover: rgba(255, 255, 255, 0);
+
+    --adfy_wishlist_sidebar_modal_notification_text_color: #38A104;
+    --adfy_wishlist_sidebar_modal_notification_bg_color: #E3FFD5;
+
+    // Border
+    --adfy_wishlist_border_color: #F5F5F5;
+
+    // z-index
+    --adfy_wishlist_popup_modal_zindex: 1000000000000000;
+    --adfy_wishlist_sidebar_overlay_zindex: 10000000000000000;
+    --adfy_wishlist_sidebar_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) + 10 );
+    --adfy_wishlist_sidebar_trigger_button_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) - 1 );
+
+    // Position offset.
+    --adfy_wishlist_sidebar_btn_position_offset: -40;
 }

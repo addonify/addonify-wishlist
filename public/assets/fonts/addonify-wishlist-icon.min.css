@@ -111,6 +111,26 @@
     content: "\e909";
 }
 
+.woocommerce .adfy-wishlist-icon.loader::before {
+
+    content: "\e909";
+    height: auto;
+    width: auto;
+    display: inherit;
+    position: relative;
+    top: inherit;
+    left: inherit;
+    margin-left: inherit;
+    margin-top: inherit;
+    animation: none;
+    background: transparent;
+    background-size: inherit;
+    line-height: 1;
+    text-align: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
 .lock:before {
     content: "\e90a";
 }

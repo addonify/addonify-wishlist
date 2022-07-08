@@ -1,38 +1,54 @@
 {
   "name": "addonify-wishlist",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Addonify WooCommerce Wishlist is a powerful toolkit which adds a wishlist functionality to your e-commerce shop.",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "gulp"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/addonify/addonify-wishlist.git"
-  },
+  "license": "GPLv3",
+  "private": true,
   "author": "Addonify",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/addonify/addonify-wishlist/issues"
+  "scripts": {
+    "dev": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "production": "mix --production",
+    "public": "gulp assets",
+    "zip": "mix --production && gulp zip"
   },
-  "homepage": "https://github.com/addonify/addonify-wishlist#readme",
+  "dependencies": {
+    "element-plus": "^2.2.2",
+    "pinia": "^2.0.14",
+    "postcss-preset-env": "^7.6.0",
+    "vue": "^3.2.36",
+    "vue-router": "^4.0.15"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.0",
+    "@babel/preset-env": "^7.18.0",
     "autoprefixer": "^10.4.2",
-    "cssnano": "^5.1.4",
+    "babel-loader": "^8.2.5",
+    "browser-sync": "^2.27.10",
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "cross-env": "^7.0.3",
+    "cssnano": "^5.1.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-notify": "^4.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.1",
     "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.1.3",
     "gulp-rtlcss": "^1.4.2",
     "gulp-sass": "^5.1.0",
     "gulp-shell": "^0.8.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-wp-pot": "^2.5.0",
     "gulp-zip": "^5.1.0",
-    "sass": "^1.49.9"
+    "laravel-mix": "^6.0.43",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.52.1",
+    "sass-loader": "^13.0.0",
+    "vue-loader": "^16.8.3",
+    "vue-template-compiler": "^2.6.14",
+    "unplugin-element-plus": "^0.4.0"
   }
 }

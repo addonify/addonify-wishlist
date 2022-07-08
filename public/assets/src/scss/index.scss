@@ -1,0 +1,24 @@
+/*
+===========================================================
+
+# Pugin: Addonify WooCommerce Wishlist
+
+# Author: https://addonify.com
+
+# Since: 22 Nov, 2020
+
+# Last updated: 
+
+# Current version: 1.0.0
+
+=====================================
+*/
+
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+@import 'partials/components/buttons';				// buttons
+@import 'partials/layout/wishlist-modal';			// modal
+@import 'partials/layout/wishlist-sidebar';			// sidebar
+@import 'partials/layout/wishlist-page';			// page
+@import 'partials/components/keyframe';				// keyframe

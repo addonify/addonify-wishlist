@@ -1,0 +1,22 @@
+# Used by 10up wordpress deploy action to exclude files during deployment.
+# Reference: https://github.com/10up/action-wordpress-plugin-deploy
+
+/.wordpress-org
+/.git
+/.github
+/node_modules
+/admin/src/
+/admin/assets/scss/           
+/public/assets/src/
+
+.distignore
+.gitignore
+.babelrc
+gulpfile.js
+webpack.config.js
+webpack.mix.js
+package.json
+package-lock.json
+sftp-config.json
+composer.json
+composer.lock

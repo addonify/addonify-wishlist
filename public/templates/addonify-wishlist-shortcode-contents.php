@@ -12,18 +12,13 @@
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
 
-if ( isset( $data['wishlist_name'] ) && $data['wishlist_name'] ) { 
-	?>
-	<h2><?php echo esc_html( $data['wishlist_name'] ); ?></h2>
-	<?php 
-}
-
 if ( function_exists( 'wc_print_notices' ) ) {
 	wc_print_notices();
 }
 ?>
 
 <div id="addonify-wishlist-page-container">
+	<?php do_action( 'addonify_wishlist/before_wishlist_form' ); ?>
 	<?php
 	if ( 
 		isset( $data['wishlist_product_ids'] ) &&
@@ -33,8 +28,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 		?>
 		<form action="" method="POST" id="addonify-wishlist-page-form">
 
-			<input type="hidden" name="nonce" value="<?php echo esc_html( $data['nonce'] ); ?>" >
-			<input type="hidden" name="process_addonify_wishlist_form" value="1" >
+			<?php do_action( 'addonify_wishlist/before_wishlist_form_table' ); ?>
 
 			<table id="addonify-wishlist-table">
 				<thead class="addonify-wishlist-items-heading">
@@ -53,9 +47,32 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 						$product = wc_get_product( $product_id );
 						?>
-						<tr>
+						<tr data-product_row="addonify-wishlist-table-product-row-<?php echo esc_attr( $product_id ); ?>">
 							<td class="remove">
-								<button type="submit" class="adfy-wishlist-btn addonify-wishlist-icon" name="addonify_wishlist_remove" value="<?php echo esc_attr( $product_id ); ?>"><i class="adfy-wishlist-icon trash-2"></i></button>
+								<?php 
+								if ( (int) addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ) == 1 ) {
+									?>
+									<button 
+										class="adfy-wishlist-btn addonify-wishlist-icon addonify-wishlist-ajax-remove-from-wishlist addonify-wishlist-table-button" 
+										name="addonify_wishlist_remove" 
+										value="<?php echo esc_attr( $product_id ); ?>"
+									>
+											<i class="adfy-wishlist-icon trash-2"></i>
+									</button>
+									<?php
+								} else {
+									?>
+									<button 
+										type="submit"
+										class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon"
+										name="addonify-remove-from-wishlist"
+										value="<?php echo esc_attr( $product_id ); ?>"
+									>
+										<i class="adfy-wishlist-icon trash-2"></i>
+									</button>
+									<?php
+								}
+								?>
 							</td>
 							<td class="image">
 								<?php
@@ -70,7 +87,9 @@ if ( function_exists( 'wc_print_notices' ) ) {
 								?>
 							</td>
 							<td class="name">
-								<?php echo $product->get_title(); ?>
+								<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
+									<?php echo $product->get_title(); ?>
+								</a>
 							</td>
 							<td class="price">
 								<?php echo $product->get_price_html(); ?>
@@ -95,17 +114,38 @@ if ( function_exists( 'wc_print_notices' ) ) {
 								<?php
 								if ( in_array( $product->get_type(), array( 'simple', 'external' ) ) ) {
 									if ( $product->is_in_stock() ) {
-										?>
-										<button type="submit" class="button adfy-wishlist-btn" name="addonify_wishlist_add_to_cart" value="<?php echo esc_attr( $product_id ); ?>"><?php echo esc_html( $product->add_to_cart_text() ); ?></button>
-										<?php
+
+										if ( (int) addonify_wishlist_get_option( 'ajaxify_add_to_cart' ) == 1 ) {
+											?>
+											<button 
+												class="button adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-ajax-add-to-cart addonify-wishlist-table-button" 
+												name="addonify_wishlist_add_to_cart" 
+												value="<?php echo esc_attr( $product_id ); ?>">
+													<?php echo esc_html( $product->add_to_cart_text() ); ?>
+											</button>
+											<?php
+										} else {
+											?>
+											<button 
+												type="submit" 
+												class="button adfy-wishlist-btn addonify-wishlist-add-to-cart"
+												name="addonify-add-to-cart-from-wishlist"
+												value="<?php echo esc_attr( $product_id ); ?>"
+											>
+												<?php echo esc_html( $product->add_to_cart_text() ); ?>
+											</button>
+											<?php
+										}
 									}
 								} else {
 									$add_to_cart_button_classes = array(
 										'button',
 										'adfy-wishlist-btn',
+										'addonify-wishlist-table-button',
 										'product_type_' . $product->get_type(),
 										$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
 										$product->supports( 'ajax_add_to_cart' ) && $product->is_purchasable() && $product->is_in_stock() ? 'ajax_add_to_cart' : '',
+										
 									);
 
 									$add_to_cart_button_attributes = array(
@@ -115,7 +155,11 @@ if ( function_exists( 'wc_print_notices' ) ) {
 										'rel'              => 'nofollow',
 									);
 									?>
-									<a href="<?php echo esc_url( $product->add_to_cart_url() ) ?>" class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" <?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>>
+									<a 
+										href="<?php echo esc_url( $product->add_to_cart_url() ) ?>" 
+										class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" 
+										<?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>
+									>
 										<?php echo esc_html( $product->add_to_cart_text() ); ?>
 									</a>
 									<?php
@@ -127,11 +171,13 @@ if ( function_exists( 'wc_print_notices' ) ) {
 					}
 					?>
 				</tbody>
-			</table>		
+			</table>
+			<?php do_action( 'addonify_wishlist/after_wishlist_form_table' ); ?>		
 		</form>
 		<?php 
 	} else {
 		echo esc_html__( 'Your wishlist is empty.', 'addonify-wishlist' );
 	}
 	?>
+	<?php do_action( 'addonify_wishlist/after_wishlist_form' ); ?>
 </div>

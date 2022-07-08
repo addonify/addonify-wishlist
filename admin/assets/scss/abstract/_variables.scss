@@ -1,0 +1,61 @@
+/*================================================================
+[Define variables]
+==================================================================*/
+//
+// Since: 1.0.0
+// usage = color:var(--addonify_primary_color);
+/*==================================================================*/
+
+:root {
+  
+  /* -------------------------------------------------------------------------- 
+	  Colors variables
+  -------------------------------------------------------------------------- */
+
+  // Base colors
+  --addonify_primary_color: #0286e7;
+  --addonify_seconary_color: #00b32a;
+  --addonify_base_text_color: #585858;
+  --addonify_base_link_color: #0366E0; // default link color
+  --addonify_base_link_hover_color: var(--addonify_seconary_color);
+  --addonify_border_color: #d5d5d5;
+
+  // Buttons
+  --addonify_button_text_color: white;
+  --addonify_button_background_color: #0286e7;
+  --addonify_button_hover_text_color: white;
+  --addonify_button_hover_background_color: #00b32a;
+  --addonify_button_border_color: transparent;
+  --addonify_button_hover_border_color: transparent;
+  --addonify_button_border_width: 0;
+  --addonify_button_border_style: solid;
+
+  --addonify_text_button_color: var(--addonify_primary_color);
+  --addonify_text_button_hover_color: var(--addonify_seconary_color);
+  --addonify_text_button_underline_color: var(--addonify_primary_color);
+  --addonify_text_button_hover_underline_color: var(--addonify_seconary_color);
+  --addonify_text_button_underline_height: 3px;
+
+  --addonify_button_is_link_style_text_color: #ef2c2c;
+  --addonify_button_is_link_style_hover_text_color: #1e73be;
+  --addonify_button_is_link_style_underline_color: #ef2c2c;
+  --addonify_button_is_link_style_hover_underline_color: #1e73be;
+
+  /* -------------------------------------------------------------------------- 
+	  Typography variables
+  -------------------------------------------------------------------------- */
+
+  // typography
+  --addonify_system_font_family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, Inter, Roboto, Segoe ui, System ui, sans-serif; // websafe
+  --addonify_monospace_font_family: monospace;
+
+  --addonify_button_font_size: 15px; // 14px: 15px: 0.9375rem [16px: 1rem]
+  --addonify_button_font_weight: normal;
+  --addonify_button_line_height: 1;
+
+  /* -------------------------------------------------------------------------- 
+	  Border radius
+  -------------------------------------------------------------------------- */
+
+  --addonify_buttons_border_radius: 4px;
+}

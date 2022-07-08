@@ -19,8 +19,8 @@ defined( 'ABSPATH' ) || exit;
 
 	<div class="addonify-wishlist-modal-body">
 		<div class="adfy-wishlist-icon-entry">
-			<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three" stye="display: none; " ></i>
-			<i class="adfy-wishlist-icon adfy-status-error flash" stye="display: none; " ></i>
+			<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three"></i>
+			<i class="adfy-wishlist-icon adfy-status-error flash"></i>
 		</div>
 		<div id="addonify-wishlist-modal-response"></div>
 		<div class="addonify-wishlist-modal-btns">

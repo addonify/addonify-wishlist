@@ -17,7 +17,7 @@
  * @since      1.0.0
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/includes
- * @author     Adodnify <info@addonify.com>
+ * @author     Adodnify <contact@addonify.com>
  */
 class Addonify_Wishlist_Activator {
 
@@ -31,7 +31,8 @@ class Addonify_Wishlist_Activator {
 		// create page only once.
 		// do not regenerate even if plugin is deleted by user.
 
-		if ( get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id' ) ) {
+		if ( get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page' ) ) {
+			
 			return;
 		}
 
@@ -49,26 +50,7 @@ class Addonify_Wishlist_Activator {
 		// Insert the post into the database.
 		$page_id = wp_insert_post( $new_page );
 
-		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'page_id', $page_id );
-
-		// add current page to menu item.
-		$theme_locations = get_nav_menu_locations();
-		$menu_obj = get_term( $theme_locations['primary'], 'nav_menu' );
-
-		$term = get_term_by( 'name', $menu_obj->name, 'nav_menu' );
-		$menu_id = $term->term_id;
-
-		wp_update_nav_menu_item(
-			$menu_id,
-			0,
-			array(
-				'menu-item-title' => $page_title,
-				'menu-item-object-id' => $page_id,
-				'menu-item-object' => 'page',
-				'menu-item-status' => 'publish',
-				'menu-item-type' => 'post_type',
-			)
-		);
+		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $page_id );
 	}
 
 }

@@ -13,10 +13,12 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<a id="addonify-wishlist-show-sidebar-btn" class="<?php echo esc_attr( $css_classes ); ?>">
+<button id="addonify-wishlist-show-sidebar-btn" class="adfy-wishlist-clear-button-style <?php echo esc_attr( $css_classes ); ?>">
 	<?php if ( $show_icon ) : ?>
-		<span class="button-icon"><i class="adfy-wishlist-icon <?php echo esc_attr( $icon ); ?>"></i> </span>
+		<span class="button-icon">
+			<i class="adfy-wishlist-icon <?php echo esc_attr( $icon ); ?>"></i>
+		</span>
 	<?php endif; ?>
-
 	<span class="button-label"><?php echo wp_kses_post( $label ); ?></span>
-</a>
+</button>
+
