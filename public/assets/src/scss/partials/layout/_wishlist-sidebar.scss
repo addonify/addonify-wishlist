@@ -49,6 +49,7 @@
                 padding: 0;
                 margin: 0;
                 font-size: 18px;
+                color: var(--adfy_wishlist_sidebar_modal_title_color);
             }
 
             #close-adfy-wishlist-sidebar-button {
@@ -281,6 +282,11 @@
                         background: rgba(255, 255, 255, 0.9);
                     }
                 }
+            }
+
+            #addonify-empty-wishlist-para {
+
+                color: var(--adfy_wishlist_sidebar_modal_empty_text_color);
             }
         }
 
