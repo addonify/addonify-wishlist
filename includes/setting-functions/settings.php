@@ -53,6 +53,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
                 'wishlist_btn_bg_color' => '',
                 'wishlist_btn_bg_color_hover' => '',
                 'sidebar_modal_overlay_bg_color' => '',
+                'popup_modal_overlay_bg_color'  => '',
                 'popup_modal_bg_color' => '',
                 'sidebar_modal_general_border_color' => '',
                 'popup_modal_icon_color' => '',

@@ -1069,6 +1069,7 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_wishlist_btn_bg_color' => addonify_wishlist_get_option('wishlist_btn_bg_color' ),
 			'--adfy_wishlist_wishlist_btn_bg_color_hover' => addonify_wishlist_get_option('wishlist_btn_bg_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_overlay_bg_color' => addonify_wishlist_get_option('sidebar_modal_overlay_bg_color' ),
+			'--adfy_wishlist_popup_modal_overlay_bg_color' => addonify_wishlist_get_option('popup_modal_overlay_bg_color' ),
 			'--adfy_wishlist_popup_modal_bg_color' => addonify_wishlist_get_option('popup_modal_bg_color' ),
 			'--adfy_wishlist_border_color' => addonify_wishlist_get_option('sidebar_modal_general_border_color' ),
 			'--adfy_wishlist_popup_modal_icon_color' => addonify_wishlist_get_option('popup_modal_icon_color' ),

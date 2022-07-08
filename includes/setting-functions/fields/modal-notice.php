@@ -50,6 +50,13 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_styles_settings_fields' 
     function addonify_wishlist_modal_notice_styles_settings_fields() {
 
         return array(
+            'popup_modal_overlay_bg_color' => array(
+                'type'                        => 'color',
+                'label'                       => __( 'Overlay Background Color', 'addonify-wishlist' ),
+                'isAlphaPicker'               => true,
+                'className'                   => '',
+                'value'                       => addonify_wishlist_get_option( 'popup_modal_overlay_bg_color' )
+            ),
             'popup_modal_bg_color' => array(
                 'type'                        => 'color',
                 'label'                       => __( 'Background Color', 'addonify-wishlist' ),
