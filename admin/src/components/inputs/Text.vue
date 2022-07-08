@@ -1,6 +1,8 @@
 <script setup>
 	import { computed } from "vue";
-	let { __, _x, _n, _nx } = wp.i18n;
+	import { ElInput } from "element-plus";
+
+	let { __ } = wp.i18n;
 
 	let props = defineProps({
 		modelValue: String,

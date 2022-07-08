@@ -4,7 +4,7 @@
 	import Color from "../../inputs/Color.vue";
 	import Textarea from "../../inputs/Textarea.vue";
 	import InvalidControl from "../../inputs/InvalidControl.vue";
-	let { __, _x, _n, _nx } = wp.i18n;
+
 	let props = defineProps({
 		section: Object,
 		sectionId: String,

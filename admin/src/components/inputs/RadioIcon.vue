@@ -1,5 +1,7 @@
 <script setup>
 	import { computed } from "vue";
+	import { ElRadioGroup, ElRadio } from "element-plus";
+
 	let props = defineProps({
 		modelValue: String,
 		choices: [Object, Array],

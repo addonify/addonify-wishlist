@@ -1,5 +1,5 @@
 <script setup>
-	let { __, _x, _n, _nx } = wp.i18n;
+	let { __ } = wp.i18n;
 	let versionNumber = ADDONIFY_WISHLIST_LOCOLIZER.version_number;
 	let thisYear = new Date().getFullYear();
 </script>

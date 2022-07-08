@@ -1,8 +1,9 @@
 <script setup>
 	import { computed } from "vue";
+	import { ElCheckbox } from "element-plus";
 	let props = defineProps({
-		modelValue: [Boolean],
-		label: [String],
+		modelValue: Boolean,
+		label: String,
 	});
 	// Ref: https://vuejs.org/guide/components/events.html#usage-with-v-model
 	let emit = defineEmits(["update:modelValue"]);
