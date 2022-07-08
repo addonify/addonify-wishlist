@@ -92,13 +92,13 @@ class Addonify_Wishlist_Public {
 
 		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'after_add_to_cart' ) {
 			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 15 );
-			add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'render_add_to_wishlist_button' ) );
 		}
 
 		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'before_add_to_cart' ) {
 			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 5 );
-			add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'render_add_to_wishlist_button' ) );
 		}
+
+		add_action( 'woocommerce_after_add_to_cart_form', array( $this, 'render_add_to_wishlist_button_single' ) );
 		
 		add_action( 'wp_footer', array( $this, 'wishlist_modal_wrapper' ) );
 		add_action( 'wp_footer', array( $this, 'wishlist_sidebar_template' ) );
@@ -117,8 +117,6 @@ class Addonify_Wishlist_Public {
 		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
 
 		add_action( 'addonify_wishlist_modal_generate_action_btns', array( $this, 'generate_modal_action_btns' ), 12 );
-
-		// add_action( 'wp_head', array( $this, 'generate_custom_styles_callback' ) );
 
 		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
 
@@ -441,6 +439,20 @@ class Addonify_Wishlist_Public {
 			false,
 			apply_filters( 'addonify_wishlist/add_to_wishlist_button_args', $add_to_wishlist_button_args )
 		);
+	}
+
+	/**
+	 * Render add to wishlist button in product single.
+	 * 
+	 * @since 1.0.0
+	 */
+	public function render_add_to_wishlist_button_single() {
+
+		if ( is_product() ) {
+			echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
+			$this->render_add_to_wishlist_button();
+			echo '</div>';
+		}
 	}
 
 
@@ -783,47 +795,6 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Generate custom style tag and print it in header of the website
-	 *
-	 * @since    1.0.0
-	 */
-	public function generate_custom_styles_callback() {
-
-		// do not continue if plugin styles are disabled by user.
-		if ( (int) addonify_wishlist_get_option( 'load_styles_from_plugin' ) == 1 ) {
-			return;
-		}
-
-		$custom_css = addonify_wishlist_get_option( 'custom_css' );
-
-		$style_args = array(
-			'.addonify-add-to-wishlist-btn button' => array(
-				'color' => 'wishlist_btn_text_color',
-			),
-			'.addonify-add-to-wishlist-btn button i' => array(
-				'color' => 'wishlist_btn_icon_color',
-			),
-			'.addonify-add-to-wishlist-btn button:hover' => array(
-				'color' => 'wishlist_btn_text_color_hover',
-			),
-			'.addonify-add-to-wishlist-btn button:hover i' => array(
-				'color' => 'wishlist_btn_icon_color_hover',
-			),
-
-		);
-
-		$custom_styles_output = $this->generate_styles_markups( $style_args );
-
-		// avoid empty style tags.
-		if ( $custom_styles_output || $custom_css ) {
-			echo "<style id=\"addonify-wishlist-styles\"  media=\"screen\"> \n" . esc_html( $custom_styles_output . $custom_css ) . "\n </style>\n";
-		}
-
-	}
-
-
-
-	/**
 	 * Generate style markups
 	 *
 	 * @since    1.0.0
@@ -952,7 +923,8 @@ class Addonify_Wishlist_Public {
 				'title' => addonify_wishlist_get_option( 'sidebar_title' ),
 				'loop' => $this->get_sticky_sidebar_loop(),
 				'wishlist_url' => ( addonify_wishlist_get_option( 'wishlist_page' ) ) ? get_permalink( addonify_wishlist_get_option( 'wishlist_page' ) ) : '',
-				'alignment' => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' )
+				'alignment' => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' ),
+				'view_wishlist_page_button_label' => addonify_wishlist_get_option( 'view_wishlist_page_button_label' )
 			)
 		);
 	}
@@ -1100,6 +1072,7 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_popup_modal_bg_color' => addonify_wishlist_get_option('popup_modal_bg_color' ),
 			'--adfy_wishlist_border_color' => addonify_wishlist_get_option('sidebar_modal_general_border_color' ),
 			'--adfy_wishlist_popup_modal_icon_color' => addonify_wishlist_get_option('popup_modal_icon_color' ),
+			'--adfy_wishlist_popup_modal_text_color' => addonify_wishlist_get_option('popup_modal_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color' => addonify_wishlist_get_option('popup_modal_btn_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color_hover' => addonify_wishlist_get_option('popup_modal_btn_text_color_hover' ),
 			'--adfy_wishlist_popup_modal_btn_bg_color' => addonify_wishlist_get_option('popup_modal_btn_bg_color' ),

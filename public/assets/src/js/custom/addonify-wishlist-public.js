@@ -99,7 +99,7 @@
                         
                         // Triggering custom event when product is added to wishlist. 
                         // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
-                        $(document).trigger('addonify_added_to_wishlist', [{ productID: $(this_sel).data('product_id') }]);
+                        $(document).trigger('addonify_added_to_wishlist', [{ productID: thisButton.data('product_id') }]);
 
                         if (addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart == '1' && parentProductRow) {
 
@@ -290,7 +290,7 @@
         // Display intial state wishlist button label and icon.
         function addonifyInitialWishlistButton(productId) {
 
-            var wishlistButton = $('button[data-product_id="' + productId + '"].addonify-add-to-wishlist-btn');
+            var wishlistButton = $('[data-product_id="' + productId + '"].addonify-add-to-wishlist-btn');
 
             // Update button label and icon of custom add to wishlist button.
             if (wishlistButton && !wishlistButton.hasClass('addonify-custom-wishlist-btn')) {
@@ -299,6 +299,10 @@
                 wishlistButton.find('span.addonify-wishlist-btn-label').text(addonifyWishlistJSObject.initialAddToWishlistButtonLabel);
                 // Update button icon.
                 wishlistButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-style-one').addClass('heart-o-style-one');
+            }
+
+            if ( $('.woocommerce-notices-wrapper') ) {
+                $('.woocommerce-notices-wrapper').remove();
             }
         }
 

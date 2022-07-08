@@ -25,6 +25,8 @@ if ( $require_login == true ) {
 		<a 
 			href="<?php echo esc_url( $login_url ); ?>" 
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>"
+			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
+			data-product_name="<?php echo esc_attr( $product_name ); ?>"
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</a>
@@ -57,6 +59,8 @@ if ( $require_login == true ) {
 		<a 
 			href="?addonify-add-to-wishlist=<?php echo esc_attr( $product_id ); ?>"
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
+			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
+			data-product_name="<?php echo esc_attr( $product_name ); ?>"
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</a>
