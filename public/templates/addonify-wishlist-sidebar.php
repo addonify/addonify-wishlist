@@ -40,15 +40,22 @@ defined( 'ABSPATH' ) || exit;
 			<?php endif; ?>
 		</form>
 	</div>
-	<div class="addonify-wishlist-ssc-footer">
-		<a href="<?php echo esc_url( $wishlist_url ); ?>" class="addonify-wishlist-goto-wishlist-btn">
-			<?php esc_html_e( 'View all wishlist', 'addonify-wishlist' ); ?>
-			<span class="icon">
-				<svg viewBox="0 0 64 64" xml:space="preserve">
-					<path d="M61.5,28.5l-6.9-8.2c-0.6-0.7-1.7-0.8-2.5-0.2c-0.7,0.6-0.8,1.7-0.2,2.5l6.5,7.7H3c-1,0-1.8,0.8-1.8,1.8c0,1,0.8,1.8,1.8,1.8h55.4l-6.5,7.7c-0.6,0.7-0.5,1.8,0.2,2.5c0.3,0.3,0.7,0.4,1.1,0.4c0.5,0,1-0.2,1.3-0.6l6.9-8.2C63.2,33.5,63.2,30.5,61.5,28.5z"/>
-				</svg>
-			</span>
-		</a>
-	</div>
+	<?php 
+
+	if ( $view_wishlist_page_button_label ) {
+		?>
+		<div class="addonify-wishlist-ssc-footer">
+			<a href="<?php echo esc_url( $wishlist_url ); ?>" class="addonify-wishlist-goto-wishlist-btn">
+				<?php echo esc_html( $view_wishlist_page_button_label ); ?>
+				<span class="icon">
+					<svg viewBox="0 0 64 64" xml:space="preserve">
+						<path d="M61.5,28.5l-6.9-8.2c-0.6-0.7-1.7-0.8-2.5-0.2c-0.7,0.6-0.8,1.7-0.2,2.5l6.5,7.7H3c-1,0-1.8,0.8-1.8,1.8c0,1,0.8,1.8,1.8,1.8h55.4l-6.5,7.7c-0.6,0.7-0.5,1.8,0.2,2.5c0.3,0.3,0.7,0.4,1.1,0.4c0.5,0,1-0.2,1.3-0.6l6.9-8.2C63.2,33.5,63.2,30.5,61.5,28.5z"/>
+					</svg>
+				</span>
+			</a>
+		</div>
+		<?php 
+	}
+	?>
 	<?php do_action( 'addonify_wishlist_before_sidebar_closing_tag' ); ?>
 </div>

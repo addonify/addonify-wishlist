@@ -64,6 +64,13 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_styles_settings_fields' 
                 'className'                   => '',
                 'value'                       => addonify_wishlist_get_option( 'popup_modal_icon_color' )
             ),
+            'popup_modal_text_color' => array(
+                'type'                        => 'color',
+                'label'                       => __( 'Text Color', 'addonify-wishlist' ),
+                'isAlphaPicker'               => true,
+                'className'                   => '',
+                'value'                       => addonify_wishlist_get_option( 'popup_modal_text_color' )
+            ),
             'popup_modal_btn_text_color' => array(
                 'type'                        => 'color',
                 'label'                       => __( 'Buttons Label Color', 'addonify-wishlist' ),

@@ -44,6 +44,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
                 'sidebar_show_icon' => true,
                 'sidebar_btn_icon' => 'heart-style-one',
                 'ajaxify_remove_from_wishlist_button' => false,
+                'view_wishlist_page_button_label' => __( 'View All Wishlist Items', 'addonify-wishlist' ),
                 'load_styles_from_plugin' => false,
                 'wishlist_btn_text_color' => '#333333',
                 'wishlist_btn_icon_color' => '#333333',
@@ -55,6 +56,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
                 'popup_modal_bg_color' => '',
                 'sidebar_modal_general_border_color' => '',
                 'popup_modal_icon_color' => '',
+                'popup_modal_text_color' => '',
                 'popup_modal_btn_text_color' => '',
                 'popup_modal_btn_text_color_hover' => '',
                 'popup_modal_btn_bg_color' => '',
@@ -245,6 +247,13 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
                             'type' => 'options-box',
                             'dependent'  => array('load_styles_from_plugin'),
                             'fields' => addonify_wishlist_add_to_wishlist_button_styles_settings_fields()
+                        ),
+                        'popup_modal' => array(
+                            'title' => __( 'Popup Modal Colors', 'addonify-wishlist' ),
+                            'description' => __( 'Set popup modal icon, message, and button colors.', 'addonify-wishlist' ),
+                            'type' => 'options-box',
+                            'dependent'  => array('load_styles_from_plugin'),
+                            'fields' => addonify_wishlist_modal_notice_styles_settings_fields()
                         ),
                         'sidebar_wishlist_modal_toggle_button' => array(
                             'title' => __( 'Sidebar Wishlist Modal Toggle Button Colors', 'addonify-wishlist' ),
