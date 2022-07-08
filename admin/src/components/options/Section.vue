@@ -1,4 +1,5 @@
 <script setup>
+	import { ElTag } from "element-plus";
 	import { useOptionsStore } from "../../stores/options";
 	import Switch from "../inputs/Switch.vue"; // Regular switch.
 	import Text from "../inputs/Text.vue"; // Input type text.
