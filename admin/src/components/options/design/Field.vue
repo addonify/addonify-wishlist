@@ -1,4 +1,5 @@
 <script setup>
+	import { ElTag } from "element-plus";
 	import Text from "../../inputs/Text.vue";
 	import Switch from "../../inputs/Switch.vue";
 	import Color from "../../inputs/Color.vue";
