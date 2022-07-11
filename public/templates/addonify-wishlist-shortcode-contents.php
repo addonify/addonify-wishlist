@@ -80,7 +80,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 								if ( $product->get_image() ) {
 									?>
 									<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
-										<?php echo $product->get_image(array(72, 72)); ?>
+										<?php echo wp_kses_post( $product->get_image( array(72, 72) ) ); ?>
 									</a>
 									<?php
 								}
@@ -88,11 +88,11 @@ if ( function_exists( 'wc_print_notices' ) ) {
 							</td>
 							<td class="name">
 								<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
-									<?php echo $product->get_title(); ?>
+									<?php echo wp_kses_post( $product->get_title() ); ?>
 								</a>
 							</td>
 							<td class="price">
-								<?php echo $product->get_price_html(); ?>
+								<?php echo wp_kses_post( $product->get_price_html() ); ?>
 							</td>
 							<td class="stock">
 								<?php 
