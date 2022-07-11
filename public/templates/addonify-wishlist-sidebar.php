@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 	<div class="addonify-wishlist-ssc-body">
 		<div class="addonify-wishlist-scs-header">
 			<h3 class="adfy-wishlist-sidebar-title">
-				<?php echo esc_attr( $title ); ?>
+				<?php echo esc_html( $title ); ?>
 			</h3>
 			<button id="close-adfy-wishlist-sidebar-button" class="button">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -35,7 +35,7 @@ defined( 'ABSPATH' ) || exit;
 			</div>
 			<?php if ( $total_items < 1 ) : ?>
 			<p id="addonify-empty-wishlist-para" class="empty-wishlist">
-				<?php echo esc_html_e( 'Your wishlist is empty', 'addonify-wishlist' ); ?>
+				<?php echo esc_html__( 'Your wishlist is empty', 'addonify-wishlist' ); ?>
 			</p>
 			<?php endif; ?>
 			<?php do_action( 'addonify_wishlist/after_wishlist_form_table' ); ?>

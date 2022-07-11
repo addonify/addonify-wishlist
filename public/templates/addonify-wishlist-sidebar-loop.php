@@ -30,7 +30,7 @@ if (
 						if ( $product->get_image() ) {
 							?>
 							<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
-								<?php echo $product->get_image(array(72, 72)); ?>
+								<?php echo wp_kses_post( $product->get_image( array(72, 72) ) ); ?>
 							</a>
 							<?php
 						}
@@ -43,7 +43,7 @@ if (
 							<?php echo $product->get_title(); ?>
 						</a>
 					</div>
-					<div class="adfy-wishlist-woo-price"><?php echo $product->get_price_html(); ?></div>
+					<div class="adfy-wishlist-woo-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
 				</div>
 			</div>
 

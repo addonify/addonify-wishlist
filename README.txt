@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, woocommerce, ecommerce, e-commerce, product wishlist
 Requires at least: 5.6
 Tested up to: 6.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,11 @@ Yes, Addonify Wishlist should work with all WordPress themes. But it might not w
 6. Addonify wishlist page
 
 == Changelog ==
+
+= 1.0.1 - 11 July 2022 =
+
+- Updated: Escaped unescaped PHP variables.
+
 
 = 1.0.0 - 08 July 2022 =
 

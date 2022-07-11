@@ -112,7 +112,8 @@ class Addonify_Wishlist_Public {
 		add_action( 'wp_ajax_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
 		add_action( 'wp_ajax_nopriv_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
 
-		add_action( 'wp_login', array( $this, 'after_user_login' ), 10, 2 );
+		// For future update.
+		//add_action( 'wp_login', array( $this, 'after_user_login' ), 10, 2 );
 		
 		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
 
@@ -177,7 +178,7 @@ class Addonify_Wishlist_Public {
 			$this->plugin_name,
 			'addonifyWishlistJSObject',
 			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'nonce' => wp_create_nonce( $this->plugin_name ),
 				'addToWishlistAction' => 'addonify_add_to_wishlist',
 				'removeFromWishlistAfterAddedToCart' => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
@@ -690,13 +691,16 @@ class Addonify_Wishlist_Public {
 
 		do_action( 'addonify_wishlist_before_adding_to_wishlist' );
 
-		if ( is_user_logged_in() ) {
+		// For future update.
+		/* if ( is_user_logged_in() ) {
 
 			$return_boolean = ( $this->set_cookie( $data ) && update_user_meta( get_current_user_id(), '_' . $this->plugin_name, serialize( $data ) ) ) ? true : false;
 		} else {
 			
 			$return_boolean = $this->set_cookie( $data );
-		}
+		} */		
+		
+		$return_boolean = $this->set_cookie( $data );
 
 		$this->wishlist_items_count = count( $this->wishlist_items );
 
@@ -746,6 +750,7 @@ class Addonify_Wishlist_Public {
 
 		$cookie_wishlist = $this->get_wishlist_from_cookies();
 
+		/* For future update
 		if ( is_user_logged_in() ) {
 
 			$user_meta_wishlist = $this->get_wishlist_from_database();
@@ -753,7 +758,7 @@ class Addonify_Wishlist_Public {
 
 				$this->save_wishlist_items( $cookie_wishlist );
 			} 
-		}
+		} */
 
 		return $cookie_wishlist;
 	}
@@ -774,10 +779,10 @@ class Addonify_Wishlist_Public {
 	/**
 	 * Return wishlist product ids in array from database
 	 *
-	 * @since    1.0.0
+	 * @since    for future update.
 	 * @return 	array $wishlist_items.
 	 */
-	private function get_wishlist_from_database() {
+	/* private function get_wishlist_from_database() {
 
 		$current_user_id = get_current_user_id();
 
@@ -788,48 +793,7 @@ class Addonify_Wishlist_Public {
 		}
 
 		return array();
-	}
-
-
-
-	/**
-	 * Generate style markups
-	 *
-	 * @since    1.0.0
-	 * @param    array $style_args    Style args to be processed.
-	 */
-	private function generate_styles_markups( $style_args ) {
-
-		$custom_styles_output = '';
-
-		foreach ( $style_args as $css_sel => $property_value ) {
-
-			$properties = '';
-
-			foreach ( $property_value as $property => $db_field ) {
-
-				$css_unit = '';
-
-				if ( is_array( $db_field ) ) {
-					$db_value = $this->get_option( $db_field[0] );
-					$css_unit = $db_field[1];
-				} else {
-					$db_value = $this->get_option( $db_field );
-				}
-
-				if ( $db_value ) {
-					$properties .= $property . ': ' . $db_value . $css_unit . '; ';
-				}
-			}
-
-			if ( $properties ) {
-				$custom_styles_output .= $css_sel . '{' . $properties . '}';
-			}
-		}
-
-		return $custom_styles_output;
-	}
-
+	} */
 
 
 	/**
@@ -953,7 +917,7 @@ class Addonify_Wishlist_Public {
 	 * @param    string $user_login User Login.
 	 * @param    object $user User object.
 	 */
-	public function after_user_login( $user_login, $user ) {
+	/* public function after_user_login( $user_login, $user ) {
 
 		$wishlist_cookies = $this->get_wishlist_from_cookies();
 
@@ -965,7 +929,7 @@ class Addonify_Wishlist_Public {
 
 			update_user_meta( $user->ID, '_' . $this->plugin_name, $wishlist_data );
 		}
-	}
+	} */
 
 
 

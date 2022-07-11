@@ -19,6 +19,6 @@ defined( 'ABSPATH' ) || exit;
 			<i class="adfy-wishlist-icon <?php echo esc_attr( $icon ); ?>"></i>
 		</span>
 	<?php endif; ?>
-	<span class="button-label"><?php echo wp_kses_post( $label ); ?></span>
+	<span class="button-label"><?php echo esc_html( $label ); ?></span>
 </button>
 
