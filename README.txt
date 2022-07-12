@@ -1,14 +1,14 @@
-=== Addonify Wishlist ===
+=== Addonify WooCommerce Wishlist ===
 
 Contributors: addonify
-Tags: wishlist, woocommerce wishlist, woocommerce, ecommerce, e-commerce, product wishlist
+Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.6
 Tested up to: 6.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Addonify Wishlist is a light-weight yet powerful tool that adds a wishlist functionality to your e-commerce shop.
+Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wishlist functionality to your e-commerce shop.
 
 == Description ==
 
@@ -107,14 +107,18 @@ Yes, Addonify Wishlist should work with all WordPress themes. But it might not w
 
 == Screenshots ==
 
-1. Addonify menu in dashboard
-2. Addonify wishlist setting page in WordPress admin dashboard
-3. Addonify wishlist button in the product section
-4. Addonify wishlist modal window
-5. Addonify wishlist sidebar canvas panel
-6. Addonify wishlist page
+1. Addonify wishlist setting page on admin dashboard.
+2. Addonify wishlist design setting page on admin dashboard.
+3. Added to wishlist message modal box.
+4. Addonify wishlist sidebar drawer.
+5. Add to wishlist button in product single page.
+6. Addonify wishlist page using shortcode.
 
 == Changelog ==
+
+= 1.0.2 - 12 July 2022 =
+
+- New: Added graphics for wordpress.org pugin landing page.
 
 = 1.0.1 - 11 July 2022 =
 
