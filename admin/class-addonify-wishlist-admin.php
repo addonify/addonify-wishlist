@@ -144,27 +144,43 @@ class Addonify_Wishlist_Admin {
 			return;
 		}
 
-		global $menu;
-		$parent_menu_slug = null;
+		global $admin_page_hooks;
 
-		foreach ( $menu as $item ) {
-			if ( 'addonify' === strtolower( $item[0] ) ) {
-
-				$parent_menu_slug = $item[2];
-				break;
-			}
-		}
+		$parent_menu_slug = array_search( 'addonify', $admin_page_hooks, true );
 
 		if ( ! $parent_menu_slug ) {
-			add_menu_page( 'Addonify Settings', 'Addonify', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 'dashicons-superhero', 70 );
-			add_submenu_page( $this->settings_page_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 1 );
+
+			add_menu_page( 
+				'Addonify Settings', 
+				'Addonify', 
+				'manage_options', 
+				$this->settings_page_slug, 
+				array( $this, 'get_settings_screen_contents' ), 
+				'dashicons-superhero', 
+				70 
+			);
+
+			add_submenu_page( 
+				$this->settings_page_slug, 
+				'Wishlist Settings', 
+				'Wishlist', 
+				'manage_options', 
+				$this->settings_page_slug, 
+				array( $this, 'get_settings_screen_contents' ), 
+				1 
+			);
 
 		} else {
-
-			// sub menu.
-			// redirects to main plugin link.
-			add_submenu_page( $parent_menu_slug, 'Addonify Wishlist Settings', 'Wishlist', 'manage_options', $this->settings_page_slug, array( $this, 'get_settings_screen_contents' ), 1 );
-
+			
+			add_submenu_page( 
+				$parent_menu_slug, 
+				'Wishlist Settings', 
+				'Wishlist', 
+				'manage_options', 
+				$this->settings_page_slug, 
+				array( $this, 'get_settings_screen_contents' ), 
+				1 
+			);
 		}
 	}
 
