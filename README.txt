@@ -122,6 +122,11 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 1.0.3 - 12 July 2022 =
+
+- Fixed: Author name typo.
+
+
 = 1.0.2 - 12 July 2022 =
 
 - New: Added graphics for wordpress.org pugin landing page.
