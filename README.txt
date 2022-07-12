@@ -12,7 +12,9 @@ Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wi
 
 == Description ==
 
-Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functionality to your e-commerce shop. Addonify Wishlist is packed with various functionalities that will help the shop owner to customize the wishlist behaviour. The primary goal of the Addonify Wishlist plugin is to allow website visitors to add products to their shopping wishlist so they can focus on buying the product rather than wasting their time finding it whenever they visit the store. Whereas, the secondary goal of the Addonify team is to keep the plugin light-weight so that the website shouldn't compromise its performance.
+Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functionality to your e-commerce shop. Addonify Wishlist is packed with various functionalities that will help the shop owner to customize the wishlist behaviour. 
+
+The primary goal of the Addonify Wishlist plugin is to allow website visitors to add products to their shopping wishlist so they can focus on buying the product rather than wasting their time finding it whenever they visit the store. Whereas, the secondary goal of the Addonify team is to keep the plugin light-weight so that the website shouldn't compromise its performance.
 
 > *Researches have shown that an online e-commerce store having products wishlist functionality is likely to sell more than the store that doesn't have wishlist functionality.* 
 
@@ -27,7 +29,7 @@ Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functio
 - Improves customers shopping experience.
 
 
-#### ⏳ FEATURES
+#### ⏳ CORE FEATURES
 
 - Light-weight & powerful.
 - Adds "Add to Wishlist" button to WooCommerce product catalog and product single.
@@ -47,11 +49,12 @@ Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functio
 - Add to wishlist and remove from wishlist functionality with/without ajax call.
 - Add to cart functionality with/without ajax call.
 - Color option for "Add to Wishlist" button.
+- Shortcode that can be used to display the wishlist in any page.
 - Support for custom CSS.
 - Well documented.
 - Users & developers friendly.
 
-**DESIGN FEATURES:**
+#### 🎨 DESIGN FEATURES
 
 - Color options for "Add to Wishlist" button.
 - Color options for popup modal notification.
@@ -97,6 +100,9 @@ No, this plugin will not work without WooCommerce.
 
 Yes, Addonify Wishlist should work with all WordPress themes. But it might not work on some themes if the theme authors have overridden the default WooCommerce template files. In this case please ask your theme author to make their themes compatible with our plugin by following our [*developer documentation guide.*](https://docs.addonify.com/kb/woocommerce-wishlist/) 
 
+= How can I display wishlist table in any page? =
+
+You can use this `[addonify_wishlist]` shortcode to display the wishlist table in any page.
 
 == Installation ==
 
@@ -115,6 +121,11 @@ Yes, Addonify Wishlist should work with all WordPress themes. But it might not w
 6. Addonify wishlist page using shortcode.
 
 == Changelog ==
+
+= 1.0.3 - 12 July 2022 =
+
+- Fixed: Author name typo.
+
 
 = 1.0.2 - 12 July 2022 =
 
