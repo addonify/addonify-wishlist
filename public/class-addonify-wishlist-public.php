@@ -698,9 +698,14 @@ class Addonify_Wishlist_Public {
 		} else {
 			
 			$return_boolean = $this->set_cookie( $data );
-		} */		
+		} */	
 		
-		$return_boolean = $this->set_cookie( $data );
+		$set_wishlist_cookie_data = array(
+			'last_updated' => time(),
+			'wishlist_items' => $data
+		);
+		
+		$return_boolean = $this->set_cookie( $set_wishlist_cookie_data );
 
 		$this->wishlist_items_count = count( $this->wishlist_items );
 
@@ -718,16 +723,17 @@ class Addonify_Wishlist_Public {
 	 * @param    array $data serialized data.
 	 * @return 	 boolean true if cookie is set, false otherwise.
 	 */
-	private function set_cookie( $data ) {
+	private function set_cookie( $wishlist_cookie_data ) {
 
 		if ( 
-			is_array( $data ) &&
-			count( $data ) > 0
+			is_array( $wishlist_cookie_data ) &&
+			isset( $wishlist_cookie_data['wishlist_items'] ) &&
+			count( $wishlist_cookie_data['wishlist_items'] ) > 0
 		) {
 			// Set browser cookie if there are products in the wishlist.
 			$cookies_lifetime = (int) addonify_wishlist_get_option( 'cookies_lifetime' ) * DAY_IN_SECONDS;
 
-			return setcookie( $this->plugin_name, serialize( $data ), time() + $cookies_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+			return setcookie( $this->plugin_name, json_encode( $wishlist_cookie_data ), time() + $cookies_lifetime, COOKIEPATH, COOKIE_DOMAIN );
 		} else {
 
 			// Remove browser cookie if are no products in the wishlist.
@@ -748,7 +754,9 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_wishlist() {
 
-		$cookie_wishlist = $this->get_wishlist_from_cookies();
+		$wishlist_cookie = $this->get_wishlist_from_cookies();
+
+		$wishlist_items = isset( $wishlist_cookie['wishlist_items'] ) ? $wishlist_cookie['wishlist_items'] : array();
 
 		/* For future update
 		if ( is_user_logged_in() ) {
@@ -760,7 +768,7 @@ class Addonify_Wishlist_Public {
 			} 
 		} */
 
-		return $cookie_wishlist;
+		return $wishlist_items;
 	}
 
 
@@ -772,7 +780,7 @@ class Addonify_Wishlist_Public {
 	 */
 	private function get_wishlist_from_cookies() {
 
-		return isset( $_COOKIE[ $this->plugin_name ] ) ? unserialize( sanitize_text_field( wp_unslash( $_COOKIE[ $this->plugin_name ] ) ) ) : array();
+		return isset( $_COOKIE[ $this->plugin_name ] ) ? json_decode( sanitize_text_field( wp_unslash( $_COOKIE[ $this->plugin_name ] ) ), true ) : array();
 	}
 
 

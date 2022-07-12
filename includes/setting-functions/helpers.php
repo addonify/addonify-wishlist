@@ -9,16 +9,19 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 
 	function addonify_wishlist_get_wishlist_items() {
 
+		/*
+		// For future update.
 		$wishlist_items = null;
 
 		if ( is_user_logged_in() ) {
 			$current_user_id = get_current_user_id();
 			$wishlist_items = get_user_meta( $current_user_id, "_addonify-wishlist", true );
 		} else {
-			$wishlist_items = ( isset( $_COOKIE['addonify-wishlist'] ) ) ? $_COOKIE['addonify-wishlist'] : array();
-		}
+		} */
 
-		return ( $wishlist_items ) ? unserialize( $wishlist_items ) : array(); 
+		$wishlist_cookie = ( isset( $_COOKIE['addonify-wishlist'] ) ) ? json_decode( $_COOKIE['addonify-wishlist'], true ) : array();
+		
+		return ( isset( $wishlist_cookie['wishlist_items'] ) ) ? $wishlist_cookie['wishlist_items'] : array(); 
 	}
 }
 
@@ -35,11 +38,7 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items_count' ) ) {
 
 		$wishlist_items = addonify_wishlist_get_wishlist_items();
 
-		if ( is_array( $wishlist_items ) ) {
-			return count( $wishlist_items );
-		} else {
-			return false;
-		}
+		return ( is_array( $wishlist_items ) ) ? count( $wishlist_items ) : false;
 	}
 }
 
@@ -114,7 +113,12 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_url' ) ) {
 }
 
 
-
+/**
+ * Get the list of pages.
+ * 
+ * @since 1.0.0
+ * @return array $page_list
+ */
 if ( ! function_exists( 'addonify_wishlist_get_pages' ) ) {
 
 	function addonify_wishlist_get_pages() {
@@ -137,7 +141,12 @@ if ( ! function_exists( 'addonify_wishlist_get_pages' ) ) {
 
 
 
-
+/**
+ * Get the icons for the sidebar wishlist toggle button.
+ * 
+ * @since 1.0.0
+ * @return array Array of icons.
+ */
 if ( ! function_exists( 'addonify_wishlist_get_sidebar_icons' ) ) {
 
 	function addonify_wishlist_get_sidebar_icons() {
