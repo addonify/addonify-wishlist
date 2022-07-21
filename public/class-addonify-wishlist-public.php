@@ -978,7 +978,7 @@ class Addonify_Wishlist_Public {
 
 			echo apply_filters(
 				'addonify_wishlist_modal_add_to_wishlist_btn',
-				'<a class="adfy-wishlist-btn addonify-view-wishlist-btn" href="' . esc_url( $wishlist_page_url ) . '">. ' $view_wishlist_button_label '. </a>'
+				'<a class="adfy-wishlist-btn addonify-view-wishlist-btn href="' . esc_url( $wishlist_page_url ) . '">' . $view_wishlist_button_label . '</a>'
 			);
 		}
 
@@ -1000,7 +1000,7 @@ class Addonify_Wishlist_Public {
 			echo wp_kses_post(
 				apply_filters(
 					'addonify_wishlist_modal_login_btn',
-					'<a href="' . esc_url( $redirect_url ) . '"><button type="button" class="adfy-wishlist-btn addonify-view-wishlist-btn">' . __( 'Login', 'addonify-wishlist' ) . '</button></a>'
+					'<a class="adfy-wishlist-btn addonify-goto-login-btn" href="' . esc_url( $redirect_url ) . '">' . __( 'Login', 'addonify-wishlist' ) . '</a>'
 				)
 			);
 		}
