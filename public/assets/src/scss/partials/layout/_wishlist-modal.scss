@@ -75,12 +75,13 @@
             grid-template-columns: repeat(1, 1fr);
             row-gap: 20px;
 
-            .adfy-wishlist-btn {
+            .adfy-wishlist-btn,
+            .adfy-wishlist-btn-link {
 
                 @include flex();
                 align-items: center;
                 justify-content: center;
-                font-size: 16px;
+                font-size: 15px;
                 line-height: 1;
                 font-weight: normal;
                 width: 100%;
@@ -90,11 +91,28 @@
                 border-radius: 3px;
                 color: var(--adfy_wishlist_popup_modal_btn_text_color);
                 background-color: var(--adfy_wishlist_popup_modal_btn_bg_color);
+                @include transation_delay();
 
                 &:hover {
 
                     color: var(--adfy_wishlist_popup_modal_btn_text_color_hover);
                     background-color: var(--adfy_wishlist_popup_modal_btn_bg_color_hover);
+                }
+            }
+
+            .adfy-wishlist-btn-link {
+
+                text-decoration: none;
+
+                &:hover {
+
+                    text-decoration: none;
+                }
+
+                &:focus {
+
+                    outline: none;
+                    text-decoration: none;
                 }
             }
         }
