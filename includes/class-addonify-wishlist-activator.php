@@ -35,12 +35,10 @@ class Addonify_Wishlist_Activator {
 			
 			return;
 		}
-
-		$page_title = __( 'Wishlist', 'addonify-wishlist' );
-
+		
 		// Create page object.
 		$new_page = array(
-			'post_title' => $page_title,
+			'post_title' => __( 'Wishlist', 'addonify-wishlist' ),
 			'post_content' => '[addonify_wishlist]',
 			'post_status' => 'publish',
 			'post_author' => get_current_user_id(),
