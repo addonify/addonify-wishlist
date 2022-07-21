@@ -36,7 +36,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
                 'view_wishlist_btn_text' => __( 'View wishlist', 'addonify-wishlist' ),
                 'product_added_to_wishlist_text' => __( '{product_name} added to wishlist', 'addonify-wishlist' ),
                 'product_already_in_wishlist_text' => __( '{product_name} already in wishlist', 'addonify-wishlist' ),
-                'show_sidebar' => true,
+                'show_sidebar' => false,
                 'sidebar_position' => 'right',
                 'sidebar_title' => __( 'My wishlist', 'addonify-wishlist' ),
                 'sidebar_btn_label' => __( 'Wishlist', 'addonify-wishlist' ),
