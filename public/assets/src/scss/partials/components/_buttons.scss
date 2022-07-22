@@ -10,7 +10,20 @@
     gap: 5px;
     font-weight: normal;
     cursor: pointer;
+    box-shadow: none;
+    border-style: none;
+    border-width: 0;
+    border-color: transparent;
     @include transation_delay();
+
+    &:focus,
+    &:hover {
+
+        box-shadow: none;
+        border-style: none;
+        border-width: 0;
+        border-color: transparent;
+    }
 }
 
 .adfy-wishlist-clear-button-style {
