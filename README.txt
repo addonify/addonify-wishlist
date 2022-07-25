@@ -125,7 +125,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 1.0.5 - 22 July 2022 =
+= 1.0.5 - 25 July 2022 =
 
 - Added: Demo & documentation guide links.
 - Tweak: Disabled wishlist sidebar drawer by default.
