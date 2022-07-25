@@ -16,16 +16,16 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 
     function addonify_wishlist_settings_defaults( $setting_id = '' ) {
 
-        $defaults = apply_filters( 
-            'addonify_wishlist/setting_defaults',  
+        $defaults = apply_filters(
+            'addonify_wishlist/setting_defaults',
             array(
                 'enable_wishlist' => true,
                 'wishlist_page' => '',
                 'require_login' => false,
                 'if_not_login_action' => 'default',
-                'ajaxify_add_to_cart' => false,
+                'ajaxify_add_to_cart' => true,
                 'redirect_to_checkout_if_product_added_to_cart' => false,
-                'remove_from_wishlist_if_added_to_cart' => true,                
+                'remove_from_wishlist_if_added_to_cart' => true,
                 'cookies_lifetime' => 30,
                 'btn_position' => 'before_add_to_cart',
                 'btn_label' => __( 'Add to wishlist', 'addonify-wishlist' ),
@@ -36,14 +36,14 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
                 'view_wishlist_btn_text' => __( 'View wishlist', 'addonify-wishlist' ),
                 'product_added_to_wishlist_text' => __( '{product_name} added to wishlist', 'addonify-wishlist' ),
                 'product_already_in_wishlist_text' => __( '{product_name} already in wishlist', 'addonify-wishlist' ),
-                'show_sidebar' => true,
+                'show_sidebar' => false,
                 'sidebar_position' => 'right',
                 'sidebar_title' => __( 'My wishlist', 'addonify-wishlist' ),
                 'sidebar_btn_label' => __( 'Wishlist', 'addonify-wishlist' ),
                 'sidebar_btn_position_offset' => -40,
                 'sidebar_show_icon' => true,
                 'sidebar_btn_icon' => 'heart-style-one',
-                'ajaxify_remove_from_wishlist_button' => false,
+                'ajaxify_remove_from_wishlist_button' => true,
                 'view_wishlist_page_button_label' => __( 'View All Wishlist Items', 'addonify-wishlist' ),
                 'load_styles_from_plugin' => false,
                 'wishlist_btn_text_color' => '#333333',
@@ -141,7 +141,7 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
 
     function addonify_wishlist_update_settings( $settings = '' ) {
 
-        if ( 
+        if (
             is_array( $settings ) &&
             count( $settings ) > 0
         ) {
@@ -183,7 +183,7 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
             }
 
             return true;
-        }        
+        }
     }
 }
 
@@ -199,7 +199,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_fields' ) ) {
 
 /**
  * Define settings sections and respective settings fields.
- * 
+ *
  * @since 1.0.7
  * @return array
  */
