@@ -73,7 +73,7 @@ class Addonify_Wishlist_Public {
 	}
 
 
-	public function actions_init() {
+	public function public_init() {
 
 		if (
 			! class_exists( 'WooCommerce' ) ||
@@ -85,6 +85,47 @@ class Addonify_Wishlist_Public {
 		$this->wishlist_items = $this->get_wishlist();
 
 		$this->wishlist_items_count = is_array( $this->wishlist_items ) ? count( $this->wishlist_items ) : 0;
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+
+
+		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'after_add_to_cart' ) {
+			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 15 );
+		}
+
+		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'before_add_to_cart' ) {
+			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 5 );
+		}
+
+		add_action( 'woocommerce_after_add_to_cart_form', array( $this, 'render_add_to_wishlist_button_single' ) );
+		
+		add_action( 'wp', array( $this, 'init_actions' ) );
+
+		add_action( 'wp_footer', array( $this, 'wishlist_modal_wrapper' ) );
+		add_action( 'wp_footer', array( $this, 'wishlist_sidebar_template' ) );
+
+		add_action( 'wp_ajax_addonify_add_to_wishlist', array( $this, 'ajax_add_to_wishlist_handler' ) );
+		add_action( 'wp_ajax_nopriv_addonify_add_to_wishlist', array( $this, 'ajax_add_to_wishlist_handler' ) );
+
+		add_action( 'wp_ajax_addonify_add_to_cart_from_wishlist', array( $this, 'ajax_add_to_cart_handler' ) );
+		add_action( 'wp_ajax_nopriv_addonify_add_to_cart_from_wishlist', array( $this, 'ajax_add_to_cart_handler' ) );
+
+		add_action( 'wp_ajax_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
+		add_action( 'wp_ajax_nopriv_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
+
+		// For future update.
+		//add_action( 'wp_login', array( $this, 'after_user_login' ), 10, 2 );
+		
+		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
+
+		add_action( 'addonify_wishlist_modal_generate_action_btns', array( $this, 'generate_modal_action_btns' ), 12 );
+
+		add_action( 'addonify_wishlist/before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
+
+		// add_action( 'wp', array( $this, 'init_actions' ) );
+
+		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
 	}
 
 
@@ -163,6 +204,8 @@ class Addonify_Wishlist_Public {
 	public function init_actions() {
 
 		global $wp;
+
+		// var_dump( strtok( $_SERVER['REQUEST_URI'], '?' ) );
 
 		// Remove product from the wishlist.
 		// Only works if removal is done on form submit.
@@ -284,10 +327,17 @@ class Addonify_Wishlist_Public {
 					$notice .= __( "{$product->get_title()} is added to the wishlist.", "addonify-wishlist" );
 
 					wc_add_notice( $notice, 'success' );
+
+					wp_redirect( home_url( $wp->request ) );
+					exit;
 				}
 			} else {
 
-				wc_add_notice( __( "{$product->get_title()} is already in the wishlist.", "addonify-wishlist" ), 'error' );
+				$notice = '<a href="' . esc_url( get_permalink( (int) addonify_wishlist_get_option( 'wishlist_page' ) ) ) . '" class="button wc-forward" tabindex="1">' . esc_html__( 'View Wishlist', 'addonify-wishlist' ) . '</a>';
+
+				$notice .= __( "{$product->get_title()} is already in the wishlist.", "addonify-wishlist" );
+
+				wc_add_notice( $notice, 'error' );
 
 				if (
 					addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) == 'redirect_to_wishlist_page' &&
@@ -296,6 +346,10 @@ class Addonify_Wishlist_Public {
 
 					$wishlist_page_id = (int) addonify_wishlist_get_option( 'wishlist_page' );
 					wp_redirect( get_permalink( $wishlist_page_id ) );
+					exit;
+				} else {
+
+					wp_redirect( home_url( $wp->request ) );
 					exit;
 				}
 			}
@@ -982,7 +1036,7 @@ class Addonify_Wishlist_Public {
 
 	public function register_shortcodes() {
 
-		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
+		
 	}
 
 
