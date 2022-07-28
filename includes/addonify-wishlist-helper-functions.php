@@ -34,7 +34,7 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 		} else {
 		} */
 
-		$wishlist_cookie = ( array_key_exists( 'addonify-wishlist', $_COOKIE ) ) ? json_decode( stripslashes( $_COOKIE['addonify-wishlist'] ), true ) : array();
+		$wishlist_cookie = ( array_key_exists( 'addonify-wishlist', $_COOKIE ) ) ? json_decode( wp_unslash( $_COOKIE['addonify-wishlist'] ), true ) : array();
 		
 		return ( array_key_exists( 'wishlist_items', $wishlist_cookie ) ) ? $wishlist_cookie['wishlist_items'] : array(); 
 	}
