@@ -212,47 +212,9 @@ class Addonify_Wishlist {
 
 		$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'actions_init', 20 );
-
-
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-
-
-		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'after_add_to_cart' ) {
-			$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'render_add_to_wishlist_button', 15 );
-		}
-
-		if ( addonify_wishlist_get_option( 'btn_position' ) ==  'before_add_to_cart' ) {
-			$this->loader->add_action( 'woocommerce_after_shop_loop_item', $plugin_public, 'render_add_to_wishlist_button', 5 );
-		}
-
-		$this->loader->add_action( 'woocommerce_after_add_to_cart_form', $plugin_public, 'render_add_to_wishlist_button_single' );
-		
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_modal_wrapper' );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'wishlist_sidebar_template' );
-
-		$this->loader->add_action( 'wp_ajax_addonify_add_to_wishlist', $plugin_public, 'ajax_add_to_wishlist_handler' );
-		$this->loader->add_action( 'wp_ajax_nopriv_addonify_add_to_wishlist', $plugin_public, 'ajax_add_to_wishlist_handler' );
-
-		$this->loader->add_action( 'wp_ajax_addonify_add_to_cart_from_wishlist', $plugin_public, 'ajax_add_to_cart_handler' );
-		$this->loader->add_action( 'wp_ajax_nopriv_addonify_add_to_cart_from_wishlist', $plugin_public, 'ajax_add_to_cart_handler' );
-
-		$this->loader->add_action( 'wp_ajax_addonify_remove_from_wishlist', $plugin_public, 'ajax_remove_from_wishlist_handler' );
-		$this->loader->add_action( 'wp_ajax_nopriv_addonify_remove_from_wishlist', $plugin_public, 'ajax_remove_from_wishlist_handler' );
-
-		// For future update.
-		//add_action( 'wp_login', array( $this, 'after_user_login' ), 10, 2 );
-		
-		$this->loader->add_filter( 'woocommerce_login_redirect', $plugin_public, 'myaccount_login' );
-
-		$this->loader->add_action( 'addonify_wishlist_modal_generate_action_btns', $plugin_public, 'generate_modal_action_btns', 12 );
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'register_shortcodes' );
-
-		$this->loader->add_action( 'addonify_wishlist/before_wishlist_form_table', $plugin_public, 'ajaxify_wishlist_form' );
-
 		$this->loader->add_action( 'wp', $plugin_public, 'init_actions' );
+
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'public_init' );		
 	}
 
 	/**
