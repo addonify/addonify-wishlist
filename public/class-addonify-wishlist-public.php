@@ -100,6 +100,8 @@ class Addonify_Wishlist_Public {
 
 		add_action( 'woocommerce_after_add_to_cart_form', array( $this, 'render_add_to_wishlist_button_single' ) );
 		
+		add_action( 'wp', array( $this, 'init_actions' ) );
+
 		add_action( 'wp_footer', array( $this, 'wishlist_modal_wrapper' ) );
 		add_action( 'wp_footer', array( $this, 'wishlist_sidebar_template' ) );
 

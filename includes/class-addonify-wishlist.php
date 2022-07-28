@@ -203,16 +203,7 @@ class Addonify_Wishlist {
 	 */
 	private function define_public_hooks() {
 
-		if ( 
-			! addonify_wishlist_is_woocommerce_active() ||
-			(int) addonify_wishlist_get_option( 'enable_wishlist' ) != 1
-		) {
-			return;
-		}
-
 		$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
-
-		$this->loader->add_action( 'wp', $plugin_public, 'init_actions' );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'public_init' );		
 	}
