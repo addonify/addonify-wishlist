@@ -21,9 +21,8 @@ if ( function_exists( 'wc_print_notices' ) ) {
 	<?php do_action( 'addonify_wishlist/before_wishlist_form' ); ?>
 	<?php
 	if ( 
-		isset( $data['wishlist_product_ids'] ) &&
-		is_array( $data['wishlist_product_ids'] ) && 
-		count( $data['wishlist_product_ids'] ) > 0 
+		is_array( $wishlist_product_ids ) && 
+		count( $wishlist_product_ids ) > 0 
 	) {
 		?>
 		<form action="" method="POST" id="addonify-wishlist-page-form">
@@ -43,7 +42,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 				</thead>
 				<tbody>
 					<?php
-					foreach ( $data['wishlist_product_ids'] as $product_id ) {
+					foreach ( $wishlist_product_ids as $product_id ) {
 
 						$product = wc_get_product( $product_id );
 						?>
@@ -136,6 +135,30 @@ if ( function_exists( 'wc_print_notices' ) ) {
 											</button>
 											<?php
 										}
+									} else {
+										$add_to_cart_button_classes = array(
+											'button',
+											'adfy-wishlist-btn addonify-wishlist-add-to-cart',
+											'product_type_' . $product->get_type(),
+											$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : ''
+											
+										);
+
+										$add_to_cart_button_attributes = array(
+											'data-product_id'  => $product->get_id(),
+											'data-product_sku' => $product->get_sku(),
+											'aria-label'       => $product->add_to_cart_description(),
+											'rel'              => 'nofollow',
+										);
+										?>
+										<a 
+											href="<?php echo esc_url( $product->get_permalink() ) ?>" 
+											class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" 
+											<?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>
+										>
+											<?php echo esc_html( $product->add_to_cart_text() ); ?>
+										</a>
+										<?php
 									}
 								} else {
 									$add_to_cart_button_classes = array(

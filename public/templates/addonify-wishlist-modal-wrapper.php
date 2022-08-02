@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 		<div id="addonify-wishlist-modal-response"></div>
 		<div class="addonify-wishlist-modal-btns">
-			<?php do_action( 'addonify_wishlist_modal_generate_action_btns' ); ?>
+			<?php do_action( 'addonify_wishlist/popup_action_btns' ); ?>
 		</div>
 	</div>
 

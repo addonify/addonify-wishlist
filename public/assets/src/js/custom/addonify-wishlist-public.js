@@ -214,7 +214,7 @@
 
                         if (response.sidebar_data) {
                             // update sidebar contents
-                            $sidebar_ul.html('').append(response.sidebar_data);
+                            $sidebar_ul.append(response.sidebar_data);
                         }
 
                         // Update button label and icon of custom add to wishlist button.
