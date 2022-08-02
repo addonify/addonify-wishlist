@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.6
 Tested up to: 6.0.1
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,12 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 6. Addonify wishlist page using shortcode.
 
 == Changelog ==
+
+= 1.0.7 - 2 August 2022 =
+
+- Tweak: When a product is added into the wishlist, on sidebar only the product will be appended. But not the whole wishlist.
+- Updated: Read more button will be visible for the out of stock products in the wishlist.
+
 
 = 1.0.6 - 28 July 2022 =
 
