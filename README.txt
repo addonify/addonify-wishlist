@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.6
 Tested up to: 6.0.2
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 = 1.0.8 - 31 August, 2022 =
 
 - Tested: with WordPress version 6.0.2.
+
 
 = 1.0.7 - 2 August 2022 =
 
