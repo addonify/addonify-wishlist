@@ -215,6 +215,10 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_toggle_button' ) ) {
 
 	function addonify_wishlist_render_sidebar_toggle_button() {
 
+		if ( (int) addonify_wishlist_get_option( 'show_sidebar' ) !== 1 ) {
+			return;
+		}
+
 		$alignment = 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' );
 
 		$css_classes = array( $alignment );

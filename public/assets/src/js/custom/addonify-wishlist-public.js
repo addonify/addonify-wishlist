@@ -161,6 +161,10 @@
 
                         parentProductRow.remove();
 
+                        if(response.wishlist_count <= 0) {
+                            $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
+                        }
+
                         addonifyInitialWishlistButton(thisButton.val());
 
                         addonifyEmptyWishlistText(response.wishlist_count);
@@ -211,6 +215,10 @@
                             addToWishlistButton.data('product_name'),
                             'success'
                         );
+
+                        if(response.wishlist_count > 0) {
+                            $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                        }
 
                         if (response.sidebar_data) {
                             // update sidebar contents
