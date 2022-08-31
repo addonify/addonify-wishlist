@@ -431,6 +431,11 @@
         transform: rotate(-90deg);
     }
 
+    &.hidden {
+
+        display: none;
+    }
+
     &:hover {
 
         color: var(--adfy_wishlist_sidebar_modal_toggle_btn_label_color_hover);
