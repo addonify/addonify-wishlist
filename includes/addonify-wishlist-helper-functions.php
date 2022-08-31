@@ -67,11 +67,7 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items_count' ) ) {
  */
 if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 
-	function addonify_wishlist_is_product_in_wishlist( $product_id = '' ) {
-
-		global $product;
-
-		$product_ID = ( $product_id ) ? $product_id : $product->get_id();
+	function addonify_wishlist_is_product_in_wishlist( $product_id ) {
 
 		$wishlist_items = addonify_wishlist_get_wishlist_items();
 
@@ -79,7 +75,7 @@ if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 			is_array( $wishlist_items ) &&
 			count( $wishlist_items ) > 0
 		) {
-			return array_key_exists( $product_ID, $wishlist_items );
+			return array_key_exists( $product_id, $wishlist_items );
 		}
 
 		return false;

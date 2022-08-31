@@ -119,8 +119,6 @@ class Addonify_Wishlist_Public {
 		
 		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
 
-		add_action( 'addonify_wishlist_modal_generate_action_btns', array( $this, 'generate_modal_action_btns' ), 12 );
-
 		add_action( 'addonify_wishlist/before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
 
 		// add_action( 'wp', array( $this, 'init_actions' ) );
@@ -565,7 +563,7 @@ class Addonify_Wishlist_Public {
 		}
 
 		// Check if product is already in the wishlist.
-		if ( array_key_exists( $product_id, $this->wishlist_items ) ) {
+		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
 
 			return wp_send_json(
 				array(
@@ -581,7 +579,7 @@ class Addonify_Wishlist_Public {
 		// Save the wishlist.
 		if ( $this->save_wishlist_items( $this->wishlist_items ) ) {
 
-			$sidebar_data = $this->get_sticky_sidebar_loop();
+			$sidebar_data = addonify_wishlist_render_sidebar_product( $product_id );
 
 			return wp_send_json(
 				array(
@@ -736,22 +734,15 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_shortcode_contents() {
 
-		$wishlist_items = $this->wishlist_items;
+		if ( wp_doing_ajax() ) {
+			ob_start();
+			addonify_wishlist_render_wishlist_content();
+			return ob_end_clean();
+		} else {
+			do_action( 'addonify_wishlist/render_shortcode_content' );
+		} 
 
-		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
-
-		ob_start();
-
-		$this->get_templates(
-			'addonify-wishlist-shortcode-contents',
-			false,
-			array(
-				'wishlist_product_ids' => $wishlist_product_ids,
-				'nonce' => wp_create_nonce( $this->plugin_name ),
-			)
-		);
-
-		return ob_get_clean();
+			
 	}
 
 
@@ -762,15 +753,7 @@ class Addonify_Wishlist_Public {
 	 */
 	public function wishlist_modal_wrapper() {
 
-		$css_class = ( (int) addonify_wishlist_get_option( 'require_login' ) && ! is_user_logged_in() ) ? 'require-login' : '';
-
-		$this->get_templates(
-			'addonify-wishlist-modal-wrapper',
-			true,
-			array(
-				'css_classes' => $css_class,
-			)
-		);
+		do_action( 'addonify_wishlist/render_modal_wrapper' );
 	}
 
 
@@ -781,47 +764,9 @@ class Addonify_Wishlist_Public {
 	 */
 	public function wishlist_sidebar_template() {
 
-		if ( get_the_ID() === (int) addonify_wishlist_get_option( 'wishlist_page' ) ) {
-			// do not show sidebar in wishlist page.
-			return;
-		}
+		do_action( 'addonify_wishlist/render_sidebar_toggle_button' );
 
-		if ( (int) addonify_wishlist_get_option( 'show_sidebar' ) != 1 ) {
-			return;
-		}
-
-		$alignment = 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' );
-
-		$css_classes = array( $alignment );
-
-		$css_classes[] = ( $this->wishlist_items_count < 1 ) ? 'hidden' : '';
-
-		// sidebar toggle button template.
-		$this->get_templates(
-			'addonify-wishlist-sidebar-toggle-button',
-			true,
-			array(
-				'css_classes' => implode( ' ', $css_classes ),
-				'label' => addonify_wishlist_get_option( 'sidebar_btn_label' ),
-				'show_icon' => (int) addonify_wishlist_get_option( 'sidebar_show_icon' ),
-				'icon' => addonify_wishlist_get_option( 'sidebar_btn_icon' ),
-			)
-		);
-
-		// sidebar template.
-		$this->get_templates(
-			'addonify-wishlist-sidebar',
-			true,
-			array(
-				'total_items' => $this->wishlist_items_count,
-				'css_class' => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' ),
-				'title' => addonify_wishlist_get_option( 'sidebar_title' ),
-				'loop' => $this->get_sticky_sidebar_loop(),
-				'wishlist_url' => ( addonify_wishlist_get_option( 'wishlist_page' ) ) ? get_permalink( addonify_wishlist_get_option( 'wishlist_page' ) ) : '',
-				'alignment' => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' ),
-				'view_wishlist_page_button_label' => addonify_wishlist_get_option( 'view_wishlist_page_button_label' )
-			)
-		);
+		do_action( 'addonify_wishlist/render_sidebar' );
 	}
 
 
@@ -832,13 +777,13 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_sticky_sidebar_loop() {
 
-		$wishlist_items = $this->wishlist_items;
-
-		$wishlist_product_ids = ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) ? array_keys( $wishlist_items ) : array();
-
-		ob_start();
-			$this->get_templates( 'addonify-wishlist-sidebar-loop', false, array( 'wishlist_product_ids' => $wishlist_product_ids ) );
-		return ob_get_clean();
+		if ( wp_doing_ajax() ) {
+			ob_start();
+			addonify_wishlist_render_sidebar_loop();
+			return ob_end_clean();
+		} else {
+			do_action( 'addonify_wishlist/render_sidebar_loop' );
+		}		
 	}
 
 
