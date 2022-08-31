@@ -125,6 +125,12 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 1.0.9 - 31 August, 2022 =
+
+- Fixed: Wishlist sidebar toggle button will not be visible if wishlist sidebar is disabled.
+- Tweak: Wishlist sidebar toggle button will not be visible if there are no items in the wishlist.
+
+
 = 1.0.8 - 31 August, 2022 =
 
 - Tested: with WordPress version 6.0.2.
