@@ -3,10 +3,10 @@
 </script>
 <template>
 	<div class="error-404">
-		<h3>{{ __("404", "addonify-wishist") }}</h3>
-		<p>{{ __("Oops, page not found!", "addonify-wishist") }}</p>
+		<h3>{{ __("404", "addonify-wishlist") }}</h3>
+		<p>{{ __("Oops, page not found!", "addonify-wishlist") }}</p>
 		<router-link to="/" class="adfy-button">
-			{{ __("Go Back", "addonify-wishist") }}
+			{{ __("Go Back", "addonify-wishlist") }}
 		</router-link>
 	</div>
 </template>
