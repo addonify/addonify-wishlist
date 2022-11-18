@@ -62,7 +62,7 @@
 					<Color
 						v-else-if="field.type == 'color'"
 						v-model="props.reactiveState[fieldKey]"
-						:showAlpha="field.isAlphaPicker"
+						:isAlpha="field.isAlphaPicker"
 					/>
 					<InvalidControl v-else />
 				</div>

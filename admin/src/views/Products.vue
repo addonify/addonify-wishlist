@@ -10,7 +10,7 @@
 				<Navigation />
 			</aside>
 			<section class="adfy-col end site-primary">
-				<p>{{ __("Coming soon.....", "addonify-wishist") }}</p>
+				<p>{{ __("Coming soon.....", "addonify-wishlist") }}</p>
 			</section>
 		</main>
 	</section>

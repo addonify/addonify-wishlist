@@ -73,7 +73,7 @@ export const useOptionsStore = defineStore({
                 this.options = res.settings_values;
                 this.data = res.tabs;
                 oldOptions = cloneDeep(res.settings_values);
-                console.log(res);
+                //console.log(res);
                 this.isLoading = false;
             });
         },

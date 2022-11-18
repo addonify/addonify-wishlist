@@ -4,14 +4,14 @@
 <template>
 	<span class="unsupported-control-text">
 		❌
-		{{ __("Input is not supported.", "addonify-wishist") }}
+		{{ __("Input is not supported.", "addonify-wishlist") }}
 		<a
 			href="https://docs.addonify.com/kb/woocommerce-wishlist/developer/"
 			target="_blank"
 			rel="documentation"
 			class="adfy-button fake-button has-underline forward-to-doc-link"
 		>
-			{{ __("Check docs", "addonify-wishist") }}
+			{{ __("Check docs", "addonify-wishlist") }}
 		</a>
 	</span>
 </template>
