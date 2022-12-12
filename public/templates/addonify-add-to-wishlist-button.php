@@ -19,7 +19,7 @@ if ( $display_icon ) {
 	$label = '<i class="icon adfy-wishlist-icon ' . esc_attr( $icon ) . '"></i> ' . $label;
 }
 
-if ( $require_login == true ) {
+if ( true === $require_login ) {
 	if ( $login_url ) {
 		?>
 		<a 

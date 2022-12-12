@@ -4,12 +4,18 @@
 
     $(document).ready(function () {
 
-        var $body = $('body');
-        var $modal = $('#addonify-wishlist-modal-wrapper');
-        var $modal_response = $('#addonify-wishlist-modal-response');
-        var $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
-
+        let $body = $('body');
+        let $modal = $('#addonify-wishlist-modal-wrapper');
+        let $modal_response = $('#addonify-wishlist-modal-response');
+        let $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
+        let plugin_name = 'addonify-wishlist';
+        let localDataExpiration = 30;   // local data expiration in days.
+        let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
+
+        if ( ! isLoggedIn ) {
+            guest_init();
+        }
 
         // Display popup modal if login is required.
         $body.on('click', '.addonify-wishlist-login-popup-enabled', function (e) {
@@ -23,17 +29,20 @@
          */
         $body.on('click', '.addonify-wishlist-ajax-add-to-wishlist', function (e) {
             e.preventDefault();
-            var addToWishlistButton = $(this);
+            let addToWishlistButton = $(this);
             if (addToWishlistButton.hasClass('added-to-wishlist')) {
                 addonifyShowPopupModal(
                     addonifyWishlistJSObject.popupAlreadyInWishlistText,
                     addToWishlistButton.data('product_name')
                 );
             } else {
-                addonifyAddToWishlist(addToWishlistButton);
+                if ( isLoggedIn ) {
+                    addonifyAddToWishlist(addToWishlistButton);
+                } else {
+                    addonifyLocalAddToWishlist(addToWishlistButton);
+                }
             }
         })
-
 
         // Close popup modal.
         $body.on('click', '#addonify-wishlist-close-modal-btn', function () {
@@ -50,34 +59,20 @@
             $body.toggleClass('addonify-wishlist-sticky-sidebar-is-visible');
         });
 
-        // Hides scrollbar if sidebar wishlist is active, else show it.
-        // $(document).mouseup(function(e) {
-        //     if (!$('body').hasClass('addonify-wishlist-sticky-sidebar-is-visible')) {
-        //         // do not proceed if sidebar is not open.
-        //         return;
-        //     }
-        //     var container = $(".addonify-wishlist-ssc-body, #addonify-wishlist-show-sidebar-btn");
-        //     // Ff the target of the click isn't the container nor a descendant of the container
-        //     if (!container.is(e.target) && container.has(e.target).length === 0) {
-        //         // hide sidebar.
-        //         $body.removeClass('addonify-wishlist-sticky-sidebar-is-visible');
-        //     }
-        // });
-
         // Ajax call to add product into cart.
         $body.on('click', '.addonify-wishlist-ajax-add-to-cart', function (event) {
 
             event.preventDefault();
 
-            var thisButton = $(this);
+            let thisButton = $(this);
 
-            var ajaxData = {
+            let ajaxData = {
                 action: 'addonify_add_to_cart_from_wishlist',
                 productId: thisButton.val(),
                 nonce: addonifyWishlistJSObject.nonce
             }
 
-            var parentProductRow = '';
+            let parentProductRow = '';
 
             if (thisButton.hasClass('addonify-wishlist-sidebar-button')) {
                 parentProductRow = $('#addonify-wishlist-sticky-sidebar-container').find('li[data-product_row="addonify-wishlist-sidebar-product-row-' + thisButton.val() + '"]');
@@ -126,15 +121,15 @@
 
             event.preventDefault();
 
-            var thisButton = $(this);
+            let thisButton = $(this);
 
-            var ajaxData = {
+            let ajaxData = {
                 action: 'addonify_remove_from_wishlist',
                 productId: thisButton.val(),
                 nonce: addonifyWishlistJSObject.nonce
             }
 
-            var parentProductRow = '';
+            let parentProductRow = '';
 
             if (thisButton.hasClass('addonify-wishlist-sidebar-button')) {
                 parentProductRow = $('#addonify-wishlist-sticky-sidebar-container').find('li[data-product_row="addonify-wishlist-sidebar-product-row-' + thisButton.val() + '"]');
@@ -180,10 +175,20 @@
             }
         });
 
+        function guest_init() {
+            let wishlist_products = getProductids();
+            let addedToWishlistButtonLabel = addonifyWishlistJSObject.addedToWishlistButtonLabel;
+
+            wishlist_products.forEach( function (value, index) {
+                $('button[data-product_id="' + value + '"]').find('span').html( addedToWishlistButtonLabel );
+                $('button[data-product_id="' + value + '"]').find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
+            });
+        }
+
         // Ajax call to add product into the wishlist.
         function addonifyAddToWishlist(addToWishlistButton) {
 
-            var data = {
+            let data = {
                 action: addonifyWishlistJSObject.addToWishlistAction,
                 id: addToWishlistButton.data('product_id'),
                 nonce: addonifyWishlistJSObject.nonce
@@ -245,6 +250,45 @@
             );
         }
 
+        /**
+         * Add product to local wishlist.
+         *
+         * @param {object} addToWishlistButton Button Object.
+         */
+        function addonifyLocalAddToWishlist(addToWishlistButton) {
+            let id = addToWishlistButton.data('product_id');
+
+            let wishlist = getProductids();
+
+            if ( wishlist.indexOf(id) === -1 ) {
+                wishlist.push(id);
+
+                setProductids(wishlist);
+    
+                console.log('Added to wishlist.');
+
+                // update button 
+                addToWishlistButton.addClass('added-to-wishlist');
+
+                addonifyShowPopupModal(
+                    addonifyWishlistJSObject.popupAddedToWishlistText,
+                    addToWishlistButton.data('product_name'),
+                    'success'
+                );
+
+                // Update button label and icon of custom add to wishlist button.
+                if (!addToWishlistButton.hasClass('addonify-custom-wishlist-btn')) {
+                    // Update button label.
+                    addToWishlistButton.find('span.addonify-wishlist-btn-label').text(addonifyWishlistJSObject.addedToWishlistText);
+                    // Update button icon.
+                    addToWishlistButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-o-style-one').addClass('heart-style-one');
+                }
+            } else {
+                console.log('Item already in wishlist.');
+            }
+
+        }
+
         // Show popup modal with message.
         function addonifyShowPopupModal(response_text, product_name, icon) {
 
@@ -259,7 +303,7 @@
         // Display sidebar notifications.
         function addonifyWishlistEmptyWishlist(message) {
 
-            var notice = $('#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-footer');
+            let notice = $('#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-footer');
 
             if (notice) {
 
@@ -298,7 +342,7 @@
         // Display intial state wishlist button label and icon.
         function addonifyInitialWishlistButton(productId) {
 
-            var wishlistButton = $('[data-product_id="' + productId + '"].addonify-add-to-wishlist-btn');
+            let wishlistButton = $('[data-product_id="' + productId + '"].addonify-add-to-wishlist-btn');
 
             // Update button label and icon of custom add to wishlist button.
             if (wishlistButton && !wishlistButton.hasClass('addonify-custom-wishlist-btn')) {
@@ -313,6 +357,99 @@
                 $('.woocommerce-notices-wrapper').remove();
             }
         }
+
+		/**
+		 * Return product ids stored in localstorage.
+		 * 
+		 * @returns {array|false} product ids.
+		 */
+		function getProductids() {
+			return getLocalItem( 'product_ids' );
+		}
+
+		/**
+		 * Save product ids in localstorage.
+		 *
+		 * @param {Object|string} val Value to be inserted.
+		 */
+		function setProductids( val ) {
+			setLocalItem( 'product_ids', val );
+		}
+
+        /**
+		 * Store item in localstorage.
+		 * 
+		 * @param {int} productId Product ID.
+		 * @param {mixed} val Value to be stored in localstorage.
+		 */
+		function setLocalItem( name, val ) {
+			if ( typeof val === 'object' ) {
+				val = JSON.stringify( val )
+			}
+			const d = new Date();
+			d.setTime( d.getTime() + (localDataExpiration * 24 * 60 * 60 * 1000) );
+			let expires = d.getTime();
+			localStorage.setItem( plugin_name + '_' + name, val )
+			localStorage.setItem( plugin_name + '_' + name +  '_deadline', expires )
+		}
+
+		/**
+		 * Parse string to json.
+		 *
+		 * @param {string} json_str Json string.
+		 * @return {object|false} Json object
+		 */
+		function parseJson( json_str ) {
+			let json_val
+			try {
+				json_val = JSON.parse(json_str)
+			} catch(e) {
+				return false;
+			}
+			return json_val
+		}
+
+		/**
+		 * Get item from localstorage.
+		 *
+		 * @param {int} productId Product Id.
+		 * @returns {array|false}
+		 */
+		function getLocalItem( name ) {
+			let localDeadline = localStorage.getItem( plugin_name + '_' + name +  '_deadline' )
+			if ( null !== localDeadline ) {
+				const d = new Date();
+				if ( d.getTime() < parseInt( localDeadline ) ) {
+					return jsonToArray( parseJson( localStorage.getItem( plugin_name + '_' + name ) ) )
+				} else {
+					localStorage.removeItem( plugin_name + '_' + name )
+					localStorage.removeItem( plugin_name + '_' + name + '_deadline' );
+				}
+			}
+			return [];
+		}
+
+		/**
+		 * Converts json to Array
+		 * 
+		 * @param {object} json Json object
+		 * @returns {object|false} An array
+		 */
+		function jsonToArray(json){
+			if ( json !== null && typeof json === 'object' ) {
+				let result = new Array;
+				let keys = Object.keys(json);
+				if (keys.length > 0) {
+					keys.forEach(function(key){
+						result[key]= json[key];
+					});
+				}
+				return result;
+			} else {
+				return false;
+			}
+		}
+
 
     });
 

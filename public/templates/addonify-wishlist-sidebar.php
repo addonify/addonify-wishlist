@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php do_action( 'addonify_wishlist/before_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-sidebar-items-wrapper">
 				<ul class="adfy-wishlist-sidebar-items-entry">
-					<?php do_action( 'addonify_wishlist/render_sidebar_loop' ); ?>
+					<?php do_action( 'addonify_wishlist_render_sidebar_loop' ); ?>
 				</ul>
 			</div>
 			<?php if ( $total_items < 1 ) : ?>
