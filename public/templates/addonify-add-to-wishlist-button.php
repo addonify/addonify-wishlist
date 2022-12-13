@@ -12,7 +12,7 @@
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
 
-$label = ( $button_label ) ? '<span class="addonify-wishlist-btn-label">' . esc_html( $button_label ) . ' </span>' : '';
+$label = '<span class="addonify-wishlist-btn-label">' . ( ( $button_label ) ? esc_html( $button_label ) : '' ) . ' </span>';
 
 // If icon is enabled, icon is displayed before the button lable.
 if ( $display_icon ) {

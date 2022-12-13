@@ -30,10 +30,10 @@ defined( 'ABSPATH' ) || exit;
 			<?php do_action( 'addonify_wishlist/before_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-sidebar-items-wrapper">
 				<ul class="adfy-wishlist-sidebar-items-entry">
-					<?php do_action( 'addonify_wishlist_render_sidebar_loop' ); ?>
+					<?php do_action( 'addonify_wishlist_render_sidebar_loop', $product_ids ); ?>
 				</ul>
 			</div>
-			<?php if ( $total_items < 1 ) : ?>
+			<?php if ( empty( $product_ids ) && $total_items < 1 ) : ?>
 			<p id="addonify-empty-wishlist-para" class="empty-wishlist">
 				<?php echo esc_html__( 'Your wishlist is empty', 'addonify-wishlist' ); ?>
 			</p>
@@ -41,8 +41,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php do_action( 'addonify_wishlist/after_wishlist_form_table' ); ?>
 		</form>
 	</div>
-	<?php 
-
+	<?php
 	if ( $view_wishlist_page_button_label ) {
 		?>
 		<div class="addonify-wishlist-ssc-footer">
@@ -55,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 				</span>
 			</a>
 		</div>
-		<?php 
+		<?php
 	}
 	?>
 	<?php do_action( 'addonify_wishlist_before_sidebar_closing_tag' ); ?>
