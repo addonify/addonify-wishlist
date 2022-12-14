@@ -200,6 +200,7 @@ class Addonify_Wishlist_Public {
 				'addedToWishlistButtonLabel'         => addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' ),
 				'addonify_get_wishlist_table'        => 'addonify_get_wishlist_table',
 				'addonify_get_wishlist_sidebar'      => 'addonify_get_wishlist_sidebar',
+				'thisSiteUrl'                        => network_site_url(),
 			)
 		);
 

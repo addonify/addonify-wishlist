@@ -186,7 +186,9 @@
         }
 
         if ( ! isLoggedIn) {
+            // actions on wishlist page.
             if($body.find('div#addonify-wishlist-page-container').length > 0){
+                //populate table
                 $.post(
                     addonifyWishlistJSObject.ajax_url,
                     { 
@@ -199,6 +201,7 @@
                     }
                 );
 
+                // remove an item from wishlist table.
                 $(document).on('click', '.addonify-wishlist-table-remove-from-wishlist', function (event) {
                     event.preventDefault();
                     let p_tag
@@ -217,6 +220,7 @@
                 });
             }
 
+            // remove product from wishlist.
             $(document).on('click', '.addonify-wishlist-remove-from-wishlist', function (event) {
                 event.preventDefault();
                 let thisButton = $(this);
@@ -246,8 +250,10 @@
 
                 addonifyEmptyWishlistText(product_ids.length);
 
-                addonifyWishlistEmptyWishlist( 'Product removed from wishlist' );
+                addonifyWishlistEmptyWishlist( thisButton.data('product_name') + addonifyWishlistJSObject.removedFromWishlistText );
             })
+
+            // fetch wishlist product data from server
             $.post(
                 addonifyWishlistJSObject.ajax_url,
                 {
@@ -256,6 +262,7 @@
                     nonce: addonifyWishlistJSObject.nonce
                 },
                 function (result) {
+                    $body.append(result);
                     if (getProductids().length > 0) {
                         $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
                     }
@@ -419,12 +426,12 @@
         // Display empty wishlist text.
         function addonifyEmptyWishlistText(wishlistCount) {
 
-            if (wishlistCount > 0 && $('#addonify-empty-wishlist-para')) {
+            if (wishlistCount > 0) {
                 $('#addonify-empty-wishlist-para').remove();
             } else {
 
-                if ($sidebar_ul) {
-                    $sidebar_ul.html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.emptyWishlistText + '</p>');
+                if ($('ul.adfy-wishlist-sidebar-items-entry')) {
+                    $('ul.adfy-wishlist-sidebar-items-entry').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.emptyWishlistText + '</p>');
                 }
 
                 if ($('#addonify-wishlist-page-container')) {
@@ -480,11 +487,12 @@
 			if ( typeof val === 'object' ) {
 				val = JSON.stringify( val )
 			}
+            let hostname = addonifyWishlistJSObject.thisSiteUrl;
 			const d = new Date();
 			d.setTime( d.getTime() + (localDataExpiration * 24 * 60 * 60 * 1000) );
 			let expires = d.getTime();
-			localStorage.setItem( plugin_name + '_' + name, val )
-			localStorage.setItem( plugin_name + '_' + name +  '_deadline', expires )
+			localStorage.setItem( hostname + '_' + plugin_name + '_' + name, val )
+			localStorage.setItem( hostname + '_' + plugin_name + '_' + name +  '_deadline', expires )
 		}
 
 		/**
@@ -510,14 +518,15 @@
 		 * @returns {array|false}
 		 */
 		function getLocalItem( name ) {
-			let localDeadline = localStorage.getItem( plugin_name + '_' + name +  '_deadline' )
+            let hostname = addonifyWishlistJSObject.thisSiteUrl;
+			let localDeadline = localStorage.getItem( hostname + '_' + plugin_name + '_' + name +  '_deadline' )
 			if ( null !== localDeadline ) {
 				const d = new Date();
 				if ( d.getTime() < parseInt( localDeadline ) ) {
-					return jsonToArray( parseJson( localStorage.getItem( plugin_name + '_' + name ) ) )
+					return jsonToArray( parseJson( localStorage.getItem( hostname + '_' + plugin_name + '_' + name ) ) )
 				} else {
-					localStorage.removeItem( plugin_name + '_' + name )
-					localStorage.removeItem( plugin_name + '_' + name + '_deadline' );
+					localStorage.removeItem( hostname + '_' + plugin_name + '_' + name )
+					localStorage.removeItem( hostname + '_' + plugin_name + '_' + name + '_deadline' );
 				}
 			}
 			return [];
