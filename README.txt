@@ -125,6 +125,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 1.1.1 - ? December, 2022 =
+
+- Updated: Users wishlist data without login saved clientside.
+
 = 1.1.0 - 18 November, 2022 =
 
 Improvement: Color picker in settings page.

@@ -32,17 +32,17 @@ class Addonify_Wishlist_Activator {
 		// do not regenerate even if plugin is deleted by user.
 
 		if ( get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page' ) ) {
-			
+
 			return;
 		}
-		
+
 		// Create page object.
 		$new_page = array(
-			'post_title' => __( 'Wishlist', 'addonify-wishlist' ),
+			'post_title'   => __( 'Wishlist', 'addonify-wishlist' ),
 			'post_content' => '[addonify_wishlist]',
-			'post_status' => 'publish',
-			'post_author' => get_current_user_id(),
-			'post_type' => 'page',
+			'post_status'  => 'publish',
+			'post_author'  => get_current_user_id(),
+			'post_type'    => 'page',
 		);
 
 		// Insert the post into the database.
