@@ -13,7 +13,10 @@
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
 
-        if ( ! isLoggedIn ) {
+        let adfyEmptyWishlistTextEle = $('#addonify-empty-wishlist-para');
+        console.log(adfyEmptyWishlistTextEle);
+
+        if (!isLoggedIn) {
             guest_init();
         }
 
@@ -36,7 +39,7 @@
                     addToWishlistButton.data('product_name')
                 );
             } else {
-                if ( isLoggedIn ) {
+                if (isLoggedIn) {
                     addonifyAddToWishlist(addToWishlistButton);
                 } else {
                     addonifyLocalAddToWishlist(addToWishlistButton);
@@ -91,7 +94,7 @@
                 ajaxData,
                 function (response) {
                     if (response.success) {
-                        
+
                         // Triggering custom event when product is added to wishlist. 
                         // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
                         $(document).trigger('addonify_added_to_wishlist', [{ productID: thisButton.data('product_id') }]);
@@ -156,7 +159,7 @@
 
                         parentProductRow.remove();
 
-                        if(response.wishlist_count <= 0) {
+                        if (response.wishlist_count <= 0) {
                             $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
                         }
 
@@ -179,19 +182,19 @@
             let wishlist_products = getProductids();
             let addedToWishlistButtonLabel = addonifyWishlistJSObject.addedToWishlistButtonLabel;
 
-            wishlist_products.forEach( function (value, index) {
-                $('button[data-product_id="' + value + '"]').find('span').html( addedToWishlistButtonLabel );
+            wishlist_products.forEach(function (value, index) {
+                $('button[data-product_id="' + value + '"]').find('span').html(addedToWishlistButtonLabel);
                 $('button[data-product_id="' + value + '"]').find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
             });
         }
 
-        if ( ! isLoggedIn) {
+        if (!isLoggedIn) {
             // actions on wishlist page.
-            if($body.find('div#addonify-wishlist-page-container').length > 0){
+            if ($body.find('div#addonify-wishlist-page-container').length > 0) {
                 //populate table
                 $.post(
                     addonifyWishlistJSObject.ajax_url,
-                    { 
+                    {
                         action: 'addonify_get_wishlist_table',
                         productIds: JSON.stringify(getProductids()),
                         nonce: addonifyWishlistJSObject.nonce
@@ -242,7 +245,7 @@
                 // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
                 $(document).trigger('addonify_removed_from_wishlist', [{ productID: thisButton.val() }]);
 
-                if(product_ids.length <= 0) {
+                if (product_ids.length <= 0) {
                     $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
                 }
 
@@ -250,7 +253,7 @@
 
                 addonifyEmptyWishlistText(product_ids.length);
 
-                addonifyWishlistEmptyWishlist( thisButton.data('product_name') + addonifyWishlistJSObject.removedFromWishlistText );
+                addonifyWishlistEmptyWishlist(thisButton.data('product_name') + addonifyWishlistJSObject.removedFromWishlistText);
             })
 
             // fetch wishlist product data from server
@@ -306,7 +309,7 @@
                             'success'
                         );
 
-                        if(response.wishlist_count > 0) {
+                        if (response.wishlist_count > 0) {
                             $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
                         }
 
@@ -345,7 +348,7 @@
 
             let wishlist = getProductids();
 
-            if ( wishlist.indexOf(id) === -1 ) {
+            if (wishlist.indexOf(id) === -1) {
                 wishlist.push(id);
 
                 setProductids(wishlist);
@@ -376,7 +379,7 @@
                     'success'
                 );
 
-                if(wishlist.length > 0) {
+                if (wishlist.length > 0) {
                     $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
                 }
 
@@ -426,12 +429,31 @@
         // Display empty wishlist text.
         function addonifyEmptyWishlistText(wishlistCount) {
 
+            console.log("INFO: addonifyEmptyWishlistText() fn invoked.");
+
+            console.log('INFO: Wishlist count is = ' + wishlistCount + '.');
+
+            let addonifyWishlistStickySidebarEle = $("#addonify-wishlist-sticky-sidebar-container");
+            let addonifyWishListEmptyTextEle = $("#addonify-wishlist-sticky-sidebar-container #addonify-empty-wishlist-para");
+
             if (wishlistCount > 0) {
-                $('#addonify-empty-wishlist-para').remove();
+
+                console.log("INFO: Inside wishlistCount > 0 if condition.");
+
+                if (addonifyWishListEmptyTextEle.length > 0) {
+
+                    console.log("NOTE: Empty text found!");
+                    addonifyWishListEmptyTextEle.remove();
+                    console.log("NOTE: Empty text removed!");
+                }
+
             } else {
 
-                if ($('ul.adfy-wishlist-sidebar-items-entry')) {
-                    $('ul.adfy-wishlist-sidebar-items-entry').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.emptyWishlistText + '</p>');
+                if (addonifyWishlistStickySidebarEle.length > 0) {
+
+                    $('#addonify-wishlist-sticky-sidebar-container ul.adfy-wishlist-sidebar-items-entry').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.emptyWishlistText + '</p>');
+
+                    console.log("INFO: Empty wishlist text added to sidebar.")
                 }
 
                 if ($('#addonify-wishlist-page-container')) {
@@ -454,104 +476,104 @@
                 wishlistButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-style-one').addClass('heart-o-style-one');
             }
 
-            if ( $('.woocommerce-notices-wrapper') ) {
+            if ($('.woocommerce-notices-wrapper')) {
                 $('.woocommerce-notices-wrapper').remove();
             }
         }
 
-		/**
-		 * Return product ids stored in localstorage.
-		 * 
-		 * @returns {array|false} product ids.
-		 */
-		function getProductids() {
-			return getLocalItem( 'product_ids' );
-		}
-
-		/**
-		 * Save product ids in localstorage.
-		 *
-		 * @param {Object|string} val Value to be inserted.
-		 */
-		function setProductids( val ) {
-			setLocalItem( 'product_ids', val );
-		}
+        /**
+         * Return product ids stored in localstorage.
+         * 
+         * @returns {array|false} product ids.
+         */
+        function getProductids() {
+            return getLocalItem('product_ids');
+        }
 
         /**
-		 * Store item in localstorage.
-		 * 
-		 * @param {int} productId Product ID.
-		 * @param {mixed} val Value to be stored in localstorage.
-		 */
-		function setLocalItem( name, val ) {
-			if ( typeof val === 'object' ) {
-				val = JSON.stringify( val )
-			}
+         * Save product ids in localstorage.
+         *
+         * @param {Object|string} val Value to be inserted.
+         */
+        function setProductids(val) {
+            setLocalItem('product_ids', val);
+        }
+
+        /**
+         * Store item in localstorage.
+         * 
+         * @param {int} productId Product ID.
+         * @param {mixed} val Value to be stored in localstorage.
+         */
+        function setLocalItem(name, val) {
+            if (typeof val === 'object') {
+                val = JSON.stringify(val)
+            }
             let hostname = addonifyWishlistJSObject.thisSiteUrl;
-			const d = new Date();
-			d.setTime( d.getTime() + (localDataExpiration * 24 * 60 * 60 * 1000) );
-			let expires = d.getTime();
-			localStorage.setItem( hostname + '_' + plugin_name + '_' + name, val )
-			localStorage.setItem( hostname + '_' + plugin_name + '_' + name +  '_deadline', expires )
-		}
+            const d = new Date();
+            d.setTime(d.getTime() + (localDataExpiration * 24 * 60 * 60 * 1000));
+            let expires = d.getTime();
+            localStorage.setItem(hostname + '_' + plugin_name + '_' + name, val)
+            localStorage.setItem(hostname + '_' + plugin_name + '_' + name + '_deadline', expires)
+        }
 
-		/**
-		 * Parse string to json.
-		 *
-		 * @param {string} json_str Json string.
-		 * @return {object|false} Json object
-		 */
-		function parseJson( json_str ) {
-			let json_val
-			try {
-				json_val = JSON.parse(json_str)
-			} catch(e) {
-				return false;
-			}
-			return json_val
-		}
+        /**
+         * Parse string to json.
+         *
+         * @param {string} json_str Json string.
+         * @return {object|false} Json object
+         */
+        function parseJson(json_str) {
+            let json_val
+            try {
+                json_val = JSON.parse(json_str)
+            } catch (e) {
+                return false;
+            }
+            return json_val
+        }
 
-		/**
-		 * Get item from localstorage.
-		 *
-		 * @param {int} productId Product Id.
-		 * @returns {array|false}
-		 */
-		function getLocalItem( name ) {
+        /**
+         * Get item from localstorage.
+         *
+         * @param {int} productId Product Id.
+         * @returns {array|false}
+         */
+        function getLocalItem(name) {
             let hostname = addonifyWishlistJSObject.thisSiteUrl;
-			let localDeadline = localStorage.getItem( hostname + '_' + plugin_name + '_' + name +  '_deadline' )
-			if ( null !== localDeadline ) {
-				const d = new Date();
-				if ( d.getTime() < parseInt( localDeadline ) ) {
-					return jsonToArray( parseJson( localStorage.getItem( hostname + '_' + plugin_name + '_' + name ) ) )
-				} else {
-					localStorage.removeItem( hostname + '_' + plugin_name + '_' + name )
-					localStorage.removeItem( hostname + '_' + plugin_name + '_' + name + '_deadline' );
-				}
-			}
-			return [];
-		}
+            let localDeadline = localStorage.getItem(hostname + '_' + plugin_name + '_' + name + '_deadline')
+            if (null !== localDeadline) {
+                const d = new Date();
+                if (d.getTime() < parseInt(localDeadline)) {
+                    return jsonToArray(parseJson(localStorage.getItem(hostname + '_' + plugin_name + '_' + name)))
+                } else {
+                    localStorage.removeItem(hostname + '_' + plugin_name + '_' + name)
+                    localStorage.removeItem(hostname + '_' + plugin_name + '_' + name + '_deadline');
+                }
+            }
+            return [];
+        }
 
-		/**
-		 * Converts json to Array
-		 * 
-		 * @param {object} json Json object
-		 * @returns {object|false} An array
-		 */
-		function jsonToArray(json){
-			if ( json !== null && typeof json === 'object' ) {
-				let result = new Array;
-				let keys = Object.keys(json);
-				if (keys.length > 0) {
-					keys.forEach(function(key){
-						result[key]= json[key];
-					});
-				}
-				return result;
-			} else {
-				return false;
-			}
-		}
+        /**
+         * Converts json to Array
+         * 
+         * @param {object} json Json object
+         * @returns {object|false} An array
+         */
+        function jsonToArray(json) {
+            if (json !== null && typeof json === 'object') {
+                let result = new Array;
+                let keys = Object.keys(json);
+                if (keys.length > 0) {
+                    keys.forEach(function (key) {
+                        result[key] = json[key];
+                    });
+                }
+                return result;
+            } else {
+                return false;
+            }
+        }
 
     });
 
