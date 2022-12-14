@@ -107,7 +107,7 @@ if ( ! function_exists( 'addonify_wishlist_general_add_to_settings_fields' ) ) {
         return array_merge( $settings_fields, addonify_wishlist_general_setting_fields() );
     }
     
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_general_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_general_add_to_settings_fields' );
 }
 
 
@@ -135,5 +135,5 @@ if ( ! function_exists( 'addonify_wishlist_general_styles_add_to_settings_fields
         return array_merge( $settings_fields, addonify_wishlist_general_styles_settings_fields() );
     }
     
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_general_styles_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_general_styles_add_to_settings_fields' );
 }

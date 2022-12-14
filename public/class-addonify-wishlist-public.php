@@ -454,7 +454,7 @@ class Addonify_Wishlist_Public {
 		if (
 			! isset( $_POST['nonce'] ) ||
 			empty( $_POST['nonce'] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'], $this->plugin_name ) ) )
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), $this->plugin_name )
 		) {
 			return wp_send_json(
 				array(
