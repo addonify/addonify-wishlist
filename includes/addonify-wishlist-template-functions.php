@@ -532,8 +532,8 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_login_link_button' ) ) {
 			( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url()
 		);
 
-		addonify_wishlist_get_template( 
-			'addonify-popup-wishlist-link-button.php', 
+		addonify_wishlist_get_template(
+			'addonify-popup-login-link-button.php',
 			apply_filters(
 				'addonify_wishlist/popup_wishlist_link_button_args',
 				array(
