@@ -26,5 +26,5 @@ if ( ! function_exists( 'addonify_wishlist_custom_css_add_to_settings_fields' ) 
         return array_merge( $settings_fields, addonify_wishlist_custom_css_settings_fields() );
     }
     
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_custom_css_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_custom_css_add_to_settings_fields' );
 }

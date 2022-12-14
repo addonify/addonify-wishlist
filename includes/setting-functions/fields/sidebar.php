@@ -92,7 +92,7 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_add_to_settings_fields' ) ) {
         return array_merge( $settings_fields, addonify_wishlist_sidebar_settings_fields() );
     }
 
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_sidebar_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_sidebar_add_to_settings_fields' );
 }
 
 
@@ -163,7 +163,7 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_modal_styles_add_to_settings_
         return array_merge( $settings_fields, addonify_wishlist_sidebar_modal_styles_settings_fields() );
     }
     
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_sidebar_modal_styles_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_sidebar_modal_styles_add_to_settings_fields' );
 }
 
 
@@ -211,7 +211,7 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_modal_toggle_button_styles_ad
         return array_merge( $settings_fields, addonify_wishlist_sidebar_modal_toggle_button_styles_settings_fields() );
     }
 
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_sidebar_modal_toggle_button_styles_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_sidebar_modal_toggle_button_styles_add_to_settings_fields' );
 }
 
 if ( ! function_exists( 'addonify_wishlist_product_content_styles_settings_fields' ) ) {
@@ -300,7 +300,7 @@ if ( ! function_exists( 'addonify_wishlist_product_content_styles_add_to_setting
         return array_merge( $settings_fields, addonify_wishlist_product_content_styles_settings_fields() );
     }
 
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_product_content_styles_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_product_content_styles_add_to_settings_fields' );
 }
 
 
@@ -334,7 +334,7 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_modal_notification_styles_add
         return array_merge( $settings_fields, addonify_wishlist_sidebar_modal_notification_styles_settings_fields() );
     }
 
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_sidebar_modal_notification_styles_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_sidebar_modal_notification_styles_add_to_settings_fields' );
 }
 
 
@@ -382,5 +382,5 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_modal_view_wishlist_button_st
         return array_merge( $settings_fields, addonify_wishlist_sidebar_modal_view_wishlist_button_styles_settings_fields() );
     }
 
-    add_filter( 'addonify_wishlist/settings_fields', 'addonify_wishlist_sidebar_modal_view_wishlist_button_styles_add_to_settings_fields' );
+    add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_sidebar_modal_view_wishlist_button_styles_add_to_settings_fields' );
 }

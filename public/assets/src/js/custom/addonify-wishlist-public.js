@@ -13,9 +13,6 @@
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
 
-        let adfyEmptyWishlistTextEle = $('#addonify-empty-wishlist-para');
-        console.log(adfyEmptyWishlistTextEle);
-
         if (!isLoggedIn) {
             guest_init();
         }
@@ -220,6 +217,8 @@
                     if (p_tag.length === 1) {
                         p_tag.remove();
                     }
+
+                    addonifyEmptyWishlistText(product_ids.length);
                 });
             }
 
@@ -428,32 +427,19 @@
 
         // Display empty wishlist text.
         function addonifyEmptyWishlistText(wishlistCount) {
-
-            console.log("INFO: addonifyEmptyWishlistText() fn invoked.");
-
-            console.log('INFO: Wishlist count is = ' + wishlistCount + '.');
-
             let addonifyWishlistStickySidebarEle = $("#addonify-wishlist-sticky-sidebar-container");
             let addonifyWishListEmptyTextEle = $("#addonify-wishlist-sticky-sidebar-container #addonify-empty-wishlist-para");
 
             if (wishlistCount > 0) {
 
-                console.log("INFO: Inside wishlistCount > 0 if condition.");
-
                 if (addonifyWishListEmptyTextEle.length > 0) {
-
-                    console.log("NOTE: Empty text found!");
                     addonifyWishListEmptyTextEle.remove();
-                    console.log("NOTE: Empty text removed!");
                 }
 
             } else {
 
                 if (addonifyWishlistStickySidebarEle.length > 0) {
-
                     $('#addonify-wishlist-sticky-sidebar-container ul.adfy-wishlist-sidebar-items-entry').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.emptyWishlistText + '</p>');
-
-                    console.log("INFO: Empty wishlist text added to sidebar.")
                 }
 
                 if ($('#addonify-wishlist-page-container')) {
