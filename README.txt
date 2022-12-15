@@ -134,6 +134,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Added: Option to export all settings.
 - Added: Option to import all settings.
 - Tweak: Now saving wishlist data in browser local strorage if the user is not logged-in.
+- Added: User Data Processing.
 
 = 1.1.0 - 18 November, 2022 =
 
