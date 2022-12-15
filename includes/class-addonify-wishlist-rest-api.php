@@ -70,7 +70,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			);
 
 			register_rest_route(
-				$this->namespace,
+				$this->rest_namespace,
 				'/reset_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -80,7 +80,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			);
 
 			register_rest_route(
-				$this->namespace,
+				$this->rest_namespace,
 				'/export_options',
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
@@ -90,7 +90,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			);
 
 			register_rest_route(
-				$this->namespace,
+				$this->rest_namespace,
 				'/import_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -174,12 +174,12 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			if ( $wpdb->query( $wpdb->prepare( $query, $values ) ) ) { //phpcs:ignore
 				$return_data = array(
 					'success' => true,
-					'message' => esc_html__( 'Options reset success.', 'go-cart' ),
+					'message' => esc_html__( 'Options reset success.', 'addonify-wishlist' ),
 				);
 			} else {
 				$return_data = array(
 					'success' => false,
-					'message' => esc_html__( 'Error! Options reset unsuccessful.', 'go-cart' ),
+					'message' => esc_html__( 'Error! Options reset unsuccessful.', 'addonify-wishlist' ),
 				);
 			}
 
@@ -210,7 +210,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			} else {
 				$message = array(
 					'success' => false,
-					'message' => 'Unable to write on server.',
+					'message' => esc_html__( 'Error! Options export failed!.', 'addonify-wishlist' ),
 				);
 			}
 
@@ -228,17 +228,17 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				return rest_ensure_response(
 					array(
 						'success' => false,
-						'message' => esc_html__( 'No file provided.', 'go-cart' ),
+						'message' => esc_html__( 'No file provided.', 'addonify-wishlist' ),
 					)
 				);
 			}
-			$file_contents = file_get_contents( $_FILES['wishlist_import_file']['tmp_name'] ); //phpcs:ignore
+			$file_contents = file_get_contents( $_FILES['addonify_wishlist_import_file']['tmp_name'] ); //phpcs:ignore
 
-			if ( isset( $_FILES['wishlist_import_file']['type'] ) && 'application/json' !== $_FILES['wishlist_import_file']['type'] ) {
+			if ( isset( $_FILES['addonify_wishlist_import_file']['type'] ) && 'application/json' !== $_FILES['addonify_wishlist_import_file']['type'] ) {
 				return rest_ensure_response(
 					array(
 						'success' => false,
-						'message' => esc_html__( 'File format not supported.', 'go-cart' ),
+						'message' => esc_html__( 'File format not supported.', 'addonify-wishlist' ),
 					)
 				);
 			}
@@ -249,7 +249,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				return rest_ensure_response(
 					array(
 						'success' => false,
-						'message' => esc_html__( 'Ooops, error saving settings!!! File does not contain supported json.', 'go-cart' ),
+						'message' => esc_html__( 'Ooops, error saving settings!!! File does not contain supported json.', 'addonify-wishlist' ),
 					)
 				);
 			}
@@ -261,7 +261,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			return rest_ensure_response(
 				array(
 					'success' => true,
-					'message' => esc_html__( 'Go Cart options has been imported successfully.', 'go-cart' ),
+					'message' => esc_html__( 'Addonify Wishlist options has been imported successfully.', 'addonify-wishlist' ),
 				)
 			);
 		}

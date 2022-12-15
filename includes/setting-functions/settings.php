@@ -340,37 +340,37 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 				'tools'    => array(
 					'sections' => array(
 						'reset-options'  => array(
-							'accordion' => false,
+							'type'       => 'options-box',
 							'fields'    => array(
 								'reset-options' => array(
-									'label'          => esc_html__( 'Reset Options', 'go-cart' ),
-									'confirmText'    => esc_html__( 'Are you sure you want to reset all options?', 'go-cart' ),
-									'confirmYesText' => esc_html__( 'Yes', 'go-cart' ),
-									'confirmNoText'  => esc_html__( 'No', 'go-cart' ),
+									'label'          => esc_html__( 'Reset Options', 'addonify-wishlist' ),
+									'confirmText'    => esc_html__( 'Are you sure you want to reset all settings?', 'addonify-wishlist' ),
+									'confirmYesText' => esc_html__( 'Yes', 'addonify-wishlist' ),
+									'confirmNoText'  => esc_html__( 'No', 'addonify-wishlist' ),
 									'type'           => 'reset-option',
-									'description'    => esc_html__( 'Once you click reset button, all the options of Go Cart will be set to default', 'go-cart' ),
+									'description'    => esc_html__( 'All the settings will be set to default.', 'addonify-wishlist' ),
 								),
 							),
 						),
 						'export-options' => array(
-							'accordion' => false,
+							'type'       => 'options-box',
 							'fields'    => array(
 								'export-options' => array(
-									'label'       => esc_html__( 'Export Options', 'go-cart' ),
-									'description' => esc_html__( 'Backup all options of Go Cart which can be imported in future', 'go-cart' ),
+									'label'       => esc_html__( 'Export Options', 'addonify-wishlist' ),
+									'description' => esc_html__( 'Backup all settings that can be imported in future.', 'addonify-wishlist' ),
 									'type'        => 'export-option',
 								),
 							),
 						),
 						'import-options' => array(
-							'accordion' => false,
-							'title'     => esc_html__( 'Import Options', 'go-cart' ),
+							'type'       => 'options-box',
+							'title'     => esc_html__( 'Import Options', 'addonify-wishlist' ),
 							'fields'    => array(
 								'import-options' => array(
-									'label'       => esc_html__( 'Import Options', 'go-cart' ),
-									'caption'     => esc_html__( 'Drop a file here or click here to upload.', 'go-cart' ),
-									'note'        => esc_html__( 'Only .json file is permitted.', 'go-cart' ),
-									'description' => esc_html__( 'Drag or upload the .json file that you had exported', 'go-cart' ),
+									'label'       => esc_html__( 'Import Options', 'addonify-wishlist' ),
+									'caption'     => esc_html__( 'Drop a file here or click here to upload.', 'addonify-wishlist' ),
+									'note'        => esc_html__( 'Only .json file is permitted.', 'addonify-wishlist' ),
+									'description' => esc_html__( 'Drag or upload the .json file that you had exported.', 'addonify-wishlist' ),
 									'type'        => 'import-option',
 									'className'   => 'fullwidth',
 								),
