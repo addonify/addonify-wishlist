@@ -1935,7 +1935,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     expose();
     var props = __props;
     var slug = props.slug;
-    var addonName;
+    var addonName, addonDescription;
     var isFetchingAddonInfo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true);
     var isWaitingForInstallationSignal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
 
@@ -1972,23 +1972,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 data = _context.sent;
                 addonName = data.name; // Set the name.
-                //console.log(data);
+                addonDescription = data.sections.description; // Set the description.
+                addonDescription = addonDescription.replace(/(<([^>]+)>)/gi, ""); // Remove all HTML tags.
+                addonDescription = addonDescription.substring(0, 110) + "..."; // Shorten the description.
+
                 isFetchingAddonInfo.value = false;
                 if (res.status !== 200) {
                   console.log("Couldn't fetch WordPress plugin repo " + res);
                 }
-                _context.next = 16;
+                _context.next = 19;
                 break;
-              case 13:
-                _context.prev = 13;
+              case 16:
+                _context.prev = 16;
                 _context.t0 = _context["catch"](1);
                 console.log(_context.t0);
-              case 16:
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 13]]);
+        }, _callee, null, [[1, 16]]);
       }));
       return function fetchPluginName(_x) {
         return _ref2.apply(this, arguments);
@@ -2017,6 +2020,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       set addonName(v) {
         addonName = v;
+      },
+      get addonDescription() {
+        return addonDescription;
+      },
+      set addonDescription(v) {
+        addonDescription = v;
       },
       get isFetchingAddonInfo() {
         return isFetchingAddonInfo;
@@ -2516,11 +2525,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       fetchGithubRepo();
     });
-
-    //setTimeout(() => {
-    //	console.log(hotAddons);
-    //}, 10000);
-
     var __returned__ = {
       get allAddons() {
         return allAddons;
@@ -3548,7 +3552,8 @@ var _hoisted_7 = {
   "class": "content"
 };
 var _hoisted_8 = ["innerHTML"];
-var _hoisted_9 = {
+var _hoisted_9 = ["innerHTML"];
+var _hoisted_10 = {
   "class": "adfy-product-actions"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -3565,7 +3570,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     _: 1 /* STABLE */
   }), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ElSkeleton"], {
-    rows: 1,
+    rows: 3,
     animated: ""
   })], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $setup.isFetchingAddonInfo == true]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("figure", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $setup.getWpPluginThumbnail($setup.slug),
@@ -3573,10 +3578,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8 /* PROPS */, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
     "class": "adfy-product-title",
     innerHTML: $setup.addonName
-  }, null, 8 /* PROPS */, _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ElButton"], {
+  }, null, 8 /* PROPS */, _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "adfy-product-description",
+    innerHTML: $setup.addonDescription
+  }, null, 8 /* PROPS */, _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ElButton"], {
     type: "primary",
-    plain: "",
-    round: ""
+    size: "large",
+    plain: ""
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Activate ")];
