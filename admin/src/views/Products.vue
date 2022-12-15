@@ -4,9 +4,12 @@
 	import Navigation from "../components/layouts/Navigation.vue";
 	import Recommended from "../components/layouts/Recommended.vue";
 
-	let data = {};
+	let allAddons = new Object();
+	let hotAddons = new Object();
+	let generalAddons = new Object();
 	let { __ } = wp.i18n;
-	let isLoading = ref(true);
+	let isFetching = ref(true);
+	let isCheckingAddonStatus = ref(true);
 	let github =
 		"https://raw.githubusercontent.com/addonify/recommended-products/main/products.json";
 
@@ -21,7 +24,7 @@
 				// no cache.
 				cache: "no-cache",
 			});
-			data = await res.json();
+			let data = await res.json();
 			console.log(data);
 
 			if (res.status !== 200) {
@@ -29,6 +32,7 @@
 			}
 
 			processRecommendedPluginsList(data);
+			isFetching.value = false;
 		} catch (err) {
 			console.log(err);
 		}
@@ -37,16 +41,20 @@
 	/**
 	 *
 	 * Get the recommended products.
+	 * Used on fetchGithubRepo().
+	 * Used for processing hotAddons, generalAddons & allAddons.
+	 * @param {object} list
 	 */
 
-	const processRecommendedPluginsList = (data) => {
-		let hotProducts = data.data.hot;
+	const processRecommendedPluginsList = (list) => {
+		hotAddons = list.data.hot; // Only hot addons.
+		generalAddons = list.data.general; // Only general addons.
+		allAddons = { ...hotAddons, ...generalAddons }; // Push all addons to allAddons object.
 
-		if (Array.isArray(hotProducts)) {
-			hotProducts.forEach((slug) => {
+		if (Array.isArray(allAddons)) {
+			allAddons.forEach((addon) => {
 				//console.log(addon);
-				checkPluginInstalled(slug);
-				fetchWpPluginInfo(slug);
+				checkAddonStatusOnBoot(addon);
 			});
 		}
 	};
@@ -57,68 +65,34 @@
 	 *
 	 */
 
-	const checkPluginInstalled = (slug) => {
-		console.log(`Checking ${slug} addon installed status.`);
-	};
-
-	/**
-	 *
-	 * WordPress.org/plugins get plugin thumbnail.
-	 */
-
-	const getThumbnailWordPress = (slug) => {
-		let thumbURL = `https://ps.w.org/${slug}/assets/icon-256x256.png`;
-		return thumbURL;
-	};
-
-	/**
-	 *
-	 * WordPress.org/plugins api get plugin info.
-	 */
-
-	const fetchWpPluginInfo = async (slug) => {
-		let wpApi = `https://api.wordpress.org/plugins/info/1.0/${slug}.json`;
-
-		try {
-			const res = await fetch(wpApi);
-			let data = await res.json();
-			console.log(data);
-
-			if (res.status !== 200) {
-				console.log("Couldn't fetch WordPress plugin repo " + res);
-			}
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	/*
-	 *
-	 * Handle install/activate button click action.
-	 * Called from Recommended.vue child component.
-	 */
-
-	const handleActivation = (slug) => {
-		console.log(slug);
+	const checkAddonStatusOnBoot = (slug) => {
+		console.log(`Checking ${slug} plugin installed status.`);
+		isCheckingAddonStatus.value = false;
 	};
 
 	onMounted(() => {
 		fetchGithubRepo();
 	});
+
+	//setTimeout(() => {
+	//	console.log(hotAddons);
+	//}, 10000);
 </script>
 
 <template>
 	<section class="adfy-container">
 		<main class="adfy-columns main-content">
 			<aside class="adfy-col start aside secondary">
-				<Navigation />
+				<Navigation :addons="allAddons" />
 			</aside>
 			<section class="adfy-col end site-primary">
-				<!--<Loading v-if="isLoading" />-->
-				<section id="recommended-products">
+				<Loading v-if="isFetching && isCheckingAddonStatus" />
+				<section v-else id="recommended-products">
 					<div id="recommended-hot-products">
 						<div class="adfy-grid">
-							<!--<Recommended />-->
+							<template v-for="(addon, key) in hotAddons">
+								<Recommended :slug="addon" />
+							</template>
 						</div>
 					</div>
 					<div id="recommended-general-products"></div>

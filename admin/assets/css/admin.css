@@ -270,6 +270,46 @@
   background-color: var(--addonify_primary_color);
 }
 
+.adfy-loading {
+  display: block;
+  position: relative;
+  margin: 50px 0;
+}
+.adfy-loading .pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 30px;
+  height: 30px;
+}
+.adfy-loading .pulse:before {
+  content: "";
+  position: relative;
+  display: block;
+  width: 300%;
+  height: 300%;
+  box-sizing: border-box;
+  margin-left: -100%;
+  margin-top: -100%;
+  border-radius: 100%;
+  background-color: #C5C5C5;
+  animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+.adfy-loading .pulse:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background-color: white;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.01);
+  animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+}
+
 #___adfy-wishlist-app___ {
   display: block;
   position: relative;
@@ -632,44 +672,46 @@
   border-radius: 30px;
 }
 
-.adfy-loading {
-  display: block;
-  position: relative;
-  margin: 50px 0;
+#recommended-products #recommended-hot-products .adfy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 30px;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
 }
-.adfy-loading .pulse {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  width: 30px;
-  height: 30px;
+#recommended-products #recommended-hot-products .adfy-grid .adfy-product-card {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
 }
-.adfy-loading .pulse:before {
-  content: "";
-  position: relative;
-  display: block;
-  width: 300%;
-  height: 300%;
-  box-sizing: border-box;
-  margin-left: -100%;
-  margin-top: -100%;
-  border-radius: 100%;
-  background-color: #C5C5C5;
-  animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+#recommended-products #recommended-hot-products .adfy-grid .adfy-product-card:hover {
+  box-shadow: 0 0 65px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
 }
-.adfy-loading .pulse:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
+#recommended-products #recommended-hot-products .adfy-grid .adfy-product-card .adfy-product-box {
+  display: grid;
+  grid-template-columns: 92px auto;
+  grid-gap: 20px;
+}
+#recommended-products #recommended-hot-products .adfy-grid .adfy-product-card .adfy-product-box .adfy-product-thumb {
   display: block;
   width: 100%;
-  height: 100%;
-  border-radius: 100%;
-  background-color: white;
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.01);
-  animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+#recommended-products #recommended-hot-products .adfy-grid .adfy-product-card .adfy-product-box .adfy-product-thumb > img {
+  display: block;
+  max-width: 100%;
+}
+#recommended-products #recommended-hot-products .adfy-grid .adfy-product-card .adfy-product-box .adfy-product-title {
+  display: block;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 1.3;
+  margin: 0 0 20px 0;
 }
 
 @keyframes pulse-ring {
