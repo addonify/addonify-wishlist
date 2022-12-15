@@ -53,6 +53,9 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Add to cart functionality with/without ajax call.
 - Color option for "Add to Wishlist" button.
 - Shortcode that can be used to display the wishlist in any page.
+- Option to reset all settings.
+- Option to export all options.
+- Option to import all options.
 - Support for custom CSS.
 - Well documented.
 - Users & developers friendly.
