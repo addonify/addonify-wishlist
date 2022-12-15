@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.6
 Tested up to: 6.1.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,7 +127,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 = 1.1.1 - ? December, 2022 =
 
-- Updated: Users wishlist data without login saved clientside.
+- Added: Option to reset all settings.
+- Added: Option to export all settings.
+- Added: Option to import all settings.
+- Tweak: Now saving wishlist data in browser local strorage if the user is not logged-in.
 
 = 1.1.0 - 18 November, 2022 =
 
