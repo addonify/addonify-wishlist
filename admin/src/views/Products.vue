@@ -73,10 +73,6 @@
 	onMounted(() => {
 		fetchGithubRepo();
 	});
-
-	//setTimeout(() => {
-	//	console.log(hotAddons);
-	//}, 10000);
 </script>
 
 <template>

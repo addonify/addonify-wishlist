@@ -9,7 +9,7 @@
 
 	const { slug } = props;
 
-	let addonName;
+	let addonName, addonDescription;
 	let isFetchingAddonInfo = ref(true);
 	let isWaitingForInstallationSignal = ref(false);
 
@@ -35,7 +35,10 @@
 			const res = await fetch(pluginApi);
 			let data = await res.json();
 			addonName = data.name; // Set the name.
-			//console.log(data);
+			addonDescription = data.sections.description; // Set the description.
+			addonDescription = addonDescription.replace(/(<([^>]+)>)/gi, ""); // Remove all HTML tags.
+			addonDescription = addonDescription.substring(0, 110) + "..."; // Shorten the description.
+
 			isFetchingAddonInfo.value = false;
 
 			if (res.status !== 200) {
@@ -71,7 +74,7 @@
 			</template>
 		</el-skeleton>
 		<br />
-		<el-skeleton :rows="1" animated />
+		<el-skeleton :rows="3" animated />
 	</div>
 
 	<div v-show="isFetchingAddonInfo == false" class="adfy-product-card">
@@ -81,8 +84,14 @@
 			</figure>
 			<div class="content">
 				<h3 class="adfy-product-title" v-html="addonName"></h3>
+				<p
+					class="adfy-product-description"
+					v-html="addonDescription"
+				></p>
 				<div class="adfy-product-actions">
-					<el-button type="primary" plain round> Activate </el-button>
+					<el-button type="primary" size="large" plain>
+						Activate
+					</el-button>
 				</div>
 			</div>
 		</div>
