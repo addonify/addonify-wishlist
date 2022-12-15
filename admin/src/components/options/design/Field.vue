@@ -4,6 +4,9 @@
 	import Switch from "../../inputs/Switch.vue";
 	import Color from "../../inputs/Color.vue";
 	import Textarea from "../../inputs/Textarea.vue";
+	import ResetOptions from "../../inputs/ResetOptions.vue";
+	import ExportOptions from "../../inputs/ExportOptions.vue";
+	import ImportOptions from "../../inputs/ImportOptions.vue";
 	import InvalidControl from "../../inputs/InvalidControl.vue";
 
 	let props = defineProps({
@@ -11,6 +14,8 @@
 		sectionId: String,
 		reactiveState: Object,
 	});
+
+	//console.log(props.section);
 </script>
 <template>
 	<h3 class="option-box-title" v-if="props.section.title !== ''">
@@ -63,6 +68,22 @@
 						v-else-if="field.type == 'color'"
 						v-model="props.reactiveState[fieldKey]"
 						:isAlpha="field.isAlphaPicker"
+					/>
+					<ResetOptions
+						v-else-if="field.type == 'reset-option'"
+						:label="field.label"
+						:confirmText="field.confirmText"
+						:confirmYesText="field.confirmYesText"
+						:confirmNoText="field.confirmNoText"
+					/>
+					<ExportOptions
+						v-else-if="field.type == 'export-option'"
+						:label="field.label"
+					/>
+					<ImportOptions
+						v-else-if="field.type == 'import-option'"
+						:caption="field.caption"
+						:note="field.note"
 					/>
 					<InvalidControl v-else />
 				</div>
