@@ -20,10 +20,7 @@
 
 	const fetchGithubRepo = async () => {
 		try {
-			const res = await fetch(github, {
-				// no cache.
-				cache: "no-cache",
-			});
+			const res = await fetch(github);
 			let data = await res.json();
 			//console.log(data);
 
