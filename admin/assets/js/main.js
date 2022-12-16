@@ -2463,10 +2463,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return fetch(github, {
-                  // no cache.
-                  cache: "no-cache"
-                });
+                return fetch(github);
               case 3:
                 res = _context.sent;
                 _context.next = 6;

@@ -32,11 +32,7 @@
 		let pluginApi = `https://api.wordpress.org/plugins/info/1.0/${slug}.json`;
 
 		try {
-			const res = await fetch(pluginApi, {
-				// no cache.
-				method: "GET", // *GET, POST, PUT, DELETE, etc.
-				mode: "cors", // no-cors, *cors, same-origin
-			});
+			const res = await fetch(pluginApi);
 			let data = await res.json();
 			//console.log(data);
 			addonName = data.name; // Set the name.
