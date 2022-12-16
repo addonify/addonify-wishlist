@@ -1964,13 +1964,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 pluginApi = "https://api.wordpress.org/plugins/info/1.0/".concat(slug, ".json");
                 _context.prev = 1;
                 _context.next = 4;
-                return fetch(pluginApi);
+                return fetch(pluginApi, {
+                  // no cache.
+                  method: "GET",
+                  // *GET, POST, PUT, DELETE, etc.
+                  mode: "cors" // no-cors, *cors, same-origin
+                });
               case 4:
                 res = _context.sent;
                 _context.next = 7;
                 return res.json();
               case 7:
                 data = _context.sent;
+                //console.log(data);
                 addonName = data.name; // Set the name.
                 addonDescription = data.sections.description; // Set the description.
                 addonDescription = addonDescription.replace(/(<([^>]+)>)/gi, ""); // Remove all HTML tags.
@@ -2467,24 +2473,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return res.json();
               case 6:
                 data = _context.sent;
-                console.log(data);
+                //console.log(data);
+
                 if (res.status !== 200) {
                   console.log("Couldn't fetch Github repo " + res);
                 }
                 processRecommendedPluginsList(data);
                 isFetching.value = false;
-                _context.next = 16;
+                _context.next = 15;
                 break;
-              case 13:
-                _context.prev = 13;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
-              case 16:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 13]]);
+        }, _callee, null, [[0, 12]]);
       }));
       return function fetchGithubRepo() {
         return _ref2.apply(this, arguments);
@@ -2505,7 +2512,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       allAddons = _objectSpread(_objectSpread({}, hotAddons), generalAddons); // Push all addons to allAddons object.
 
       if (Array.isArray(allAddons)) {
-        allAddons.forEach(function (addon) {
+        allAddons.map(function (addon) {
           //console.log(addon);
           checkAddonStatusOnBoot(addon);
         });

@@ -25,7 +25,7 @@
 				cache: "no-cache",
 			});
 			let data = await res.json();
-			console.log(data);
+			//console.log(data);
 
 			if (res.status !== 200) {
 				console.log("Couldn't fetch Github repo " + res);
@@ -52,7 +52,7 @@
 		allAddons = { ...hotAddons, ...generalAddons }; // Push all addons to allAddons object.
 
 		if (Array.isArray(allAddons)) {
-			allAddons.forEach((addon) => {
+			allAddons.map((addon) => {
 				//console.log(addon);
 				checkAddonStatusOnBoot(addon);
 			});
