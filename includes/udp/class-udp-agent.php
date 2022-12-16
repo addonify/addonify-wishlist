@@ -437,7 +437,7 @@ class Udp_Agent {
 		add_action( $cron_hook_name, array( $this, 'send_data_to_engine' ) );
 
 		if ( ! wp_next_scheduled( $cron_hook_name ) ) {
-			wp_schedule_event( time(), 'weekly', $cron_hook_name );
+			wp_schedule_event( time(), 'daily', $cron_hook_name );
 		}
 
 	}
