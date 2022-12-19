@@ -9,7 +9,7 @@
         let $modal_response = $('#addonify-wishlist-modal-response');
         let $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
         let plugin_name = 'addonify-wishlist';
-        let localDataExpiration = 30;   // local data expiration in days.
+        let localDataExpiration = parseInt(addonifyWishlistJSObject.noOfDaysDataIsValid);   // local data expiration in days.
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
 

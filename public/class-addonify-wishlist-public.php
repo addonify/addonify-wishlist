@@ -201,6 +201,7 @@ class Addonify_Wishlist_Public {
 				'addonify_get_wishlist_table'        => 'addonify_get_wishlist_table',
 				'addonify_get_wishlist_sidebar'      => 'addonify_get_wishlist_sidebar',
 				'thisSiteUrl'                        => get_bloginfo( 'url' ),
+				'noOfDaysDataIsValid'                => (int) addonify_wishlist_get_option( 'cookies_lifetime' ),
 			)
 		);
 
