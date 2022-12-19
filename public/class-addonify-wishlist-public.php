@@ -633,7 +633,7 @@ class Addonify_Wishlist_Public {
 
 		if ( is_user_logged_in() ) {
 
-			$return_boolean = ( update_user_meta( get_current_user_id(), '_' . $this->plugin_name, wp_json_encode( $data ) ) ) ? true : false;
+			$return_boolean = ( update_user_meta( get_bloginfo( 'url' ) . '_' . get_current_user_id(), '_' . $this->plugin_name, wp_json_encode( $data ) ) ) ? true : false;
 		}
 
 		$this->wishlist_items_count = count( $this->wishlist_items );
@@ -672,7 +672,7 @@ class Addonify_Wishlist_Public {
 		$current_user_id = get_current_user_id();
 
 		if ( 0 !== $current_user_id ) {
-			$wishlist_data = get_user_meta( $current_user_id, '_' . $this->plugin_name, true );
+			$wishlist_data = get_user_meta( get_bloginfo( 'url' ) . '_' . $current_user_id, '_' . $this->plugin_name, true );
 
 			return $wishlist_data ? json_decode( $wishlist_data, true ) : array();
 		}
