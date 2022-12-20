@@ -102,8 +102,6 @@ class Udp_Agent {
 	 */
 	public function on_admin_init() {
 
-		$this->show_user_tracking_admin_notice();
-
 		// register and save settings data.
 		register_setting(
 			'general',
@@ -169,69 +167,6 @@ class Udp_Agent {
 	// ----------------------------------------------
 
 	/**
-	 * Show admin notice to collect user data.
-	 *
-	 * @since    1.0.0
-	 */
-	public function show_user_tracking_admin_notice() {
-
-		$show_admin_notice = true;
-		$users_choice      = get_option( 'udp_agent_allow_tracking' );
-
-		if ( 'later' !== $users_choice && ! empty( $users_choice ) ) {
-
-			// user has already clicked "yes" or "no" in admin notice.
-			// do not show this notice.
-			$show_admin_notice = false;
-
-		} else {
-
-			$tracking_msg_last_shown_at = intval( get_option( 'udp_agent_tracking_msg_last_shown_at' ) );
-
-			if ( $tracking_msg_last_shown_at > ( time() - ( DAY_IN_SECONDS * 3 ) ) ) {
-				// do not show,
-				// if last admin notice was shown less than 1 day ago.
-				$show_admin_notice = false;
-			}
-		}
-
-		if ( ! $show_admin_notice ) {
-			return;
-		}
-		$content = '<p>' . sprintf(
-			/* translators: %s: agent name */
-			__( '%s is asking to allow tracking your non-sensitive WordPress data?', 'udp-agent' ),
-			$this->find_agent_name( $this->agent_root_dir )
-		) . '</p><p>';
-
-		$content .= sprintf(
-			/* translators: %s: agent allow access link, %s: Allow */
-			__( '<a href="%1$s" class="button button-primary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>', 'udp-agent' ),
-			add_query_arg( 'udp-agent-allow-access', 'yes' ),
-			'Allow'
-		);
-
-		$content .= sprintf(
-			/* translators: %s: agent allow access link, %s: Allow */
-			__( '<a href="%1$s" class="button button-secondary udp-agent-access_tracking-no" style="margin-right: 10px" >%2$s</a>', 'udp-agent' ),
-			add_query_arg( 'udp-agent-allow-access', 'no' ),
-			'Do not show again'
-		);
-
-		$content .= sprintf(
-			/* translators: %s: agent allow access link, %s: Allow */
-			__( '<a href="%1$s" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>', 'udp-agent' ),
-			add_query_arg( 'udp-agent-allow-access', 'later' ),
-			'Later'
-		);
-
-		$content .= '</p>';
-		$this->show_admin_notice( 'warning', $content );
-	}
-
-
-
-	/**
 	 * User has decided to allow or not allow user tracking.
 	 * save this value in database.
 	 *
@@ -256,31 +191,6 @@ class Udp_Agent {
 		exit;
 
 	}
-
-
-	/**
-	 * A little helper function to show admin notice.
-	 *
-	 * @since    1.0.0
-	 * @param string $error_class Error Class/Type.
-	 * @param string $msg Message.
-	 */
-	private function show_admin_notice( $error_class, $msg ) {
-		add_action(
-			'load-index.php',
-			function () use ( $error_class, $msg ) {
-				add_action(
-					'admin_notices',
-					function() use ( $error_class, $msg ) {
-						$class = 'is-dismissible  notice notice-' . $error_class;
-						printf( '<div class="%1$s">%2$s</div>', esc_attr( $class ), wp_kses_post( $msg ) );
-					}
-				);
-			}
-		);
-
-	}
-
 
 	// ----------------------------------------------
 	// Data collection and authentication with engine.
@@ -380,46 +290,6 @@ class Udp_Agent {
 		return true;
 
 	}
-
-
-	/**
-	 * Find agent's parent's name. It can be theme or plugin.
-	 *
-	 * @since    1.0.0
-	 * @param    string $root_dir Path to root folder of the agents parent.
-	 */
-	private function find_agent_name( $root_dir ) {
-
-		if ( ! empty( $this->agent_name ) ) {
-			return $this->agent_name;
-		}
-
-		$agent_name = '';
-
-		if ( file_exists( $root_dir . '/functions.php' ) ) {
-			// it is a theme
-			// return get_style.
-
-			$my_theme = wp_get_theme( basename( $root_dir ) );
-			if ( $my_theme->exists() ) {
-				$agent_name = $my_theme->get( 'Name' );
-			}
-		} else {
-			// it is a plugin.
-			$plugin_file = $this->agent_root_dir . DIRECTORY_SEPARATOR . basename( $this->agent_root_dir ) . '.php';
-			$plugin_data = get_file_data(
-				$plugin_file,
-				array(
-					'name' => 'Plugin Name',
-				)
-			);
-
-			$agent_name = $plugin_data['name'];
-		}
-		$this->agent_name = $agent_name;
-		return $agent_name;
-	}
-
 
 	// ------------------------------------------------
 	// Cron
