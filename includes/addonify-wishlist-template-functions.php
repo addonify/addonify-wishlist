@@ -10,7 +10,13 @@
  */
 
 if ( ! function_exists( 'addonify_wishlist_locate_template' ) ) {
-
+	/**
+	 * Locates template.
+	 *
+	 * @param string $template_name Template name.
+	 * @param string $template_path Template path.
+	 * @param string $default_path Default path.
+	 */
 	function addonify_wishlist_locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
 		// Set template location for theme.
@@ -36,13 +42,20 @@ if ( ! function_exists( 'addonify_wishlist_locate_template' ) ) {
 			$template = $default_path . $template_name;
 		endif;
 
-		return apply_filters( 'addonify_wishlist/locate_template', $template, $template_name, $template_path, $default_path );
+		return apply_filters( 'addonify_wishlist_locate_template', $template, $template_name, $template_path, $default_path );
 	}
 }
 
 
 if ( ! function_exists( 'addonify_wishlist_get_template' ) ) {
-
+	/**
+	 * Return template content if found.
+	 *
+	 * @param string $template_name Template name.
+	 * @param array  $args Arguments.
+	 * @param string $tempate_path Template path.
+	 * @param string $default_path Default path.
+	 */
 	function addonify_wishlist_get_template( $template_name, $args = array(), $tempate_path = '', $default_path = '' ) {
 
 		if ( is_array( $args ) && isset( $args ) ) :
@@ -52,7 +65,7 @@ if ( ! function_exists( 'addonify_wishlist_get_template' ) ) {
 		$template_file = addonify_wishlist_locate_template( $template_name, $tempate_path, $default_path );
 
 		if ( ! file_exists( $template_file ) ) :
-			_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $template_file ), '1.0.0' );
+			_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $template_file ), '1.0.0' ); //phpcs:ignore
 			return;
 		endif;
 
@@ -60,10 +73,10 @@ if ( ! function_exists( 'addonify_wishlist_get_template' ) ) {
 	}
 }
 
-
-
 if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
-
+	/**
+	 * Render add to wishlist button.
+	 */
 	function addonify_wishlist_render_add_to_wishlist_button() {
 
 		// Return if button label and icon is not set.
@@ -155,16 +168,17 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 		addonify_wishlist_get_template(
 			'addonify-add-to-wishlist-button.php',
 			apply_filters(
-				'addonify_wishlist/add_to_wishlist_button_args',
+				'addonify_wishlist_add_to_wishlist_button_args',
 				$add_to_wishlist_button_args
 			)
 		);
 	}
 }
 
-
 if ( ! function_exists( 'addonify_wishlist_render_wishlist_content' ) ) {
-
+	/**
+	 * Render wishlist content.
+	 */
 	function addonify_wishlist_render_wishlist_content() {
 
 		$wishlist_product_ids = array();
@@ -182,7 +196,7 @@ if ( ! function_exists( 'addonify_wishlist_render_wishlist_content' ) ) {
 					'addonify_wishlist_shortcode_contents_args',
 					array(
 						'wishlist_product_ids' => $wishlist_product_ids,
-						'nonce' => wp_create_nonce( 'addonify-wishlist' ),
+						'nonce'                => wp_create_nonce( 'addonify-wishlist' ),
 					)
 				)
 			);
@@ -194,7 +208,7 @@ if ( ! function_exists( 'addonify_wishlist_render_wishlist_content' ) ) {
 					'addonify_wishlist_shortcode_contents_args',
 					array(
 						'wishlist_product_ids' => $wishlist_product_ids,
-						'nonce' => wp_create_nonce( 'addonify-wishlist' ),
+						'nonce'                => wp_create_nonce( 'addonify-wishlist' ),
 					)
 				)
 			);
@@ -204,7 +218,9 @@ if ( ! function_exists( 'addonify_wishlist_render_wishlist_content' ) ) {
 
 
 if ( ! function_exists( 'addonify_wishlist_render_modal_wrapper' ) ) {
-
+	/**
+	 * Render modal wrapper.
+	 */
 	function addonify_wishlist_render_modal_wrapper() {
 
 		$css_class = ( (int) addonify_wishlist_get_option( 'require_login' ) && ! is_user_logged_in() ) ? 'require-login' : '';
@@ -212,7 +228,7 @@ if ( ! function_exists( 'addonify_wishlist_render_modal_wrapper' ) ) {
 		addonify_wishlist_get_template(
 			'addonify-wishlist-modal-wrapper.php',
 			apply_filters(
-				'addonify_wishlist/modal_wrapper_args',
+				'addonify_wishlist_modal_wrapper_args',
 				array(
 					'css_classes' => $css_class,
 				)
@@ -223,7 +239,11 @@ if ( ! function_exists( 'addonify_wishlist_render_modal_wrapper' ) ) {
 
 
 if ( ! function_exists( 'addonify_wishlist_render_sidebar_toggle_button' ) ) {
-
+	/**
+	 * Render sidebar toggle button.
+	 *
+	 * @param array $product_ids Product ids.
+	 */
 	function addonify_wishlist_render_sidebar_toggle_button( $product_ids = array() ) {
 
 		if ( (int) addonify_wishlist_get_option( 'show_sidebar' ) !== 1 ) {
@@ -239,7 +259,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_toggle_button' ) ) {
 		addonify_wishlist_get_template(
 			'addonify-wishlist-sidebar-toggle-button.php',
 			apply_filters(
-				'addonify_wishlist/sidebar_toggle_button_args',
+				'addonify_wishlist_sidebar_toggle_button_args',
 				array(
 					'css_classes' => implode( ' ', $css_classes ),
 					'label'       => addonify_wishlist_get_option( 'sidebar_btn_label' ),
@@ -251,9 +271,12 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_toggle_button' ) ) {
 	}
 }
 
-
 if ( ! function_exists( 'addonify_wishlist_render_sidebar' ) ) {
-
+	/**
+	 * Render sidebar.
+	 *
+	 * @param array $product_ids Product ids.
+	 */
 	function addonify_wishlist_render_sidebar( $product_ids = array() ) {
 
 		if ( get_the_ID() === (int) addonify_wishlist_get_option( 'wishlist_page' ) ) {
@@ -268,7 +291,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar' ) ) {
 		addonify_wishlist_get_template(
 			'addonify-wishlist-sidebar.php',
 			apply_filters(
-				'addonify_wishlist/sidebar_args',
+				'addonify_wishlist_sidebar_args',
 				array(
 					'total_items'                     => addonify_wishlist_get_wishlist_items_count(),
 					'css_class'                       => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' ),
@@ -283,10 +306,12 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar' ) ) {
 	}
 }
 
-
-
 if ( ! function_exists( 'addonify_wishlist_render_sidebar_loop' ) ) {
-
+	/**
+	 * Render sidebar loop.
+	 *
+	 * @param array $wishlist_product_ids Product ids.
+	 */
 	function addonify_wishlist_render_sidebar_loop( $wishlist_product_ids = array() ) {
 		$guest = false;
 		if ( is_user_logged_in() ) {
@@ -302,7 +327,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_loop' ) ) {
 		addonify_wishlist_get_template(
 			'addonify-wishlist-sidebar-loop.php',
 			apply_filters(
-				'addonify_wishlist/sidebar_loop_args',
+				'addonify_wishlist_sidebar_loop_args',
 				array(
 					'wishlist_product_ids' => $wishlist_product_ids,
 					'guest'                => $guest,
@@ -312,27 +337,31 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_loop' ) ) {
 	}
 }
 
-
-
 if ( ! function_exists( 'addonify_wishlist_render_single_wishlist_button' ) ) {
-
+	/**
+	 * Render single wishlist button.
+	 */
 	function addonify_wishlist_render_single_wishlist_button() {
 
 		addonify_wishlist_get_template(
 			'addonify-wishlist-sidebar-loop.php',
 			apply_filters(
-				'addonify_wishlist/sidebar_loop_args',
+				'addonify_wishlist_sidebar_loop_args',
 				array(
-					'wishlist_product_ids' => $wishlist_product_ids,
+					'wishlist_product_ids' => isset( $wishlist_product_ids ) ? $wishlist_product_ids : array(),
 				)
 			)
 		);
 	}
 }
 
-
 if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
-
+	/**
+	 * Render single wishlist button.
+	 *
+	 * @param string $product_id Product id.
+	 * @param bool   $guest False if user is logged in, true otherwise.
+	 */
 	function addonify_wishlist_render_sidebar_product( $product_id, $guest = false ) {
 
 		$product = wc_get_product( $product_id );
@@ -348,7 +377,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 						if ( $product->get_image() ) {
 							?>
 							<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
-								<?php echo wp_kses_post( $product->get_image( array(72, 72) ) ); ?>
+								<?php echo wp_kses_post( $product->get_image( array( 72, 72 ) ) ); ?>
 							</a>
 							<?php
 						}
@@ -412,7 +441,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 								<a 
 									href="<?php echo esc_url( $product->get_permalink() ); ?>" 
 									class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" 
-									<?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>
+									<?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); //phpcs:ignore ?>
 								>
 									<?php echo esc_html( $product->add_to_cart_text() ); ?>
 								</a>
@@ -436,7 +465,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 							<a 
 								href="<?php echo esc_url( $product->add_to_cart_url() ); ?>" 
 								class="<?php echo esc_attr( implode( ' ', $add_to_cart_button_classes ) ); ?>" 
-								<?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); ?>
+								<?php echo wc_implode_html_attributes( $add_to_cart_button_attributes ); //phpcs:ignore ?>
 							>
 								<?php echo esc_html( $product->add_to_cart_text() ); ?>
 							</a>
@@ -484,7 +513,9 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 
 
 if ( ! function_exists( 'addonify_wishlist_render_popup_wishlist_link_button' ) ) {
-
+	/**
+	 * Render popup wishlist link button.
+	 */
 	function addonify_wishlist_render_popup_wishlist_link_button() {
 		// If login is not required, display link button to wishlist page.
 		if (
@@ -502,7 +533,7 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_wishlist_link_button' ) 
 		addonify_wishlist_get_template(
 			'addonify-popup-wishlist-link-button.php',
 			apply_filters(
-				'addonify_wishlist/popup_wishlist_link_button_args',
+				'addonify_wishlist_popup_wishlist_link_button_args',
 				array(
 					'wishlist_page_url'          => $wishlist_page_url,
 					'view_wishlist_button_label' => $view_wishlist_button_label,
@@ -512,9 +543,10 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_wishlist_link_button' ) 
 	}
 }
 
-
 if ( ! function_exists( 'addonify_wishlist_render_popup_login_link_button' ) ) {
-
+	/**
+	 * Render popup link button.
+	 */
 	function addonify_wishlist_render_popup_login_link_button() {
 		// If login is not required, display link button to wishlist page.
 		if (
@@ -535,27 +567,28 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_login_link_button' ) ) {
 		addonify_wishlist_get_template(
 			'addonify-popup-login-link-button.php',
 			apply_filters(
-				'addonify_wishlist/popup_wishlist_link_button_args',
+				'addonify_wishlist_popup_wishlist_link_button_args',
 				array(
-					'redirect_url' => $redirect_url,
-					'login_button_label' => apply_filters( 'addonify_wishlist/popup_login_button_label', __( 'Login', 'addonify-wishlist' ) ),
+					'redirect_url'       => $redirect_url,
+					'login_button_label' => apply_filters( 'addonify_wishlist_popup_login_button_label', __( 'Login', 'addonify-wishlist' ) ),
 				)
 			)
 		);
 	}
 }
 
-
 if ( ! function_exists( 'addonify_wishlist_render_popup_close_button' ) ) {
-
+	/**
+	 * Render popup close button.
+	 */
 	function addonify_wishlist_render_popup_close_button() {
 
 		addonify_wishlist_get_template(
 			'addonify-popup-close-button.php',
 			apply_filters(
-				'addonify_wishlist/popup_close_button_args',
+				'addonify_wishlist_popup_close_button_args',
 				array(
-					'close_button_label' => apply_filters( 'addonify_wishlist/popup_close_button_label', __( 'Close', 'addonify-wishlist' ) ),
+					'close_button_label' => apply_filters( 'addonify_wishlist_popup_close_button_label', __( 'Close', 'addonify-wishlist' ) ),
 				)
 			)
 		);

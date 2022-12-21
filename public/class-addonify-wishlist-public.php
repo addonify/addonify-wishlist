@@ -672,7 +672,7 @@ class Addonify_Wishlist_Public {
 		$current_user_id = get_current_user_id();
 
 		if ( 0 !== $current_user_id ) {
-			$wishlist_data = get_user_meta( get_bloginfo( 'url' ) . '_' . $current_user_id, '_' . $this->plugin_name, true );
+			$wishlist_data = get_user_meta( $current_user_id, get_bloginfo( 'url' ) . '_' . $this->plugin_name, true );
 
 			return $wishlist_data ? json_decode( $wishlist_data, true ) : array();
 		}
