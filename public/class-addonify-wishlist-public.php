@@ -633,8 +633,7 @@ class Addonify_Wishlist_Public {
 		do_action( 'addonify_wishlist_before_adding_to_wishlist' );
 
 		if ( is_user_logged_in() ) {
-
-			$return_boolean = ( update_user_meta( get_bloginfo( 'url' ) . '_' . get_current_user_id(), '_' . $this->plugin_name, wp_json_encode( $data ) ) ) ? true : false;
+			$return_boolean = ( update_user_meta( get_current_user_id(), get_bloginfo( 'url' ) . '_' . $this->plugin_name, wp_json_encode( $data ) ) ) ? true : false;
 		}
 
 		$this->wishlist_items_count = count( $this->wishlist_items );
