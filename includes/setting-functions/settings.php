@@ -47,7 +47,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'btn_label_if_added_to_wishlist'           => __( 'Already in wishlist', 'addonify-wishlist' ),
 				'show_icon'                                => true,
 				'btn_custom_class'                         => '',
-				'after_add_to_wishlist_action'             => 'none',
+				'after_add_to_wishlist_action'             => 'show_popup_notice',
 				'view_wishlist_btn_text'                   => __( 'View wishlist', 'addonify-wishlist' ),
 				'product_added_to_wishlist_text'           => __( '{product_name} added to wishlist', 'addonify-wishlist' ),
 				'product_already_in_wishlist_text'         => __( '{product_name} already in wishlist', 'addonify-wishlist' ),

@@ -149,6 +149,11 @@ class Addonify_Wishlist_Public {
 
 		wp_enqueue_style( 'addonify-wishlist-icon', plugin_dir_url( __FILE__ ) . 'assets/fonts/addonify-wishlist-icon.min.css', array(), $this->version );
 
+		$css  = ':root {';
+		$css .= '--adfy_wishlist_sidebar_btn_position_offset: ' . addonify_wishlist_get_option( 'sidebar_btn_position_offset' ) . ';';
+		$css .= '}';
+		wp_add_inline_style( $this->plugin_name, $css );
+
 		if ( (int) addonify_wishlist_get_option( 'load_styles_from_plugin' ) === 1 ) {
 
 			$inline_css = $this->dynamic_css();
@@ -204,6 +209,8 @@ class Addonify_Wishlist_Public {
 				'noOfDaysDataIsValid'                => (int) addonify_wishlist_get_option( 'cookies_lifetime' ),
 				'redirectToCheckOutAfterAddedToCart' => addonify_wishlist_get_option( 'redirect_to_checkout_if_product_added_to_cart' ),
 				'checkoutPageURL'                    => wc_get_checkout_url(),
+				'afterAddToWishlistAction'           => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
+				'wishlistPageURL'                    => esc_url( get_permalink( get_page_by_title( 'Wishlist' ) ) ),
 			)
 		);
 
@@ -918,7 +925,6 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_popup_modal_btn_text_color_hover' => addonify_wishlist_get_option( 'popup_modal_btn_text_color_hover' ),
 			'--adfy_wishlist_popup_modal_btn_bg_color'     => addonify_wishlist_get_option( 'popup_modal_btn_bg_color' ),
 			'--adfy_wishlist_popup_modal_btn_bg_color_hover' => addonify_wishlist_get_option( 'popup_modal_btn_bg_color_hover' ),
-			'--adfy_wishlist_sidebar_btn_position_offset'  => addonify_wishlist_get_option( 'sidebar_btn_position_offset' ),
 			'--adfy_wishlist_sidebar_modal_toggle_btn_label_color' => addonify_wishlist_get_option( 'sidebar_modal_toggle_btn_label_color' ),
 			'--adfy_wishlist_sidebar_modal_toggle_btn_label_color_hover' => addonify_wishlist_get_option( 'sidebar_modal_toggle_btn_label_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_toggle_btn_bg_color' => addonify_wishlist_get_option( 'sidebar_modal_toggle_btn_bg_color' ),
