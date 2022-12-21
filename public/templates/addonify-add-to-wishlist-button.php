@@ -44,7 +44,7 @@ if ( true === $require_login ) {
 	}
 } else {
 
-	if ( $display_popup_notice ) {
+	if ( $display_popup_notice || ! is_user_logged_in() ) {
 		?>
 		<button 
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 

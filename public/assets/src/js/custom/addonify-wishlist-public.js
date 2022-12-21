@@ -357,6 +357,10 @@
 
                 setProductids(wishlist);
 
+                if(addonifyWishlistJSObject.afterAddToWishlistAction === 'redirect_to_wishlist_page'){ 
+                    window.location.href = addonifyWishlistJSObject.wishlistPageURL;
+                }
+
                 $.post(
                     addonifyWishlistJSObject.ajax_url,
                     {

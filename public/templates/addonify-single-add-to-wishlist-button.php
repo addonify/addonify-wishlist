@@ -14,6 +14,5 @@ defined( 'ABSPATH' ) || exit;
 
 ?>
 <div class="addonify-add-to-wishlist-btn-wrapper">
-    <?php do_action( 'addonify_wishlist_render_wishlist_button' ); ?>
+	<?php do_action( 'addonify_wishlist_render_wishlist_button' ); ?>
 </div>
-<?php

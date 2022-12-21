@@ -18,6 +18,6 @@ add_action( 'addonify_wishlist_render_sidebar_loop', 'addonify_wishlist_render_s
 add_action( 'addonify_wishlist_render_shortcode_content', 'addonify_wishlist_render_wishlist_content' );
 
 
-add_action( 'addonify_wishlist/popup_action_btns', 'addonify_wishlist_render_popup_wishlist_link_button' );
-add_action( 'addonify_wishlist/popup_action_btns', 'addonify_wishlist_render_popup_login_link_button' );
-add_action( 'addonify_wishlist/popup_action_btns', 'addonify_wishlist_render_popup_close_button' );
+add_action( 'addonify_wishlist_popup_action_btns', 'addonify_wishlist_render_popup_wishlist_link_button' );
+add_action( 'addonify_wishlist_popup_action_btns', 'addonify_wishlist_render_popup_login_link_button' );
+add_action( 'addonify_wishlist_popup_action_btns', 'addonify_wishlist_render_popup_close_button' );
