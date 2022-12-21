@@ -120,7 +120,8 @@ if ( function_exists( 'wc_print_notices' ) ) {
 											?>
 											<button 
 												class="button adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-ajax-add-to-cart addonify-wishlist-table-button" 
-												name="addonify_wishlist_add_to_cart" 
+												name="addonify_wishlist_add_to_cart"
+												data-product_name = "<?php echo esc_attr( $product->get_name() ); ?>"
 												value="<?php echo esc_attr( $product_id ); ?>">
 													<?php echo esc_html( $product->add_to_cart_text() ); ?>
 											</button>

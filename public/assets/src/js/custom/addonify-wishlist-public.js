@@ -96,6 +96,8 @@
                         // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
                         $(document).trigger('addonify_added_to_wishlist', [{ productID: thisButton.data('product_id') }]);
 
+                        addonifyShowPopupModal('{product_name} added to cart.', thisButton.data('product_name'), 'success')
+
                         if (addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart == '1' && parentProductRow) {
 
                             parentProductRow.remove();
@@ -397,7 +399,6 @@
 
         // Show popup modal with message.
         function addonifyShowPopupModal(response_text, product_name, icon) {
-
             // change icon
             $('.adfy-wishlist-icon-entry .adfy-wishlist-icon').hide();
             $('.adfy-wishlist-icon-entry .adfy-wishlist-icon.adfy-status-' + icon).show();

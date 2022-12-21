@@ -41,7 +41,7 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 
 		if ( is_user_logged_in() ) {
 			$current_user_id = get_current_user_id();
-			$user_meta_data  = get_user_meta( $current_user_id, '_addonify-wishlist', true );
+			$user_meta_data  = get_user_meta( $current_user_id, get_bloginfo( 'url' ) . '_addonify-wishlist', true );
 			$wishlist_items  = ! $user_meta_data || '' === $user_meta_data ? array() : json_decode( $user_meta_data, true );
 		}
 		return $wishlist_items;
