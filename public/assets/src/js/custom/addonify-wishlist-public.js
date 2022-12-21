@@ -185,14 +185,15 @@
             let addedToWishlistButtonLabel = addonifyWishlistJSObject.addedToWishlistButtonLabel;
 
             wishlist_products.forEach(function (value, index) {
-                $('button[data-product_id="' + value + '"]').find('span').html(addedToWishlistButtonLabel);
-                $('button[data-product_id="' + value + '"]').find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
+                $('button.adfy-wishlist-btn[data-product_id="' + value + '"]').find('span').html(addedToWishlistButtonLabel);
+                $('button.adfy-wishlist-btn[data-product_id="' + value + '"]').find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
             });
         }
 
         if (!isLoggedIn) {
             // actions on wishlist page.
             if ($body.find('div#addonify-wishlist-page-container').length > 0) {
+                $('div#addonify-wishlist-page-container').append('<div id="addonify-wishlist_spinner"></div>');
                 //populate table
                 $.post(
                     addonifyWishlistJSObject.ajax_url,
@@ -202,7 +203,7 @@
                         nonce: addonifyWishlistJSObject.nonce
                     },
                     function (result) {
-                        $body.find('div#addonify-wishlist-page-container').html(result);
+                        $body.find('div#addonify-wishlist-page-container').replaceWith(result);
                     }
                 );
 
