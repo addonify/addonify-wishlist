@@ -108,6 +108,9 @@
 
                             addonifyWishlistEmptyWishlist(response.message);
                         }
+                        if(addonifyWishlistJSObject.redirectToCheckOutAfterAddedToCart){
+                            window.location.href = addonifyWishlistJSObject.checkoutPageURL
+                        }
                     }
                 },
                 "json"
