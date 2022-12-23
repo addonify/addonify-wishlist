@@ -54,7 +54,8 @@ if ( function_exists( 'wc_print_notices' ) ) {
 									?>
 									<button 
 										class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_html( $remove_class ); ?> addonify-wishlist-table-button" 
-										name="addonify_wishlist_remove" 
+										name="addonify_wishlist_remove"
+										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product_id ); ?>"
 									>
 										<i class="adfy-wishlist-icon trash-2"></i>
@@ -67,6 +68,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 										type="submit"
 										class="adfy-wishlist-btn <?php echo esc_html( $remove_class ); ?> addonify-wishlist-icon"
 										name="addonify-remove-from-wishlist"
+										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product_id ); ?>"
 									>
 										<i class="adfy-wishlist-icon trash-2"></i>

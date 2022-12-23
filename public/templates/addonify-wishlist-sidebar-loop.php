@@ -59,6 +59,7 @@ if (
 									<button 
 										class="button adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-ajax-add-to-cart addonify-wishlist-sidebar-button" 
 										name="addonify_wishlist_add_to_cart" 
+										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product_id ); ?>">
 											<?php echo esc_html( $product->add_to_cart_text() ); ?>
 									</button>
@@ -69,6 +70,7 @@ if (
 										type="submit" 
 										class="button adfy-wishlist-btn addonify-wishlist-add-to-cart"
 										name="addonify-add-to-cart-from-wishlist"
+										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product->get_id() ); ?>"
 									>
 										<?php echo esc_html( $product->add_to_cart_text() ); ?>
