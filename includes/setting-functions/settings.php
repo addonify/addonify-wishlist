@@ -44,6 +44,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'cookies_lifetime'                         => 30,
 				'btn_position'                             => 'before_add_to_cart',
 				'btn_label'                                => __( 'Add to wishlist', 'addonify-wishlist' ),
+				'btn_label_when_added_to_wishlist'         => __( 'Added to wishlist', 'addonify-wishlist' ),
 				'btn_label_if_added_to_wishlist'           => __( 'Already in wishlist', 'addonify-wishlist' ),
 				'show_icon'                                => true,
 				'btn_custom_class'                         => '',
@@ -51,6 +52,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'view_wishlist_btn_text'                   => __( 'View wishlist', 'addonify-wishlist' ),
 				'product_added_to_wishlist_text'           => __( '{product_name} added to wishlist', 'addonify-wishlist' ),
 				'product_already_in_wishlist_text'         => __( '{product_name} already in wishlist', 'addonify-wishlist' ),
+				'popup_close_btn_text'                     => __( 'Close', 'addonify-wishlist' ),
 				'show_sidebar'                             => false,
 				'sidebar_position'                         => 'right',
 				'sidebar_title'                            => __( 'My wishlist', 'addonify-wishlist' ),
@@ -230,6 +232,44 @@ if ( ! function_exists( 'addonify_wishlist_settings_fields' ) ) {
 }
 
 
+/**
+ * Add setting fields into the global setting fields array.
+ *
+ * @since 1.0.0
+ * @param mixed $settings_fields Setting fields.
+ * @return array
+ */
+function addonify_wishlist_add_fields_to_settings_fields( $settings_fields ) {
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_general_setting_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_general_styles_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_modal_notice_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_modal_notice_styles_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_styles_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_toggle_button_styles_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_product_content_styles_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_notification_styles_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_button_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_add_to_wishlist_button_styles_settings_fields() );
+
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_custom_css_settings_fields() );
+
+	return $settings_fields;
+}
+add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_add_fields_to_settings_fields' );
+
+
 if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 	/**
 	 * Define settings sections and respective settings fields.
@@ -340,8 +380,8 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 				'tools'    => array(
 					'sections' => array(
 						'reset-options'  => array(
-							'type'       => 'options-box',
-							'fields'    => array(
+							'type'   => 'options-box',
+							'fields' => array(
 								'reset-options' => array(
 									'label'          => esc_html__( 'Reset Options', 'addonify-wishlist' ),
 									'confirmText'    => esc_html__( 'Are you sure you want to reset all settings?', 'addonify-wishlist' ),
@@ -353,8 +393,8 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 							),
 						),
 						'export-options' => array(
-							'type'       => 'options-box',
-							'fields'    => array(
+							'type'   => 'options-box',
+							'fields' => array(
 								'export-options' => array(
 									'label'       => esc_html__( 'Export Options', 'addonify-wishlist' ),
 									'description' => esc_html__( 'Backup all settings that can be imported in future.', 'addonify-wishlist' ),
@@ -363,9 +403,9 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 							),
 						),
 						'import-options' => array(
-							'type'       => 'options-box',
-							'title'     => esc_html__( 'Import Options', 'addonify-wishlist' ),
-							'fields'    => array(
+							'type'   => 'options-box',
+							'title'  => esc_html__( 'Import Options', 'addonify-wishlist' ),
+							'fields' => array(
 								'import-options' => array(
 									'label'       => esc_html__( 'Import Options', 'addonify-wishlist' ),
 									'caption'     => esc_html__( 'Drop a file here or click here to upload.', 'addonify-wishlist' ),
