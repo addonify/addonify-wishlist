@@ -14,7 +14,7 @@ Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wi
 
 Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functionality to your e-commerce shop. Addonify Wishlist is packed with various functionalities that will help the shop owner to customize the wishlist behaviour. 
 
-👉 [Demo one](https://demo.addonify.com/woo/01/wishlist/) 
+👉 [Live demo preview](https://demo.addonify.com/woo/01/wishlist/) 
 👉 [Documentation guide](https://docs.addonify.com/kb/woocommerce-wishlist/) 
 
 The primary goal of the Addonify Wishlist plugin is to allow website visitors to add products to their shopping wishlist so they can focus on buying the product rather than wasting their time finding it whenever they visit the store. Whereas, the secondary goal of the Addonify team is to keep the plugin light-weight so that the website shouldn't compromise its performance.
@@ -133,8 +133,12 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Added: Option to reset all settings.
 - Added: Option to export all settings.
 - Added: Option to import all settings.
+- Added: User Data Processing. Ref: https://creamcode.org/user-data-processing/
+- Added: Spinner on wishlist page.
+- Added: Recommended products on settings page.
+- Fix: Minor bugs.
 - Tweak: Now saving wishlist data in browser local strorage if the user is not logged-in.
-- Added: User Data Processing.
+- Removed: Default behavior from "After Add to Wishlist Action" option on settings page.
 
 = 1.1.0 - 18 November, 2022 =
 
