@@ -194,7 +194,7 @@ class Addonify_Wishlist_Public {
 				'addToWishlistActionSideBar'         => 'addonify_add_to_wishlist_sidebar_added_content',
 				'removeFromWishlistAfterAddedToCart' => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
 				'loginMessage'                       => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
-				'addedToWishlistText'                => __( 'Added to Wishlist', 'addonify-wishlist' ),
+				'addedToWishlistText'                => addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' ),
 				'initialAddToWishlistButtonLabel'    => addonify_wishlist_get_option( 'btn_label' ),
 				'alreadyInWishlistText'              => __( 'Already in Wishlist', 'addonify-wishlist' ),
 				'popupAddedToWishlistText'           => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),

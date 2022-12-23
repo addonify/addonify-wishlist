@@ -592,7 +592,7 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_close_button' ) ) {
 			apply_filters(
 				'addonify_wishlist_popup_close_button_args',
 				array(
-					'close_button_label' => apply_filters( 'addonify_wishlist_popup_close_button_label', __( 'Close', 'addonify-wishlist' ) ),
+					'close_button_label' => apply_filters( 'addonify_wishlist_popup_close_button_label', addonify_wishlist_get_option( 'popup_close_btn_text' ) ),
 				)
 			)
 		);
