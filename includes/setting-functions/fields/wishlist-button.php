@@ -19,7 +19,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 	function addonify_wishlist_button_settings_fields() {
 
 		return array(
-			'btn_position'                   => array(
+			'btn_position'                     => array(
 				'type'        => 'select',
 				'className'   => '',
 				'label'       => __( 'Button Position', 'addonify-wishlist' ),
@@ -31,7 +31,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_position' ),
 			),
-			'btn_label'                      => array(
+			'btn_label'                        => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Button Label', 'addonify-wishlist' ),
@@ -39,7 +39,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_label' ),
 			),
-			'btn_custom_class'               => array(
+			'btn_custom_class'                 => array(
 				'type'        => 'text',
 				'className'   => '',
 				'placeholder' => 'my_button rounded_button',
@@ -57,7 +57,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' ),
 			),
-			'btn_label_if_added_to_wishlist' => array(
+			'btn_label_if_added_to_wishlist'   => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Already in Wishlist Button Label', 'addonify-wishlist' ),
@@ -65,7 +65,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' ),
 			),
-			'show_icon'                      => array(
+			'show_icon'                        => array(
 				'type'        => 'switch',
 				'className'   => '',
 				'label'       => __( 'Show Icon in Button', 'addonify-wishlist' ),
