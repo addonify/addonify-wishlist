@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 		</div>
 
 		<form action="" method="POST" id="addonify-wishlist-sidebar-form">
-			<?php do_action( 'addonify_wishlist/before_wishlist_form_table' ); ?>
+			<?php do_action( 'addonify_wishlist_before_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-sidebar-items-wrapper">
 				<ul class="adfy-wishlist-sidebar-items-entry">
 					<?php do_action( 'addonify_wishlist_render_sidebar_loop', $product_ids ); ?>
@@ -38,7 +38,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php echo esc_html__( 'Your wishlist is empty', 'addonify-wishlist' ); ?>
 			</p>
 			<?php endif; ?>
-			<?php do_action( 'addonify_wishlist/after_wishlist_form_table' ); ?>
+			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
 		</form>
 	</div>
 	<?php

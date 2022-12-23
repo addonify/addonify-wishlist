@@ -1,7 +1,21 @@
-<?php 
+<?php
+/**
+ * Define general settings fields of plugin.
+ *
+ * @link       https://addonify.com/
+ * @since      1.0.0
+ *
+ * @package    Addonify_Wishlist
+ * @subpackage Addonify_Wishlist/includes/setting-functions/fields
+ */
 
 if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
-
+	/**
+	 * General setting fields of plugin.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	function addonify_wishlist_general_setting_fields() {
 
 		return array(
@@ -14,7 +28,7 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'value'       => addonify_wishlist_get_option( 'enable_wishlist' ),
 			),
 			'wishlist_page'                         => array(
-				'type' => 'select',
+				'type'        => 'select',
 				'className'   => '',
 				'placeholder' => __( 'Select a page', 'addonify-wishlist' ),
 				'label'       => __( 'Wishlist Page', 'addonify-wishlist' ),
@@ -24,18 +38,18 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'value'       => addonify_wishlist_get_option( 'wishlist_page' ),
 			),
 			'require_login'                         => array(
-				'type'          => 'switch',
-				'label'         => __( 'Require Login', 'addonify-wishlist' ),
-				'description'   => __( 'A user is required to be logged-in inorder to add products in the wishlist.', 'addonify-wishlist' ),
-				'dependent'     => array( 'enable_wishlist' ),
-				'value'         => addonify_wishlist_get_option( 'require_login' ),
+				'type'        => 'switch',
+				'label'       => __( 'Require Login', 'addonify-wishlist' ),
+				'description' => __( 'A user is required to be logged-in inorder to add products in the wishlist.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'require_login' ),
 			),
 			'if_not_login_action'                   => array(
 				'type'        => 'select',
 				'className'   => '',
-				'placeholder' => __( 'Select Action', 'addonify-wishlist'),
+				'placeholder' => __( 'Select Action', 'addonify-wishlist' ),
 				'label'       => __( 'If not login action', 'addonify-wishlist' ),
-				'description' => __( 'If user is required to be logged-in, choose what to do if the user tries to add product into the wishlist..', 'addonify-wishlist'),
+				'description' => __( 'If user is required to be logged-in, choose what to do if the user tries to add product into the wishlist..', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist', 'require_login' ),
 				'choices'     => array(
 					'default'    => __( 'Redirect to login page', 'addonify-wishlist' ),
@@ -46,11 +60,11 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 			'cookies_lifetime'                      => array(
 				'type'        => 'number',
 				'className'   => '',
-				'typeStyle'   => 'toggle', // 'default', 'toggle' & slider
+				'typeStyle'   => 'toggle', // Values for typeStyle are default, toggle & slider.
 				'label'       => __( 'Save Wishlist Cookie for [ x ] days', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist' ),
 				'description' => __( 'Set the number of days to save the Wishlist data in browser cookie.', 'addonify-wsihlist' ),
-				'value'       => addonify_wishlist_get_option( 'cookies_lifetime' )
+				'value'       => addonify_wishlist_get_option( 'cookies_lifetime' ),
 			),
 			'after_add_to_wishlist_action'          => array(
 				'type'        => 'select',
@@ -65,74 +79,58 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				),
 			),
 			'redirect_to_checkout_if_product_added_to_cart' => array(
-				'type'          => 'switch',
-				'className'     => '',
-				'label'         => __( 'Redirect to Checkout', 'addonify-wishlist' ),
-				'description'   => __( 'Redirect to the checkout page if the product in the wishlist is added into cart.', 'addonify-wishlist' ),
-				'dependent'     => array('enable_wishlist'),
-				'value'         => addonify_wishlist_get_option( 'redirect_to_checkout_if_product_added_to_cart' )
+				'type'        => 'switch',
+				'className'   => '',
+				'label'       => __( 'Redirect to Checkout', 'addonify-wishlist' ),
+				'description' => __( 'Redirect to the checkout page if the product in the wishlist is added into cart.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'redirect_to_checkout_if_product_added_to_cart' ),
 			),
 			'remove_from_wishlist_if_added_to_cart' => array(
-				'type'          => 'switch',
-				'className'     => '',
-				'label'         => __( 'Remove Product From Wishlist', 'addonify-wishlist' ),
-				'description'   => __( 'Remove the product from wishlist if the product is successfully added to cart.', 'addonify-wishlist' ),
-				'dependent'     => array('enable_wishlist'),
-				'value'         => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' )
+				'type'        => 'switch',
+				'className'   => '',
+				'label'       => __( 'Remove Product From Wishlist', 'addonify-wishlist' ),
+				'description' => __( 'Remove the product from wishlist if the product is successfully added to cart.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
 			),
 			'ajaxify_add_to_cart'                   => array(
-				'type'          => 'switch',
-				'className'     => '',
-				'label'         => __( 'Ajaxify Add to Cart Action', 'addonify-wishlist' ),
-				'description'   => __( 'Add the product into the cart with ajax call.', 'addonify-wishlist' ),
-				'dependent'     => array('enable_wishlist'),
-				'value'         => addonify_wishlist_get_option( 'ajaxify_add_to_cart' )
+				'type'        => 'switch',
+				'className'   => '',
+				'label'       => __( 'Ajaxify Add to Cart Action', 'addonify-wishlist' ),
+				'description' => __( 'Add the product into the cart with ajax call.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'ajaxify_add_to_cart' ),
 			),
 			'ajaxify_remove_from_wishlist_button'   => array(
-				'type'              => 'switch',
-				'label'             => __( 'Ajaxify Remove from Wishlist Action', 'addonify-wishlist' ),
-				'description'       => __( 'Remove the product from wishlist with ajax call.', 'addonify-wishlist' ),
-				'dependent'         => array('enable_wishlist'),
-				'value'             => addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' )
+				'type'        => 'switch',
+				'label'       => __( 'Ajaxify Remove from Wishlist Action', 'addonify-wishlist' ),
+				'description' => __( 'Remove the product from wishlist with ajax call.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ),
 			),
 		);
 	}
-}
-
-if ( ! function_exists( 'addonify_wishlist_general_add_to_settings_fields' ) ) {
-
-	function addonify_wishlist_general_add_to_settings_fields( $settings_fields ) {
-
-		return array_merge( $settings_fields, addonify_wishlist_general_setting_fields() );
-	}
-
-	add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_general_add_to_settings_fields' );
 }
 
 
 if ( ! function_exists( 'addonify_wishlist_general_styles_settings_fields' ) ) {
-
+	/**
+	 * Style setting fields of plugin.
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	function addonify_wishlist_general_styles_settings_fields() {
 
 		return array(
 			'load_styles_from_plugin' => array(
-				'type'              => 'switch',
-				'className'         => '',
-				'label'             => __( 'Enable Styles from Plugin', 'addonify-wishlist' ),
-				'description'       => __( 'Enable to apply styles and colors from the plugin.', 'addonify-wishlist' ),
-				'value'             => addonify_wishlist_get_option( 'load_styles_from_plugin' )
-			)
+				'type'        => 'switch',
+				'className'   => '',
+				'label'       => __( 'Enable Styles from Plugin', 'addonify-wishlist' ),
+				'description' => __( 'Enable to apply styles and colors from the plugin.', 'addonify-wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'load_styles_from_plugin' ),
+			),
 		);
 	}
-}
-
-
-if ( ! function_exists( 'addonify_wishlist_general_styles_add_to_settings_fields' ) ) {
-
-	function addonify_wishlist_general_styles_add_to_settings_fields( $settings_fields ) {
-
-		return array_merge( $settings_fields, addonify_wishlist_general_styles_settings_fields() );
-	}
-	
-	add_filter( 'addonify_wishlist_settings_fields', 'addonify_wishlist_general_styles_add_to_settings_fields' );
 }

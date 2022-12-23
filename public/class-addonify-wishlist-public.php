@@ -126,7 +126,7 @@ class Addonify_Wishlist_Public {
 
 		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
 
-		add_action( 'addonify_wishlist/before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
+		add_action( 'addonify_wishlist_before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
 
 		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
 	}
@@ -981,32 +981,5 @@ class Addonify_Wishlist_Public {
 		$css = preg_replace( '/(:| )(\.?)0(%|em|ex|px|in|cm|mm|pt|pc)/i', '${1}0', $css );
 
 		return trim( $css );
-	}
-
-	/**
-	 * Require proper templates for use in front end
-	 *
-	 * @since    1.0.0
-	 * @param    string  $template_name Name of the template.
-	 * @param    boolean $require_once  Should use require_once or require ?.
-	 * @param    array   $data          Data to pass to template.
-	 */
-	private function get_templates( $template_name, $require_once = true, $data = array() ) {
-
-		// first look for template in themes/addonify/templates.
-		$theme_path    = get_template_directory() . '/addonify/addonify-wishlist/' . $template_name . '.php';
-		$plugin_path   = dirname( __FILE__ ) . '/templates/' . $template_name . '.php';
-		$template_path = file_exists( $theme_path ) ? $theme_path : $plugin_path;
-
-		// Extract keys from array to separate local variables.
-		foreach ( $data as $data_key => $data_val ) {
-			$$data_key = $data_val;
-		}
-
-		if ( $require_once ) {
-			require_once $template_path;
-		} else {
-			require $template_path;
-		}
 	}
 }
