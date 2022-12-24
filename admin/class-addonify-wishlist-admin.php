@@ -123,6 +123,7 @@ class Addonify_Wishlist_Admin {
 			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WISHLIST_LOCOLIZER', array(
 				'admin_url'  						=> admin_url( '/' ),
 				'ajax_url'   						=> admin_url( 'admin-ajax.php' ),
+				'site_url'   						=> site_url( '/' ),
 				'rest_namespace' 					=> 'addonify_wishlist_options_api',
 				'version_number' 					=> $this->version,
 			) );
