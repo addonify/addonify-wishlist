@@ -1,74 +1,32 @@
 <script setup>
-	import { ref, onMounted } from "vue";
 	import { ElButton, ElSkeleton, ElSkeletonItem } from "element-plus";
 	import { Loading } from "@element-plus/icons-vue";
+	import { useProductStore } from "../../stores/product";
 
 	const props = defineProps({
-		slug: [String, Object, Array],
+		slug: String,
+		name: String,
+		description: String,
+		thumb: String,
+		status: String,
 	});
 
-	const { slug } = props;
+	const proStore = useProductStore();
+	const { slug, name, thumb, description, status } = props;
 
-	let addonName, addonDescription;
-	let isFetchingAddonInfo = ref(true);
-	let isWaitingForInstallationSignal = ref(false);
-
-	/**
-	 *
-	 * WordPress.org/plugins get plugin thumbnail.
-	 */
-
-	const getWpPluginThumbnail = (slug) => {
-		let thumb = `https://ps.w.org/${slug}/assets/icon-256x256.png`;
-		return thumb;
+	const installAddon = (slug) => {
+		alert("Installing addon: " + slug);
 	};
 
-	/**
-	 *
-	 * WordPress.org/plugins api get plugin info.
-	 */
-
-	const fetchPluginName = async (slug) => {
-		let pluginApi = `https://api.wordpress.org/plugins/info/1.0/${slug}.json`;
-
-		try {
-			const res = await fetch(pluginApi);
-			let data = await res.json();
-			//console.log(data);
-			addonName = data.name; // Set the name.
-			addonDescription = data.sections.description; // Set the description.
-			addonDescription = addonDescription.replace(/(<([^>]+)>)/gi, ""); // Remove all HTML tags.
-			addonDescription = addonDescription.substring(0, 110) + "..."; // Shorten the description.
-
-			isFetchingAddonInfo.value = false;
-
-			if (res.status !== 200) {
-				console.log("Couldn't fetch WordPress plugin repo " + res);
-			}
-		} catch (err) {
-			console.log(err);
-		}
+	const activateAddon = (slug) => {
+		alert("Activating addon: " + slug);
 	};
 
-	/*
-	 *
-	 * Handle install/activate button click action.
-	 * Called from Recommended.vue child component.
-	 * Wait for the signal from the backend.
-	 * @param {string} slug
-	 */
-
-	const handleActivation = (slug) => {
-		console.log(slug);
-	};
-
-	onMounted(() => {
-		fetchPluginName(slug);
-	});
+	//console.log("=> Child component loaded.");
 </script>
 
 <template>
-	<div v-show="isFetchingAddonInfo == true" id="adfy-skelaton">
+	<!--<div v-if="proStore.isSettingAddonStatus" id="adfy-skelaton">
 		<el-skeleton style="--el-skeleton-circle-size: 82px" animated>
 			<template #template>
 				<el-skeleton-item variant="circle" />
@@ -76,22 +34,44 @@
 		</el-skeleton>
 		<br />
 		<el-skeleton :rows="3" animated />
-	</div>
+	</div>-->
 
-	<div v-show="isFetchingAddonInfo == false" class="adfy-product-card">
+	<div class="adfy-product-card">
 		<div class="adfy-product-box">
 			<figure class="adfy-product-thumb">
-				<img :src="getWpPluginThumbnail(slug)" :alt="slug" />
+				<img :src="thumb" :alt="slug" />
 			</figure>
 			<div class="content">
-				<h3 class="adfy-product-title" v-html="addonName"></h3>
-				<p
-					class="adfy-product-description"
-					v-html="addonDescription"
-				></p>
+				<h3 class="adfy-product-title" v-html="name"></h3>
+				<p class="adfy-product-description" v-html="description"></p>
 				<div class="adfy-product-actions">
-					<el-button type="primary" size="large" plain>
-						Activate
+					<el-button
+						v-if="status == 'active'"
+						size="large"
+						plain
+						disabled
+					>
+						Installed
+					</el-button>
+					<el-button
+						v-else-if="status == 'inactive'"
+						type="primary"
+						size="large"
+						plain
+						:loading="proStore.isWaitingForInstallation === true"
+						@click="proStore.handleAddonInstallation(slug)"
+					>
+						Active now
+					</el-button>
+					<el-button
+						v-else
+						type="primary"
+						size="large"
+						plain
+						:loading="proStore.isWaitingForInstallation === true"
+						@click="proStore.handleAddonInstallation(slug)"
+					>
+						Install now
 					</el-button>
 				</div>
 			</div>
