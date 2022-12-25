@@ -600,13 +600,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var _wp = wp,
   apiFetch = _wp.apiFetch;
+var __ = wp.i18n.__;
 var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
   id: 'Product',
   state: function state() {
     return {
       allAddons: {},
-      allAddonsSlug: [],
-      // Storing all addons slug.
+      // Storing all addons slugs.
+      allProductSlugStatus: {},
+      // Storing all addons slug & status.
       hotAddons: {},
       generalAddons: {},
       installedAddons: [],
@@ -614,9 +616,9 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
       // Fetching recommended plugins list from github.
       isFetchingAllInstalledAddons: true,
       // Fetched all installed plugins.
-      isCheckingAddonStatus: true,
+      isSettingAddonStatus: true,
       // Checking plugin status on backend.
-      isWaitingForInstallation: false // Waiting for plugin installation.
+      isWaitingForInstallation: "" // Waiting for plugin installation.
     };
   },
 
@@ -684,11 +686,15 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
       this.hotAddons = list.data.hot;
       this.generalAddons = list.data.general;
       this.allAddons = _objectSpread(_objectSpread({}, this.hotAddons), this.generalAddons);
-      console.log(this.generalAddons);
+
+      //console.log(this.generalAddons);
+
       if (_typeof(this.allAddons) === 'object') {
         Object.keys(this.allAddons).forEach(function (key) {
           //console.log(key);
-          _this2.allAddonsSlug.push(key);
+          // Let's add the slug to object with status null for now.
+          // i.e: { 'addonify-wishlist': 'status' }
+          _this2.allProductSlugStatus[key] = 'null';
         });
       } else {
         console.error("💥 Couldn't process the list plugins list.");
@@ -713,48 +719,67 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
             switch (_context2.prev = _context2.next) {
               case 0:
                 console.log("=> Getting the list of all plugins installed on the site....");
-                _context2.next = 3;
+                _context2.prev = 1;
+                _context2.next = 4;
                 return apiFetch({
                   method: "GET",
                   path: "/wp/v2/plugins"
                 });
-              case 3:
+              case 4:
                 res = _context2.sent;
-                console.log(res);
+                //console.log(res);
+                console.log("=> Received the list of all installed plugins....");
                 _this3.installedAddons = res;
+                _this3.setAddonStatusFlag(Object.keys(_this3.allProductSlugStatus)); // Just send the slug array.
                 _this3.isFetchingAllInstalledAddons = false;
-              case 7:
+                _context2.next = 16;
+                break;
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](1);
+                console.error(_context2.t0);
+                element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
+                  message: __('Error: couldn\'t retrive the list of installed plugins.', 'addonify-wishlist'),
+                  offset: 50,
+                  duration: 10000
+                });
+                _this3.isFetchingAllInstalledAddons = false;
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[1, 11]]);
       }))();
     },
     /**
     * Action: Get plugin installed/active status via slug.
     * Returns 'active' or 'inactive' or 'not-installed'.
     * 
-    * @param {String} slug
+    * @param {Object} slug
     */
-    getAddonStatus: function getAddonStatus(slug) {
+    setAddonStatusFlag: function setAddonStatusFlag(slugs) {
+      var _this4 = this;
       if (_typeof(this.installedAddons) == 'object' && this.installedAddons.length > 0) {
-        console.log("=> Checking the status of the addon " + slug);
-        var installed = this.installedAddons;
-        installed.forEach(function (item) {
-          //console.log(item.textdomain);
+        console.log("=> Setting the status of the addon.");
+        //console.log(slugs);
 
-          if (item.textdomain == slug) {
-            return item.status == 'active' ? 'active' : 'inactive';
+        slugs.forEach(function (slug) {
+          // Find the status in installed addons. 
+          var tryFind = _this4.installedAddons.find(function (plugin) {
+            return plugin.textdomain == slug;
+          });
+          if (tryFind) {
+            _this4.allProductSlugStatus[slug] = tryFind.status;
           } else {
-            return 'not-installed';
+            _this4.allProductSlugStatus[slug] = 'not-installed';
           }
         });
       } else {
-        console.log("=> Bailing!!! Installed addons list is not ready yet...");
+        console.log("=> Bailing!!! The installed addons list is empty.");
       }
-
-      //this.isCheckingAddonStatus = false;
+      console.log("💥 Done setting the status of the addon.");
+      this.isSettingAddonStatus = false; // Done setting the status till here. Let's set the flag to false.
     },
     /*
     *
@@ -764,7 +789,7 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
     * @param slug
     */
     handleAddonInstallation: function handleAddonInstallation(slug) {
-      var _this4 = this;
+      var _this5 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var res, data;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -772,7 +797,9 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.prev = 0;
-                _context3.next = 3;
+                _this5.isWaitingForInstallation = true;
+                console.log("=> Trying to install plugin ".concat(slug, "..."));
+                _context3.next = 5;
                 return apiFetch({
                   method: "POST",
                   path: "/wp/v2/plugins",
@@ -782,46 +809,111 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
                     status: "active"
                   }
                 });
-              case 3:
+              case 5:
                 res = _context3.sent;
-                _context3.next = 6;
+                _context3.next = 8;
                 return res.json();
-              case 6:
+              case 8:
                 data = _context3.sent;
+                if (data.status === 500) {
+                  console.log("=> Folder exists. Try deleting the addon first.");
+                }
                 if (data.status === 200) {
-                  console.log("Plugin activated successfully.");
+                  console.log("=> Plugin ".concat(slug, " activated successfully."));
                   element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.success({
                     message: __('Plugin activated successfully.', 'addonify-wishlist'),
                     offset: 50,
                     duration: 10000
                   });
-                  _this4.isWaitingForInstallation = false;
+                  _this5.isWaitingForInstallation = false;
                 } else {
-                  console.log("Couldn't activate plugin.");
+                  console.log("=> Couldn't activate plugin ".concat(slug, "."));
                   element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
                     message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
                     offset: 50,
                     duration: 10000
                   });
                 }
-                _context3.next = 15;
+                _context3.next = 18;
                 break;
-              case 10:
-                _context3.prev = 10;
+              case 13:
+                _context3.prev = 13;
                 _context3.t0 = _context3["catch"](0);
-                console.log(_context3.t0);
+                console.error(_context3.t0);
                 element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
                   message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
                   offset: 50,
                   duration: 10000
                 });
-                _this4.isWaitingForInstallation = false;
-              case 15:
+                _this5.isWaitingForInstallation = false;
+              case 18:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 10]]);
+        }, _callee3, null, [[0, 13]]);
+      }))();
+    },
+    handleDeleteAddon: function handleDeleteAddon(slug) {
+      var _this6 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var res, data;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _this6.isWaitingForInstallation = true;
+                console.log("=> Trying to delete plugin ".concat(slug, "..."));
+                _context4.next = 5;
+                return apiFetch({
+                  method: "DELETE",
+                  path: "/wp/v2/plugins",
+                  // Args to send to the endpoint.
+                  data: {
+                    slug: slug
+                  }
+                });
+              case 5:
+                res = _context4.sent;
+                _context4.next = 8;
+                return res.json();
+              case 8:
+                data = _context4.sent;
+                if (data.status === 200) {
+                  console.log("=> Plugin ".concat(slug, " deleted successfully."));
+                  element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.success({
+                    message: __('Plugin deleted successfully.', 'addonify-wishlist'),
+                    offset: 50,
+                    duration: 10000
+                  });
+                  _this6.isWaitingForInstallation = false;
+                } else {
+                  console.log("=> Couldn't delete plugin ".concat(slug, "."));
+                  element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
+                    message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
+                    offset: 50,
+                    duration: 10000
+                  });
+                }
+                _context4.next = 17;
+                break;
+              case 12:
+                _context4.prev = 12;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0);
+                element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
+                  message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
+                  offset: 50,
+                  duration: 10000
+                });
+                _this6.isWaitingForInstallation = false;
+              case 17:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 12]]);
       }))();
     }
   }
@@ -2160,15 +2252,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var element_plus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! element-plus */ "./node_modules/element-plus/es/components/button/index.mjs");
-/* harmony import */ var element_plus__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! element-plus */ "./node_modules/element-plus/es/components/skeleton/index.mjs");
-/* harmony import */ var element_plus_es_components_button_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! element-plus/es/components/button/style/css */ "./node_modules/element-plus/es/components/button/style/css.mjs");
-/* harmony import */ var element_plus_es_components_skeleton_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! element-plus/es/components/skeleton/style/css */ "./node_modules/element-plus/es/components/skeleton/style/css.mjs");
-/* harmony import */ var element_plus_es_components_skeleton_item_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! element-plus/es/components/skeleton-item/style/css */ "./node_modules/element-plus/es/components/skeleton-item/style/css.mjs");
-/* harmony import */ var _element_plus_icons_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @element-plus/icons-vue */ "./node_modules/@element-plus/icons-vue/dist/index.js");
-/* harmony import */ var _stores_product__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../stores/product */ "./admin/src/stores/product.js");
-
+/* harmony import */ var element_plus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! element-plus */ "./node_modules/element-plus/es/components/button/index.mjs");
+/* harmony import */ var element_plus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! element-plus */ "./node_modules/element-plus/es/components/skeleton/index.mjs");
+/* harmony import */ var element_plus_es_components_button_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! element-plus/es/components/button/style/css */ "./node_modules/element-plus/es/components/button/style/css.mjs");
+/* harmony import */ var element_plus_es_components_skeleton_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! element-plus/es/components/skeleton/style/css */ "./node_modules/element-plus/es/components/skeleton/style/css.mjs");
+/* harmony import */ var element_plus_es_components_skeleton_item_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! element-plus/es/components/skeleton-item/style/css */ "./node_modules/element-plus/es/components/skeleton-item/style/css.mjs");
+/* harmony import */ var _element_plus_icons_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @element-plus/icons-vue */ "./node_modules/@element-plus/icons-vue/dist/index.js");
+/* harmony import */ var _stores_product__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../stores/product */ "./admin/src/stores/product.js");
 
 
 
@@ -2186,23 +2276,28 @@ __webpack_require__.r(__webpack_exports__);
     slug: String,
     name: String,
     description: String,
-    thumb: String
+    thumb: String,
+    status: String
   },
   setup: function setup(__props, _ref) {
     var expose = _ref.expose;
     expose();
     var props = __props;
-    var proStore = (0,_stores_product__WEBPACK_IMPORTED_MODULE_4__.useProductStore)();
+    var proStore = (0,_stores_product__WEBPACK_IMPORTED_MODULE_3__.useProductStore)();
     var slug = props.slug,
       name = props.name,
       thumb = props.thumb,
-      description = props.description;
-    var status = "inactive";
+      description = props.description,
+      status = props.status;
     var installAddon = function installAddon(slug) {
       alert("Installing addon: " + slug);
     };
-    console.log("=> Child component loaded & status is: " + status);
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {});
+    var activateAddon = function activateAddon(slug) {
+      alert("Activating addon: " + slug);
+    };
+
+    //console.log("=> Child component loaded.");
+
     var __returned__ = {
       props: props,
       proStore: proStore,
@@ -2210,28 +2305,23 @@ __webpack_require__.r(__webpack_exports__);
       name: name,
       thumb: thumb,
       description: description,
-      get status() {
-        return status;
-      },
-      set status(v) {
-        status = v;
-      },
+      status: status,
       installAddon: installAddon,
-      onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
+      activateAddon: activateAddon,
       get ElButton() {
-        return element_plus__WEBPACK_IMPORTED_MODULE_5__.ElButton;
+        return element_plus__WEBPACK_IMPORTED_MODULE_4__.ElButton;
       },
       get ElSkeleton() {
-        return element_plus__WEBPACK_IMPORTED_MODULE_6__.ElSkeleton;
+        return element_plus__WEBPACK_IMPORTED_MODULE_5__.ElSkeleton;
       },
       get ElSkeletonItem() {
-        return element_plus__WEBPACK_IMPORTED_MODULE_6__.ElSkeletonItem;
+        return element_plus__WEBPACK_IMPORTED_MODULE_5__.ElSkeletonItem;
       },
       get Loading() {
-        return _element_plus_icons_vue__WEBPACK_IMPORTED_MODULE_7__.Loading;
+        return _element_plus_icons_vue__WEBPACK_IMPORTED_MODULE_6__.Loading;
       },
       get useProductStore() {
-        return _stores_product__WEBPACK_IMPORTED_MODULE_4__.useProductStore;
+        return _stores_product__WEBPACK_IMPORTED_MODULE_3__.useProductStore;
       }
     };
     Object.defineProperty(__returned__, '__isScriptSetup', {
@@ -2606,10 +2696,20 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var proStore = (0,_stores_product__WEBPACK_IMPORTED_MODULE_4__.useProductStore)();
+
+    //const getStatus = (slug) => {
+    //	console.log(proStore.allProductSlugStatus[slug]);
+    //};
+
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
       proStore.fetchInstalledAddons();
       proStore.fetchGithubRepo();
+
+      //setTimeout(() => {
+      //	console.log(proStore.allProductSlugStatus);
+      //}, 5000);
     });
+
     var __returned__ = {
       proStore: proStore,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
@@ -3579,64 +3679,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  key: 0,
-  id: "adfy-skelaton"
-};
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
-var _hoisted_3 = {
-  key: 1,
   "class": "adfy-product-card"
 };
-var _hoisted_4 = {
+var _hoisted_2 = {
   "class": "adfy-product-box"
 };
-var _hoisted_5 = {
+var _hoisted_3 = {
   "class": "adfy-product-thumb"
 };
-var _hoisted_6 = ["src", "alt"];
-var _hoisted_7 = {
+var _hoisted_4 = ["src", "alt"];
+var _hoisted_5 = {
   "class": "content"
 };
-var _hoisted_8 = ["innerHTML"];
-var _hoisted_9 = ["innerHTML"];
-var _hoisted_10 = {
+var _hoisted_6 = ["innerHTML"];
+var _hoisted_7 = ["innerHTML"];
+var _hoisted_8 = {
   "class": "adfy-product-actions"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return $setup.proStore.isCheckingAddonStatus ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ElSkeleton"], {
-    style: {
-      "--el-skeleton-circle-size": "82px"
-    },
-    animated: ""
-  }, {
-    template: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ElSkeletonItem"], {
-        variant: "circle"
-      })];
-    }),
-    _: 1 /* STABLE */
-  }), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ElSkeleton"], {
-    rows: 3,
-    animated: ""
-  })])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("figure", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<div v-if=\"proStore.isSettingAddonStatus\" id=\"adfy-skelaton\">\r\n\t\t<el-skeleton style=\"--el-skeleton-circle-size: 82px\" animated>\r\n\t\t\t<template #template>\r\n\t\t\t\t<el-skeleton-item variant=\"circle\" />\r\n\t\t\t</template>\r\n\t\t</el-skeleton>\r\n\t\t<br />\r\n\t\t<el-skeleton :rows=\"3\" animated />\r\n\t</div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("figure", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $setup.thumb,
-    alt: $setup.name
-  }, null, 8 /* PROPS */, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+    alt: $setup.slug
+  }, null, 8 /* PROPS */, _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
     "class": "adfy-product-title",
     innerHTML: $setup.name
-  }, null, 8 /* PROPS */, _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  }, null, 8 /* PROPS */, _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "adfy-product-description",
     innerHTML: $setup.description
-  }, null, 8 /* PROPS */, _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ElButton"], {
+  }, null, 8 /* PROPS */, _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [$setup.status == 'active' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["ElButton"], {
+    key: 0,
     size: "large",
     plain: "",
     disabled: ""
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Active ")];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Installed ")];
     }),
     _: 1 /* STABLE */
-  })])])])]));
+  })) : $setup.status == 'inactive' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["ElButton"], {
+    key: 1,
+    type: "primary",
+    size: "large",
+    plain: "",
+    loading: $setup.proStore.isWaitingForInstallation === true,
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $setup.proStore.handleAddonInstallation($setup.slug);
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Active now ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["loading"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["ElButton"], {
+    key: 2,
+    type: "primary",
+    size: "large",
+    plain: "",
+    loading: $setup.proStore.isWaitingForInstallation === true,
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $setup.proStore.handleAddonInstallation($setup.slug);
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Install now ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["loading"]))])])])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 
 /***/ }),
@@ -4060,15 +4168,16 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, null, -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Navigation"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_4, [$setup.proStore.isFetching && $setup.proStore.isFetchingAllInstalledAddons ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Loading"], {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("aside", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Navigation"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_4, [$setup.proStore.isFetching === true || $setup.proStore.isFetchingAllInstalledAddons === true || $setup.proStore.isSettingAddonStatus === true ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Loading"], {
     key: 0
   })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.proStore.hotAddons, function (addon, key) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["Recommended"], {
       slug: key,
       name: addon.name,
       description: addon.description,
-      thumb: addon.thumbnail
-    }, null, 8 /* PROPS */, ["slug", "name", "description", "thumb"]);
+      thumb: addon.thumbnail,
+      status: $setup.proStore.allProductSlugStatus[key]
+    }, null, 8 /* PROPS */, ["slug", "name", "description", "thumb", "status"]);
   }), 256 /* UNKEYED_FRAGMENT */))])]), _hoisted_8]))])])]);
 }
 

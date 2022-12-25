@@ -1,5 +1,4 @@
 <script setup>
-	import { onMounted } from "vue";
 	import { ElButton, ElSkeleton, ElSkeletonItem } from "element-plus";
 	import { Loading } from "@element-plus/icons-vue";
 	import { useProductStore } from "../../stores/product";
@@ -9,24 +8,25 @@
 		name: String,
 		description: String,
 		thumb: String,
+		status: String,
 	});
 
 	const proStore = useProductStore();
-	const { slug, name, thumb, description } = props;
-
-	let status = "inactive";
+	const { slug, name, thumb, description, status } = props;
 
 	const installAddon = (slug) => {
 		alert("Installing addon: " + slug);
 	};
 
-	console.log("=> Child component loaded & status is: " + status);
+	const activateAddon = (slug) => {
+		alert("Activating addon: " + slug);
+	};
 
-	onMounted(() => {});
+	//console.log("=> Child component loaded.");
 </script>
 
 <template>
-	<div v-if="proStore.isCheckingAddonStatus" id="adfy-skelaton">
+	<!--<div v-if="proStore.isSettingAddonStatus" id="adfy-skelaton">
 		<el-skeleton style="--el-skeleton-circle-size: 82px" animated>
 			<template #template>
 				<el-skeleton-item variant="circle" />
@@ -34,18 +34,45 @@
 		</el-skeleton>
 		<br />
 		<el-skeleton :rows="3" animated />
-	</div>
+	</div>-->
 
-	<div v-else class="adfy-product-card">
+	<div class="adfy-product-card">
 		<div class="adfy-product-box">
 			<figure class="adfy-product-thumb">
-				<img :src="thumb" :alt="name" />
+				<img :src="thumb" :alt="slug" />
 			</figure>
 			<div class="content">
 				<h3 class="adfy-product-title" v-html="name"></h3>
 				<p class="adfy-product-description" v-html="description"></p>
 				<div class="adfy-product-actions">
-					<el-button size="large" plain disabled> Active </el-button>
+					<el-button
+						v-if="status == 'active'"
+						size="large"
+						plain
+						disabled
+					>
+						Installed
+					</el-button>
+					<el-button
+						v-else-if="status == 'inactive'"
+						type="primary"
+						size="large"
+						plain
+						:loading="proStore.isWaitingForInstallation === true"
+						@click="proStore.handleAddonInstallation(slug)"
+					>
+						Active now
+					</el-button>
+					<el-button
+						v-else
+						type="primary"
+						size="large"
+						plain
+						:loading="proStore.isWaitingForInstallation === true"
+						@click="proStore.handleAddonInstallation(slug)"
+					>
+						Install now
+					</el-button>
 				</div>
 			</div>
 		</div>

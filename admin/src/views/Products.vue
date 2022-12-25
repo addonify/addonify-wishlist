@@ -7,9 +7,17 @@
 
 	const proStore = useProductStore();
 
+	//const getStatus = (slug) => {
+	//	console.log(proStore.allProductSlugStatus[slug]);
+	//};
+
 	onMounted(() => {
 		proStore.fetchInstalledAddons();
 		proStore.fetchGithubRepo();
+
+		//setTimeout(() => {
+		//	console.log(proStore.allProductSlugStatus);
+		//}, 5000);
 	});
 </script>
 
@@ -22,8 +30,9 @@
 			<section class="adfy-col end site-primary">
 				<Loading
 					v-if="
-						proStore.isFetching &&
-						proStore.isFetchingAllInstalledAddons
+						proStore.isFetching === true ||
+						proStore.isFetchingAllInstalledAddons === true ||
+						proStore.isSettingAddonStatus === true
 					"
 				/>
 				<section v-else id="recommended-products">
@@ -37,6 +46,7 @@
 									:name="addon.name"
 									:description="addon.description"
 									:thumb="addon.thumbnail"
+									:status="proStore.allProductSlugStatus[key]"
 								/>
 							</template>
 						</div>

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ElMessage } from 'element-plus'
 
 const { apiFetch } = wp;
+const { __ } = wp.i18n;
 
 export const useProductStore = defineStore({
 
@@ -9,16 +10,16 @@ export const useProductStore = defineStore({
 
     state: () => ({
 
-        allAddons: {},
-        allAddonsSlug: [], // Storing all addons slug.
+        allAddons: {}, // Storing all addons slugs.
+        allProductSlugStatus: {}, // Storing all addons slug & status.
         hotAddons: {},
         generalAddons: {},
         installedAddons: [],
 
         isFetching: true, // Fetching recommended plugins list from github.
         isFetchingAllInstalledAddons: true, // Fetched all installed plugins.
-        isCheckingAddonStatus: true, // Checking plugin status on backend.
-        isWaitingForInstallation: false, // Waiting for plugin installation.
+        isSettingAddonStatus: true, // Checking plugin status on backend.
+        isWaitingForInstallation: "", // Waiting for plugin installation.
     }),
 
     actions: {
@@ -77,14 +78,16 @@ export const useProductStore = defineStore({
             this.generalAddons = list.data.general;
             this.allAddons = { ...this.hotAddons, ...this.generalAddons };
 
-            console.log(this.generalAddons);
+            //console.log(this.generalAddons);
 
             if (typeof this.allAddons === 'object') {
 
                 Object.keys(this.allAddons).forEach((key) => {
 
                     //console.log(key);
-                    this.allAddonsSlug.push(key);
+                    // Let's add the slug to object with status null for now.
+                    // i.e: { 'addonify-wishlist': 'status' }
+                    this.allProductSlugStatus[key] = 'null';
                 });
 
             } else {
@@ -109,54 +112,71 @@ export const useProductStore = defineStore({
 
             console.log("=> Getting the list of all plugins installed on the site....");
 
-            const res = await apiFetch({
+            try {
 
-                method: "GET",
-                path: `/wp/v2/plugins`,
-            });
+                const res = await apiFetch({
 
-            console.log(res);
-            this.installedAddons = res;
-            this.isFetchingAllInstalledAddons = false;
+                    method: "GET",
+                    path: `/wp/v2/plugins`,
+                });
+
+                //console.log(res);
+                console.log("=> Received the list of all installed plugins....");
+
+                this.installedAddons = res;
+                this.setAddonStatusFlag(Object.keys(this.allProductSlugStatus)); // Just send the slug array.
+                this.isFetchingAllInstalledAddons = false;
+
+            } catch (err) {
+
+                console.error(err);
+
+                ElMessage.error(({
+                    message: __('Error: couldn\'t retrive the list of installed plugins.', 'addonify-wishlist'),
+                    offset: 50,
+                    duration: 10000,
+                }));
+
+                this.isFetchingAllInstalledAddons = false;
+            }
         },
 
         /**
         * Action: Get plugin installed/active status via slug.
         * Returns 'active' or 'inactive' or 'not-installed'.
         * 
-        * @param {String} slug
+        * @param {Object} slug
         */
 
-
-        getAddonStatus(slug) {
+        setAddonStatusFlag(slugs) {
 
             if (typeof this.installedAddons == 'object' && this.installedAddons.length > 0) {
 
-                console.log("=> Checking the status of the addon " + slug);
+                console.log("=> Setting the status of the addon.");
+                //console.log(slugs);
 
-                let installed = this.installedAddons;
+                slugs.forEach((slug) => {
 
-                installed.forEach((item) => {
+                    // Find the status in installed addons. 
+                    let tryFind = this.installedAddons.find((plugin) => plugin.textdomain == slug);
 
-                    //console.log(item.textdomain);
+                    if (tryFind) {
 
-                    if (item.textdomain == slug) {
-
-                        return item.status == 'active' ? 'active' : 'inactive';
+                        this.allProductSlugStatus[slug] = tryFind.status;
 
                     } else {
 
-                        return 'not-installed';
+                        this.allProductSlugStatus[slug] = 'not-installed';
                     }
-
                 });
 
             } else {
 
-                console.log("=> Bailing!!! Installed addons list is not ready yet...");
+                console.log("=> Bailing!!! The installed addons list is empty.");
             }
 
-            //this.isCheckingAddonStatus = false;
+            console.log("💥 Done setting the status of the addon.");
+            this.isSettingAddonStatus = false; // Done setting the status till here. Let's set the flag to false.
         },
 
         /*
@@ -170,6 +190,10 @@ export const useProductStore = defineStore({
         async handleAddonInstallation(slug) {
 
             try {
+
+                this.isWaitingForInstallation = true;
+
+                console.log(`=> Trying to install plugin ${slug}...`);
 
                 const res = await apiFetch({
 
@@ -185,9 +209,14 @@ export const useProductStore = defineStore({
 
                 const data = await res.json();
 
+                if (data.status === 500) {
+
+                    console.log("=> Folder exists. Try deleting the addon first.");
+                }
+
                 if (data.status === 200) {
 
-                    console.log("Plugin activated successfully.");
+                    console.log(`=> Plugin ${slug} activated successfully.`);
 
                     ElMessage.success(({
                         message: __('Plugin activated successfully.', 'addonify-wishlist'),
@@ -199,7 +228,7 @@ export const useProductStore = defineStore({
 
                 } else {
 
-                    console.log("Couldn't activate plugin.");
+                    console.log(`=> Couldn't activate plugin ${slug}.`);
 
                     ElMessage.error(({
                         message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
@@ -210,7 +239,7 @@ export const useProductStore = defineStore({
 
             } catch (err) {
 
-                console.log(err);
+                console.error(err);
 
                 ElMessage.error(({
                     message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
@@ -221,5 +250,63 @@ export const useProductStore = defineStore({
                 this.isWaitingForInstallation = false;
             }
         },
+
+        async handleDeleteAddon(slug) {
+
+            try {
+
+                this.isWaitingForInstallation = true;
+
+                console.log(`=> Trying to delete plugin ${slug}...`);
+
+                const res = await apiFetch({
+
+                    method: "DELETE",
+                    path: "/wp/v2/plugins",
+
+                    // Args to send to the endpoint.
+                    data: {
+                        slug: slug,
+                    },
+                });
+
+                const data = await res.json();
+
+                if (data.status === 200) {
+
+                    console.log(`=> Plugin ${slug} deleted successfully.`);
+
+                    ElMessage.success(({
+                        message: __('Plugin deleted successfully.', 'addonify-wishlist'),
+                        offset: 50,
+                        duration: 10000,
+                    }));
+
+                    this.isWaitingForInstallation = false;
+
+                } else {
+
+                    console.log(`=> Couldn't delete plugin ${slug}.`);
+
+                    ElMessage.error(({
+                        message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
+                        offset: 50,
+                        duration: 10000,
+                    }));
+                }
+
+            } catch (err) {
+
+                console.log(err);
+
+                ElMessage.error(({
+                    message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
+                    offset: 50,
+                    duration: 10000,
+                }));
+
+                this.isWaitingForInstallation = false;
+            }
+        }
     }
 });
