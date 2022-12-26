@@ -98,7 +98,7 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'type'        => 'switch',
 				'label'       => __( 'Ajaxify Remove from Wishlist Action', 'addonify-wishlist' ),
 				'description' => __( 'Remove the product from wishlist with ajax call.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
+				'dependent'   => array( 'enable_wishlist', 'require_login' ),
 				'value'       => addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ),
 			),
 		);
