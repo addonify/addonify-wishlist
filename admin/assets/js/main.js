@@ -861,19 +861,29 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
                 _context4.next = 5;
                 return apiFetch({
                   method: "POST",
-                  path: "/wp/v2/plugins/".concat(slug)
-
-                  //data: {
-                  //    status: "active",
-                  //},
+                  path: "/wp/v2/plugins/".concat(slug),
+                  data: {
+                    status: "active",
+                    plugin: "".concat(slug, "/").concat(slug)
+                  }
                 });
               case 5:
                 res = _context4.sent;
                 console.log(res);
-                _context4.next = 14;
+                if (res.status == 'active') {
+                  console.log("=> Plugin ".concat(slug, " activated successfully."));
+                  element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.success({
+                    message: __('Plugin activated successfully.', 'addonify-wishlist'),
+                    offset: 50,
+                    duration: 20000
+                  });
+                  _this6.isWaitingForInstallation = false;
+                  window.location.reload();
+                }
+                _context4.next = 15;
                 break;
-              case 9:
-                _context4.prev = 9;
+              case 10:
+                _context4.prev = 10;
                 _context4.t0 = _context4["catch"](0);
                 console.log(_context4.t0);
                 element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
@@ -882,12 +892,12 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
                   duration: 20000
                 });
                 _this6.isWaitingForInstallation = false;
-              case 14:
+              case 15:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 9]]);
+        }, _callee4, null, [[0, 10]]);
       }))();
     }
   }
@@ -2257,31 +2267,30 @@ __webpack_require__.r(__webpack_exports__);
     var expose = _ref.expose;
     expose();
     var props = __props;
+    var __ = wp.i18n.__;
     var proStore = (0,_stores_product__WEBPACK_IMPORTED_MODULE_3__.useProductStore)();
     var slug = props.slug,
       name = props.name,
       thumb = props.thumb,
       description = props.description,
       status = props.status;
-    var installAddon = function installAddon(slug) {
-      alert("Installing addon: " + slug);
-    };
-    var activateAddon = function activateAddon(slug) {
-      alert("Activating addon: " + slug);
-    };
-
-    //console.log("=> Child component loaded.");
-
+    var activate = __("Activate now", "addonify-wishlist");
+    var activiting = __("Activating...", "addonify-wishlist");
+    var install = __("Install now", "addonify-wishlist");
+    var installing = __("Installing...", "addonify-wishlist");
     var __returned__ = {
       props: props,
+      __: __,
       proStore: proStore,
       slug: slug,
       name: name,
       thumb: thumb,
       description: description,
       status: status,
-      installAddon: installAddon,
-      activateAddon: activateAddon,
+      activate: activate,
+      activiting: activiting,
+      install: install,
+      installing: installing,
       get ElButton() {
         return element_plus__WEBPACK_IMPORTED_MODULE_4__.ElButton;
       },
@@ -3701,8 +3710,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Active now ")];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.proStore.isWaitingForInstallation ? $setup.activiting : $setup.activate), 1 /* TEXT */)];
     }),
+
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["loading"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["ElButton"], {
     key: 2,
@@ -3715,8 +3725,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Install now ")];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.proStore.isWaitingForInstallation ? $setup.installing : $setup.install), 1 /* TEXT */)];
     }),
+
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["loading"]))])])])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }

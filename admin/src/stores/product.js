@@ -255,13 +255,27 @@ export const useProductStore = defineStore({
 
                     method: "POST",
                     path: `/wp/v2/plugins/${slug}`,
-
-                    //data: {
-                    //    status: "active",
-                    //},
+                    data: {
+                        status: "active",
+                        plugin: `${slug}/${slug}`,
+                    },
                 });
 
                 console.log(res);
+
+                if (res.status == 'active') {
+
+                    console.log(`=> Plugin ${slug} activated successfully.`);
+
+                    ElMessage.success(({
+                        message: __('Plugin activated successfully.', 'addonify-wishlist'),
+                        offset: 50,
+                        duration: 20000,
+                    }));
+
+                    this.isWaitingForInstallation = false;
+                    window.location.reload();
+                }
 
             } catch (err) {
 
