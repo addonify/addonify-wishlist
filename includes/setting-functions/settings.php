@@ -38,7 +38,6 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'wishlist_page'                            => '',
 				'require_login'                            => false,
 				'if_not_login_action'                      => 'default',
-				'ajaxify_add_to_cart'                      => true,
 				'redirect_to_checkout_if_product_added_to_cart' => false,
 				'remove_from_wishlist_if_added_to_cart'    => true,
 				'cookies_lifetime'                         => 30,

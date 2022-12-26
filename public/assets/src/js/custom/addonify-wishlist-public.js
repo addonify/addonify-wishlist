@@ -271,7 +271,7 @@
                 addonifyWishlistEmptyWishlist(thisButton.data('product_name') + addonifyWishlistJSObject.removedFromWishlistText);
             })
 
-            if ( $('#addonify-wishlist-table').length === 0 ) {
+            if ( $('#addonify-wishlist-table').length === 0 && ! addonifyWishlistJSObject.requireLogin ) {
                 // fetch wishlist product data from server
                 $.post(
                     addonifyWishlistJSObject.ajax_url,

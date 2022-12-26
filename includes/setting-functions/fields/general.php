@@ -94,14 +94,6 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
 			),
-			'ajaxify_add_to_cart'                   => array(
-				'type'        => 'switch',
-				'className'   => '',
-				'label'       => __( 'Ajaxify Add to Cart Action', 'addonify-wishlist' ),
-				'description' => __( 'Add the product into the cart with ajax call.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'ajaxify_add_to_cart' ),
-			),
 			'ajaxify_remove_from_wishlist_button'   => array(
 				'type'        => 'switch',
 				'label'       => __( 'Ajaxify Remove from Wishlist Action', 'addonify-wishlist' ),
