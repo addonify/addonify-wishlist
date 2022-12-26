@@ -656,7 +656,7 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
                   element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
                     message: __('Error: couldn\'t fetch recommended plugins list.', 'addonify-wishlist'),
                     offset: 50,
-                    duration: 10000
+                    duration: 20000
                   });
                 }
                 _context.next = 14;
@@ -739,9 +739,9 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
                 _context2.t0 = _context2["catch"](1);
                 console.error(_context2.t0);
                 element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
-                  message: __('Error: couldn\'t retrive the list of installed plugins.', 'addonify-wishlist'),
+                  message: __('Error: Couldn\'t retrive the list of installed plugins.', 'addonify-wishlist'),
                   offset: 50,
-                  duration: 10000
+                  duration: 20000
                 });
                 _this3.isFetchingAllInstalledAddons = false;
               case 16:
@@ -791,7 +791,7 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
     handleAddonInstallation: function handleAddonInstallation(slug) {
       var _this5 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var res, data;
+        var res;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -811,109 +811,83 @@ var useProductStore = (0,pinia__WEBPACK_IMPORTED_MODULE_1__.defineStore)({
                 });
               case 5:
                 res = _context3.sent;
-                _context3.next = 8;
-                return res.json();
-              case 8:
-                data = _context3.sent;
-                if (data.status === 500) {
-                  console.log("=> Folder exists. Try deleting the addon first.");
-                }
-                if (data.status === 200) {
-                  console.log("=> Plugin ".concat(slug, " activated successfully."));
+                console.log(res);
+                if (res.status === 'active') {
+                  console.log("=> Plugin ".concat(slug, " installed successfully."));
                   element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.success({
-                    message: __('Plugin activated successfully.', 'addonify-wishlist'),
+                    message: __('Plugin installed successfully.', 'addonify-wishlist'),
                     offset: 50,
-                    duration: 10000
+                    duration: 20000
                   });
                   _this5.isWaitingForInstallation = false;
-                } else {
-                  console.log("=> Couldn't activate plugin ".concat(slug, "."));
-                  element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
-                    message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
-                    offset: 50,
-                    duration: 10000
-                  });
+                  window.location.reload();
                 }
-                _context3.next = 18;
+                _context3.next = 15;
                 break;
-              case 13:
-                _context3.prev = 13;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](0);
                 console.error(_context3.t0);
                 element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
                   message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
                   offset: 50,
-                  duration: 10000
+                  duration: 20000
                 });
                 _this5.isWaitingForInstallation = false;
-              case 18:
+              case 15:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 13]]);
+        }, _callee3, null, [[0, 10]]);
       }))();
     },
-    handleDeleteAddon: function handleDeleteAddon(slug) {
+    /**
+     * Update plugin status. (active/inactive)
+     * @param {String} slug
+     * @args {slug, status} status
+     */
+    updateAddonStatus: function updateAddonStatus(slug) {
       var _this6 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-        var res, data;
+        var res;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.prev = 0;
                 _this6.isWaitingForInstallation = true;
-                console.log("=> Trying to delete plugin ".concat(slug, "..."));
+                console.log("=> Trying to set the status of plugin ".concat(slug, "..."));
                 _context4.next = 5;
                 return apiFetch({
-                  method: "DELETE",
-                  path: "/wp/v2/plugins",
-                  // Args to send to the endpoint.
-                  data: {
-                    slug: slug
-                  }
+                  method: "POST",
+                  path: "/wp/v2/plugins/".concat(slug)
+
+                  //data: {
+                  //    status: "active",
+                  //},
                 });
               case 5:
                 res = _context4.sent;
-                _context4.next = 8;
-                return res.json();
-              case 8:
-                data = _context4.sent;
-                if (data.status === 200) {
-                  console.log("=> Plugin ".concat(slug, " deleted successfully."));
-                  element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.success({
-                    message: __('Plugin deleted successfully.', 'addonify-wishlist'),
-                    offset: 50,
-                    duration: 10000
-                  });
-                  _this6.isWaitingForInstallation = false;
-                } else {
-                  console.log("=> Couldn't delete plugin ".concat(slug, "."));
-                  element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
-                    message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
-                    offset: 50,
-                    duration: 10000
-                  });
-                }
-                _context4.next = 17;
+                console.log(res);
+                _context4.next = 14;
                 break;
-              case 12:
-                _context4.prev = 12;
+              case 9:
+                _context4.prev = 9;
                 _context4.t0 = _context4["catch"](0);
                 console.log(_context4.t0);
                 element_plus__WEBPACK_IMPORTED_MODULE_2__.ElMessage.error({
-                  message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
+                  message: __('Error: Couldn\'t activate the plugin.', 'addonify-wishlist'),
                   offset: 50,
-                  duration: 10000
+                  duration: 20000
                 });
                 _this6.isWaitingForInstallation = false;
-              case 17:
+              case 14:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 12]]);
+        }, _callee4, null, [[0, 9]]);
       }))();
     }
   }
@@ -3718,12 +3692,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1 /* STABLE */
   })) : $setup.status == 'inactive' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["ElButton"], {
     key: 1,
-    type: "primary",
+    type: "success",
     size: "large",
     plain: "",
     loading: $setup.proStore.isWaitingForInstallation === true,
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $setup.proStore.handleAddonInstallation($setup.slug);
+      return $setup.proStore.updateAddonStatus($setup.slug);
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {

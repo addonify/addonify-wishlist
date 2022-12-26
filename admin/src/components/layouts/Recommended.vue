@@ -55,11 +55,11 @@
 					</el-button>
 					<el-button
 						v-else-if="status == 'inactive'"
-						type="primary"
+						type="success"
 						size="large"
 						plain
 						:loading="proStore.isWaitingForInstallation === true"
-						@click="proStore.handleAddonInstallation(slug)"
+						@click="proStore.updateAddonStatus(slug)"
 					>
 						Active now
 					</el-button>
