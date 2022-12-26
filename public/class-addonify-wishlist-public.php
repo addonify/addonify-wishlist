@@ -211,6 +211,7 @@ class Addonify_Wishlist_Public {
 				'checkoutPageURL'                    => wc_get_checkout_url(),
 				'afterAddToWishlistAction'           => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
 				'wishlistPageURL'                    => esc_url( get_permalink( get_page_by_title( 'Wishlist' ) ) ),
+				'requireLogin'                       => (bool) addonify_wishlist_get_option( 'require_login' ),
 			)
 		);
 
@@ -721,7 +722,7 @@ class Addonify_Wishlist_Public {
 	 * @since    1.0.0
 	 */
 	public function wishlist_sidebar_template() {
-		if ( addonify_wishlist_get_option( 'wishlist_page' ) !== '' && ! is_page( addonify_wishlist_get_option( 'wishlist_page' ) ) ) {
+		if ( ( addonify_wishlist_get_option( 'wishlist_page' ) !== '' && ! is_page( addonify_wishlist_get_option( 'wishlist_page' ) ) ) || ! addonify_wishlist_get_option( 'require_login' ) ) {
 			do_action( 'addonify_wishlist_render_sidebar_toggle_button' );
 
 			do_action( 'addonify_wishlist_render_sidebar' );
