@@ -11,18 +11,14 @@
 		status: String,
 	});
 
+	const { __ } = wp.i18n;
 	const proStore = useProductStore();
 	const { slug, name, thumb, description, status } = props;
 
-	const installAddon = (slug) => {
-		alert("Installing addon: " + slug);
-	};
-
-	const activateAddon = (slug) => {
-		alert("Activating addon: " + slug);
-	};
-
-	//console.log("=> Child component loaded.");
+	const activate = __("Activate now", "addonify-wishlist");
+	const activiting = __("Activating...", "addonify-wishlist");
+	const install = __("Install now", "addonify-wishlist");
+	const installing = __("Installing...", "addonify-wishlist");
 </script>
 
 <template>
@@ -55,13 +51,17 @@
 					</el-button>
 					<el-button
 						v-else-if="status == 'inactive'"
-						type="primary"
+						type="success"
 						size="large"
 						plain
 						:loading="proStore.isWaitingForInstallation === true"
-						@click="proStore.handleAddonInstallation(slug)"
+						@click="proStore.updateAddonStatus(slug)"
 					>
-						Active now
+						{{
+							proStore.isWaitingForInstallation
+								? activiting
+								: activate
+						}}
 					</el-button>
 					<el-button
 						v-else
@@ -71,7 +71,11 @@
 						:loading="proStore.isWaitingForInstallation === true"
 						@click="proStore.handleAddonInstallation(slug)"
 					>
-						Install now
+						{{
+							proStore.isWaitingForInstallation
+								? installing
+								: install
+						}}
 					</el-button>
 				</div>
 			</div>

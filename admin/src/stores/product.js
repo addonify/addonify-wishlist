@@ -52,7 +52,7 @@ export const useProductStore = defineStore({
                     ElMessage.error(({
                         message: __('Error: couldn\'t fetch recommended plugins list.', 'addonify-wishlist'),
                         offset: 50,
-                        duration: 10000,
+                        duration: 20000,
                     }));
                 }
 
@@ -132,9 +132,9 @@ export const useProductStore = defineStore({
                 console.error(err);
 
                 ElMessage.error(({
-                    message: __('Error: couldn\'t retrive the list of installed plugins.', 'addonify-wishlist'),
+                    message: __('Error: Couldn\'t retrive the list of installed plugins.', 'addonify-wishlist'),
                     offset: 50,
-                    duration: 10000,
+                    duration: 20000,
                 }));
 
                 this.isFetchingAllInstalledAddons = false;
@@ -207,34 +207,20 @@ export const useProductStore = defineStore({
                     },
                 });
 
-                const data = await res.json();
+                console.log(res);
 
-                if (data.status === 500) {
+                if (res.status === 'active') {
 
-                    console.log("=> Folder exists. Try deleting the addon first.");
-                }
-
-                if (data.status === 200) {
-
-                    console.log(`=> Plugin ${slug} activated successfully.`);
+                    console.log(`=> Plugin ${slug} installed successfully.`);
 
                     ElMessage.success(({
-                        message: __('Plugin activated successfully.', 'addonify-wishlist'),
+                        message: __('Plugin installed successfully.', 'addonify-wishlist'),
                         offset: 50,
-                        duration: 10000,
+                        duration: 20000,
                     }));
 
                     this.isWaitingForInstallation = false;
-
-                } else {
-
-                    console.log(`=> Couldn't activate plugin ${slug}.`);
-
-                    ElMessage.error(({
-                        message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
-                        offset: 50,
-                        duration: 10000,
-                    }));
+                    window.location.reload();
                 }
 
             } catch (err) {
@@ -244,55 +230,51 @@ export const useProductStore = defineStore({
                 ElMessage.error(({
                     message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
                     offset: 50,
-                    duration: 10000,
+                    duration: 20000,
                 }));
 
                 this.isWaitingForInstallation = false;
             }
         },
 
-        async handleDeleteAddon(slug) {
+        /**
+         * Update plugin status. (active/inactive)
+         * @param {String} slug
+         * @args {slug, status} status
+         */
+
+        async updateAddonStatus(slug) {
 
             try {
 
                 this.isWaitingForInstallation = true;
 
-                console.log(`=> Trying to delete plugin ${slug}...`);
+                console.log(`=> Trying to set the status of plugin ${slug}...`);
 
                 const res = await apiFetch({
 
-                    method: "DELETE",
-                    path: "/wp/v2/plugins",
-
-                    // Args to send to the endpoint.
+                    method: "POST",
+                    path: `/wp/v2/plugins/${slug}`,
                     data: {
-                        slug: slug,
+                        status: "active",
+                        plugin: `${slug}/${slug}`,
                     },
                 });
 
-                const data = await res.json();
+                console.log(res);
 
-                if (data.status === 200) {
+                if (res.status == 'active') {
 
-                    console.log(`=> Plugin ${slug} deleted successfully.`);
+                    console.log(`=> Plugin ${slug} activated successfully.`);
 
                     ElMessage.success(({
-                        message: __('Plugin deleted successfully.', 'addonify-wishlist'),
+                        message: __('Plugin activated successfully.', 'addonify-wishlist'),
                         offset: 50,
-                        duration: 10000,
+                        duration: 20000,
                     }));
 
                     this.isWaitingForInstallation = false;
-
-                } else {
-
-                    console.log(`=> Couldn't delete plugin ${slug}.`);
-
-                    ElMessage.error(({
-                        message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
-                        offset: 50,
-                        duration: 10000,
-                    }));
+                    window.location.reload();
                 }
 
             } catch (err) {
@@ -300,9 +282,9 @@ export const useProductStore = defineStore({
                 console.log(err);
 
                 ElMessage.error(({
-                    message: __('Error: couldn\'t delete plugin.', 'addonify-wishlist'),
+                    message: __('Error: Couldn\'t activate the plugin.', 'addonify-wishlist'),
                     offset: 50,
-                    duration: 10000,
+                    duration: 20000,
                 }));
 
                 this.isWaitingForInstallation = false;
