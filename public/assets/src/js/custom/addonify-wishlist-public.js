@@ -270,6 +270,24 @@
 
                 addonifyWishlistEmptyWishlist(thisButton.data('product_name') + addonifyWishlistJSObject.removedFromWishlistText);
             })
+
+            if ( $('#addonify-wishlist-table').length === 0 ) {
+                // fetch wishlist product data from server
+                $.post(
+                    addonifyWishlistJSObject.ajax_url,
+                    {
+                        action: 'addonify_get_wishlist_sidebar',
+                        productIds: JSON.stringify(getProductids()),
+                        nonce: addonifyWishlistJSObject.nonce
+                    },
+                    function (result) {
+                        $body.find('#addonify-wishlist-sticky-sidebar-container').replaceWith(result);
+                        if (getProductids().length > 0) {
+                            $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                        }
+                    }
+                );
+            }
         }
 
         // Ajax call to add product into the wishlist.
