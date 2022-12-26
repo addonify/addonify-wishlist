@@ -95,8 +95,9 @@
                         // Triggering custom event when product is added to cart. 
                         // 'addonify_added_to_cart' custom event can be used to perform desired actions.
                         $(document).trigger('addonify_added_to_cart', [{ productID: thisButton.data('product_id') }]);
-
-                        addonifyShowPopupModal('{product_name} added to cart', thisButton.data('product_name'), 'success')
+                        if (thisButton.hasClass('addonify-wishlist-table-button')) {
+                            addonifyShowPopupModal('{product_name} added to cart', thisButton.data('product_name'), 'success')
+                        }
 
                         if (addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart === '1' && parentProductRow) {
 
@@ -269,22 +270,6 @@
 
                 addonifyWishlistEmptyWishlist(thisButton.data('product_name') + addonifyWishlistJSObject.removedFromWishlistText);
             })
-
-            // fetch wishlist product data from server
-            $.post(
-                addonifyWishlistJSObject.ajax_url,
-                {
-                    action: 'addonify_get_wishlist_sidebar',
-                    productIds: JSON.stringify(getProductids()),
-                    nonce: addonifyWishlistJSObject.nonce
-                },
-                function (result) {
-                    $body.find('#addonify-wishlist-sticky-sidebar-container').replaceWith(result);
-                    if (getProductids().length > 0) {
-                        $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
-                    }
-                }
-            );
         }
 
         // Ajax call to add product into the wishlist.

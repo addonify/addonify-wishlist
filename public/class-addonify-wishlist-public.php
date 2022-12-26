@@ -721,10 +721,11 @@ class Addonify_Wishlist_Public {
 	 * @since    1.0.0
 	 */
 	public function wishlist_sidebar_template() {
+		if ( addonify_wishlist_get_option( 'wishlist_page' ) !== '' && ! is_page( addonify_wishlist_get_option( 'wishlist_page' ) ) ) {
+			do_action( 'addonify_wishlist_render_sidebar_toggle_button' );
 
-		do_action( 'addonify_wishlist_render_sidebar_toggle_button' );
-
-		do_action( 'addonify_wishlist_render_sidebar' );
+			do_action( 'addonify_wishlist_render_sidebar' );
+		}
 	}
 
 	/**
