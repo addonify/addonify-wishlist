@@ -411,6 +411,10 @@
                     // Update button icon.
                     addToWishlistButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-o-style-one').addClass('heart-style-one');
                 }
+
+                // Triggering custom event when product is added to wishlist. 
+                // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
+                $(document).trigger('addonify_added_to_wishlist', [{ productID: addToWishlistButton.data('product_id') }]);
             } else {
                 console.log('Item already in wishlist.');
             }
