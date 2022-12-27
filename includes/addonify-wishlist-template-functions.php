@@ -502,7 +502,7 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_login_link_button' ) ) {
 				'addonify_wishlist_popup_wishlist_link_button_args',
 				array(
 					'redirect_url'       => $redirect_url,
-					'login_button_label' => apply_filters( 'addonify_wishlist_popup_login_button_label', __( 'Login', 'addonify-wishlist' ) ),
+					'login_button_label' => apply_filters( 'addonify_wishlist_popup_login_button_label', addonify_wishlist_get_option( 'login_btn_label' ) ),
 				)
 			)
 		);

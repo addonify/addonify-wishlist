@@ -203,39 +203,43 @@
         if (!isLoggedIn) {
             // actions on wishlist page.
             if ($body.find('div#addonify-wishlist-page-container').length > 0) {
-                $('div#addonify-wishlist-page-container').append('<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>');
-                //populate table
-                $.post(
-                    addonifyWishlistJSObject.ajax_url,
-                    {
-                        action: 'addonify_get_wishlist_table',
-                        productIds: JSON.stringify(getProductids()),
-                        nonce: addonifyWishlistJSObject.nonce
-                    },
-                    function (result) {
-                        $body.find('div#addonify-wishlist-page-container').replaceWith(result);
-                    }
-                );
-
-                // remove an item from wishlist table.
-                $(document).on('click', '.addonify-wishlist-table-remove-from-wishlist', function (event) {
-                    event.preventDefault();
-                    let p_tag
-                    let product_ids = getProductids();
-                    let id_to_remove = parseInt($(this).val());
-                    if ($(this).closest('tr.addonify-wishlist-table-product-row').length > 0) {
-                        p_tag = $(this).closest('tr.addonify-wishlist-table-product-row');
-                    }
-                    if (product_ids.indexOf(id_to_remove) > -1) {
-                        product_ids.splice(product_ids.indexOf(id_to_remove), 1);
-                        setProductids(product_ids);
-                    }
-                    if (p_tag.length === 1) {
-                        p_tag.remove();
-                    }
-
-                    addonifyEmptyWishlistText(product_ids.length);
-                });
+                if (addonifyWishlistJSObject.requireLogin) {
+                    $('div#addonify-wishlist-page-container').html('<h3>'+addonifyWishlistJSObject.loginRequiredMessage+'</h3>');
+                } else {
+                    $('div#addonify-wishlist-page-container').html('<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>');
+                    //populate table
+                    $.post(
+                        addonifyWishlistJSObject.ajax_url,
+                        {
+                            action: 'addonify_get_wishlist_table',
+                            productIds: JSON.stringify(getProductids()),
+                            nonce: addonifyWishlistJSObject.nonce
+                        },
+                        function (result) {
+                            $body.find('div#addonify-wishlist-page-container').replaceWith(result);
+                        }
+                    );
+    
+                    // remove an item from wishlist table.
+                    $(document).on('click', '.addonify-wishlist-table-remove-from-wishlist', function (event) {
+                        event.preventDefault();
+                        let p_tag
+                        let product_ids = getProductids();
+                        let id_to_remove = parseInt($(this).val());
+                        if ($(this).closest('tr.addonify-wishlist-table-product-row').length > 0) {
+                            p_tag = $(this).closest('tr.addonify-wishlist-table-product-row');
+                        }
+                        if (product_ids.indexOf(id_to_remove) > -1) {
+                            product_ids.splice(product_ids.indexOf(id_to_remove), 1);
+                            setProductids(product_ids);
+                        }
+                        if (p_tag.length === 1) {
+                            p_tag.remove();
+                        }
+    
+                        addonifyEmptyWishlistText(product_ids.length);
+                    });
+                }
             }
 
             // remove product from wishlist.

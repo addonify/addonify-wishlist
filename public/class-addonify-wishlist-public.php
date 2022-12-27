@@ -184,6 +184,8 @@ class Addonify_Wishlist_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, true );
 
+		$login_url = ( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url();
+
 		wp_localize_script(
 			$this->plugin_name,
 			'addonifyWishlistJSObject',
@@ -212,6 +214,9 @@ class Addonify_Wishlist_Public {
 				'afterAddToWishlistAction'           => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
 				'wishlistPageURL'                    => esc_url( get_permalink( get_page_by_title( 'Wishlist' ) ) ),
 				'requireLogin'                       => (bool) addonify_wishlist_get_option( 'require_login' ),
+				'loginURL'                           => $login_url,
+				/* Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag. */
+				'loginRequiredMessage'               => sprintf( __( 'Login required. Please %1$s click here %2$s to login.', 'addonify-wishlist' ), '<a href="' . $login_url . '">', '</a>' ),
 			)
 		);
 

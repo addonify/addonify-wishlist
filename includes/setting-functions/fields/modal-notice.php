@@ -43,6 +43,14 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
 			),
+			'login_btn_label'                  => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Login Button Label', 'addonify-wishlist' ),
+				'description' => __( 'Label for button to redirect to login page.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'login_btn_label' ),
+			),
 			'popup_close_btn_text'             => array(
 				'type'        => 'text',
 				'className'   => '',

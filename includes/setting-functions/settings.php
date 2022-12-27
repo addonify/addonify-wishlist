@@ -45,6 +45,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'btn_label'                                => __( 'Add to wishlist', 'addonify-wishlist' ),
 				'btn_label_when_added_to_wishlist'         => __( 'Added to wishlist', 'addonify-wishlist' ),
 				'btn_label_if_added_to_wishlist'           => __( 'Already in wishlist', 'addonify-wishlist' ),
+				'login_btn_label'                          => __( 'Login', 'addonify-wishlist' ),
 				'show_icon'                                => true,
 				'btn_custom_class'                         => '',
 				'after_add_to_wishlist_action'             => 'show_popup_notice',
