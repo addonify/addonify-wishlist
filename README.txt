@@ -128,7 +128,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 1.1.1 - ? December, 2022 =
+= 1.1.1 - 28 December, 2022 =
 
 - Added: Option to reset all settings.
 - Added: Option to export all settings.
