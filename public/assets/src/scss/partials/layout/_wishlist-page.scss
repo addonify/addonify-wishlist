@@ -70,6 +70,35 @@
                 }
             }
         }
+
+        td.actions {
+
+            .adfy-wishlist-btn  {
+
+                position: relative;
+                @include flex();
+                flex-direction: row;
+                gap: 10px;
+                justify-content: start;
+
+                a {
+
+                    display: inline-block;
+                    margin: 0;
+                    padding: 10px 15px;
+                    font-weight: normal;
+                    text-decoration: none;
+                    line-height: 1;
+                    border-radius: 3px;
+
+                    &:hover {
+
+                        outline: none;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
     }
 
     #addonify-wishlist_spinner {
@@ -187,8 +216,11 @@
 
                         .adfy-wishlist-btn {
 
-                            height: auto;
-                            padding: 13px 15px;
+                            a {
+
+                                height: auto;
+                                padding: 13px 15px;
+                            }
                         }
                     }
 
