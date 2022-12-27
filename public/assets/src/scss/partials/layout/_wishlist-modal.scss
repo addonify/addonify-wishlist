@@ -75,8 +75,8 @@
             grid-template-columns: repeat(1, 1fr);
             row-gap: 20px;
 
-            .adfy-wishlist-btn,
-            .adfy-wishlist-btn-link {
+            .adfy-wishlist-btn-link,
+            p.addonify-wishlist-add-to-cart .button {
 
                 @include flex();
                 align-items: center;
@@ -100,7 +100,8 @@
                 }
             }
 
-            .adfy-wishlist-btn-link {
+            .adfy-wishlist-btn-link,
+            p.addonify-wishlist-add-to-cart .button {
 
                 text-decoration: none;
 

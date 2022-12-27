@@ -50,7 +50,7 @@ if (
 				<div class="adfy-wishlist-row">
 					<div class="adfy-wishlist-col cart-column">
 						<?php
-						echo do_shortcode( '[add_to_cart id=' . $product->get_id() . ' show_price=false style="" class="button adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-sidebar-button"]' );
+						echo do_shortcode( '[add_to_cart id=' . $product->get_id() . ' show_price=false style="" class="adfy-wishlist-clear-shortcode-button-style adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-sidebar-button"]' );
 						?>
 					</div>
 					<div class="adfy-wishlist-col remove-item-column">
