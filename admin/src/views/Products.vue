@@ -1,24 +1,17 @@
 <script setup>
-	import { ref, onMounted } from "vue";
-	import Loading from "../components/layouts/Loading.vue";
+	//import { ref, onMounted } from "vue";
+	//import Loading from "../components/layouts/Loading.vue";
 	import Navigation from "../components/layouts/Navigation.vue";
-	import Recommended from "../components/layouts/Recommended.vue";
-	import { useProductStore } from "../stores/product";
+	//import Recommended from "../components/layouts/Recommended.vue";
+	//import { useProductStore } from "../stores/product";
 
-	const proStore = useProductStore();
+	//const proStore = useProductStore();
+	const { __ } = wp.i18n;
 
-	//const getStatus = (slug) => {
-	//	console.log(proStore.allProductSlugStatus[slug]);
-	//};
-
-	onMounted(() => {
-		proStore.fetchInstalledAddons();
-		proStore.fetchGithubRepo();
-
-		//setTimeout(() => {
-		//	console.log(proStore.allProductSlugStatus);
-		//}, 5000);
-	});
+	//onMounted(() => {
+	//	proStore.fetchInstalledAddons();
+	//	proStore.fetchGithubRepo();
+	//});
 </script>
 
 <template>
@@ -28,7 +21,8 @@
 				<Navigation />
 			</aside>
 			<section class="adfy-col end site-primary">
-				<Loading
+				<p>{{ __("Coming soon.....", "addonify-wishlist") }}</p>
+				<!--<Loading
 					v-if="
 						proStore.isFetching === true ||
 						proStore.isFetchingAllInstalledAddons === true ||
@@ -52,7 +46,7 @@
 						</div>
 					</div>
 					<div id="recommended-general-products"></div>
-				</section>
+				</section>-->
 			</section>
 		</main>
 	</section>
