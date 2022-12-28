@@ -46,7 +46,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 						$product = wc_get_product( $product_id );
 						?>
-						<tr class="addonify-wishlist-table-product-row" data-product_row="addonify-wishlist-table-product-row-<?php echo esc_attr( $product_id ); ?>">
+						<tr class="addonify-wishlist-table-product-row" data-product_row="addonify-wishlist-table-product-row-<?php echo esc_attr( $product_id ); ?>" data-product_name="<?php echo esc_attr( $product->get_name() ); ?>">
 							<td class="remove">
 								<?php
 								$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' addonify-wishlist-ajax-remove-from-wishlist ';
@@ -115,7 +115,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 							</td>
 							<td class="actions">
 								<?php
-								echo do_shortcode( '[add_to_cart id=' . $product->get_id() . ' show_price=false style="" class="adfy-wishlist-clear-shortcode-button-style adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-sidebar-button"]' );
+								echo do_shortcode( '[add_to_cart id=' . $product->get_id() . ' show_price=false style="" class="adfy-wishlist-clear-shortcode-button-style adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-table-button"]' );
 								?>
 							</td>
 						</tr>

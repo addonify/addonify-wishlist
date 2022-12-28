@@ -115,7 +115,7 @@
                                 addonifyEmptyWishlistText(product_ids.length);
                             }
 
-                            addonifyWishlistEmptyWishlist(response.message);
+                            addonifyWishlistSidebarNotification(response.message);
                         }
                         if (addonifyWishlistJSObject.redirectToCheckOutAfterAddedToCart === '1') {
                             window.location.href = addonifyWishlistJSObject.checkoutPageURL
@@ -179,7 +179,7 @@
 
                         addonifyEmptyWishlistText(response.wishlist_count);
 
-                        addonifyWishlistEmptyWishlist(response.message);
+                        addonifyWishlistSidebarNotification(response.message);
                     }
                 },
                 "json"
@@ -189,6 +189,51 @@
                 parentProductRow.addClass('loading');
             }
         });
+
+        $(document).on('added_to_cart', function (event, fragments, cart_hash, addToCartButton) {
+            let product_id = (addToCartButton.data('product_id'));
+
+            let parentProductRow = '';
+
+            if ($('#addonify-wishlist-table').length > 0) {
+                parentProductRow = $('#addonify-wishlist-table').find('tr[data-product_row="addonify-wishlist-table-product-row-' + product_id + '"]');
+            } else {
+                parentProductRow = $('div#addonify-wishlist-sticky-sidebar-container').find('li[data-product_row="addonify-wishlist-sidebar-product-row-' + product_id + '"]');
+            }
+
+            if (addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart === '1' && parentProductRow.length > 0) {
+
+                parentProductRow.remove();
+
+                addonifyInitialWishlistButton(product_id);
+                if ( isLoggedIn ) {
+                    let ajaxData = {
+                        action: 'addonify_remove_from_wishlist',
+                        productId: product_id,
+                        nonce: addonifyWishlistJSObject.nonce
+                    }
+                    $.post(
+                        addonifyWishlistJSObject.ajax_url,
+                        ajaxData,
+                        function (response) {
+                            addonifyEmptyWishlistText(response.wishlist_count);
+                        }
+                    );
+                } else {
+                    let product_ids = getProductids();
+                    if ( product_ids.indexOf(parseInt(product_id)) > -1 ) {
+                        product_ids.splice(product_ids.indexOf(parseInt(product_id)), 1)
+                        setProductids(product_ids)
+                    }
+                    addonifyEmptyWishlistText(product_ids.length);
+                }
+
+                addonifyWishlistSidebarNotification(addonifyWishlistJSObject.removedFromWishlistText, parentProductRow.data('product_name'));
+            }
+            if (addToCartButton.parent().hasClass('addonify-wishlist-table-button')) {
+                addonifyShowPopupModal('{product_name} added to cart', parentProductRow.data('product_name'), 'success')
+            }
+        })
 
         function guest_init() {
             let wishlist_products = getProductids();
@@ -272,7 +317,7 @@
 
                 addonifyEmptyWishlistText(product_ids.length);
 
-                addonifyWishlistEmptyWishlist(thisButton.data('product_name') + addonifyWishlistJSObject.removedFromWishlistText);
+                addonifyWishlistSidebarNotification(addonifyWishlistJSObject.removedFromWishlistText, parentProductRow.data('product_name'));
             })
 
             if ( $('#addonify-wishlist-table').length === 0 && ! addonifyWishlistJSObject.requireLogin ) {
@@ -435,12 +480,14 @@
         }
 
         // Display sidebar notifications.
-        function addonifyWishlistEmptyWishlist(message) {
+        function addonifyWishlistSidebarNotification(message, product_name = '') {
 
             let notice = $('#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-footer');
 
             if (notice.length > 0) {
-
+                if ( product_name !== '' ) {
+                    message = message.replace('{product_name}', product_name)
+                }
                 notice.prepend('<div class="notice adfy-wishlist-sidebar-notice"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" /></svg><span>' + message + '</span></div> ');
 
                 // delete notification after 5 seconds

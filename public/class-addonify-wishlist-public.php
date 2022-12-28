@@ -202,7 +202,7 @@ class Addonify_Wishlist_Public {
 				'popupAddedToWishlistText'           => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
 				'popupAlreadyInWishlistText'         => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
 				'emptyWishlistText'                  => __( 'Your Wishlist is empty', 'addonify-wishlist' ),
-				'removedFromWishlistText'            => __( ' has been removed', 'addonify-wishlist' ),
+				'removedFromWishlistText'            => __( '{product_name} has been removed', 'addonify-wishlist' ),
 				'isLoggedIn'                         => is_user_logged_in(),
 				'addedToWishlistButtonLabel'         => addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' ),
 				'addonify_get_wishlist_table'        => 'addonify_get_wishlist_table',
