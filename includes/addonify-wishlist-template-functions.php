@@ -372,7 +372,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 
 		ob_start();
 		?>
-		<li class="addonify-wishlist-sidebar-item" data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>">
+		<li class="addonify-wishlist-sidebar-item" data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>" data-product_name="<?php echo esc_attr( $product->get_name() ); ?>">
 			<div class="adfy-wishlist-row">
 				<div class="adfy-wishlist-col image-column">
 					<div class="adfy-wishlist-woo-image">
