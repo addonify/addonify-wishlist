@@ -263,6 +263,8 @@ function addonify_wishlist_add_fields_to_settings_fields( $settings_fields ) {
 
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_add_to_wishlist_button_styles_settings_fields() );
 
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_view_wishlist_button_styles_settings_fields() );
+
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_custom_css_settings_fields() );
 
 	return $settings_fields;
