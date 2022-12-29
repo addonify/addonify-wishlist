@@ -254,6 +254,11 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_toggle_button' ) ) {
 			return;
 		}
 
+		if ( get_the_ID() === (int) addonify_wishlist_get_option( 'wishlist_page' ) ) {
+			// do not show sidebar in wishlist page.
+			return;
+		}
+
 		$alignment = 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' );
 
 		$css_classes = array( $alignment );

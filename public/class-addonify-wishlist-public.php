@@ -126,6 +126,8 @@ class Addonify_Wishlist_Public {
 
 		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
 
+		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_added_item_from_wishlist' ) );
+
 		add_action( 'addonify_wishlist_before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
 
 		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
@@ -217,6 +219,7 @@ class Addonify_Wishlist_Public {
 				'loginURL'                           => $login_url,
 				/* Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag. */
 				'loginRequiredMessage'               => sprintf( __( 'Login required. Please %1$s click here %2$s to login.', 'addonify-wishlist' ), '<a href="' . $login_url . '">', '</a>' ),
+				'ajaxAddToCart'                      => ( 'yes' === get_option( 'woocommerce_enable_ajax_add_to_cart' ) ),
 			)
 		);
 
@@ -908,6 +911,16 @@ class Addonify_Wishlist_Public {
 		}
 		$sidebar_data = addonify_wishlist_render_sidebar_product( $product_id, true );
 		wp_send_json( array( 'sidebar_data' => $sidebar_data ) );
+	}
+
+	/**
+	 * Removes product from wishlist if exists.
+	 */
+	public function remove_added_item_from_wishlist() {
+		if ( 'yes' !== get_option( 'woocommerce_enable_ajax_add_to_cart' ) ) {
+			$product_id = (int) $_REQUEST['add-to-cart']; //phpcs:ignore
+			$this->remove_from_wishlist( $product_id );
+		}
 	}
 
 	/**
