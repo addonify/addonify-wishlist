@@ -211,7 +211,6 @@ class Addonify_Wishlist_Public {
 				'addonify_get_wishlist_sidebar'      => 'addonify_get_wishlist_sidebar',
 				'thisSiteUrl'                        => get_bloginfo( 'url' ),
 				'noOfDaysDataIsValid'                => (int) addonify_wishlist_get_option( 'cookies_lifetime' ),
-				'redirectToCheckOutAfterAddedToCart' => addonify_wishlist_get_option( 'redirect_to_checkout_if_product_added_to_cart' ),
 				'checkoutPageURL'                    => wc_get_checkout_url(),
 				'afterAddToWishlistAction'           => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
 				'wishlistPageURL'                    => esc_url( get_permalink( get_page_by_title( 'Wishlist' ) ) ),
@@ -306,16 +305,6 @@ class Addonify_Wishlist_Public {
 				}
 
 				wc_add_notice( $notice, 'success' );
-
-				// If redirect to checkout is enabled, redirect to checkout page.
-				if (
-					(int) addonify_wishlist_get_option( 'redirect_to_checkout_if_product_added_to_cart' ) === 1 &&
-					get_option( 'woocommerce_checkout_page_id' )
-				) {
-
-					wp_safe_redirect( wc_get_checkout_url() );
-					exit;
-				}
 
 				wp_safe_redirect( home_url( $wp->request ) );
 				exit;
