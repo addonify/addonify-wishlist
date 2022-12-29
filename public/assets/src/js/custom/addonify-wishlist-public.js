@@ -117,10 +117,6 @@
 
                             addonifyWishlistSidebarNotification(response.message);
                         }
-                        if (addonifyWishlistJSObject.redirectToCheckOutAfterAddedToCart === '1') {
-                            window.location.href = addonifyWishlistJSObject.checkoutPageURL
-                            return;
-                        }
                     }
                 },
                 "json"

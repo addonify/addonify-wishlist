@@ -78,14 +78,6 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 					'redirect_to_wishlist_page' => __( 'Redirect to Wishlist Page', 'addonify-wishlist' ),
 				),
 			),
-			'redirect_to_checkout_if_product_added_to_cart' => array(
-				'type'        => 'switch',
-				'className'   => '',
-				'label'       => __( 'Redirect to Checkout', 'addonify-wishlist' ),
-				'description' => __( 'Redirect to the checkout page if the product in the wishlist is added into cart.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'redirect_to_checkout_if_product_added_to_cart' ),
-			),
 			'remove_from_wishlist_if_added_to_cart' => array(
 				'type'        => 'switch',
 				'className'   => '',
