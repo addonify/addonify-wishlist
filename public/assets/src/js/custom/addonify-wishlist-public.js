@@ -337,6 +337,18 @@
                     }
                 );
             }
+
+            if ( ! addonifyWishlistJSObject.ajaxAddToCart && addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart === '1' ) {
+                $(document).on('click', '.add_to_cart_button', function (e) {
+                    let $this = $(this);
+                    let product_id = $this.data('product_id');
+                    let product_ids = getProductids();
+                    if ( product_ids.indexOf(parseInt(product_id)) > -1 ) {
+                        product_ids.splice(product_ids.indexOf(parseInt(product_id)), 1)
+                        setProductids(product_ids)
+                    }
+                });
+            }
         }
 
         // Ajax call to add product into the wishlist.
