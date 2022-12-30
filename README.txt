@@ -128,17 +128,18 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 1.1.1 - 28 December, 2022 =
+= 1.1.1 - 30 December, 2022 =
 
 - Added: Option to reset all settings.
 - Added: Option to export all settings.
 - Added: Option to import all settings.
 - Added: User Data Processing. Ref: https://creamcode.org/user-data-processing/
 - Added: Spinner on wishlist page.
-- Added: Recommended products on settings page.
-- Fix: Minor bugs.
 - Tweak: Now saving wishlist data in browser local strorage if the user is not logged-in.
 - Removed: Default behavior from "After Add to Wishlist Action" option on settings page.
+- Updated: Removed custom add to cart button from wishlist table and added WooCommerce default button.
+- Removed: Unwanted settings.
+- Fixed: Minor bugs.
 
 = 1.1.0 - 18 November, 2022 =
 
