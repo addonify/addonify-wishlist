@@ -101,6 +101,8 @@ class Addonify_Wishlist_Public {
 
 		add_action( 'woocommerce_after_add_to_cart_form', array( $this, 'render_add_to_wishlist_button_single' ) );
 
+		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_item_from_wishlist' ) );
+
 		add_action( 'wp', array( $this, 'init_actions' ) );
 
 		add_action( 'wp_footer', array( $this, 'wishlist_modal_wrapper' ) );
@@ -125,8 +127,6 @@ class Addonify_Wishlist_Public {
 		add_action( 'wp_ajax_nopriv_addonify_get_wishlist_sidebar', array( $this, 'addonify_get_wishlist_sidebar' ) );
 
 		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
-
-		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_added_item_from_wishlist' ) );
 
 		add_action( 'addonify_wishlist_before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
 
@@ -905,10 +905,15 @@ class Addonify_Wishlist_Public {
 	/**
 	 * Removes product from wishlist if exists.
 	 */
-	public function remove_added_item_from_wishlist() {
-		if ( 'yes' !== get_option( 'woocommerce_enable_ajax_add_to_cart' ) ) {
-			$product_id = (int) $_REQUEST['add-to-cart']; //phpcs:ignore
-			$this->remove_from_wishlist( $product_id );
+	public function remove_item_from_wishlist() {
+		if ( is_user_logged_in() && (bool) addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ) ) {
+			// remove if exists.
+			if ( isset( $_REQUEST['product_id'] ) ) { //phpcs:ignore
+				$this->remove_from_wishlist( sanitize_text_field( wp_unslash( $_REQUEST['product_id'] ) ) ); //phpcs:ignore
+			}
+			if ( isset( $_REQUEST['add-to-cart'] ) ) { //phpcs:ignore
+				$this->remove_from_wishlist( sanitize_text_field( wp_unslash( $_REQUEST['add-to-cart'] ) ) ); //phpcs:ignore
+			}
 		}
 	}
 

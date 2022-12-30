@@ -198,8 +198,9 @@
             }
 
             if (addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart === '1' && parentProductRow.length > 0) {
-
-                parentProductRow.remove();
+                if (parentProductRow.length > 0) {
+                    parentProductRow.remove();
+                }
 
                 addonifyInitialWishlistButton(product_id);
                 if ( isLoggedIn ) {
@@ -334,7 +335,7 @@
                 );
             }
 
-            if ( ! addonifyWishlistJSObject.ajaxAddToCart && addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart === '1' ) {
+            if ( addonifyWishlistJSObject.removeFromWishlistAfterAddedToCart === '1' ) {
                 $(document).on('click', '.add_to_cart_button', function (e) {
                     let $this = $(this);
                     let product_id = $this.data('product_id');
