@@ -4,6 +4,10 @@
 
 #addonify-wishlist-page-container  {
 
+    position: relative;
+    min-height: 150px;
+    margin: 0 0 40px 0;
+
     #addonify-wishlist-table {
 
         table-layout: auto;
@@ -65,6 +69,61 @@
                     background-color: transparent;
                 }
             }
+        }
+
+        td.actions {
+
+            .adfy-wishlist-btn  {
+
+                position: relative;
+                @include flex();
+                flex-direction: row;
+                gap: 10px;
+                justify-content: start;
+
+                a {
+
+                    display: inline-block;
+                    margin: 0;
+                    padding: 10px 15px;
+                    font-weight: normal;
+                    text-decoration: none;
+                    line-height: 1;
+                    border-radius: 3px;
+
+                    &:hover {
+
+                        outline: none;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+
+    #addonify-wishlist_spinner {
+
+        @include flex();
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        background-color: rgba(255, 255, 255, 1);
+        @include transation_delay();
+
+        svg {
+
+            display: inline-flex;
+            position: relative;
+            color: #444444;
+            width: 32px;
+            height: 32px;
+            animation: AddonifyWishlistSpin 0.8s infinite ease-in-out;
         }
     }
 }
@@ -157,8 +216,11 @@
 
                         .adfy-wishlist-btn {
 
-                            height: auto;
-                            padding: 13px 15px;
+                            a {
+
+                                height: auto;
+                                padding: 13px 15px;
+                            }
                         }
                     }
 

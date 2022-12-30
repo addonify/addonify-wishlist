@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Settings from '../views/Settings.vue'
 import Styles from '../views/Styles.vue'
 import Products from '../views/Products.vue'
+import Tools from '../views/Tools.vue'
 import PageNotFound from '../views/404.vue'
 
 const routes = [
@@ -15,6 +16,11 @@ const routes = [
         path: "/styles",
         name: "Styles",
         component: Styles,
+    },
+    {
+        path: "/tools",
+        name: "Tools",
+        component: Tools,
     },
     {
         path: "/products",

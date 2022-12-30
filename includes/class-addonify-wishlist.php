@@ -129,9 +129,14 @@ class Addonify_Wishlist {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-rest-api.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-functions.php'; 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-functions.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-hooks.php';
+
+		/**
+		 * User data processing functions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/udp/init.php';
 
 		$this->loader = new Addonify_Wishlist_Loader();
 
@@ -205,7 +210,7 @@ class Addonify_Wishlist {
 
 		$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'public_init' );		
+		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'public_init' );
 	}
 
 	/**

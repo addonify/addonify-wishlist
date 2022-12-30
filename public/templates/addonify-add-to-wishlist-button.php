@@ -12,14 +12,14 @@
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
 
-$label = ( $button_label ) ? '<span class="addonify-wishlist-btn-label">' . esc_html( $button_label ) . ' </span>' : '';
+$label = '<span class="addonify-wishlist-btn-label">' . ( ( $button_label ) ? esc_html( $button_label ) : '' ) . ' </span>';
 
 // If icon is enabled, icon is displayed before the button lable.
 if ( $display_icon ) {
 	$label = '<i class="icon adfy-wishlist-icon ' . esc_attr( $icon ) . '"></i> ' . $label;
 }
 
-if ( $require_login == true ) {
+if ( true === $require_login ) {
 	if ( $login_url ) {
 		?>
 		<a 
@@ -44,7 +44,7 @@ if ( $require_login == true ) {
 	}
 } else {
 
-	if ( $display_popup_notice ) {
+	if ( $display_popup_notice || ! is_user_logged_in() ) {
 		?>
 		<button 
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 

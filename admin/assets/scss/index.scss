@@ -17,9 +17,13 @@
 @use 'abstract/mixins' as *;
 
 @import 'base/form';
+
+@import 'helpers/class';
+
 @import 'layouts/entry';
 @import 'layouts/header';
 @import 'layouts/footer';
 @import 'layouts/error-404';
-@import 'helpers/class';
+@import 'layouts/recommended-products';
+
 @import 'helpers/keyframes';

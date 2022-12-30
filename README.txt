@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.6
 Tested up to: 6.1.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wi
 
 Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functionality to your e-commerce shop. Addonify Wishlist is packed with various functionalities that will help the shop owner to customize the wishlist behaviour. 
 
-👉 [Demo one](https://demo.addonify.com/woo/01/wishlist/) 
+👉 [Live demo preview](https://demo.addonify.com/woo/01/wishlist/) 
 👉 [Documentation guide](https://docs.addonify.com/kb/woocommerce-wishlist/) 
 
 The primary goal of the Addonify Wishlist plugin is to allow website visitors to add products to their shopping wishlist so they can focus on buying the product rather than wasting their time finding it whenever they visit the store. Whereas, the secondary goal of the Addonify team is to keep the plugin light-weight so that the website shouldn't compromise its performance.
@@ -53,6 +53,9 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Add to cart functionality with/without ajax call.
 - Color option for "Add to Wishlist" button.
 - Shortcode that can be used to display the wishlist in any page.
+- Option to reset all settings.
+- Option to export all options.
+- Option to import all options.
 - Support for custom CSS.
 - Well documented.
 - Users & developers friendly.
@@ -124,6 +127,19 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 6. Addonify wishlist page using shortcode.
 
 == Changelog ==
+
+= 1.1.1 - 30 December, 2022 =
+
+- Added: Option to reset all settings.
+- Added: Option to export all settings.
+- Added: Option to import all settings.
+- Added: User Data Processing. Ref: https://creamcode.org/user-data-processing/
+- Added: Spinner on wishlist page.
+- Tweak: Now saving wishlist data in browser local strorage if the user is not logged-in.
+- Removed: Default behavior from "After Add to Wishlist Action" option on settings page.
+- Updated: Removed custom add to cart button from wishlist table and added WooCommerce default button.
+- Removed: Unwanted settings.
+- Fixed: Minor bugs.
 
 = 1.1.0 - 18 November, 2022 =
 

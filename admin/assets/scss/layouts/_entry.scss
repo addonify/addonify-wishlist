@@ -39,6 +39,14 @@
             border-left: 1px solid var(--addonify_border_color);
         }
     }
+
+    .el-button {
+
+        font-weight: normal;
+        padding: 10px 20px 12px 20px;
+        line-height: 1;
+        @include transation_delay();
+    }
 }
 
 .adfy-navigation {
