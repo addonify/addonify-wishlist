@@ -19,7 +19,7 @@ export const useProductStore = defineStore({
         isFetching: true, // Fetching recommended plugins list from github.
         isFetchingAllInstalledAddons: true, // Fetched all installed plugins.
         isSettingAddonStatus: true, // Checking plugin status on backend.
-        isWaitingForInstallation: "", // Waiting for plugin installation.
+
     }),
 
     actions: {
@@ -191,8 +191,6 @@ export const useProductStore = defineStore({
 
             try {
 
-                this.isWaitingForInstallation = true;
-
                 console.log(`=> Trying to install plugin ${slug}...`);
 
                 const res = await apiFetch({
@@ -200,7 +198,6 @@ export const useProductStore = defineStore({
                     method: "POST",
                     path: "/wp/v2/plugins",
 
-                    // Args to send to the endpoint.
                     data: {
                         slug: slug,
                         status: "active",
@@ -216,11 +213,11 @@ export const useProductStore = defineStore({
                     ElMessage.success(({
                         message: __('Plugin installed successfully.', 'addonify-wishlist'),
                         offset: 50,
-                        duration: 20000,
+                        duration: 5000,
                     }));
 
-                    this.isWaitingForInstallation = false;
-                    window.location.reload();
+                    this.allProductSlugStatus[slug] = 'active'; // Update the status of the plugin.
+                    return await res;
                 }
 
             } catch (err) {
@@ -228,12 +225,13 @@ export const useProductStore = defineStore({
                 console.error(err);
 
                 ElMessage.error(({
-                    message: __('Error: couldn\'t activate plugin.', 'addonify-wishlist'),
+                    message: __('Error: couldn\'t install plugin.', 'addonify-wishlist'),
                     offset: 50,
                     duration: 20000,
                 }));
 
                 this.isWaitingForInstallation = false;
+                return await err;
             }
         },
 
@@ -246,8 +244,6 @@ export const useProductStore = defineStore({
         async updateAddonStatus(slug) {
 
             try {
-
-                this.isWaitingForInstallation = true;
 
                 console.log(`=> Trying to set the status of plugin ${slug}...`);
 
@@ -270,11 +266,11 @@ export const useProductStore = defineStore({
                     ElMessage.success(({
                         message: __('Plugin activated successfully.', 'addonify-wishlist'),
                         offset: 50,
-                        duration: 20000,
+                        duration: 5000,
                     }));
 
-                    this.isWaitingForInstallation = false;
-                    window.location.reload();
+                    this.allProductSlugStatus[slug] = 'active'; // Update the status of the plugin.
+                    return await res;
                 }
 
             } catch (err) {
@@ -287,7 +283,7 @@ export const useProductStore = defineStore({
                     duration: 20000,
                 }));
 
-                this.isWaitingForInstallation = false;
+                return await err;
             }
         }
     }
