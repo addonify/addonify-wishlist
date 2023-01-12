@@ -387,7 +387,9 @@ class Addonify_Wishlist_Public {
 	 * @since 1.0.0
 	 */
 	public function render_add_to_wishlist_button_single() {
-
+		if ( is_archive() || is_shop() ) {
+			return;
+		}
 		echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
 		$this->render_add_to_wishlist_button();
 		echo '</div>';
