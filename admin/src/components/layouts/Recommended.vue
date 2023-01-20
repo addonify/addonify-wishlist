@@ -77,7 +77,10 @@
 				<p class="adfy-product-description" v-html="description"></p>
 				<div class="adfy-product-actions">
 					<el-button
-						v-if="props.status == 'active'"
+						v-if="
+							props.status == 'active' ||
+							props.status == 'network-active'
+						"
 						size="large"
 						:id="slug"
 						plain
