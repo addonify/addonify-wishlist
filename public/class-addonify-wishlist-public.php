@@ -120,6 +120,9 @@ class Addonify_Wishlist_Public {
 		add_action( 'wp_ajax_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
 		add_action( 'wp_ajax_nopriv_addonify_remove_from_wishlist', array( $this, 'ajax_remove_from_wishlist_handler' ) );
 
+		add_action( 'wp_ajax_addonify_empty_wishlist', array( $this, 'ajax_empty_wishlist_handler' ) );
+		add_action( 'wp_ajax_nopriv_addonify_empty_wishlist', array( $this, 'ajax_empty_wishlist_handler' ) );
+
 		add_action( 'wp_ajax_addonify_get_wishlist_table', array( $this, 'addonify_get_wishlist_table' ) );
 		add_action( 'wp_ajax_nopriv_addonify_get_wishlist_table', array( $this, 'addonify_get_wishlist_table' ) );
 
@@ -180,8 +183,6 @@ class Addonify_Wishlist_Public {
 	 */
 	public function enqueue_scripts() {
 
-		global $wp;
-
 		wp_enqueue_script( 'perfect-scrollbar', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/perfect-scrollbar.min.js', null, $this->version, true );
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, true );
@@ -195,6 +196,7 @@ class Addonify_Wishlist_Public {
 				'ajax_url'                           => esc_url( admin_url( 'admin-ajax.php' ) ),
 				'nonce'                              => wp_create_nonce( $this->plugin_name ),
 				'addToWishlistAction'                => 'addonify_add_to_wishlist',
+				'emptyWishlistAction'                => 'addonify_empty_wishlist',
 				'addToWishlistActionSideBar'         => 'addonify_add_to_wishlist_sidebar_added_content',
 				'removeFromWishlistAfterAddedToCart' => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
 				'loginMessage'                       => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
@@ -204,7 +206,8 @@ class Addonify_Wishlist_Public {
 				'popupAddedToWishlistText'           => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
 				'popupAlreadyInWishlistText'         => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
 				'emptyWishlistText'                  => __( 'Your Wishlist is empty', 'addonify-wishlist' ),
-				'removedFromWishlistText'            => __( '{product_name} has been removed', 'addonify-wishlist' ),
+				'removedFromWishlistText'            => addonify_wishlist_get_option( 'product_removed_from_wishlist_text' ),
+				'emptiedWishlistText'                => addonify_wishlist_get_option( 'wishlist_emptied_text' ),
 				'isLoggedIn'                         => is_user_logged_in(),
 				'addedToWishlistButtonLabel'         => addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' ),
 				'addonify_get_wishlist_table'        => 'addonify_get_wishlist_table',
@@ -542,9 +545,12 @@ class Addonify_Wishlist_Public {
 			empty( $_POST['productId'] )
 		) {
 			return wp_send_json(
-				array(
-					'success' => false,
-					'message' => __( 'Missing product id.', 'addonify-wishlist' ),
+				apply_filters(
+					'ajax_remove_from_wishlist_id_not_found_return',
+					array(
+						'success' => false,
+						'message' => __( 'Missing product id.', 'addonify-wishlist' ),
+					)
 				)
 			);
 		}
@@ -555,18 +561,24 @@ class Addonify_Wishlist_Public {
 		if ( $this->remove_from_wishlist( $product->get_id() ) ) {
 
 			return wp_send_json(
-				array(
-					'success'        => true,
-					'message'        => __( "{$product->get_title()} is removed from wishlist.", 'addonify-wishlist' ), //phpcs:ignore
-					'wishlist_count' => $this->wishlist_items_count,
+				apply_filters(
+					'ajax_remove_from_wishlist_return',
+					array(
+						'success'        => true,
+						'message'        => __( "{$product->get_title()} is removed from wishlist.", 'addonify-wishlist' ), //phpcs:ignore
+						'wishlist_count' => $this->wishlist_items_count,
+					)
 				)
 			);
 		}
 
 		return wp_send_json(
-			array(
-				'success' => false,
-				'message' => __( "Error removing {$product->get_title()} from the wishlist.", 'addonify-wishlist' ), //phpcs:ignore
+			apply_filters(
+				'ajax_remove_from_wishlist_error_return',
+				array(
+					'success' => false,
+					'message' => __( "Error removing {$product->get_title()} from the wishlist.", 'addonify-wishlist' ), //phpcs:ignore
+				)
 			)
 		);
 	}
@@ -593,13 +605,14 @@ class Addonify_Wishlist_Public {
 
 		// Check if product is already in the wishlist.
 		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
-
-			return wp_send_json(
+			$ajax_add_to_wishlist_return = apply_filters(
+				'addonify_wishlist_ajax_already_in_wishlist_return',
 				array(
 					'success' => true,
 					'message' => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
 				)
 			);
+			return wp_send_json( $ajax_add_to_wishlist_return );
 		}
 
 		// Add product into the wishlist.
@@ -610,7 +623,8 @@ class Addonify_Wishlist_Public {
 
 			$sidebar_data = addonify_wishlist_render_sidebar_product( $product_id );
 
-			return wp_send_json(
+			$ajax_add_to_wishlist_return = apply_filters(
+				'addonify_wishlist_ajax_add_to_wishlist_return',
 				array(
 					'success'        => true,
 					'sidebar_data'   => $sidebar_data,
@@ -619,12 +633,54 @@ class Addonify_Wishlist_Public {
 				)
 			);
 		} else {
-			return wp_send_json(
+			$ajax_add_to_wishlist_return = apply_filters(
+				'addonify_wishlist_ajax_add_to_wishlist_return_error',
 				array(
 					'success' => false,
 					'message' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
 				)
 			);
+		}
+		return wp_send_json( $ajax_add_to_wishlist_return );
+	}
+
+	/**
+	 * Empty wishlist
+	 */
+	public function ajax_empty_wishlist_handler() {
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+
+		// Check if product id and nonce is set and valid.
+		if (
+			! $nonce ||
+			! wp_verify_nonce( $nonce, $this->plugin_name )
+		) {
+			wp_send_json_error( 'Nonce does not match' );
+		}
+
+		if ( $this->save_wishlist_items( array() ) ) {
+
+			return wp_send_json(
+				apply_filters(
+					'ajax_empty_wishlist_return',
+					array(
+						'success'        => true,
+						'message'        => addonify_wishlist_get_option( 'wishlist_emptied_text' ), //phpcs:ignore
+						'wishlist_count' => 0,
+					)
+				)
+			);
+		} else {
+			return wp_send_json(
+				apply_filters(
+					'ajax_empty_wishlist_error_return',
+					array(
+						'success' => false,
+						'message' => __( "Error emptying wishlist.", 'addonify-wishlist' ), //phpcs:ignore
+					)
+				)
+			);
+
 		}
 	}
 

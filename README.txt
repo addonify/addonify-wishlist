@@ -128,6 +128,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 1.1.2 - ? , 2023 =
+
+- Added: Clear Wishlist button in wishlist shortcode content for removing all items in wishlist.
+
 = 1.1.1 - 30 December, 2022 =
 
 - Added: Option to reset all settings.
