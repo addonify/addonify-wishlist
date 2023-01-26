@@ -19,7 +19,7 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 	function addonify_wishlist_modal_notice_settings_fields() {
 
 		return array(
-			'view_wishlist_btn_text'           => array(
+			'view_wishlist_btn_text'             => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'View Wishlist Button Link Label', 'addonify-wishlist' ),
@@ -27,7 +27,7 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'view_wishlist_btn_text' ),
 			),
-			'product_added_to_wishlist_text'   => array(
+			'product_added_to_wishlist_text'     => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Product Added to Wishlist Text', 'addonify-wishlist' ),
@@ -35,7 +35,7 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
 			),
-			'product_already_in_wishlist_text' => array(
+			'product_already_in_wishlist_text'   => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Product Already in Wishlist Text', 'addonify-wishlist' ),
@@ -43,7 +43,30 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
 			),
-			'login_btn_label'                  => array(
+			'product_removed_from_wishlist_text' => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Product Removed from Wishlist Text', 'addonify-wishlist' ),
+				'description' => __( '{product_name} placeholder will be replaced with the actual product name.', 'addonify-wihlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'product_removed_from_wishlist_text' ),
+			),
+			'show_wishlist_emptying_button'      => array(
+				'type'      => 'switch',
+				'className' => '',
+				'label'     => __( 'Show wishlist emptying button', 'addonify-wishlist' ),
+				'dependent' => array( 'enable_wishlist' ),
+				'value'     => addonify_wishlist_get_option( 'show_wishlist_emptying_button' ),
+			),
+			'wishlist_emptied_text'              => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Wishlist Emptied Text', 'addonify-wishlist' ),
+				'description' => __( 'Text to display in notice when wishlist is emptied.', 'addonify-wihlist' ),
+				'dependent'   => array( 'enable_wishlist', 'show_wishlist_emptying_button' ),
+				'value'       => addonify_wishlist_get_option( 'wishlist_emptied_text' ),
+			),
+			'login_btn_label'                    => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Login Button Label', 'addonify-wishlist' ),
@@ -51,7 +74,7 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'login_btn_label' ),
 			),
-			'popup_close_btn_text'             => array(
+			'popup_close_btn_text'               => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Close Button Label', 'addonify-wishlist' ),
