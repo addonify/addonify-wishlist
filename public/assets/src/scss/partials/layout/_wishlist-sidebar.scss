@@ -197,7 +197,7 @@
                                     @include flex();
                                     flex-direction: row;
                                     gap: 10px;
-                                    justify-content: start;
+                                    justify-content: flex-start;
 
                                     a.button,
                                     a.added_to_cart  {
@@ -366,7 +366,7 @@
         @include grid();
         grid-template-columns: 16px auto;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         column-gap: 10px;
         font-size: 14px;
         font-weight: normal;
