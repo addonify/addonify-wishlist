@@ -477,14 +477,15 @@
 
             if (thisButton.hasClass('addonify-wishlist-sidebar-button')) {
                 parentProductRow = $('#addonify-wishlist-sticky-sidebar-container').find('li[data-product_row="addonify-wishlist-sidebar-product-row-' + product_id + '"]');
+                parentProductRow.addClass('loading');
             }
 
             if (thisButton.hasClass('addonify-wishlist-table-button')) {
                 parentProductRow = $('#addonify-wishlist-table').find('tr[data-product_row="addonify-wishlist-table-product-row-' + product_id + '"]');
+                parentProductRow.append('<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>')
             }
 
             if (parentProductRow) {
-                parentProductRow.addClass('loading');
             }
 
             $.post(
