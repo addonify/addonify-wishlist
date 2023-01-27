@@ -189,6 +189,49 @@ class Addonify_Wishlist_Public {
 
 		$login_url = ( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url();
 
+		if ( ! is_user_logged_in() ) {
+			$inline_script = "
+			function addonify_wishlist_get_wishlist_products() {
+				let hostname = addonifyWishlistJSObject.thisSiteUrl;
+				let localDeadline = localStorage.getItem('{$this->plugin_name}' + '_' + hostname + '_product_ids_deadline')
+				if (null !== localDeadline) {
+					const d = new Date();
+					if (d.getTime() < parseInt(localDeadline)) {
+						return jsonToArray(parseJson(localStorage.getItem('{$this->plugin_name}' + '_' + hostname + '_product_ids')))
+					} else {
+						localStorage.removeItem('{$this->plugin_name}' + '_' + hostname + '_product_ids')
+						localStorage.removeItem('{$this->plugin_name}' + '_' + hostname + '_product_ids_deadline');
+					}
+				}
+				return [];
+			}
+			function jsonToArray(json) {
+				if (json !== null && typeof json === 'object') {
+					let result = new Array;
+					let keys = Object.keys(json);
+					if (keys.length > 0) {
+						keys.forEach(function (key) {
+							result[key] = json[key];
+						});
+					}
+					return result;
+				} else {
+					return false;
+				}
+			}
+			function parseJson(json_str) {
+				let json_val
+				try {
+					json_val = JSON.parse(json_str)
+				} catch (e) {
+					return false;
+				}
+				return json_val
+			}
+			";
+			wp_add_inline_script( $this->plugin_name, $inline_script );
+		}
+
 		wp_localize_script(
 			$this->plugin_name,
 			'addonifyWishlistJSObject',
