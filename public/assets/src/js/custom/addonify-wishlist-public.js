@@ -176,7 +176,7 @@
                 $(document).trigger('addonify_removed_from_wishlist', [{ productID: product_id, wishlist_count : getProductids().length }]);
             }
             if (addToCartButton.parent().hasClass('addonify-wishlist-table-button')) {
-                addonifyShowPopupModal('{product_name} added to cart', parentProductRow.data('product_name'), 'success')
+                addonifyShowPopupModal('{product_name} added to cart', parentProductRow.data('product_name'), false, false)
             }
         })
 
@@ -565,9 +565,11 @@
             } else {
                 $('.addonify-view-wishlist-btn').css('display','block');
             }
-            // change icon
             $('.adfy-wishlist-icon-entry .adfy-wishlist-icon').hide();
-            $('.adfy-wishlist-icon-entry .adfy-wishlist-icon.adfy-status-' + icon).show();
+            if (icon) {
+                // change icon
+                $('.adfy-wishlist-icon-entry .adfy-wishlist-icon.adfy-status-' + icon).show();
+            }
             $modal_response.html("<p class='response-text'>" + response_text.replace('{product_name}', product_name) + "</p>");
             $body.addClass('addonify-wishlist-modal-is-open');
         }
