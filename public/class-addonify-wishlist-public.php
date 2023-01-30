@@ -86,7 +86,11 @@ class Addonify_Wishlist_Public {
 
 		$this->wishlist_items = $this->get_wishlist();
 
-		$this->wishlist_items_count = is_array( $this->wishlist_items ) ? count( $this->wishlist_items ) : 0;
+		if ( array_key_exists( get_bloginfo( 'url' ), $this->wishlist_items ) ) {
+			$this->wishlist_items_count = count( $this->wishlist_items[ get_bloginfo( 'url' ) ] );
+		} else {
+			$this->wishlist_items_count = 0;
+		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -451,9 +455,9 @@ class Addonify_Wishlist_Public {
 	 */
 	public function add_to_wishlist( $product_id ) {
 
-		if ( ! array_key_exists( $product_id, $this->wishlist_items ) ) {
+		if ( ! ( array_key_exists( get_bloginfo( 'url' ), $this->wishlist_items ) || array_key_exists( $product_id, $this->wishlist_items[ get_bloginfo( 'url' ) ] ) ) ) {
 
-			$this->wishlist_items[ $product_id ] = time();
+			$this->wishlist_items[ get_bloginfo( 'url' ) ][ $product_id ] = time();
 
 			return $this->save_wishlist_items( $this->wishlist_items );
 		}
@@ -470,9 +474,9 @@ class Addonify_Wishlist_Public {
 	 */
 	public function remove_from_wishlist( $product_id ) {
 
-		if ( array_key_exists( $product_id, $this->wishlist_items ) ) {
+		if ( array_key_exists( get_bloginfo( 'url' ), $this->wishlist_items ) && array_key_exists( $product_id, $this->wishlist_items[ get_bloginfo( 'url' ) ] ) ) {
 
-			unset( $this->wishlist_items[ $product_id ] );
+			unset( $this->wishlist_items[ get_bloginfo( 'url' ) ][ $product_id ] );
 
 			return $this->save_wishlist_items( $this->wishlist_items );
 		}
@@ -660,7 +664,7 @@ class Addonify_Wishlist_Public {
 		}
 
 		// Add product into the wishlist.
-		$this->wishlist_items[ $product_id ] = time();
+		$this->wishlist_items[ get_bloginfo( 'url' ) ][ $product_id ] = time();
 
 		// Save the wishlist.
 		if ( $this->save_wishlist_items( $this->wishlist_items ) ) {
@@ -702,7 +706,7 @@ class Addonify_Wishlist_Public {
 			wp_send_json_error( 'Nonce does not match' );
 		}
 
-		if ( $this->save_wishlist_items( array() ) ) {
+		if ( $this->save_wishlist_items( array( get_bloginfo( 'url' ) ) ) ) {
 
 			return wp_send_json(
 				apply_filters(
@@ -742,10 +746,13 @@ class Addonify_Wishlist_Public {
 		do_action( 'addonify_wishlist_before_adding_to_wishlist' );
 
 		if ( is_user_logged_in() ) {
-			$return_boolean = ( update_user_meta( get_current_user_id(), $this->plugin_name . '_' . get_bloginfo( 'url' ), wp_json_encode( $data ) ) ) ? true : false;
+			$return_boolean = ( update_user_meta( get_current_user_id(), $this->plugin_name, wp_json_encode( $data ) ) ) ? true : false;
 		}
-
-		$this->wishlist_items_count = count( $this->wishlist_items );
+		if ( array_key_exists( get_bloginfo( 'url' ), $this->wishlist_items ) ) {
+			$this->wishlist_items_count = count( $this->wishlist_items[ get_bloginfo( 'url' ) ] );
+		} else {
+			$this->wishlist_items_count = 0;
+		}
 
 		do_action( 'addonify_wishlist_after_adding_to_wishlist' );
 
@@ -781,7 +788,7 @@ class Addonify_Wishlist_Public {
 		$current_user_id = get_current_user_id();
 
 		if ( 0 !== $current_user_id ) {
-			$wishlist_data = get_user_meta( $current_user_id, $this->plugin_name . '_' . get_bloginfo( 'url' ), true );
+			$wishlist_data = get_user_meta( $current_user_id, $this->plugin_name, true );
 
 			return $wishlist_data ? json_decode( $wishlist_data, true ) : array();
 		}
