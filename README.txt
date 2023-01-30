@@ -135,6 +135,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Added: js function for obtaining wishlist items when not logged in.
 - Update: Multisite Data stored in same array.
 - Added: Spinner for clear wishlist data.
+- Fixed: Data removed from all sites in multisite on clear all button action.
 
 = 1.1.1 - 30 December, 2022 =
 

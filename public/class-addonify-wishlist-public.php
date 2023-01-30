@@ -705,8 +705,10 @@ class Addonify_Wishlist_Public {
 		) {
 			wp_send_json_error( 'Nonce does not match' );
 		}
-
-		if ( $this->save_wishlist_items( array( get_bloginfo( 'url' ) ) ) ) {
+		if ( array_key_exists( get_bloginfo( 'url' ), $this->wishlist_items ) ) {
+			$this->wishlist_items[ get_bloginfo( 'url' ) ] = array();
+		}
+		if ( $this->save_wishlist_items( $this->wishlist_items ) ) {
 
 			return wp_send_json(
 				apply_filters(
