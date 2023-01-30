@@ -123,10 +123,12 @@ if ( function_exists( 'wc_print_notices' ) ) {
 					?>
 				</tbody>
 			</table>
-			<?php if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) : ?>
-				<button type="button" id="addonify-wishlist__clear-all" class="button">Clear Wishlist</button>
-			<?php endif ?>
-			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>		
+			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
+			<div id="addonify-wishlist-page-toolbar">
+				<?php if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) : ?>
+					<button type="button" id="addonify-wishlist__clear-all" class="button">Clear Wishlist</button>
+				<?php endif ?>
+			</div>		
 		</form>
 		<?php
 	} else {

@@ -11,6 +11,7 @@
     #addonify-wishlist-table {
 
         table-layout: auto;
+        margin-bottom: 40px;
 
         th {
 
@@ -99,6 +100,13 @@
                 }
             }
         }
+    }
+
+    #addonify-wishlist-page-toolbar {
+
+        @include flex();
+        align-items: center;
+        justify-content: flex-end;
     }
 
     #addonify-wishlist_spinner {
