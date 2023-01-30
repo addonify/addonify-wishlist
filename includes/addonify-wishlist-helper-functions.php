@@ -37,12 +37,15 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 	 */
 	function addonify_wishlist_get_wishlist_items() {
 
-		$wishlist_items = null;
+		$wishlist_items = array();
 
 		if ( is_user_logged_in() ) {
-			$current_user_id = get_current_user_id();
-			$user_meta_data  = get_user_meta( $current_user_id, 'addonify-wishlist_' . get_bloginfo( 'url' ), true );
-			$wishlist_items  = ! $user_meta_data || '' === $user_meta_data ? array() : json_decode( $user_meta_data, true );
+			$current_user_id      = get_current_user_id();
+			$user_meta_data       = get_user_meta( $current_user_id, 'addonify-wishlist', true );
+			$total_wishlist_items = ! $user_meta_data || '' === $user_meta_data ? array() : json_decode( $user_meta_data, true );
+			if ( array_key_exists( get_bloginfo( 'url' ), $total_wishlist_items ) ) {
+				$wishlist_items = $total_wishlist_items[ get_bloginfo( 'url' ) ];
+			}
 		}
 		return $wishlist_items;
 	}
@@ -54,13 +57,14 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items_count' ) ) {
 	 * Get the count of items in the wishlist.
 	 *
 	 * @since 1.0.0
-	 * @return int|boolean Count ot items if found else false.
+	 * @return int Count of items.
 	 */
 	function addonify_wishlist_get_wishlist_items_count() {
-
-		$wishlist_items = addonify_wishlist_get_wishlist_items();
-
-		return ( is_array( $wishlist_items ) ) ? count( $wishlist_items ) : false;
+		$items = addonify_wishlist_get_wishlist_items();
+		if ( is_countable( $items ) ) {
+			return count( $items );
+		}
+		return 0;
 	}
 }
 
