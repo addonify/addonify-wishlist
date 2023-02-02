@@ -42,9 +42,14 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 		if ( is_user_logged_in() ) {
 			$current_user_id      = get_current_user_id();
 			$user_meta_data       = get_user_meta( $current_user_id, 'addonify-wishlist', true );
-			$total_wishlist_items = ! $user_meta_data || '' === $user_meta_data ? array() : json_decode( $user_meta_data, true );
-			if ( array_key_exists( get_bloginfo( 'url' ), $total_wishlist_items ) ) {
-				$wishlist_items = $total_wishlist_items[ get_bloginfo( 'url' ) ];
+			$total_wishlist_items = ( empty( $user_meta_data ) || '' === $user_meta_data ) ? array() : json_decode( $user_meta_data, true );
+			if (
+				is_array( $total_wishlist_items ) &&
+				array_key_exists( get_bloginfo( 'url' ), $total_wishlist_items ) &&
+				isset( $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist'] ) &&
+				isset( $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['product_id'] )
+				) {
+				$wishlist_items = $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['product_id'];
 			}
 		}
 		return $wishlist_items;
@@ -84,7 +89,7 @@ if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 			is_array( $wishlist_items ) &&
 			count( $wishlist_items ) > 0
 		) {
-			return array_key_exists( $product_id, $wishlist_items );
+			return in_array( $product_id, $wishlist_items );
 		}
 
 		return false;

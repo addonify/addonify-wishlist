@@ -136,6 +136,8 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Update: Multisite Data stored in same array.
 - Added: Spinner for clear wishlist data.
 - Fixed: Data removed from all sites in multisite on clear all button action.
+- Fixed: Wishlist icon and view wishlist button showing on add to cart in wishlist page.
+- Update: user wishlist saved as an array with created and updated time
 
 = 1.1.1 - 30 December, 2022 =
 
