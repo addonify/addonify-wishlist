@@ -342,8 +342,8 @@
                         $(document).trigger('addonify_added_to_wishlist', [
                             {
                                 productID      : addToWishlistButton.data('product_id'),
-                                wishlist_count : response.wishlist_count,
-                                sidebar_data   : response.sidebar_data,
+                                wishlistCount : response.wishlist_count,
+                                sidebarData   : response.sidebar_data,
                             }
                         ]);
 
@@ -450,8 +450,8 @@
                 $(document).trigger('addonify_added_to_wishlist', [
                     {
                         productID      : addToWishlistButton.data('product_id'),
-                        wishlist_count : wishlist.length,
-                        sidebar_data   : sidebar_data,
+                        wishlistCount : wishlist.length,
+                        sidebarData   : sidebar_data,
                     }
                 ]);
             } else {
@@ -497,7 +497,7 @@
 
                         // Triggering custom event when product is added to wishlist. 
                         // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
-                        $(document).trigger('addonify_removed_from_wishlist', [{ productID: product_id, wishlist_count : response.wishlist_count }]);
+                        $(document).trigger('addonify_removed_from_wishlist', [{ productID: product_id, wishlistCount : response.wishlist_count }]);
 
                         if (response.wishlist_count <= 0) {
                             $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
@@ -549,7 +549,7 @@
 
             // Triggering custom event when product is added to wishlist. 
             // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
-            $(document).trigger('addonify_removed_from_wishlist', [{ productID: id_to_remove, wishlist_count : product_ids.length }]);
+            $(document).trigger('addonify_removed_from_wishlist', [{ productID: id_to_remove, wishlistCount : product_ids.length }]);
 
             if (product_ids.length <= 0) {
                 $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
