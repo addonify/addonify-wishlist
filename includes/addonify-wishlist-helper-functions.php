@@ -47,9 +47,9 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 				is_array( $total_wishlist_items ) &&
 				array_key_exists( get_bloginfo( 'url' ), $total_wishlist_items ) &&
 				isset( $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist'] ) &&
-				isset( $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['product_id'] )
+				isset( $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['products'] )
 				) {
-				$wishlist_items = $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['product_id'];
+				$wishlist_items = $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['products'];
 			}
 		}
 		return $wishlist_items;

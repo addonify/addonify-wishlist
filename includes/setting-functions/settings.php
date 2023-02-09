@@ -41,6 +41,7 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'remove_from_wishlist_if_added_to_cart'    => true,
 				'cookies_lifetime'                         => 30,
 				'btn_position'                             => 'before_add_to_cart',
+				'btn_position_on_single'                   => 'after_add_to_cart_form',
 				'btn_label'                                => __( 'Add to wishlist', 'addonify-wishlist' ),
 				'btn_label_when_added_to_wishlist'         => __( 'Added to wishlist', 'addonify-wishlist' ),
 				'btn_label_if_added_to_wishlist'           => __( 'Already in wishlist', 'addonify-wishlist' ),

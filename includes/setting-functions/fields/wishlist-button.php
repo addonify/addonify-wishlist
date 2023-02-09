@@ -31,6 +31,20 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_position' ),
 			),
+			'btn_position_on_single'                     => array(
+				'type'        => 'select',
+				'className'   => '',
+				'label'       => __( 'Button Position on Product Single Page', 'addonify-wishlist' ),
+				'description' => __( 'Choose where to place the Add to Wishlist button.', 'addonify-wishlist' ),
+				'choices'     => array(
+					'before_add_to_cart_form'   => __( 'Before Add to Cart Form', 'addonify-wishlist' ),
+					'before_add_to_cart_button' => __( 'Before Add to Cart Button', 'addonify-wishlist' ),
+					'after_add_to_cart_button'  => __( 'After Add to Cart Button', 'addonify-wishlist' ),
+					'after_add_to_cart_form'    => __( 'After Add to Cart Form', 'addonify-wishlist' ),
+				),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'btn_position' ),
+			),
 			'btn_label'                                  => array(
 				'type'        => 'text',
 				'className'   => '',
