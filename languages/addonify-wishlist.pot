@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-05T09:53:29+00:00\n"
+"POT-Creation-Date: 2023-02-21T07:47:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: addonify-wishlist\n"
@@ -35,7 +35,7 @@ msgid "https://www.addonify.com"
 msgstr ""
 
 #: admin/class-addonify-wishlist-admin.php:201
-#: includes/setting-functions/settings.php:287
+#: includes/setting-functions/settings.php:292
 #: admin/assets/js/main.js:3683
 msgid "Settings"
 msgstr ""
@@ -49,7 +49,7 @@ msgid "Addonify Wishlist is enabled but not effective. It requires WooCommerce i
 msgstr ""
 
 #: includes/class-addonify-wishlist-activator.php:41
-#: includes/setting-functions/settings.php:58
+#: includes/setting-functions/settings.php:63
 msgid "Wishlist"
 msgstr ""
 
@@ -214,57 +214,69 @@ msgid "Product Already in Wishlist Text"
 msgstr ""
 
 #: includes/setting-functions/fields/modal-notice.php:49
-msgid "Login Button Label"
-msgstr ""
-
-#: includes/setting-functions/fields/modal-notice.php:50
-msgid "Label for button to redirect to login page."
+msgid "Product Removed from Wishlist Text"
 msgstr ""
 
 #: includes/setting-functions/fields/modal-notice.php:57
+msgid "Show wishlist emptying button"
+msgstr ""
+
+#: includes/setting-functions/fields/modal-notice.php:64
+msgid "Wishlist Emptied Text"
+msgstr ""
+
+#: includes/setting-functions/fields/modal-notice.php:72
+msgid "Login Button Label"
+msgstr ""
+
+#: includes/setting-functions/fields/modal-notice.php:73
+msgid "Label for button to redirect to login page."
+msgstr ""
+
+#: includes/setting-functions/fields/modal-notice.php:80
 msgid "Close Button Label"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:58
+#: includes/setting-functions/fields/modal-notice.php:81
 msgid "Label for button to close the popup modal box."
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:79
+#: includes/setting-functions/fields/modal-notice.php:102
 #: includes/setting-functions/fields/sidebar.php:114
 msgid "Overlay Background Color"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:86
+#: includes/setting-functions/fields/modal-notice.php:109
 #: includes/setting-functions/fields/sidebar.php:121
 #: includes/setting-functions/fields/sidebar.php:313
 #: includes/setting-functions/fields/sidebar.php:349
-#: includes/setting-functions/fields/wishlist-button.php:121
+#: includes/setting-functions/fields/wishlist-button.php:143
 msgid "Background Color"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:93
-#: includes/setting-functions/fields/wishlist-button.php:107
+#: includes/setting-functions/fields/modal-notice.php:116
+#: includes/setting-functions/fields/wishlist-button.php:129
 msgid "Icon Color"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:100
+#: includes/setting-functions/fields/modal-notice.php:123
 #: includes/setting-functions/fields/sidebar.php:306
 msgid "Text Color"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:107
+#: includes/setting-functions/fields/modal-notice.php:130
 msgid "Buttons Label Color"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:114
+#: includes/setting-functions/fields/modal-notice.php:137
 msgid "Buttons On Hover Label Color"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:121
+#: includes/setting-functions/fields/modal-notice.php:144
 msgid "Buttons Background Color"
 msgstr ""
 
-#: includes/setting-functions/fields/modal-notice.php:128
+#: includes/setting-functions/fields/modal-notice.php:151
 msgid "Buttons On Hover Background Color"
 msgstr ""
 
@@ -414,17 +426,17 @@ msgid "Remove Icon Color on Hover"
 msgstr ""
 
 #: includes/setting-functions/fields/sidebar.php:335
-#: includes/setting-functions/fields/wishlist-button.php:93
+#: includes/setting-functions/fields/wishlist-button.php:115
 msgid "Label Color"
 msgstr ""
 
 #: includes/setting-functions/fields/sidebar.php:342
-#: includes/setting-functions/fields/wishlist-button.php:100
+#: includes/setting-functions/fields/wishlist-button.php:122
 msgid "On Hover Label Color"
 msgstr ""
 
 #: includes/setting-functions/fields/sidebar.php:356
-#: includes/setting-functions/fields/wishlist-button.php:128
+#: includes/setting-functions/fields/wishlist-button.php:150
 msgid "On Hover Background Color"
 msgstr ""
 
@@ -433,310 +445,341 @@ msgid "Button Position"
 msgstr ""
 
 #: includes/setting-functions/fields/wishlist-button.php:26
+#: includes/setting-functions/fields/wishlist-button.php:38
 msgid "Choose where to place the Add to Wishlist button."
 msgstr ""
 
 #: includes/setting-functions/fields/wishlist-button.php:28
+#: includes/setting-functions/fields/wishlist-button.php:42
 msgid "After Add to Cart Button"
 msgstr ""
 
 #: includes/setting-functions/fields/wishlist-button.php:29
+#: includes/setting-functions/fields/wishlist-button.php:41
 msgid "Before Add to Cart Button"
 msgstr ""
 
 #: includes/setting-functions/fields/wishlist-button.php:37
+msgid "Button Position on Product Single Page"
+msgstr ""
+
+#: includes/setting-functions/fields/wishlist-button.php:40
+msgid "Before Add to Cart Form"
+msgstr ""
+
+#: includes/setting-functions/fields/wishlist-button.php:43
+msgid "After Add to Cart Form"
+msgstr ""
+
+#: includes/setting-functions/fields/wishlist-button.php:51
 msgid "Button Label"
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:38
+#: includes/setting-functions/fields/wishlist-button.php:52
 msgid "Label for Add to Wishlist button."
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:46
+#: includes/setting-functions/fields/wishlist-button.php:60
 msgid "Custom CSS Class"
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:47
+#: includes/setting-functions/fields/wishlist-button.php:61
 msgid "Optional"
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:48
+#: includes/setting-functions/fields/wishlist-button.php:62
 msgid "Add custom CSS class(es) to Add to Wishlist button. Separate CSS classes with spaces."
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:55
+#: includes/setting-functions/fields/wishlist-button.php:69
 msgid "Added to Wishlist Button Label"
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:56
+#: includes/setting-functions/fields/wishlist-button.php:70
 msgid "Set the label for Add to Wishlist button, if a product is added to the wishlist."
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:63
+#: includes/setting-functions/fields/wishlist-button.php:77
 msgid "Already in Wishlist Button Label"
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:64
+#: includes/setting-functions/fields/wishlist-button.php:78
 msgid "Set the label for Add to Wishlist button, if a product is already in the wishlist."
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:71
+#: includes/setting-functions/fields/wishlist-button.php:85
 msgid "Show Icon in Button"
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:72
+#: includes/setting-functions/fields/wishlist-button.php:86
 msgid "Display heart icon before Add to Wishlist button label."
 msgstr ""
 
-#: includes/setting-functions/fields/wishlist-button.php:114
+#: includes/setting-functions/fields/wishlist-button.php:93
+msgid "Remove added product from wishlist on click"
+msgstr ""
+
+#: includes/setting-functions/fields/wishlist-button.php:94
+msgid "If add-to-wishlist button is clicked when the product is already in wishlist, remove the product from wishlist."
+msgstr ""
+
+#: includes/setting-functions/fields/wishlist-button.php:136
 msgid "On Hover Icon Color"
 msgstr ""
 
-#: includes/setting-functions/settings.php:44
+#: includes/setting-functions/settings.php:45
 msgid "Add to wishlist"
 msgstr ""
 
-#: includes/setting-functions/settings.php:45
+#: includes/setting-functions/settings.php:46
 msgid "Added to wishlist"
 msgstr ""
 
-#: includes/setting-functions/settings.php:46
+#: includes/setting-functions/settings.php:47
 msgid "Already in wishlist"
 msgstr ""
 
-#: includes/setting-functions/settings.php:47
-#: public/class-addonify-wishlist-public.php:803
+#: includes/setting-functions/settings.php:48
+#: public/class-addonify-wishlist-public.php:985
 msgid "Login"
 msgstr ""
 
-#: includes/setting-functions/settings.php:51
+#: includes/setting-functions/settings.php:53
 msgid "View wishlist"
 msgstr ""
 
-#: includes/setting-functions/settings.php:52
+#: includes/setting-functions/settings.php:54
 msgid "{product_name} added to wishlist"
 msgstr ""
 
-#: includes/setting-functions/settings.php:53
+#: includes/setting-functions/settings.php:55
 msgid "{product_name} already in wishlist"
 msgstr ""
 
-#: includes/setting-functions/settings.php:54
-#: public/class-addonify-wishlist-public.php:812
+#: includes/setting-functions/settings.php:56
+msgid "{product_name} removed from wishlist"
+msgstr ""
+
+#: includes/setting-functions/settings.php:58
+msgid "Wishlist cleared."
+msgstr ""
+
+#: includes/setting-functions/settings.php:59
+#: public/class-addonify-wishlist-public.php:994
 msgid "Close"
 msgstr ""
 
-#: includes/setting-functions/settings.php:57
+#: includes/setting-functions/settings.php:62
 msgid "My wishlist"
 msgstr ""
 
-#: includes/setting-functions/settings.php:63
+#: includes/setting-functions/settings.php:68
 msgid "View All Wishlist Items"
 msgstr ""
 
-#: includes/setting-functions/settings.php:290
+#: includes/setting-functions/settings.php:295
 msgid "General Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:295
+#: includes/setting-functions/settings.php:300
 msgid "Add to Wishlist Button Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:300
+#: includes/setting-functions/settings.php:305
 msgid "Popup Notice Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:305
+#: includes/setting-functions/settings.php:310
 msgid "Wishlist Sidebar Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:314
+#: includes/setting-functions/settings.php:319
 msgid "General"
 msgstr ""
 
-#: includes/setting-functions/settings.php:319
+#: includes/setting-functions/settings.php:324
 msgid "Add to Wishlist Button Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:320
+#: includes/setting-functions/settings.php:325
 msgid "Set Add to Wishlist button label and background colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:326
+#: includes/setting-functions/settings.php:331
 msgid "Popup Modal Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:327
+#: includes/setting-functions/settings.php:332
 msgid "Set popup modal icon, message, and button colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:333
+#: includes/setting-functions/settings.php:338
 msgid "Sidebar Wishlist Modal Toggle Button Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:334
+#: includes/setting-functions/settings.php:339
 msgid "Set sidebar wishlist off-canvas modal toggle button label and background colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:340
+#: includes/setting-functions/settings.php:345
 msgid "Sidebar Wishlist Modal Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:341
+#: includes/setting-functions/settings.php:346
 msgid "Set colors of sidebar wishlist off-canvas modal general elements."
 msgstr ""
 
-#: includes/setting-functions/settings.php:347
+#: includes/setting-functions/settings.php:352
 msgid "Sidebar Wishlist Product Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:348
+#: includes/setting-functions/settings.php:353
 msgid "Set colors of product content of sidebar wishlist off-canvas modal."
 msgstr ""
 
-#: includes/setting-functions/settings.php:354
+#: includes/setting-functions/settings.php:359
 msgid "Sidebar Wishlist Notification Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:355
+#: includes/setting-functions/settings.php:360
 msgid "Set text and background color of notification."
 msgstr ""
 
-#: includes/setting-functions/settings.php:361
+#: includes/setting-functions/settings.php:366
 msgid "Sidebar Wishlist View Wishlist Button Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:362
+#: includes/setting-functions/settings.php:367
 msgid "Set view wishlist button label and background colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:368
+#: includes/setting-functions/settings.php:373
 msgid "Developer"
 msgstr ""
 
-#: includes/setting-functions/settings.php:378
+#: includes/setting-functions/settings.php:383
 msgid "Coming soon...."
 msgstr ""
 
-#: includes/setting-functions/settings.php:387
+#: includes/setting-functions/settings.php:392
 msgid "Reset Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:388
+#: includes/setting-functions/settings.php:393
 msgid "Are you sure you want to reset all settings?"
 msgstr ""
 
-#: includes/setting-functions/settings.php:389
+#: includes/setting-functions/settings.php:394
 msgid "Yes"
 msgstr ""
 
-#: includes/setting-functions/settings.php:390
+#: includes/setting-functions/settings.php:395
 msgid "No"
 msgstr ""
 
-#: includes/setting-functions/settings.php:392
+#: includes/setting-functions/settings.php:397
 msgid "All the settings will be set to default."
 msgstr ""
 
-#: includes/setting-functions/settings.php:400
+#: includes/setting-functions/settings.php:405
 msgid "Export Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:401
+#: includes/setting-functions/settings.php:406
 msgid "Backup all settings that can be imported in future."
 msgstr ""
 
-#: includes/setting-functions/settings.php:408
-#: includes/setting-functions/settings.php:411
+#: includes/setting-functions/settings.php:413
+#: includes/setting-functions/settings.php:416
 msgid "Import Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:412
+#: includes/setting-functions/settings.php:417
 msgid "Drop a file here or click here to upload."
 msgstr ""
 
-#: includes/setting-functions/settings.php:413
+#: includes/setting-functions/settings.php:418
 msgid "Only .json file is permitted."
 msgstr ""
 
-#: includes/setting-functions/settings.php:414
+#: includes/setting-functions/settings.php:419
 msgid "Drag or upload the .json file that you had exported."
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:200
+#: public/class-addonify-wishlist-public.php:294
 msgid "Please login before adding item to Wishlist"
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:203
+#: public/class-addonify-wishlist-public.php:297
 msgid "Already in Wishlist"
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:206
+#: public/class-addonify-wishlist-public.php:300
 msgid "Your Wishlist is empty"
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:207
-msgid "{product_name} has been removed"
-msgstr ""
-
 #. Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag.
-#: public/class-addonify-wishlist-public.php:220
+#: public/class-addonify-wishlist-public.php:315
 msgid "Login required. Please %1$s click here %2$s to login."
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:249
-#: public/class-addonify-wishlist-public.php:283
+#: public/class-addonify-wishlist-public.php:344
+#: public/class-addonify-wishlist-public.php:378
 msgid "Invalid security token."
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:340
-#: public/class-addonify-wishlist-public.php:351
+#: public/class-addonify-wishlist-public.php:435
+#: public/class-addonify-wishlist-public.php:446
 msgid "View Wishlist"
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:470
-#: public/class-addonify-wishlist-public.php:532
+#: public/class-addonify-wishlist-public.php:567
+#: public/class-addonify-wishlist-public.php:629
 msgid "Missing or invalid secutiry token."
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:483
-#: public/class-addonify-wishlist-public.php:545
+#: public/class-addonify-wishlist-public.php:580
+#: public/class-addonify-wishlist-public.php:644
 msgid "Missing product id."
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:623
+#: public/class-addonify-wishlist-public.php:733
 msgid "Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again."
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:36
+#: public/class-addonify-wishlist-public.php:774
+msgid "Error emptying wishlist."
+msgstr ""
+
+#: public/templates/addonify-wishlist-shortcode-contents.php:35
 msgid "Product Image"
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:37
+#: public/templates/addonify-wishlist-shortcode-contents.php:36
 msgid "Product Name"
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:38
+#: public/templates/addonify-wishlist-shortcode-contents.php:37
 msgid "Unit Price"
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:39
+#: public/templates/addonify-wishlist-shortcode-contents.php:38
 msgid "Stock Status"
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:40
+#: public/templates/addonify-wishlist-shortcode-contents.php:39
 msgid "Actions"
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:105
+#: public/templates/addonify-wishlist-shortcode-contents.php:104
 msgid "In Stock"
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:108
+#: public/templates/addonify-wishlist-shortcode-contents.php:107
 msgid "Out of Stock"
 msgstr ""
 
-#: public/templates/addonify-wishlist-shortcode-contents.php:131
+#: public/templates/addonify-wishlist-shortcode-contents.php:135
 msgid "Your wishlist is empty."
 msgstr ""
 
