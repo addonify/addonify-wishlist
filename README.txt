@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.6
 Tested up to: 6.1.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,6 +127,17 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 6. Addonify wishlist page using shortcode.
 
 == Changelog ==
+
+= 1.1.2 - 22 February , 2023 =
+
+- Added: Clear Wishlist button in wishlist shortcode content for removing all items in wishlist.
+- Added: JavaScript function for getting wishlist items while handelling from client side (Not logged-in).
+- Update: Multisite Data stored in same array.
+- Added: Spinner for clear wishlist data.
+- Fixed: Data removed from all sites in multisite on clear all button action.
+- Fixed: Wishlist icon and view wishlist button showing on add to cart in wishlist page.
+- Update: User wishlist saved as an array with created and updated time.
+- Update: Option to remove product from wishlist on clicking on add to wishlist button if already in wishlist.
 
 = 1.1.1 - 30 December, 2022 =
 

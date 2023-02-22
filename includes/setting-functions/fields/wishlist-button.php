@@ -19,7 +19,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 	function addonify_wishlist_button_settings_fields() {
 
 		return array(
-			'btn_position'                     => array(
+			'btn_position'                               => array(
 				'type'        => 'select',
 				'className'   => '',
 				'label'       => __( 'Button Position', 'addonify-wishlist' ),
@@ -31,7 +31,21 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_position' ),
 			),
-			'btn_label'                        => array(
+			'btn_position_on_single'                     => array(
+				'type'        => 'select',
+				'className'   => '',
+				'label'       => __( 'Button Position on Product Single Page', 'addonify-wishlist' ),
+				'description' => __( 'Choose where to place the Add to Wishlist button.', 'addonify-wishlist' ),
+				'choices'     => array(
+					'before_add_to_cart_form'   => __( 'Before Add to Cart Form', 'addonify-wishlist' ),
+					'before_add_to_cart_button' => __( 'Before Add to Cart Button', 'addonify-wishlist' ),
+					'after_add_to_cart_button'  => __( 'After Add to Cart Button', 'addonify-wishlist' ),
+					'after_add_to_cart_form'    => __( 'After Add to Cart Form', 'addonify-wishlist' ),
+				),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'btn_position' ),
+			),
+			'btn_label'                                  => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Button Label', 'addonify-wishlist' ),
@@ -39,7 +53,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_label' ),
 			),
-			'btn_custom_class'                 => array(
+			'btn_custom_class'                           => array(
 				'type'        => 'text',
 				'className'   => '',
 				'placeholder' => 'my_button rounded_button',
@@ -49,7 +63,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_custom_class' ),
 			),
-			'btn_label_when_added_to_wishlist' => array(
+			'btn_label_when_added_to_wishlist'           => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Added to Wishlist Button Label', 'addonify-wishlist' ),
@@ -57,7 +71,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' ),
 			),
-			'btn_label_if_added_to_wishlist'   => array(
+			'btn_label_if_added_to_wishlist'             => array(
 				'type'        => 'text',
 				'className'   => '',
 				'label'       => __( 'Already in Wishlist Button Label', 'addonify-wishlist' ),
@@ -65,13 +79,21 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' ),
 			),
-			'show_icon'                        => array(
+			'show_icon'                                  => array(
 				'type'        => 'switch',
 				'className'   => '',
 				'label'       => __( 'Show Icon in Button', 'addonify-wishlist' ),
 				'description' => __( 'Display heart icon before Add to Wishlist button label.', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'show_icon' ),
+			),
+			'remove_already_added_product_from_wishlist' => array(
+				'type'        => 'switch',
+				'className'   => '',
+				'label'       => __( 'Remove added product from wishlist on click', 'addonify-wishlist' ),
+				'description' => __( 'If add-to-wishlist button is clicked when the product is already in wishlist, remove the product from wishlist.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'remove_already_added_product_from_wishlist' ),
 			),
 		);
 	}
