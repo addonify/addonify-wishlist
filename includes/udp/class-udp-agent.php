@@ -55,7 +55,6 @@ class Udp_Agent {
 	 */
 	public function __construct( $ver, $agent_root_dir, $engine_url ) {
 
-		$this->version        = $ver;
 		$this->engine_url     = $engine_url;
 		$this->agent_root_dir = $agent_root_dir;
 
@@ -111,10 +110,23 @@ class Udp_Agent {
 			)
 		);
 
+		$plugin_directory        = untrailingslashit( dirname( __FILE__, 3 ) );
+		$dir_names               = explode( '/', $plugin_directory );
+		if ( strpos( $dir_names[ count( $dir_names ) - 1 ], '\\' ) ) {
+			$dir_names = explode( '\\', $dir_names[ count( $dir_names ) - 1 ] );
+		}
+		$plugin_name           = array_pop( $dir_names );
+		if ( file_exists( $plugin_directory . '/' . $plugin_name . '.php' ) ) {
+			$this_plugin_data      = get_plugin_data( $plugin_directory . '/' . $plugin_name . '.php' );
+			$text_domain = $this_plugin_data['TextDomain'];
+		} else {
+			$theme       = wp_get_theme();
+			$text_domain = $theme->get( 'TextDomain' );
+		}
 		// show ui in settings page.
 		add_settings_field(
 			'udp_agent_allow_tracking',
-			__( 'Allow Anonymous Tracking', 'udp-agent' ),
+			__( 'Allow Anonymous Tracking', $text_domain ),
 			array( $this, 'show_settings_ui' ),
 			'general',
 			'default',
@@ -231,8 +243,13 @@ class Udp_Agent {
 			$dir_names = explode( '\\', $dir_names[ count( $dir_names ) - 1 ] );
 		}
 		$plugin_name           = array_pop( $dir_names );
-		$this_plugin_data      = get_plugin_data( $plugin_directory . '/' . $plugin_name . '.php' );
-		$data['sender_client'] = $this_plugin_data['Name'];
+		if ( file_exists( $plugin_directory . '/' . $plugin_name . '.php' ) ) {
+			$this_plugin_data      = get_plugin_data( $plugin_directory . '/' . $plugin_name . '.php' );
+			$data['sender_client'] = $this_plugin_data['Name'];
+		} else {
+			$theme                 = wp_get_theme();
+			$data['sender_client'] = $theme->name;
+		}
 
 		return $data;
 
@@ -271,21 +288,7 @@ class Udp_Agent {
 		$data['site_url']   = get_bloginfo( 'url' );
 		$url                = untrailingslashit( $this->engine_url ) . '/wp-json/udp-engine/v1/handshake';
 
-		// get secret key from engine.
-		$secret_key = json_decode( $this->do_curl( $url, $data ) );
-
-		if ( empty( $secret_key ) ) {
-			error_log( __FUNCTION__ . ' : Cannot get secret key from engine.' ); //phpcs:ignore
-			return false;
-		}
-
-		if ( isset( $secret_key->secret_key ) ) {
-			// save secret_key into db.
-			update_option( 'udp_agent_secret_key', $secret_key->secret_key );
-		} else {
-			error_log( __FUNCTION__ . $secret_key->message ); //phpcs:ignore
-			return false;
-		}
+		$this->do_curl( $url, $data );
 
 		return true;
 
@@ -332,6 +335,7 @@ class Udp_Agent {
 		$data_to_send['secret_key'] = get_option( 'udp_agent_secret_key' );
 		$url                        = untrailingslashit( $this->engine_url ) . '/wp-json/udp-engine/v1/process-data';
 		$this->write_log( __FUNCTION__ . $this->do_curl( $url, $data_to_send ) );
+		// $this->do_curl( $url, $data_to_send );
 		exit;
 
 	}
