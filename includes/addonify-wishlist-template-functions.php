@@ -77,7 +77,7 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 	/**
 	 * Render add to wishlist button.
 	 */
-	function addonify_wishlist_render_add_to_wishlist_button() {
+	function addonify_wishlist_render_add_to_wishlist_button( $product_ = false, $classes = array() ) {
 
 		// Return if button label and icon is not set.
 		if (
@@ -86,8 +86,13 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 		) {
 			return;
 		}
+		if ( ! $product_ ) {
+			global $product;
+		} else {
+			$product = $product_;
+		}
 
-		global $product;
+		$add_to_wishlist_button_args['button_classes'] = $classes;
 
 		$add_to_wishlist_button_args = array(
 			'product_id'           => $product->get_id(),
