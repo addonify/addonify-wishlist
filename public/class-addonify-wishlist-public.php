@@ -132,6 +132,8 @@ class Addonify_Wishlist_Public {
 
 		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
 
+		add_shortcode( 'addonify_wishlist_button', array( $this, 'get_wishlist_button_shortcode' ) );
+
 		$this->register_ajax_actions();
 	}
 
@@ -882,6 +884,32 @@ class Addonify_Wishlist_Public {
 			return ob_end_clean();
 		} else {
 			do_action( 'addonify_wishlist_render_shortcode_content' );
+		}
+	}
+
+	public function get_wishlist_button_shortcode( $atts ) {
+		return $this->get_wishlist_button_shortcode_contents( $atts );
+	}
+
+	/**
+	 * Get wishlist button shortcode contents.
+	 */
+	public function get_wishlist_button_shortcode_contents( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'id'    => '',
+				'class' => '',
+			),
+			$atts,
+			'addonify_wishlist_button'
+		);
+		if ( $atts['id'] === '' ) {
+			return "id required";
+		} else {
+			$product = wc_get_product( $atts['id'] );
+			ob_start();
+			addonify_wishlist_render_add_to_wishlist_button( $product, $atts['class'] );
+			return ob_get_clean();
 		}
 	}
 
