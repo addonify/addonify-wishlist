@@ -20,7 +20,7 @@ global $this_agent_ver, $engine_url, $root_dir, $udp_admin_notice_displayed;
 // -------------------------------------------
 
 $engine_url     = 'https://udp.creamcode.org/';
-$this_agent_ver = '1.0.0';
+$this_agent_ver = '1.0.1';
 
 // -------------------------------------------
 // Which agent to load ?
@@ -90,40 +90,38 @@ if ( $this_agent_is_latest && isset( $all_installed_agents[ basename( $root_dir 
 							'textdomain' => 'Text Domain',
 						)
 					);
-	
+
 					$agent_name = $plugin_data['name'];
-					$domain     = $plugin_data['textdomain'];
 				} else {
 					$theme      = wp_get_theme();
 					$agent_name = $theme->name;
-					$domain     = $theme->get( 'TextDomain' );
 				}
 
 				$content = '<p>' . sprintf(
 					/* translators: %s: agent name */
-					__( '%s is asking to allow tracking your non-sensitive WordPress data?', $domain ),
+					esc_html__( '%s is asking to allow tracking your non-sensitive WordPress data?', 'addonify-wishlist' ),
 					$agent_name
 				) . '</p><p>';
 
 				$content .= sprintf(
 					/* translators: %s: agent allow access link, %s: Allow */
-					__( '<a href="%1$s" class="button button-primary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>', $domain ),
+					'<a href="%1$s" class="button button-primary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>',
 					add_query_arg( 'udp-agent-allow-access', 'yes' ),
-					'Allow'
+					esc_html__( 'Allow', 'addonify-wishlist' )
 				);
 
 				$content .= sprintf(
 					/* translators: %s: agent allow access link, %s: Allow */
-					__( '<a href="%1$s" class="button button-secondary udp-agent-access_tracking-no" style="margin-right: 10px" >%2$s</a>', $domain ),
+					'<a href="%1$s" class="button button-secondary udp-agent-access_tracking-no" style="margin-right: 10px" >%2$s</a>',
 					add_query_arg( 'udp-agent-allow-access', 'no' ),
-					'Do not show again'
+					esc_html__( 'Do not show again', 'addonify-wishlist' )
 				);
 
 				$content .= sprintf(
 					/* translators: %s: agent allow access link, %s: Allow */
-					__( '<a href="%1$s" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>', $domain ),
+					'<a href="%1$s" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>',
 					add_query_arg( 'udp-agent-allow-access', 'later' ),
-					'Later'
+					esc_html__( 'Later', 'addonify-wishlist' )
 				);
 
 				$content .= '</p>';
@@ -253,12 +251,12 @@ if ( file_exists( $root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.ph
 	register_deactivation_hook(
 		$root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php',
 		function () use ( $root_dir ) {
-	
+
 			$installed_agents = get_option( 'udp_installed_agents', array() );
 			if ( isset( $installed_agents[ basename( $root_dir ) ] ) ) {
 				unset( $installed_agents[ basename( $root_dir ) ] );
 			}
-	
+
 			// remove this agent from the list of active agents.
 			update_option( 'udp_installed_agents', $installed_agents );
 			$timestamp = wp_next_scheduled( 'udp_agent_cron' );
