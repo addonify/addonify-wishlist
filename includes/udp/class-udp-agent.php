@@ -110,23 +110,10 @@ class Udp_Agent {
 			)
 		);
 
-		$plugin_directory        = untrailingslashit( dirname( __FILE__, 3 ) );
-		$dir_names               = explode( '/', $plugin_directory );
-		if ( strpos( $dir_names[ count( $dir_names ) - 1 ], '\\' ) ) {
-			$dir_names = explode( '\\', $dir_names[ count( $dir_names ) - 1 ] );
-		}
-		$plugin_name           = array_pop( $dir_names );
-		if ( file_exists( $plugin_directory . '/' . $plugin_name . '.php' ) ) {
-			$this_plugin_data      = get_plugin_data( $plugin_directory . '/' . $plugin_name . '.php' );
-			$text_domain = $this_plugin_data['TextDomain'];
-		} else {
-			$theme       = wp_get_theme();
-			$text_domain = $theme->get( 'TextDomain' );
-		}
 		// show ui in settings page.
 		add_settings_field(
 			'udp_agent_allow_tracking',
-			__( 'Allow Anonymous Tracking', $text_domain ),
+			esc_html__( 'Allow Anonymous Tracking', 'addonify-wishlist' ),
 			array( $this, 'show_settings_ui' ),
 			'general',
 			'default',
@@ -145,7 +132,7 @@ class Udp_Agent {
 	 * @param    string $data Data to modify.
 	 */
 	public function get_settings_field_val( $data ) {
-		if ( '1' === $data ) {
+		if ( 1 === (int) $data ) {
 			return 'yes';
 		} else {
 			return 'no';
@@ -170,7 +157,9 @@ class Udp_Agent {
 			echo ' checked';
 		}
 		echo '/>';
-		echo wp_kses_data( 'Become a super contributor by sharing your non-sensitive WordPress data. We guarantee no sensitive data is collected. <a href="https://creamcode.org/user-data-processing/" target="_blank" >What data do we collect?</a>' ) . ' </p>';
+		echo esc_html__( 'Become a super contributor by sharing your non-sensitive WordPress data. We guarantee no sensitive data is collected.', 'addonify-wishlist' );
+		echo wp_kses_data( '<a href="https://creamcode.org/user-data-processing/" target="_blank" > ' . esc_html__( ' What data do we collect?', 'addonify-wishlist' ) . '</a>' );
+		echo ' </p>';
 	}
 
 
@@ -242,7 +231,7 @@ class Udp_Agent {
 		if ( strpos( $dir_names[ count( $dir_names ) - 1 ], '\\' ) ) {
 			$dir_names = explode( '\\', $dir_names[ count( $dir_names ) - 1 ] );
 		}
-		$plugin_name           = array_pop( $dir_names );
+		$plugin_name = array_pop( $dir_names );
 		if ( file_exists( $plugin_directory . '/' . $plugin_name . '.php' ) ) {
 			$this_plugin_data      = get_plugin_data( $plugin_directory . '/' . $plugin_name . '.php' );
 			$data['sender_client'] = $this_plugin_data['Name'];
@@ -258,7 +247,7 @@ class Udp_Agent {
 
 
 	/**
-	 * Authotrize this agent to send data to engine.
+	 * Authorize this agent to send data to engine.
 	 * get secret key from engine
 	 * run on agent activation.
 	 *
@@ -334,8 +323,8 @@ class Udp_Agent {
 		$data_to_send['agent_data'] = serialize( $this->get_data() ); //phpcs:ignore
 		$data_to_send['secret_key'] = get_option( 'udp_agent_secret_key' );
 		$url                        = untrailingslashit( $this->engine_url ) . '/wp-json/udp-engine/v1/process-data';
-		$this->write_log( __FUNCTION__ . $this->do_curl( $url, $data_to_send ) );
-		// $this->do_curl( $url, $data_to_send );
+		// $this->write_log( __FUNCTION__ . $this->do_curl( $url, $data_to_send ) );
+		$this->do_curl( $url, $data_to_send );
 		exit;
 
 	}
@@ -347,7 +336,7 @@ class Udp_Agent {
 	 * @param string $log Message to be logged.
 	 */
 	private function write_log( $log ) {
-		if ( true === WP_DEBUG ) {
+		if ( true === WP_DEBUG && true === WP_DEBUG_LOG ) {
 			if ( is_array( $log ) || is_object( $log ) ) {
 				error_log( print_r( $log, true ) ); //phpcs:ignore
 			} else {
