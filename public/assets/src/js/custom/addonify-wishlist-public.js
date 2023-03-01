@@ -8,7 +8,6 @@
         let $modal = $('#addonify-wishlist-modal-wrapper');
         let $modal_response = $('#addonify-wishlist-modal-response');
         let $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
-        let $undo_div = $('#addonify-wishlist-undo-deleted-product');
         let plugin_name = 'addonify-wishlist';
         let localDataExpiration = parseInt(addonifyWishlistJSObject.noOfDaysDataIsValid);   // local data expiration in days.
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
@@ -142,7 +141,7 @@
 
         $body.on( 'click', '#addonify-wishlist-undo-deleted-product-link', function(event) {
             event.preventDefault();
-            $undo_div.html('');
+            $('#addonify-wishlist-undo-deleted-product').html('');
             let product_id = $(this).data('product_id');
             let addToWishlistButton = $('button.addonify-add-to-wishlist-btn[data-product_id='+product_id+']');
             if ( ! isLoggedIn ) {
@@ -763,7 +762,7 @@
             } else {
 
                 if (addonifyWishlistStickySidebarEle.length > 0) {
-                    $('#addonify-wishlist-sticky-sidebar-container ul.adfy-wishlist-sidebar-items-entry').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.emptyWishlistText + '</p>');
+                    $('#addonify-wishlist-sticky-sidebar-container ul.adfy-wishlist-sidebar-items-entry').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.sidebarEmptyWishlistText + '</p>');
                 }
 
                 if ($('#addonify-wishlist-page-container')) {
@@ -779,18 +778,18 @@
          * @param {int} product_id Product ID.
          */
         function addonifyUndoRemoveFromWishlist( product_name, product_id ) {
-            let product_removed_text = "{product_name} removed from wishlist";
+            let product_removed_text = addonifyWishlistJSObject.undoActionPrelabelText;
             product_removed_text = product_removed_text.replace('{product_name}', product_name);
-            let undo_text = "Undo";
+            let undo_text = addonifyWishlistJSObject.undoActionLabel;
             let undo_div = `
                 <p id="addonify-wishlist-undo-deleted-product-text">
                     ` + product_removed_text + `
                     <a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="` + product_id + `"> ` + undo_text + ` ?</a>
                 </p>`;
-            $undo_div.html(undo_div);
+            $('#addonify-wishlist-undo-deleted-product').html(undo_div);
             setTimeout( function() {
-                $undo_div.html('');
-            }, 4000)
+                $('#addonify-wishlist-undo-deleted-product').html('');
+            }, parseInt(addonifyWishlistJSObject.undoNoticeTimeout) * 1000)
         }
 
         // Display intial state wishlist button label and icon.
@@ -841,9 +840,14 @@
                 val = JSON.stringify(val)
             }
             let hostname = addonifyWishlistJSObject.thisSiteUrl;
-            const d = new Date();
-            d.setTime(d.getTime() + (localDataExpiration * 24 * 60 * 60 * 1000));
-            let expires = d.getTime();
+            let expires;
+            if ( localDataExpiration === 0 ) {
+                expires = 0;
+            } else {
+                const d = new Date();
+                d.setTime(d.getTime() + (localDataExpiration * 24 * 60 * 60 * 1000));
+                expires = d.getTime();
+            }
             localStorage.setItem(plugin_name + '_' + hostname + '_' + name, val)
             localStorage.setItem(plugin_name + '_' + hostname + '_' + name + '_deadline', expires)
         }
@@ -872,10 +876,10 @@
          */
         function getLocalItem(name) {
             let hostname = addonifyWishlistJSObject.thisSiteUrl;
-            let localDeadline = localStorage.getItem(plugin_name + '_' + hostname + '_' + name + '_deadline')
+            let localDeadline = parseInt(localStorage.getItem(plugin_name + '_' + hostname + '_' + name + '_deadline'))
             if (null !== localDeadline) {
                 const d = new Date();
-                if (d.getTime() < parseInt(localDeadline)) {
+                if ( localDeadline === 0 || d.getTime() < localDeadline) {
                     return jsonToArray(parseJson(localStorage.getItem(plugin_name + '_' + hostname + '_' + name)))
                 } else {
                     localStorage.removeItem(plugin_name + '_' + hostname + '_' + name)

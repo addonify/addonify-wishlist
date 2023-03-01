@@ -43,7 +43,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 					'after_add_to_cart_form'    => __( 'After Add to Cart Form', 'addonify-wishlist' ),
 				),
 				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'btn_position' ),
+				'value'       => addonify_wishlist_get_option( 'btn_position_on_single' ),
 			),
 			'btn_label'                                  => array(
 				'type'        => 'text',
@@ -83,9 +83,21 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'type'        => 'switch',
 				'className'   => '',
 				'label'       => __( 'Show Icon in Button', 'addonify-wishlist' ),
-				'description' => __( 'Display heart icon before Add to Wishlist button label.', 'addonify-wishlist' ),
+				'description' => __( 'Display heart icon on Add to Wishlist button label.', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'show_icon' ),
+			),
+			'icon_position'                     => array(
+				'type'        => 'select',
+				'className'   => '',
+				'label'       => __( 'Button Icon Position', 'addonify-wishlist' ),
+				'description' => __( 'Choose where to place the Add to Wishlist button Icon.', 'addonify-wishlist' ),
+				'choices'     => array(
+					'left'  => __( 'Before Button Label', 'addonify-wishlist' ),
+					'right' => __( 'After Button Label', 'addonify-wishlist' ),
+				),
+				'dependent'   => array( 'enable_wishlist', 'show_icon' ),
+				'value'       => addonify_wishlist_get_option( 'icon_position' ),
 			),
 			'remove_already_added_product_from_wishlist' => array(
 				'type'        => 'switch',

@@ -132,6 +132,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 - Updated : UDP updated.
 - Added : Shortcode for 'add-to-wishist' button.
+- Updated: Undo remove from wishlist action. Add undo notice timeout time option, action text, and undo link label.
+- Updated: For 0 value of the setting, Save Wishlist Cookie for [x] days, wishlist data remains forever.
+- Updated: Add select option for icon position on Add to Wishlist button.
+- Added: Text option for empty wishlist in sidebar and wishlist page.
 
 = 1.1.2 - 22 February , 2023 =
 

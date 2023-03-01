@@ -94,6 +94,14 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist', 'show_sidebar' ),
 				'value'       => addonify_wishlist_get_option( 'view_wishlist_page_button_label' ),
 			),
+			'sidebar_empty_wishlist_label'    => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Empty wishlist label', 'addonify-wishlist' ),
+				'description' => __( 'Set empty wishlist label.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist', 'show_sidebar' ),
+				'value'       => addonify_wishlist_get_option( 'sidebar_empty_wishlist_label' ),
+			),
 		);
 	}
 }

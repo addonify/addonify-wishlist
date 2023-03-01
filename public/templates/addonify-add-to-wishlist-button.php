@@ -16,7 +16,11 @@ $label = '<span class="addonify-wishlist-btn-label">' . ( ( $button_label ) ? es
 
 // If icon is enabled, icon is displayed before the button lable.
 if ( $display_icon ) {
-	$label = '<i class="icon adfy-wishlist-icon ' . esc_attr( $icon ) . '"></i> ' . $label;
+	if ( esc_html( addonify_wishlist_get_option( 'icon_position' ) ) === 'right' ) {
+		$label = $label . '<i class="icon adfy-wishlist-icon ' . esc_attr( $icon ) . '"></i> ';
+	} else {
+		$label = '<i class="icon adfy-wishlist-icon ' . esc_attr( $icon ) . '"></i> ' . $label;
+	}
 }
 
 if ( true === $require_login ) {
