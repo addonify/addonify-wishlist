@@ -135,7 +135,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 		</form>
 		<?php
 	} else {
-		echo esc_html__( 'Your wishlist is empty.', 'addonify-wishlist' );
+		echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
 	}
 	?>
 	<?php do_action( 'addonify_wishlist_after_wishlist_form' ); ?>

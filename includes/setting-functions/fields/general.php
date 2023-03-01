@@ -93,6 +93,39 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist', 'require_login' ),
 				'value'       => addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ),
 			),
+			'empty_wishlist_label'                  => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Empty wishlist label', 'addonify-wishlist' ),
+				'description' => __( 'Set empty wishlist label.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'empty_wishlist_label' ),
+			),
+			'undo_action_prelabel_text'             => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Undo action prelabel text.', 'addonify-wishlist' ),
+				'description' => __( 'Text before undo label.\'{product_name}\' is replaced by Product name.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'undo_action_prelabel_text' ),
+			),
+			'undo_action_label'                     => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Undo Action label', 'addonify-wishlist' ),
+				'description' => __( 'Set undo Action label.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'undo_action_label' ),
+			),
+			'undo_notice_timeout'                   => array(
+				'type'        => 'number',
+				'className'   => '',
+				'typeStyle'   => 'toggle', // Values for typeStyle are default, toggle & slider.
+				'label'       => __( 'Undo notice timeout(seconds)', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'description' => __( 'Set the number of days to save the Wishlist data in browser cookie.', 'addonify-wsihlist' ),
+				'value'       => addonify_wishlist_get_option( 'undo_notice_timeout' ),
+			),
 		);
 	}
 }

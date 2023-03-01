@@ -66,6 +66,13 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'sidebar_btn_icon'                         => 'heart-style-one',
 				'ajaxify_remove_from_wishlist_button'      => true,
 				'view_wishlist_page_button_label'          => __( 'View All Wishlist Items', 'addonify-wishlist' ),
+				'empty_wishlist_label'                     => __( 'Empty wishlist.', 'addonify-wishlist' ),
+				'sidebar_empty_wishlist_label'             => __( 'Empty wishlist.', 'addonify-wishlist' ),
+				'undo_action_prelabel_text'                => __( '{product_name} has been removed.', 'addonify-wishlist' ),
+				'undo_action_label'                        => __( 'Undo?', 'addonify-wishlist' ),
+				'undo_notice_timeout'                      => 5,
+				'icon_position'                            => 'left',
+
 				'load_styles_from_plugin'                  => false,
 				'wishlist_btn_text_color'                  => '#333333',
 				'wishlist_btn_icon_color'                  => '#333333',
