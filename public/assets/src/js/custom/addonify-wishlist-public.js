@@ -11,6 +11,7 @@
         let plugin_name = 'addonify-wishlist';
         let localDataExpiration = parseInt(addonifyWishlistJSObject.noOfDaysDataIsValid);   // local data expiration in days.
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
+        let undoTimeout;
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
 
         if (!isLoggedIn) {
@@ -464,6 +465,8 @@
             // mark modal as loading
             $modal.addClass('loading');
 
+            addToWishlistButton.addClass( 'addonify-wishlist-adding' );
+
             $.post(
                 addonifyWishlistJSObject.ajax_url,
                 data,
@@ -520,7 +523,9 @@
 
                 },
                 "json"
-            );
+            ).always( function() {
+                addToWishlistButton.removeClass( 'addonify-wishlist-adding' );
+            } );
         }
 
         /**
@@ -766,7 +771,11 @@
                 }
 
                 if ($('#addonify-wishlist-page-container')) {
-                    $('#addonify-wishlist-page-container').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.emptyWishlistText + '</p>');
+                    $('#addonify-wishlist-page-container').html(`
+                        <p id="addonify-empty-wishlist-para">` + addonifyWishlistJSObject.emptyWishlistText + `
+                            <a href='` + addonifyWishlistJSObject.pageLink + `'>` + addonifyWishlistJSObject.pageLinkLabel + `</a>
+                        </p>
+                    `);
                 }
             }
         }
@@ -778,18 +787,22 @@
          * @param {int} product_id Product ID.
          */
         function addonifyUndoRemoveFromWishlist( product_name, product_id ) {
+            clearTimeout(undoTimeout)
             let product_removed_text = addonifyWishlistJSObject.undoActionPrelabelText;
             product_removed_text = product_removed_text.replace('{product_name}', product_name);
             let undo_text = addonifyWishlistJSObject.undoActionLabel;
             let undo_div = `
                 <p id="addonify-wishlist-undo-deleted-product-text">
                     ` + product_removed_text + `
-                    <a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="` + product_id + `"> ` + undo_text + ` ?</a>
+                    <a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="` + product_id + `"> ` + undo_text + ` </a>
                 </p>`;
             $('#addonify-wishlist-undo-deleted-product').html(undo_div);
-            setTimeout( function() {
-                $('#addonify-wishlist-undo-deleted-product').html('');
-            }, parseInt(addonifyWishlistJSObject.undoNoticeTimeout) * 1000)
+            undoTimeout = setTimeout(
+                function() {
+                    $('#addonify-wishlist-undo-deleted-product').html('');
+                },
+                parseInt(addonifyWishlistJSObject.undoNoticeTimeout) * 1000
+            )
         }
 
         // Display intial state wishlist button label and icon.
