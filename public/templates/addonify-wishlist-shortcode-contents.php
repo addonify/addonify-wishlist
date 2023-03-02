@@ -129,13 +129,17 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-page-toolbar">
 				<?php if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) : ?>
-					<button type="button" id="addonify-wishlist__clear-all" class="button">Clear Wishlist</button>
+					<button type="button" id="addonify-wishlist__clear-all" class="button"><?php esc_html_e( addonify_wishlist_get_option( 'clear_wishlist_label' ) ) ?></button>
 				<?php endif ?>
 			</div>		
 		</form>
 		<?php
 	} else {
 		echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
+		if ( addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ) ) {
+			$page_link = @get_page_link( get_page_by_title( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) );
+			echo "<a href='" . $page_link . "'>" . addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ) . "</a>";
+		}
 	}
 	?>
 	<?php do_action( 'addonify_wishlist_after_wishlist_form' ); ?>

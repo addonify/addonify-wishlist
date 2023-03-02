@@ -17,7 +17,10 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 	 * @return array
 	 */
 	function addonify_wishlist_general_setting_fields() {
-
+		$pages = get_pages();
+		foreach ( $pages as $page ) {
+			$page_array[ $page->ID ] = $page->post_title;
+		}
 		return array(
 			'enable_wishlist'                       => array(
 				'label'       => __( 'Enable wishlist', 'addonify-wishlist' ),
@@ -96,10 +99,18 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 			'empty_wishlist_label'                  => array(
 				'type'        => 'text',
 				'className'   => '',
-				'label'       => __( 'Empty wishlist label', 'addonify-wishlist' ),
+				'label'       => __( 'Empty wishlist label on table', 'addonify-wishlist' ),
 				'description' => __( 'Set empty wishlist label.', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'empty_wishlist_label' ),
+			),
+			'clear_wishlist_label'                  => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Clear wishlist button label', 'addonify-wishlist' ),
+				'description' => __( 'Set clear wishlist button label.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'clear_wishlist_label' ),
 			),
 			'undo_action_prelabel_text'             => array(
 				'type'        => 'text',
@@ -125,6 +136,31 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'description' => __( 'Set the number of days to save the Wishlist data in browser cookie.', 'addonify-wsihlist' ),
 				'value'       => addonify_wishlist_get_option( 'undo_notice_timeout' ),
+			),
+			'show_empty_wishlist_navigation_link'     => array(
+				'type'        => 'switch',
+				'className'   => '',
+				'label'       => __( 'Navigation link on empty wishlist', 'addonify-wishlist' ),
+				'description' => __( 'Show a navigation link when wishlist is empty.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ),
+			),
+			'empty_wishlist_navigation_link'          => array(
+				'type'        => 'select',
+				'className'   => '',
+				'label'       => __( 'Navigation Page', 'addonify-wishlist' ),
+				'description' => __( 'Navigation page link when wishlist is empty.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist', 'show_empty_wishlist_navigation_link' ),
+				'choices'     => $page_array,
+				'value'       => addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ),
+			),
+			'empty_wishlist_navigation_link_label'    => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Navigation Page label', 'addonify-wishlist' ),
+				'description' => __( 'Set Navigation Page label.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist', 'show_empty_wishlist_navigation_link' ),
+				'value'       => addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ),
 			),
 		);
 	}
