@@ -757,24 +757,29 @@
         function addonifyEmptyWishlistText(wishlistCount) {
             let addonifyWishlistStickySidebarEle = $("#addonify-wishlist-sticky-sidebar-container");
             let addonifyWishListEmptyTextEle = $("#addonify-wishlist-sticky-sidebar-container #addonify-empty-wishlist-para");
-
+            let table = $('#addonify-wishlist-table')
+            let empty_div = $('#addonify-wishlist-empty')
+            empty_div.html('');
             if (wishlistCount > 0) {
-
+                if ( table.length > 0 ) {
+                    table.show();
+                }
                 if (addonifyWishListEmptyTextEle.length > 0) {
                     addonifyWishListEmptyTextEle.remove();
                 }
-
             } else {
 
                 if (addonifyWishlistStickySidebarEle.length > 0) {
                     $('#addonify-wishlist-sticky-sidebar-container ul.adfy-wishlist-sidebar-items-entry').html('<p id="addonify-empty-wishlist-para">' + addonifyWishlistJSObject.sidebarEmptyWishlistText + '</p>');
                 }
-
-                if ($('#addonify-wishlist-page-container')) {
-                    $('#addonify-wishlist-page-container').html(`
-                        <p id="addonify-empty-wishlist-para">` + addonifyWishlistJSObject.emptyWishlistText + `
-                            <a href='` + addonifyWishlistJSObject.pageLink + `'>` + addonifyWishlistJSObject.pageLinkLabel + `</a>
-                        </p>
+                if ($('#addonify-wishlist-page-form')) {
+                    table.hide();
+                    let link = '';
+                    if (addonifyWishlistJSObject.showPageLinkLabel) {
+                        link = "<a href='" + addonifyWishlistJSObject.pageLink + "'>" + addonifyWishlistJSObject.pageLinkLabel + "</a>"
+                    }   
+                    empty_div.html(`
+                        <p id="addonify-empty-wishlist-para">` + addonifyWishlistJSObject.emptyWishlistText + link + `</p>
                     `);
                 }
             }
