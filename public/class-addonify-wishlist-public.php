@@ -322,6 +322,7 @@ class Addonify_Wishlist_Public {
 				'ajaxAddToCart'                         => ( 'yes' === get_option( 'woocommerce_enable_ajax_add_to_cart' ) ),
 				'pageLink'                              => @get_page_link( get_page_by_title( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ),
 				'pageLinkLabel'                         => addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ),
+				'showPageLinkLabel'                     => (bool) addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ),
 			)
 		);
 

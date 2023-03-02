@@ -18,6 +18,11 @@ if ( function_exists( 'wc_print_notices' ) ) {
 ?>
 
 <div id="addonify-wishlist-page-container">
+
+	<div id="addonify-wishlist-undo-deleted-product">
+	</div>
+	<div id="addonify-wishlist-empty">
+	</div>
 	<?php do_action( 'addonify_wishlist_before_wishlist_form' ); ?>
 	<?php
 	if (
@@ -26,9 +31,6 @@ if ( function_exists( 'wc_print_notices' ) ) {
 	) {
 		?>
 		<form action="" method="POST" id="addonify-wishlist-page-form">
-
-			<div id="addonify-wishlist-undo-deleted-product">
-			</div>
 
 			<?php do_action( 'addonify_wishlist_before_wishlist_form_table' ); ?>
 			<table id="addonify-wishlist-table">
