@@ -5,13 +5,12 @@
     $(document).ready(function () {
 
         let $body = $('body');
-        let $modal = $('#addonify-wishlist-modal-wrapper');
         let $modal_response = $('#addonify-wishlist-modal-response');
         let $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
         let plugin_name = 'addonify-wishlist';
         let localDataExpiration = parseInt(addonifyWishlistJSObject.noOfDaysDataIsValid);   // local data expiration in days.
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
-        let undoTimeout, sidebarNoticeTimeout;
+        let undoTimeout;
         let loader = '<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>';
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
 
@@ -462,17 +461,12 @@
                 nonce: addonifyWishlistJSObject.nonce
             };
 
-            // mark modal as loading
-            $modal.addClass('loading');
-
-            addToWishlistButton.addClass( 'addonify-wishlist-adding' );
+            addToWishlistButton.addClass( 'loading' );
 
             $.post(
                 addonifyWishlistJSObject.ajax_url,
                 data,
                 function (response) {
-
-                    $modal.removeClass('loading');
 
                     if (response.success == true) {
 
@@ -524,7 +518,7 @@
                 },
                 "json"
             ).always( function() {
-                addToWishlistButton.removeClass( 'addonify-wishlist-adding' );
+                addToWishlistButton.removeClass( 'loading' );
             } );
         }
 
