@@ -76,6 +76,9 @@ if ( ! function_exists( 'addonify_wishlist_get_template' ) ) {
 if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 	/**
 	 * Render add to wishlist button.
+	 *
+	 * @param object|false $product_ Product object.
+	 * @param array        $classes Classes to be added to button.
 	 */
 	function addonify_wishlist_render_add_to_wishlist_button( $product_ = false, $classes = array() ) {
 

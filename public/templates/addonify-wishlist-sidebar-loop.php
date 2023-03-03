@@ -18,7 +18,9 @@ if (
 ) {
 	foreach ( $wishlist_product_ids as $product_id ) {
 
-		$product = wc_get_product( $product_id );
+		$product      = wc_get_product( $product_id );
+		$in_stock     = '<div style="font-weight:bold;">In stock</div>';
+		$out_of_stock = '<div style="font-weight:bold;color:#CD5C5C">Out of stock</div>';
 		?>
 		<li class="addonify-wishlist-sidebar-item" data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>" data-product_name="<?php echo esc_attr( $product->get_name() ); ?>">
 			<div class="adfy-wishlist-row">
@@ -43,6 +45,7 @@ if (
 						</a>
 					</div>
 					<div class="adfy-wishlist-woo-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
+					<div class="adfy-wishlist-woo-stock"><?php echo wp_kses_post( $product->is_in_stock() ? $in_stock : $out_of_stock ); ?></div>
 				</div>
 			</div>
 
