@@ -11,7 +11,8 @@
         let plugin_name = 'addonify-wishlist';
         let localDataExpiration = parseInt(addonifyWishlistJSObject.noOfDaysDataIsValid);   // local data expiration in days.
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
-        let undoTimeout;
+        let undoTimeout, sidebarNoticeTimeout;
+        let loader = '<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>';
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
 
         if (!isLoggedIn) {
@@ -127,8 +128,6 @@
                                 }
                                 addonifyEmptyWishlistText(product_ids.length);
                             }
-
-                            addonifyWishlistSidebarNotification(response.message);
                         }
                     }
                 },
@@ -145,6 +144,10 @@
             $('#addonify-wishlist-undo-deleted-product').html('');
             let product_id = $(this).data('product_id');
             let addToWishlistButton = $('button.addonify-add-to-wishlist-btn[data-product_id='+product_id+']');
+            let $sidebar_items = $('ul.adfy-wishlist-sidebar-items-entry');
+            let $table = $('#addonify-wishlist-table');
+            $('#addonify-wishlist-sticky-sidebar-container').block({message: null});
+            $('#addonify-wishlist-page-container').append(loader);
             if ( ! isLoggedIn ) {
                 let wishlist = getProductids();
 
@@ -167,9 +170,8 @@
                         function (response) {
                             if (response) {
                                 // update sidebar contents
-                                $('ul.adfy-wishlist-sidebar-items-entry').prepend(response.sidebar_data);
+                                $sidebar_items.prepend(response.sidebar_data);
                                 sidebar_data = response.sidebar_data
-                                let $table = $('#addonify-wishlist-table');
                                 if ( $table.length > 0 && response.table_row_data ) {
                                     $table.find('tbody').prepend(response.table_row_data)
                                 }
@@ -206,6 +208,7 @@
                             sidebarData   : sidebar_data,
                         }
                     ]);
+                    $('#addonify-wishlist_spinner').remove();$('#addonify-wishlist-sticky-sidebar-container').unblock();
                 } else {
                     if (addonifyWishlistJSObject.removeAlreadyAddedProductFromWishlist) {
                         addonifyLocalRemoveFromWishlist(addToWishlistButton)
@@ -217,13 +220,12 @@
                     id: product_id,
                     nonce: addonifyWishlistJSObject.nonce
                 };
-    
                 $.post(
                     addonifyWishlistJSObject.ajax_url,
                     data,
                     function (response) {
                         if (response.success == true) {
-    
+
                             // Triggering custom event when product is added to wishlist. 
                             // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
                             $(document).trigger('addonify_added_to_wishlist', [
@@ -233,13 +235,13 @@
                                     sidebarData   : response.sidebar_data,
                                 }
                             ]);
-    
+
                             addonifyEmptyWishlistText(response.wishlist_count);
-    
+
                             if ( addToWishlistButton.length > 0 ) {
                                 // update button 
                                 addToWishlistButton.addClass('added-to-wishlist');
-    
+
                                 // Update button label and icon of custom add to wishlist button.
                                 if (!addToWishlistButton.hasClass('addonify-custom-wishlist-btn')) {
                                     // Update button label.
@@ -247,18 +249,16 @@
                                     // Update button icon.
                                     addToWishlistButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-o-style-one').addClass('heart-style-one');
                                 }
-
                             }
-    
+
                             if (response.wishlist_count > 0) {
                                 $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
                             }
-    
+
                             if (response.sidebar_data) {
                                 // update sidebar contents
                                 $sidebar_ul.prepend(response.sidebar_data);
                             }
-                            let $table = $('#addonify-wishlist-table');
                             if ( $table.length > 0 && response.table_row_data ) {
                                 $table.find('tbody').prepend(response.table_row_data)
                             }
@@ -269,10 +269,12 @@
                                 'error'
                             );
                         }
-    
                     },
                     "json"
-                );
+                ).always( function () {
+                    $('#addonify-wishlist_spinner').remove();
+                    $('#addonify-wishlist-sticky-sidebar-container').unblock();
+                } );
             }
         } )
 
@@ -306,8 +308,6 @@
 
                 addonifyInitialWishlistButton(product_id);
                 addonifyEmptyWishlistText(parentProductSiblings);
-
-                addonifyWishlistSidebarNotification(addonifyWishlistJSObject.removedFromWishlistText, parentProductRow.data('product_name'));
                 // Triggering custom event when product is added to wishlist. 
                 // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
                 $(document).trigger('addonify_removed_from_wishlist', [{ productID: product_id, wishlist_count : getProductids().length }]);
@@ -333,7 +333,7 @@
                 if (addonifyWishlistJSObject.requireLogin) {
                     $('div#addonify-wishlist-page-container').html('<h3>'+addonifyWishlistJSObject.loginRequiredMessage+'</h3>');
                 } else {
-                    $('div#addonify-wishlist-page-container').html('<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>');
+                    $('div#addonify-wishlist-page-container').html(loader);
                     //populate table
                     $.post(
                         addonifyWishlistJSObject.ajax_url,
@@ -424,7 +424,7 @@
                     action: addonifyWishlistJSObject.emptyWishlistAction,
                     nonce: addonifyWishlistJSObject.nonce
                 }
-                $('#addonify-wishlist-table').append('<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>')
+                $('#addonify-wishlist-table').append(loader)
                 $.post(
                     addonifyWishlistJSObject.ajax_url,
                     ajaxData,
@@ -626,7 +626,7 @@
 
             if ($('#addonify-wishlist-table').length > 0) {
                 parentProductRow = $('#addonify-wishlist-table').find('tr[data-product_row="addonify-wishlist-table-product-row-' + product_id + '"]');
-                parentProductRow.append('<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>')
+                parentProductRow.append(loader)
             }
 
             $.post(
@@ -647,8 +647,6 @@
                         addonifyInitialWishlistButton(product_id);
 
                         addonifyEmptyWishlistText(response.wishlist_count);
-
-                        addonifyWishlistSidebarNotification(response.message);
 
                         addonifyUndoRemoveFromWishlist( thisButton.data('product_name'), product_id );
                     }
@@ -675,7 +673,7 @@
 
             if ($('#addonify-wishlist-table').length > 0) {
                 parentProductRow = $('#addonify-wishlist-table').find('tr[data-product_row="addonify-wishlist-table-product-row-' + id_to_remove + '"]');
-                parentProductRow.append('<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>')
+                parentProductRow.append(loader)
             }
 
             let p_tag
@@ -702,8 +700,6 @@
 
             addonifyEmptyWishlistText(product_ids.length);
 
-            addonifyWishlistSidebarNotification(addonifyWishlistJSObject.removedFromWishlistText, thisButton.data('product_name'));
-
             if (p_tag && p_tag.length === 1) {
                 p_tag.remove();
             }
@@ -729,28 +725,6 @@
             }
             $modal_response.html("<p class='response-text'>" + response_text.replace('{product_name}', product_name) + "</p>");
             $body.addClass('addonify-wishlist-modal-is-open');
-        }
-
-        // Display sidebar notifications.
-        function addonifyWishlistSidebarNotification(message, product_name = '') {
-
-            let notice = $('#addonify-wishlist-sticky-sidebar-container .addonify-wishlist-ssc-footer');
-
-            if (notice.length > 0) {
-                if ( product_name !== '' ) {
-                    message = message.replace('{product_name}', product_name)
-                }
-                notice.prepend('<div class="notice adfy-wishlist-sidebar-notice"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" /></svg><span>' + message + '</span></div> ');
-
-                // delete notification after 5 seconds
-                setTimeout(function () {
-
-                    notice.find('.notice').fadeOut('fast', function () {
-
-                        $(this).remove();
-                    })
-                }, 5000); // 5000
-            }
         }
 
         // Display empty wishlist text.

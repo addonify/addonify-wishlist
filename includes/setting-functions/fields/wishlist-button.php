@@ -87,7 +87,7 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'show_icon' ),
 			),
-			'icon_position'                     => array(
+			'icon_position'                              => array(
 				'type'        => 'select',
 				'className'   => '',
 				'label'       => __( 'Button Icon Position', 'addonify-wishlist' ),
