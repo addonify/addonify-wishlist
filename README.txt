@@ -128,7 +128,11 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 1.1.3 - ? =
+= 1.1.4 - ? = 
+
+- Added: Add Wishlist table on plugin activate.
+
+= 1.1.3 - 03 March, 2023 =
 
 - Updated : UDP updated.
 - Added : Shortcode for 'add-to-wishist' button.

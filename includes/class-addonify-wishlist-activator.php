@@ -28,6 +28,17 @@ class Addonify_Wishlist_Activator {
 	 */
 	public static function activate() {
 
+		$wishlist = new Addonify\Wishlist();
+		$wishlist->create_table();
+
+		self::create_wishlist_page();
+	}
+
+	/**
+	 * Create wishlist page.
+	 */
+	private static function create_wishlist_page() {
+
 		// create page only once.
 		// do not regenerate even if plugin is deleted by user.
 
@@ -49,6 +60,7 @@ class Addonify_Wishlist_Activator {
 		$page_id = wp_insert_post( $new_page );
 
 		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $page_id );
+
 	}
 
 }
