@@ -48,6 +48,12 @@ class Addonify_Wishlist_Public {
 	 */
 	public $wishlist_items_count;
 
+	/**
+	 * Addonify Wishlist object.
+	 *
+	 * @var object $wishlist
+	 */
+	private $wishlist;
 
 	/**
 	 * Wishlist items.
@@ -78,6 +84,8 @@ class Addonify_Wishlist_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+
+		$wishlist = new Addonify\Wishlist();
 	}
 
 	/**
@@ -93,18 +101,6 @@ class Addonify_Wishlist_Public {
 		}
 
 		$this->wishlist_items = $this->get_wishlist();
-
-		$this->maybe_create_default_wishlist();
-
-		if (
-			array_key_exists( get_bloginfo( 'url' ), $this->wishlist_items ) &&
-			isset( $this->wishlist_items[ get_bloginfo( 'url' ) ][ $this->default_wishlist ] ) &&
-			isset( $this->wishlist_items[ get_bloginfo( 'url' ) ][ $this->default_wishlist ]['products'] )
-			) {
-			$this->wishlist_items_count = count( $this->wishlist_items[ get_bloginfo( 'url' ) ][ $this->default_wishlist ]['products'] );
-		} else {
-			$this->wishlist_items_count = 0;
-		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -503,10 +499,11 @@ class Addonify_Wishlist_Public {
 	 * Add product into the wishlist if product is not in the wishlist.
 	 *
 	 * @since 1.0.0
+	 * @param int $parent_wishlist_id Wishlist ID.
 	 * @param int $product_id Product ID.
 	 * @return boolean true if added successfully otherwise false.
 	 */
-	public function add_to_wishlist( $product_id ) {
+	public function add_to_wishlist( $parent_wishlist_id, $product_id ) {
 		if (
 			is_array( $this->wishlist_items )
 		) {
@@ -833,51 +830,23 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_wishlist() {
 		if ( is_user_logged_in() ) {
-			$user_meta_wishlist = $this->get_wishlist_from_database();
-			if ( is_array( $user_meta_wishlist ) ) {
-				return $user_meta_wishlist;
+			$wishlist      = new Addonify\Wishlist();
+			$wishlist_data = array();
+			foreach ( $wishlist->get_all_rows() as $row ) {
+				if ( null !== $row->wishlist_name ) {
+					$wishlist_data[ $row->id ] = array(
+						'name'       => $row->wishlist_name,
+						'visibility' => $row->wishlist_visibility,
+					);
+				} else {
+					if ( array_key_exists( $row->parent_wishlist_id, $wishlist_data ) ) {
+						$wishlist_data[ $row->parent_wishlist_id ]['product_ids'][] = $row->product_id;
+					}
+				}
 			}
+			return $wishlist_data;
 		}
 		return array();
-	}
-
-	/**
-	 * Return wishlist product ids in array from database
-	 *
-	 * @since    for future update.
-	 * @return  array $wishlist_items.
-	 */
-	private function get_wishlist_from_database() {
-
-		$current_user_id = get_current_user_id();
-
-		if ( 0 !== $current_user_id ) {
-			$wishlist_data = get_user_meta( $current_user_id, $this->plugin_name, true );
-			if ( ! empty( $wishlist_data ) ) {
-				return $wishlist_data ? json_decode( $wishlist_data, true ) : array();
-			}
-		}
-
-		return array();
-	}
-
-	/**
-	 * Created default wishlist if does not exists.
-	 */
-	private function maybe_create_default_wishlist() {
-		if (
-			! is_array( $this->wishlist_items ) ||
-			! array_key_exists( get_bloginfo( 'url' ), $this->wishlist_items ) ||
-			! array_key_exists( $this->default_wishlist, $this->wishlist_items[ get_bloginfo( 'url' ) ] )
-			) {
-			$this->wishlist_items[ get_bloginfo( 'url' ) ] = array(
-				$this->default_wishlist => array(
-					'products'   => array(),
-					'created_at' => time(),
-				),
-			);
-			$this->save_wishlist_items( $this->wishlist_items );
-		}
 	}
 
 	/**

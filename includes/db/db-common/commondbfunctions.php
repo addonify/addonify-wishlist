@@ -40,15 +40,20 @@ trait CommonDBFunctions {
 	 * Retrive all rows from the table.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $order_by Order By Column name (Optional).
+	 * @param string $order_dir Order direction either asc or desc (Optional).
 	 * @return array|false Array of row objects.
 	 */
-	public static function get_all_rows() {
+	public static function get_all_rows( $order_by = 'id', $order_dir = 'ASC' ) {
 
 		global $wpdb;
 
 		$table_name = self::get_table_name();
 
-		return $wpdb->get_results( "SELECT * FROM {$table_name}" ); //phpcs:ignore
+		$order = " ORDER BY {$order_by} {$order_dir} ";
+
+		return $wpdb->get_results( "SELECT * FROM {$table_name} {$order}" ); //phpcs:ignore
 	}
 
 	/**
@@ -206,5 +211,58 @@ trait CommonDBFunctions {
 		global $wpdb;
 
 		return $wpdb->get_results( 'show tables', ARRAY_A ); //phpcs:ignore
+	}
+
+	/**
+	 * Insert multiple rows in table.
+	 *
+	 * @param array $data Multidimensional data.
+	 */
+	public function insert_multiple_rows( $data ) {
+		$table = $this->get_table_name();
+		if ( ! empty( $data ) ) {
+			$this->bulk_insert( $table, $data );
+		}
+	}
+
+	/**
+	 * Bulk inserts records into a table using WPDB.  All rows must contain the same keys.
+	 * Returns number of affected (inserted) rows.
+	 *
+	 * @param  string $table Name of table.
+	 * @param  array  $rows Rows to be inserted in associative array with their values.
+	 * @return int Number of affected rows.
+	 */
+	private function bulk_insert( $table, $rows ) {
+		global $wpdb;
+
+		// Extract column list from first row of data.
+		$columns = array_keys( $rows[ array_key_first( $rows ) ] );
+		asort( $columns );
+		$column_list = '`' . implode( '`, `', $columns ) . '`';
+
+		// Start building SQL, initialise data and placeholder arrays.
+		$sql          = "INSERT INTO `$table` ($column_list) VALUES\n";
+		$placeholders = array();
+		$data         = array();
+
+		// Build placeholders for each row, and add values to data array.
+		foreach ( $rows as $row ) {
+			ksort( $row );
+			$row_placeholders = array();
+
+			foreach ( $row as $value ) {
+				$data[]             = $value;
+				$row_placeholders[] = is_numeric( $value ) ? '%d' : '%s';
+			}
+
+			$placeholders[] = '(' . implode( ', ', $row_placeholders ) . ' )';
+		}
+
+		// Stitch all rows together.
+		$sql .= implode( ",\n", $placeholders );
+
+		// Run the query.  Returns number of affected rows.
+		return $wpdb->query( $wpdb->prepare( $sql, $data ) ); // phpcs:ignore
 	}
 }

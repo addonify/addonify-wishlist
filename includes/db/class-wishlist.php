@@ -38,14 +38,8 @@ class Wishlist {
 	public function create_table() {
 		$table_name = $this->get_table_name();
 
-		$available_tables = $this->get_all_tables();
-
-		foreach ( $available_tables as $_table_name ) {
-			foreach ( $_table_name as $key => $value ) {
-				if ( $table_name === $value ) {
-					return;
-				}
-			}
+		if ( $this->check_table_exists( $table_name ) ) {
+			return;
 		}
 
 		global $wpdb;
@@ -58,7 +52,7 @@ class Wishlist {
 			site_url VARCHAR(250) NOT NULL,
 			wishlist_name VARCHAR(100) NULL,
 			wishlist_visibility ENUM('public','shared','private') NULL,
-			created_at BIGINT DEFAULT (CURRENT_TIMESTAMP),
+			created_at TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
 			parent_wishlist_id BIGINT NULL,
 			product_id BIGINT NULL,
 			product_added_at TIMESTAMP NULL,
@@ -68,6 +62,39 @@ class Wishlist {
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
+	}
+
+	/**
+	 * Check if table exists.
+	 *
+	 * @param string $table_name Table name.
+	 * @return bool
+	 */
+	private function check_table_exists( $table_name ) {
+		$available_tables = $this->get_all_tables();
+
+		foreach ( $available_tables as $_table_name ) {
+			foreach ( $_table_name as $key => $value ) {
+				if ( $table_name === $value ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Seeding wishlist table.
+	 */
+	public function seed_wishlist_table() {
+		$insert_data = array(
+			'user_id'             => get_current_user_id(),
+			'site_url'            => get_bloginfo( 'url' ),
+			'wishlist_name'       => 'default_wishlist',
+			'wishlist_visibility' => 'public',
+		);
+
+		return $this->insert_row( $insert_data );
 	}
 
 }

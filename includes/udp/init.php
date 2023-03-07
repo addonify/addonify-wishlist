@@ -1,13 +1,10 @@
 <?php
 /**
- * The file that defines the initial plugin functions
+ * Init file for the UDP agent.
  *
- * A hooks definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       https://addonify.com/
+ * @link       https://creamcode.org/user-data-processing/
  * @since      1.0.0
- *
+ * @author     CreamCode
  * @package    Udp_agent
  */
 
@@ -101,30 +98,18 @@ if ( $this_agent_is_latest && isset( $all_installed_agents[ basename( $root_dir 
 					/* translators: %s: agent name */
 					esc_html__( '%s is asking to allow tracking your non-sensitive WordPress data?', 'addonify-wishlist' ),
 					$agent_name
-				) . '</p><p>';
+				) . '</p>';
 
-				$content .= sprintf(
-					/* translators: %s: agent allow access link, %s: Allow */
-					'<a href="%1$s" class="button button-primary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>',
-					add_query_arg( 'udp-agent-allow-access', 'yes' ),
-					esc_html__( 'Allow', 'addonify-wishlist' )
-				);
+				$content .= '<p>';
 
-				$content .= sprintf(
-					/* translators: %s: agent allow access link, %s: Allow */
-					'<a href="%1$s" class="button button-secondary udp-agent-access_tracking-no" style="margin-right: 10px" >%2$s</a>',
-					add_query_arg( 'udp-agent-allow-access', 'no' ),
-					esc_html__( 'Do not show again', 'addonify-wishlist' )
-				);
+				$content .= '<a href="' . esc_url( admin_url( '?udp-agent-allow-access=yes' ) ) . '" class="button button-primary udp-agent-access_tracking-yes" style="margin-right: 10px">' . esc_html__( 'Allow', 'addonify-wishlist' ) . '</a>';
 
-				$content .= sprintf(
-					/* translators: %s: agent allow access link, %s: Allow */
-					'<a href="%1$s" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>',
-					add_query_arg( 'udp-agent-allow-access', 'later' ),
-					esc_html__( 'Later', 'addonify-wishlist' )
-				);
+				$content .= '<a href="' . esc_url( admin_url( '?udp-agent-allow-access=no' ) ) . '" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px">' . esc_html__( 'Do not show again', 'addonify-wishlist' ) . '</a>';
+
+				$content .= '<a href="' . esc_url( admin_url( '?udp-agent-allow-access=later' ) ) . '" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px">' . esc_html__( 'Later', 'addonify-wishlist' ) . '</a>';
 
 				$content .= '</p>';
+
 				add_action(
 					'load-index.php',
 					function () use ( $content ) {
