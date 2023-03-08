@@ -85,13 +85,16 @@ class Wishlist {
 
 	/**
 	 * Seeding wishlist table.
+	 *
+	 * @param int $wishlist_name Wishlist name.
+	 * @param int $wishlist_visibility Wishlist visibility.
 	 */
-	public function seed_wishlist_table() {
+	public function seed_wishlist_table( $wishlist_name = false, $wishlist_visibility = false ) {
 		$insert_data = array(
 			'user_id'             => get_current_user_id(),
 			'site_url'            => get_bloginfo( 'url' ),
-			'wishlist_name'       => 'default_wishlist',
-			'wishlist_visibility' => 'public',
+			'wishlist_name'       => $wishlist_name ? $wishlist_name : 'Default Wishlist',
+			'wishlist_visibility' => $wishlist_visibility ? $wishlist_visibility : 'public',
 		);
 
 		return $this->insert_row( $insert_data );

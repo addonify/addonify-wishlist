@@ -77,17 +77,31 @@ trait CommonDBFunctions {
 	 * Retrive a row data from the table.
 	 *
 	 * @since 1.0.0
-	 * @param string $field Field Name.
-	 * @param string $value Field Value.
+	 * @param array $where Condition array.
 	 * @return object Row data.
 	 */
-	public static function get_row( $field, $value ) {
+	public static function get_row( $where ) {
+
+		if ( empty( $where ) ) {
+			return false;
+		}
 
 		global $wpdb;
 
 		$table_name = self::get_table_name();
 
-		return $wpdb->get_row( "SELECT * FROM {$table_name} WHERE {$field}={$value}" ); //phpcs:ignore
+		$sql  = "SELECT * FROM {$table_name} WHERE ";
+		$data = array();
+		foreach ( $where as $index => $val ) {
+			$sql .= " {$index} = ";
+			$sql .= is_numeric( $val ) ? '%d ' : '%s ';
+			$sql .= ' AND ';
+
+			$data[] = wp_unslash( $val );
+		}
+		$sql = substr( $sql, 0, -5 );
+
+		return $wpdb->get_row( $wpdb->prepare( $sql, $data ) ); //phpcs:ignore
 	}
 
 	/**
@@ -172,6 +186,22 @@ trait CommonDBFunctions {
 		$row_id = array( 'id' => $id );
 
 		return $wpdb->delete( $table_name, $row_id ); //phpcs:ignore
+	}
+
+	/**
+	 * Delete on provided where condition.
+	 *
+	 * @param array $where Where Conditions.
+	 */
+	public static function delete_where( $where ) {
+		if ( empty( $where ) ) {
+			return false;
+		}
+		global $wpdb;
+
+		$table_name = self::get_table_name();
+
+		return $wpdb->delete( $table_name, $where );//phpcs:ignore
 	}
 
 	/**

@@ -56,8 +56,6 @@ class Addonify_Wishlist_Activator {
 					$wishlist->insert_multiple_rows( $insert_data );
 				}
 			}
-		} else {
-			$wishlist->seed_wishlist_table();
 		}
 
 		self::create_wishlist_page();
