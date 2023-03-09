@@ -538,16 +538,16 @@ class Addonify_Wishlist_Public {
 				}
 			}
 		} else {
-			foreach ( $this->wishlist_items as $item ) {
+			foreach ( $this->wishlist_items as $index => $item ) {
 				if ( in_array( (int) $product_id, $item['product_ids'], true ) ) {
 					$where = array(
-						'parent_wishlist_id' => $parent_wishlist_id,
+						'parent_wishlist_id' => $index,
 						'product_id'         => $product_id,
 						'user_id'            => get_current_user_id(),
 						'site_url'           => get_bloginfo( 'url' ),
 					);
 					$this->wishlist->delete_where( $where );
-					unset( $this->wishlist_items[ $parent_wishlist_id ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ] );
+					unset( $this->wishlist_items[ $index ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $index ]['product_ids'], true ) ] );
 					$this->wishlist_items_count = $this->get_wishlist_count();
 					return true;
 				}
