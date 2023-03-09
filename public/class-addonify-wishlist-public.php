@@ -517,23 +517,40 @@ class Addonify_Wishlist_Public {
 	 * Remove product from the wishlist if product is already in the wishlist.
 	 *
 	 * @since 1.0.0
-	 * @param int $parent_wishlist_id Wishlist ID.
 	 * @param int $product_id Product ID.
+	 * @param int $parent_wishlist_id Wishlist ID.
 	 * @return boolean true if removed successfully otherwise false.
 	 */
-	public function remove_from_wishlist( $parent_wishlist_id, $product_id ) {
-		if ( array_key_exists( $parent_wishlist_id, $this->wishlist_items ) ) {
-			if ( in_array( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ) {
-				$where = array(
-					'parent_wishlist_id' => $parent_wishlist_id,
-					'product_id'         => $product_id,
-					'user_id'            => get_current_user_id(),
-					'site_url'           => get_bloginfo( 'url' ),
-				);
-				$this->wishlist->delete_where( $where );
-				unset( $this->wishlist_items[ $parent_wishlist_id ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ] );
-				$this->wishlist_items_count = $this->get_wishlist_count();
-				return true;
+	public function remove_from_wishlist( $product_id, $parent_wishlist_id = false ) {
+		if ( $parent_wishlist_id ) {
+			if ( array_key_exists( $parent_wishlist_id, $this->wishlist_items ) ) {
+				if ( in_array( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ) {
+					$where = array(
+						'parent_wishlist_id' => $parent_wishlist_id,
+						'product_id'         => $product_id,
+						'user_id'            => get_current_user_id(),
+						'site_url'           => get_bloginfo( 'url' ),
+					);
+					$this->wishlist->delete_where( $where );
+					unset( $this->wishlist_items[ $parent_wishlist_id ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ] );
+					$this->wishlist_items_count = $this->get_wishlist_count();
+					return true;
+				}
+			}
+		} else {
+			foreach ( $this->wishlist_items as $item ) {
+				if ( in_array( (int) $product_id, $item['product_ids'], true ) ) {
+					$where = array(
+						'parent_wishlist_id' => $parent_wishlist_id,
+						'product_id'         => $product_id,
+						'user_id'            => get_current_user_id(),
+						'site_url'           => get_bloginfo( 'url' ),
+					);
+					$this->wishlist->delete_where( $where );
+					unset( $this->wishlist_items[ $parent_wishlist_id ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ] );
+					$this->wishlist_items_count = $this->get_wishlist_count();
+					return true;
+				}
 			}
 		}
 		return false;
@@ -666,7 +683,7 @@ class Addonify_Wishlist_Public {
 		}
 
 		// Remove product from the wishlist.
-		if ( $this->remove_from_wishlist( $wishlist_id, $product->get_id() ) ) {
+		if ( $this->remove_from_wishlist( $product->get_id(), $wishlist_id ) ) {
 			return wp_send_json(
 				apply_filters(
 					'ajax_remove_from_wishlist_return',
