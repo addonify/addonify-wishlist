@@ -138,6 +138,11 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/udp/init.php';
 
+		/**
+		 * Wishlist Database functions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/db/class-wishlist.php';
+
 		$this->loader = new Addonify_Wishlist_Loader();
 
 	}
@@ -173,6 +178,11 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		/**
+		 * Maybe create table when plugin updates.
+		 */
+		$this->loader->add_action( 'upgrader_process_complete', $this, 'check_for_table', 20, 2 );
+
 		// admin menu.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_callback', 20 );
 
@@ -186,7 +196,6 @@ class Addonify_Wishlist {
 		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
 
 	}
-
 
 	/**
 	 * Register rest api endpoints for admin settings page.
@@ -255,6 +264,25 @@ class Addonify_Wishlist {
 	public function get_version() {
 
 		return $this->version;
+	}
+
+	/**
+	 * Function runs during upgrade.
+	 *
+	 * @param object $upgrader_object Upgrader Object.
+	 * @param array  $options Options.
+	 */
+	public function check_for_table( $upgrader_object, $options ) {
+		$current_plugin_path_name = plugin_basename( ADDONIFY_WISHLIST_PLUGIN_FILE );
+
+		if ( 'update' === $options['action'] && 'plugin' === $options['type'] ) {
+			foreach ( $options['plugins'] as $each_plugin ) {
+				if ( $each_plugin === $current_plugin_path_name ) {
+					$wishlist = new Addonify\Wishlist();
+					$wishlist->create_table();
+				}
+			}
+		}
 	}
 }
 

@@ -5,13 +5,12 @@
     $(document).ready(function () {
 
         let $body = $('body');
-        let $modal = $('#addonify-wishlist-modal-wrapper');
         let $modal_response = $('#addonify-wishlist-modal-response');
         let $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
         let plugin_name = 'addonify-wishlist';
         let localDataExpiration = parseInt(addonifyWishlistJSObject.noOfDaysDataIsValid);   // local data expiration in days.
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
-        let undoTimeout, sidebarNoticeTimeout;
+        let undoTimeout;
         let loader = '<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>';
         $('.addonify-add-to-wishlist-btn button.added-to-wishlist').attr('disabled', true);
 
@@ -197,6 +196,7 @@
     
                     if (wishlist.length > 0) {
                         $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                        $('#addonify-wishlist__clear-all').show();
                     }
     
                     // Triggering custom event when product is added to wishlist. 
@@ -253,6 +253,7 @@
 
                             if (response.wishlist_count > 0) {
                                 $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                                $('#addonify-wishlist__clear-all').show();
                             }
 
                             if (response.sidebar_data) {
@@ -415,6 +416,7 @@
                     'success',
                     false
                 );
+                $('#addonify-wishlist__clear-all').hide();
                 $(document).trigger('addonify_wishlist_emptied')
             })
         } else {
@@ -437,6 +439,7 @@
                                 'success',
                                 false
                             );
+                            $('#addonify-wishlist__clear-all').hide();
                             $(document).trigger('addonify_wishlist_emptied')
                         } else {
                             addonifyShowPopupModal(
@@ -462,17 +465,12 @@
                 nonce: addonifyWishlistJSObject.nonce
             };
 
-            // mark modal as loading
-            $modal.addClass('loading');
-
-            addToWishlistButton.addClass( 'addonify-wishlist-adding' );
+            addToWishlistButton.addClass( 'loading' );
 
             $.post(
                 addonifyWishlistJSObject.ajax_url,
                 data,
                 function (response) {
-
-                    $modal.removeClass('loading');
 
                     if (response.success == true) {
 
@@ -499,6 +497,7 @@
 
                         if (response.wishlist_count > 0) {
                             $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                            $('#addonify-wishlist__clear-all').show();
                         }
 
                         if (response.sidebar_data) {
@@ -524,7 +523,7 @@
                 },
                 "json"
             ).always( function() {
-                addToWishlistButton.removeClass( 'addonify-wishlist-adding' );
+                addToWishlistButton.removeClass( 'loading' );
             } );
         }
 
@@ -576,6 +575,7 @@
 
                 if (wishlist.length > 0) {
                     $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                    $('#addonify-wishlist__clear-all').show();
                 }
 
                 // Update button label and icon of custom add to wishlist button.
@@ -642,6 +642,7 @@
 
                         if (response.wishlist_count <= 0) {
                             $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
+                            $('#addonify-wishlist__clear-all').hide();
                         }
 
                         addonifyInitialWishlistButton(product_id);
@@ -694,6 +695,7 @@
 
             if (product_ids.length <= 0) {
                 $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
+                $('#addonify-wishlist__clear-all').hide();
             }
 
             addonifyInitialWishlistButton(id_to_remove);
