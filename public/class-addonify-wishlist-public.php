@@ -532,6 +532,7 @@ class Addonify_Wishlist_Public {
 				);
 				$this->wishlist->delete_where( $where );
 				unset( $this->wishlist_items[ $parent_wishlist_id ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ] );
+				$this->wishlist_items_count = $this->get_wishlist_count();
 				return true;
 			}
 		}
@@ -822,7 +823,7 @@ class Addonify_Wishlist_Public {
 				$save['user_id']            = get_current_user_id();
 				$save['site_url']           = get_bloginfo( 'url' );
 				$save['parent_wishlist_id'] = $wishlist_id;
-				$save['product_id']         = $product_id;
+				$save['product_id']         = (int) $product_id;
 
 				$insert_id = $this->wishlist->insert_row( $save );
 				if ( $insert_id ) {

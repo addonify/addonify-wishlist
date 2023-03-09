@@ -196,6 +196,7 @@
     
                     if (wishlist.length > 0) {
                         $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                        $('#addonify-wishlist__clear-all').show();
                     }
     
                     // Triggering custom event when product is added to wishlist. 
@@ -252,6 +253,7 @@
 
                             if (response.wishlist_count > 0) {
                                 $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                                $('#addonify-wishlist__clear-all').show();
                             }
 
                             if (response.sidebar_data) {
@@ -414,6 +416,7 @@
                     'success',
                     false
                 );
+                $('#addonify-wishlist__clear-all').hide();
                 $(document).trigger('addonify_wishlist_emptied')
             })
         } else {
@@ -436,6 +439,7 @@
                                 'success',
                                 false
                             );
+                            $('#addonify-wishlist__clear-all').hide();
                             $(document).trigger('addonify_wishlist_emptied')
                         } else {
                             addonifyShowPopupModal(
@@ -493,6 +497,7 @@
 
                         if (response.wishlist_count > 0) {
                             $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                            $('#addonify-wishlist__clear-all').show();
                         }
 
                         if (response.sidebar_data) {
@@ -570,6 +575,7 @@
 
                 if (wishlist.length > 0) {
                     $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
+                    $('#addonify-wishlist__clear-all').show();
                 }
 
                 // Update button label and icon of custom add to wishlist button.
@@ -636,6 +642,7 @@
 
                         if (response.wishlist_count <= 0) {
                             $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
+                            $('#addonify-wishlist__clear-all').hide();
                         }
 
                         addonifyInitialWishlistButton(product_id);
@@ -688,6 +695,7 @@
 
             if (product_ids.length <= 0) {
                 $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
+                $('#addonify-wishlist__clear-all').hide();
             }
 
             addonifyInitialWishlistButton(id_to_remove);
