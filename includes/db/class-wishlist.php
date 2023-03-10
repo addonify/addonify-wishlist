@@ -70,7 +70,7 @@ class Wishlist {
 	 * @param string $table_name Table name.
 	 * @return bool
 	 */
-	private function check_table_exists( $table_name ) {
+	public function check_table_exists( $table_name ) {
 		$available_tables = $this->get_all_tables();
 
 		foreach ( $available_tables as $_table_name ) {

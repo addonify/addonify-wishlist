@@ -820,8 +820,13 @@
             let items = jsonToArray(parseJson(getLocalItem('product_ids')));
             if ( items ) {
                 items.forEach( function( value, index ) {
-                    if ( value.name === wishlist_name ) {
-                        returnIds = items[index].product_ids;
+                    if ( typeof value === "object" ) {
+                        if ( value.name === wishlist_name ) {
+                            returnIds = items[index].product_ids;
+                            return false;
+                        }
+                    } else {
+                        returnIds = items;
                         return false;
                     }
                 })
@@ -841,8 +846,13 @@
             let items = jsonToArray(parseJson(getLocalItem('product_ids')));
             if ( items ) {
                 items.forEach( function( value, index ) {
-                    if ( value.name === wishlist_name ) {
-                        items[index].product_ids = val
+                    if ( typeof value === "object" ) {
+                        if ( value.name === wishlist_name ) {
+                            items[index].product_ids = val
+                            return false;
+                        }
+                    } else {
+                        items = val;
                         return false;
                     }
                 } )
