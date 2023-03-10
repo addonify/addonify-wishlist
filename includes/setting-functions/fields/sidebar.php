@@ -48,6 +48,14 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist', 'show_sidebar' ),
 				'value'       => addonify_wishlist_get_option( 'sidebar_title' ),
 			),
+			'sidebar_empty_wishlist_label'    => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Empty Wishlist Text', 'addonify-wishlist' ),
+				'description' => __( 'Set empty wishlist text.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist', 'show_sidebar' ),
+				'value'       => addonify_wishlist_get_option( 'sidebar_empty_wishlist_label' ),
+			),
 			'sidebar_btn_label'               => array(
 				'type'        => 'text',
 				'className'   => '',
@@ -93,14 +101,6 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_settings_fields' ) ) {
 				'description' => __( 'Set the button label of link to wishlist page.', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist', 'show_sidebar' ),
 				'value'       => addonify_wishlist_get_option( 'view_wishlist_page_button_label' ),
-			),
-			'sidebar_empty_wishlist_label'    => array(
-				'type'        => 'text',
-				'className'   => '',
-				'label'       => __( 'Empty wishlist label on sidebar', 'addonify-wishlist' ),
-				'description' => __( 'Set empty wishlist label on sidebar.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist', 'show_sidebar' ),
-				'value'       => addonify_wishlist_get_option( 'sidebar_empty_wishlist_label' ),
 			),
 		);
 	}

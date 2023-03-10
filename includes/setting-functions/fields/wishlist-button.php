@@ -102,8 +102,8 @@ if ( ! function_exists( 'addonify_wishlist_button_settings_fields' ) ) {
 			'remove_already_added_product_from_wishlist' => array(
 				'type'        => 'switch',
 				'className'   => '',
-				'label'       => __( 'Remove added product from wishlist on click', 'addonify-wishlist' ),
-				'description' => __( 'If add-to-wishlist button is clicked when the product is already in wishlist, remove the product from wishlist.', 'addonify-wishlist' ),
+				'label'       => __( 'Remove Added Product from Wishlist on Click', 'addonify-wishlist' ),
+				'description' => __( 'If Add to Wishlist button is clicked when the product is already in wishlist, remove the product from wishlist.', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'remove_already_added_product_from_wishlist' ),
 			),

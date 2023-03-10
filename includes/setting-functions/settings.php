@@ -20,6 +20,8 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/
 
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/sidebar.php';
 
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/wishlist-page.php';
+
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/custom-css.php';
 
 
@@ -273,6 +275,8 @@ function addonify_wishlist_add_fields_to_settings_fields( $settings_fields ) {
 
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_settings_fields() );
 
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_page_settings_fields() );
+
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_styles_settings_fields() );
 
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_toggle_button_styles_settings_fields() );
@@ -328,6 +332,11 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 							'title'       => __( 'Wishlist Sidebar Options', 'addonify-wishlist' ),
 							'description' => '',
 							'fields'      => addonify_wishlist_sidebar_settings_fields(),
+						),
+						'wishlist_page'          => array(
+							'title'       => __( 'Wishlist Page Options', 'addonify-wishlist' ),
+							'description' => '',
+							'fields'      => addonify_wishlist_page_settings_fields(),
 						),
 					),
 				),
