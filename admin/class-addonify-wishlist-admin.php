@@ -87,28 +87,28 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		wp_register_script( 
-			"{$this->plugin_name}-manifest", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js', 
-			null, 
-			$this->version, 
-			true 
+		wp_register_script(
+			"{$this->plugin_name}-manifest",
+			plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js',
+			null,
+			$this->version,
+			true
 		);
 
-		wp_register_script( 
-			"{$this->plugin_name}-vendor", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js', 
-			array(  "{$this->plugin_name}-manifest" ), 
-			$this->version, 
-			true 
+		wp_register_script(
+			"{$this->plugin_name}-vendor",
+			plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js',
+			array( "{$this->plugin_name}-manifest" ),
+			$this->version,
+			true
 		);
 
-		wp_register_script( 
-			"{$this->plugin_name}-main", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/main.js', 
-			array("{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ), 
-			$this->version, 
-			true 
+		wp_register_script(
+			"{$this->plugin_name}-main",
+			plugin_dir_url( __FILE__ ) . 'assets/js/main.js',
+			array( "{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ),
+			$this->version,
+			true
 		);
 
 		// load scripts in plugin page only.
@@ -120,13 +120,17 @@ class Addonify_Wishlist_Admin {
 
 			wp_enqueue_script( "{$this->plugin_name}-main" );
 
-			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WISHLIST_LOCOLIZER', array(
-				'admin_url'  						=> admin_url( '/' ),
-				'ajax_url'   						=> admin_url( 'admin-ajax.php' ),
-				'site_url'   						=> site_url( '/' ),
-				'rest_namespace' 					=> 'addonify_wishlist_options_api',
-				'version_number' 					=> $this->version,
-			) );
+			wp_localize_script(
+				"{$this->plugin_name}-main",
+				'ADDONIFY_WISHLIST_LOCOLIZER',
+				array(
+					'admin_url'      => admin_url( '/' ),
+					'ajax_url'       => admin_url( 'admin-ajax.php' ),
+					'site_url'       => site_url( '/' ),
+					'rest_namespace' => 'addonify_wishlist_options_api',
+					'version_number' => $this->version,
+				)
+			);
 		}
 
 		wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
@@ -151,38 +155,41 @@ class Addonify_Wishlist_Admin {
 
 		if ( ! $parent_menu_slug ) {
 
-			add_menu_page( 
-				'Addonify Settings', 
-				'Addonify', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				'dashicons-superhero', 
-				70 
+			add_menu_page(
+				'Addonify Settings',
+				'Addonify',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				'dashicons-superhero',
+				70
 			);
 
-			add_submenu_page( 
-				$this->settings_page_slug, 
-				'Wishlist Settings', 
-				'Wishlist', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				1 
+			add_submenu_page(
+				$this->settings_page_slug,
+				'Wishlist Settings',
+				'Wishlist',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				1
 			);
 
 		} else {
-			
-			add_submenu_page( 
-				$parent_menu_slug, 
-				'Wishlist Settings', 
-				'Wishlist', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				1 
+			add_submenu_page(
+				$parent_menu_slug,
+				'Wishlist Settings',
+				'Wishlist',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				1
 			);
 		}
+
+		$this->maybe_create_table();
+
+		$this->maybe_show_table_created_message();
 	}
 
 
@@ -250,14 +257,83 @@ class Addonify_Wishlist_Admin {
 
 		$wishlist_page_id = addonify_wishlist_get_option( 'wishlist_page' ) ? (int) addonify_wishlist_get_option( 'wishlist_page' ) : '';
 
-		if ( 
-			get_post_type( $post->ID ) == 'page' && 
-			$post->ID == $wishlist_page_id 
+		if (
+			get_post_type( $post->ID ) == 'page' &&
+			$post->ID == $wishlist_page_id
 		) {
 			$states[] = __( 'Addonify Wishlist Page', 'addonify-wishlist' );
 		}
 
 		return $states;
+	}
+
+	/**
+	 * Create wishlist table if it does not exists.
+	 */
+	public function maybe_create_table() {
+		if ( isset( $_GET['addonifyWishlistInstallTable'] ) ) { // phpcs:ignore
+			$wishlist = new Addonify\Wishlist();
+			$wishlist->create_table();
+			wp_safe_redirect( esc_html( add_query_arg( 'addonifywishlisttableinstalled', true, admin_url() ) ) );
+			exit;
+		}
+	}
+
+	/**
+	 * Show table created message after table created.
+	 */
+	public function maybe_show_table_created_message() {
+		add_action(
+			'admin_notices',
+			function () {
+				if ( isset( $_GET['addonifywishlisttableinstalled'] ) ) { // phpcs:ignore
+					$wishlist   = new Addonify\Wishlist();
+					$table_name = $wishlist->get_table_name();
+					if ( $wishlist->check_table_exists( $table_name ) ) {
+						?>
+						<div class="notice notice-success is-dismissible">
+							<p>
+							<?php esc_html_e( 'Table created successfully.', 'addonify-wishlist' ); ?>
+							</p>
+						</div>
+						<?php
+					} else {
+						?>
+						<div class="notice notice-error is-dismissible">
+							<p>
+							<?php esc_html_e( 'Table could not be created. Please contact plugin admin.', 'addonify-wishlist' ); ?>
+							</p>
+						</div>
+						<?php
+					}
+				}
+			}
+		);
+	}
+
+	/**
+	 * Show insert table notice on admin dashboard if not exists.
+	 */
+	public function maybe_show_insert_table_notice() {
+		$wishlist   = new Addonify\Wishlist();
+		$table_name = $wishlist->get_table_name();
+		if ( ! $wishlist->check_table_exists( $table_name ) ) {
+			add_action(
+				'admin_notices',
+				function () {
+					?>
+					<div class="notice notice-error is-dismissible">
+						<p>
+							<?php esc_html_e( 'Data has been migrated to new table in newer versions of Addonify Wishlist.', 'addonify-wishlist' ); ?>
+							<a href="<?php echo esc_html( add_query_arg( 'addonifyWishlistInstallTable', true, admin_url() ) ); ?>">
+								<?php esc_html_e( 'Click to migrate data.', 'addonify-wishlist' ); ?>
+							</a>
+						</p>
+					</div>
+					<?php
+				}
+			);
+		}
 	}
 
 }
