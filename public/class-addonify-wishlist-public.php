@@ -99,7 +99,7 @@ class Addonify_Wishlist_Public {
 			return;
 		}
 
-		$this->wishlist_items = $this->get_wishlist();
+		$this->wishlist_items = addonify_wishlist_get_wishlist_items();
 
 		$this->maybe_create_default_wishlist();
 
@@ -836,7 +836,7 @@ class Addonify_Wishlist_Public {
 		do_action( 'addonify_wishlist_before_adding_to_wishlist' );
 
 		if ( is_user_logged_in() ) {
-			if ( array_key_exists( $wishlist_id, $this->wishlist_items ) ) {
+			if ( array_key_exists( (int) $wishlist_id, $this->wishlist_items ) ) {
 				$save['user_id']            = get_current_user_id();
 				$save['site_url']           = get_bloginfo( 'url' );
 				$save['parent_wishlist_id'] = $wishlist_id;
@@ -909,7 +909,7 @@ class Addonify_Wishlist_Public {
 	 * @return int
 	 */
 	private function get_default_wishlist_id() {
-		foreach ( $this->get_wishlist() as $index => $item ) {
+		foreach ( addonify_wishlist_get_wishlist_items() as $index => $item ) {
 			if ( $item['name'] === $this->default_wishlist ) {
 				return $index;
 			}
@@ -921,10 +921,12 @@ class Addonify_Wishlist_Public {
 	 * Created default wishlist if does not exists.
 	 */
 	private function maybe_create_default_wishlist() {
-		if ( is_user_logged_in() && empty( $this->wishlist_items ) ) {
-			$this->wishlist->seed_wishlist_table( $this->default_wishlist );
+		if ( is_user_logged_in() ) {
+			if ( ! $this->get_default_wishlist_id() ) {
+				$this->wishlist->seed_wishlist_table( $this->default_wishlist );
+			}
 		}
-		$this->wishlist_items = $this->get_wishlist();
+		$this->wishlist_items = addonify_wishlist_get_wishlist_items();
 	}
 
 	/**
