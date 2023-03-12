@@ -192,6 +192,8 @@ class Addonify_Wishlist {
 		 */
 		$this->loader->add_action( 'upgrader_process_complete', $this, 'check_for_table', 20, 2 );
 
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
+
 		// admin menu.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_callback', 20 );
 
