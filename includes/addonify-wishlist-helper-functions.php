@@ -174,10 +174,3 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_url' ) ) {
 		}
 	}
 }
-
-add_action(
-	'wp_footer',
-	function () {
-		var_dump( addonify_wishlist_get_wishlist_items() );
-	}
-);
