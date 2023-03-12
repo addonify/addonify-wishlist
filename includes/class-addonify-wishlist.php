@@ -299,6 +299,7 @@ class Addonify_Wishlist {
 				if ( $each_plugin === $current_plugin_path_name ) {
 					$wishlist = new Addonify\Wishlist();
 					$wishlist->create_table();
+					$wishlist->migrate_wishlist_data();
 				}
 			}
 		}

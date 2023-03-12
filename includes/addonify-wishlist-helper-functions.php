@@ -128,7 +128,7 @@ if ( ! function_exists( 'addonify_wishlist_is_product_in_this_wishlist' ) ) {
 			is_array( $wishlist_items ) &&
 			count( $wishlist_items ) > 0
 		) {
-			if ( array_key_exists( 'product_ids', $wishlist_items[ $wishlist_id ] ) ) {
+			if ( array_key_exists( $wishlist_id, $wishlist_items ) && array_key_exists( 'product_ids', $wishlist_items[ $wishlist_id ] ) ) {
 				return in_array( (int) $product_id, $wishlist_items[ $wishlist_id ]['product_ids'], true );
 			}
 		}

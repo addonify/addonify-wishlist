@@ -84,6 +84,39 @@ class Wishlist {
 	}
 
 	/**
+	 * Migrate old usermeta wishlist data to new table.
+	 */
+	public function migrate_wishlist_data() {
+		$wishlist_data = get_user_meta( get_current_user_id(), 'addonify-wishlist', true );
+		if ( ! empty( $wishlist_data ) ) {
+			$wishlist_data = json_decode( $wishlist_data, true );
+
+			foreach ( $wishlist_data as $index => $row ) {
+				$insert_data = array();
+
+				$insert_data['site_url']            = $index;
+				$insert_data['user_id']             = get_current_user_id();
+				$insert_data['wishlist_name']       = array_key_first( $row );
+				$insert_data['wishlist_visibility'] = 'public';
+
+				$wishlist_id = $this->insert_row( $insert_data );
+
+				$wishlist_single_data = (array) $row[ array_key_first( $row ) ];
+				if ( $wishlist_id && ! empty( $wishlist_single_data['products'] ) ) {
+					$insert_data = array();
+					foreach ( $wishlist_single_data['products'] as $i => $product_id ) {
+						$insert_data[ $i ]['site_url']           = $index;
+						$insert_data[ $i ]['user_id']            = get_current_user_id();
+						$insert_data[ $i ]['product_id']         = $product_id;
+						$insert_data[ $i ]['parent_wishlist_id'] = $wishlist_id;
+					}
+					$this->insert_multiple_rows( $insert_data );
+				}
+			}
+		}
+	}
+
+	/**
 	 * Seeding wishlist table.
 	 *
 	 * @param int $wishlist_name Wishlist name.
