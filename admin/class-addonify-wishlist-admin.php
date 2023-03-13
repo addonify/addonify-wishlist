@@ -59,7 +59,7 @@ class Addonify_Wishlist_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -71,7 +71,7 @@ class Addonify_Wishlist_Admin {
 	public function enqueue_styles() {
 
 		// load styles in this plugin page only.
-		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
 			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'assets/fonts/icon.css', array(), $this->version, 'all' );
 
@@ -112,7 +112,7 @@ class Addonify_Wishlist_Admin {
 		);
 
 		// load scripts in plugin page only.
-		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
 			wp_enqueue_script( "{$this->plugin_name}-manifest" );
 
@@ -134,6 +134,15 @@ class Addonify_Wishlist_Admin {
 		}
 
 		wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
+	}
+
+	/**
+	 * Admin initial functions.
+	 */
+	public function admin_init() {
+		$this->maybe_create_table();
+
+		$this->maybe_show_table_created_message();
 	}
 
 
@@ -186,10 +195,6 @@ class Addonify_Wishlist_Admin {
 				1
 			);
 		}
-
-		$this->maybe_create_table();
-
-		$this->maybe_show_table_created_message();
 	}
 
 
@@ -258,8 +263,8 @@ class Addonify_Wishlist_Admin {
 		$wishlist_page_id = addonify_wishlist_get_option( 'wishlist_page' ) ? (int) addonify_wishlist_get_option( 'wishlist_page' ) : '';
 
 		if (
-			get_post_type( $post->ID ) == 'page' &&
-			$post->ID == $wishlist_page_id
+			get_post_type( $post->ID ) === 'page' &&
+			(int) $post->ID === (int) $wishlist_page_id
 		) {
 			$states[] = __( 'Addonify Wishlist Page', 'addonify-wishlist' );
 		}
@@ -271,10 +276,11 @@ class Addonify_Wishlist_Admin {
 	 * Create wishlist table if it does not exists.
 	 */
 	public function maybe_create_table() {
-		if ( isset( $_GET['addonifyWishlistInstallTable'] ) ) { // phpcs:ignore
+		if ( isset( $_GET['addonify-Wishlist-Install-Table'] ) ) { // phpcs:ignore
 			$wishlist = new Addonify\Wishlist();
 			$wishlist->create_table();
-			wp_safe_redirect( esc_html( add_query_arg( 'addonifywishlisttableinstalled', true, admin_url() ) ) );
+			$wishlist->migrate_wishlist_data();
+			wp_safe_redirect( esc_html( add_query_arg( 'addonify-wishlist-table-installed', true, admin_url() ) ) );
 			exit;
 		}
 	}
@@ -286,7 +292,7 @@ class Addonify_Wishlist_Admin {
 		add_action(
 			'admin_notices',
 			function () {
-				if ( isset( $_GET['addonifywishlisttableinstalled'] ) ) { // phpcs:ignore
+				if ( isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
 					$wishlist   = new Addonify\Wishlist();
 					$table_name = $wishlist->get_table_name();
 					if ( $wishlist->check_table_exists( $table_name ) ) {
@@ -325,7 +331,7 @@ class Addonify_Wishlist_Admin {
 					<div class="notice notice-error is-dismissible">
 						<p>
 							<?php esc_html_e( 'Data has been migrated to new table in newer versions of Addonify Wishlist.', 'addonify-wishlist' ); ?>
-							<a href="<?php echo esc_html( add_query_arg( 'addonifyWishlistInstallTable', true, admin_url() ) ); ?>">
+							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>">
 								<?php esc_html_e( 'Click to migrate data.', 'addonify-wishlist' ); ?>
 							</a>
 						</p>
