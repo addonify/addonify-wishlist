@@ -859,36 +859,6 @@ class Addonify_Wishlist_Public {
 	}
 
 	/**
-	 * Return wishlist.
-	 * If cookie wishlist and user meta wishlist do not match, user meta wishlist is updated with cookie wishlist.
-	 *
-	 * @since    1.0.0
-	 * @return  array $wishlist_items.
-	 */
-	public function get_wishlist() {
-		if ( is_user_logged_in() ) {
-			$user_id       = get_current_user_id();
-			$wishlist_data = array();
-			foreach ( $this->wishlist->get_all_rows() as $row ) {
-				if ( get_bloginfo( 'url' ) === $row->site_url && $user_id === (int) $row->user_id ) {
-					if ( null !== $row->wishlist_name ) {
-						$wishlist_data[ $row->id ] = array(
-							'name'       => $row->wishlist_name,
-							'visibility' => $row->wishlist_visibility,
-						);
-					} else {
-						if ( array_key_exists( $row->parent_wishlist_id, $wishlist_data ) ) {
-							$wishlist_data[ $row->parent_wishlist_id ]['product_ids'][] = (int) $row->product_id;
-						}
-					}
-				}
-			}
-			return $wishlist_data;
-		}
-		return array();
-	}
-
-	/**
 	 * Get wishlist count.
 	 *
 	 * @return int
