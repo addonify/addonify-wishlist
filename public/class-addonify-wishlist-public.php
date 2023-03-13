@@ -524,7 +524,7 @@ class Addonify_Wishlist_Public {
 	public function remove_from_wishlist( $product_id, $parent_wishlist_id = false ) {
 		if ( $parent_wishlist_id ) {
 			if ( array_key_exists( $parent_wishlist_id, $this->wishlist_items ) ) {
-				if ( in_array( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ) {
+				if ( array_key_exists( 'product_ids', $this->wishlist_items[ $parent_wishlist_id ] ) && in_array( (int) $product_id, $this->wishlist_items[ $parent_wishlist_id ]['product_ids'], true ) ) {
 					$where = array(
 						'parent_wishlist_id' => $parent_wishlist_id,
 						'product_id'         => $product_id,
@@ -539,7 +539,7 @@ class Addonify_Wishlist_Public {
 			}
 		} else {
 			foreach ( $this->wishlist_items as $index => $item ) {
-				if ( in_array( (int) $product_id, $item['product_ids'], true ) ) {
+				if ( array_key_exists( 'product_ids', $item ) && in_array( (int) $product_id, $item['product_ids'], true ) ) {
 					$where = array(
 						'parent_wishlist_id' => $index,
 						'product_id'         => $product_id,

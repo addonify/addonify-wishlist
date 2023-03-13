@@ -131,6 +131,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 = 1.1.4 - ? = 
 
 - Added: Add Wishlist table on plugin activate.
+- Added: Migrate data from earlier version on both activation and manually migrate from admin notice.
 
 = 1.1.3 - 03 March, 2023 =
 
