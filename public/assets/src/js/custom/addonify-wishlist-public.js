@@ -8,7 +8,6 @@
         let $modal_response = $('#addonify-wishlist-modal-response');
         let $sidebar_ul = $('ul.adfy-wishlist-sidebar-items-entry');
         let plugin_name = 'addonify-wishlist';
-        let localDataExpiration = parseInt(addonifyWishlistJSObject.noOfDaysDataIsValid);   // local data expiration in days.
         let isLoggedIn = addonifyWishlistJSObject.isLoggedIn;
         let undoTimeout;
         let loader = '<div id="addonify-wishlist_spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 11h5v2H2zm15 0h5v2h-5zm-6 6h2v5h-2zm0-15h2v5h-2zM4.222 5.636l1.414-1.414 3.536 3.536-1.414 1.414zm15.556 12.728-1.414 1.414-3.536-3.536 1.414-1.414zm-12.02-3.536 1.414 1.414-3.536 3.536-1.414-1.414zm7.07-7.071 3.536-3.535 1.414 1.415-3.536 3.535z"></path></svg></div>';
@@ -322,12 +321,13 @@
         })
 
         function guest_init() {
-            let wishlist_products = getProductids();
+            let wishlist_products = getProductids(); console.log(wishlist_products)
             let addedToWishlistButtonLabel = addonifyWishlistJSObject.addedToWishlistButtonLabel;
 
             wishlist_products.forEach(function (value, index) {
-                $('button.adfy-wishlist-btn[data-product_id="' + value + '"]').find('span').html(addedToWishlistButtonLabel);
-                $('button.adfy-wishlist-btn[data-product_id="' + value + '"]').find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
+                let product_button = $('.adfy-wishlist-btn[data-product_id="' + value + '"]')
+                product_button.find('span').html(addedToWishlistButtonLabel);
+                product_button.find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
             });
         }
 
@@ -909,16 +909,7 @@
                 val = JSON.stringify(val)
             }
             let hostname = addonifyWishlistJSObject.thisSiteUrl;
-            let expires;
-            if ( localDataExpiration === 0 ) {
-                expires = 0;
-            } else {
-                const d = new Date();
-                d.setTime(d.getTime() + (localDataExpiration * 24 * 60 * 60 * 1000));
-                expires = d.getTime();
-            }
             localStorage.setItem(plugin_name + '_' + hostname + '_' + name, val)
-            localStorage.setItem(plugin_name + '_' + hostname + '_' + name + '_deadline', expires)
         }
 
         /**
@@ -945,17 +936,7 @@
          */
         function getLocalItem(name) {
             let hostname = addonifyWishlistJSObject.thisSiteUrl;
-            let localDeadline = parseInt(localStorage.getItem(plugin_name + '_' + hostname + '_' + name + '_deadline'))
-            if (null !== localDeadline) {
-                const d = new Date();
-                if ( localDeadline === 0 || d.getTime() < localDeadline) {
-                    return localStorage.getItem(plugin_name + '_' + hostname + '_' + name)
-                } else {
-                    localStorage.removeItem(plugin_name + '_' + hostname + '_' + name)
-                    localStorage.removeItem(plugin_name + '_' + hostname + '_' + name + '_deadline');
-                }
-            }
-            return false;
+            return localStorage.getItem(plugin_name + '_' + hostname + '_' + name)
         }
 
         /**

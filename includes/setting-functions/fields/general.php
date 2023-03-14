@@ -57,15 +57,6 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				),
 				'value'       => addonify_wishlist_get_option( 'if_not_login_action' ),
 			),
-			'cookies_lifetime'                      => array(
-				'type'        => 'number',
-				'className'   => '',
-				'typeStyle'   => 'toggle', // Values for typeStyle are default, toggle & slider.
-				'label'       => __( 'Save Wishlist Cookie for [ x ] days', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'description' => __( 'Set the number of days to save the Wishlist data in browser cookie.', 'addonify-wsihlist' ),
-				'value'       => addonify_wishlist_get_option( 'cookies_lifetime' ),
-			),
 			'after_add_to_wishlist_action'          => array(
 				'type'        => 'select',
 				'className'   => '',
