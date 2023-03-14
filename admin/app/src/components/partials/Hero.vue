@@ -7,7 +7,7 @@ const { __ } = wp.i18n;
 	<section id="adfy-hero">
 		<div class="content">
 			<h3 class="hero-title">
-				<Icon name="hand-wave" size="26px" />
+				<Icon name="hand-wave" size="32px" />
 				{{ __("Hello", textdomain) }}
 			</h3>
 			<p class="hero-description">
@@ -32,7 +32,7 @@ const { __ } = wp.i18n;
 					target="_blank"
 				>
 					{{ __("Drop a review", textdomain) }}
-					<Icon name="comment" />
+					<Icon name="comment" size="18px" />
 				</a>
 			</div>
 		</div>

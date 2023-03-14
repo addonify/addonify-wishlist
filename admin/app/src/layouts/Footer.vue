@@ -1,2 +1,4 @@
 <script lang="ts" setup></script>
-<template></template>
+<template>
+	<footer id="adfy-colophon"></footer>
+</template>

@@ -8,9 +8,9 @@ import Hero from "@components/partials/Hero.vue";
 </script>
 <template>
 	<Header />
-	<main id="addonify-container">
+	<section id="addonify-container">
 		<Hero />
 		<router-view></router-view>
-	</main>
+	</section>
 	<Footer />
 </template>

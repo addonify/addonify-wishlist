@@ -1,2 +1,4 @@
-<script lang="ts" setup></script>
-<template></template>
+<script setup></script>
+<template>
+	<aside id="app-sidebar"></aside>
+</template>
