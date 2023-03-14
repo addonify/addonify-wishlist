@@ -55,6 +55,13 @@ register_deactivation_hook( __FILE__, 'deactivate_addonify_wishlist' );
 require plugin_dir_path( __FILE__ ) . 'includes/class-addonify-wishlist.php';
 
 /**
+* The code that runs during plugin bootstrap.
+*/
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+require_once plugin_dir_path( __FILE__ ) . 'admin/app.php';
+
+
+/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,

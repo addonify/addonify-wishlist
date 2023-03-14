@@ -1,0 +1,30 @@
+#addonify-wishlist-app {
+
+    display: block;
+    position: relative;
+    margin: 0 0 0 -20px;
+    padding: 0;
+    box-sizing: border-box;
+    @include better_font_rendering();
+
+    * {
+
+        box-sizing: border-box;
+        @include better_font_rendering();
+    }
+
+    /**
+    *
+    * App Container. 
+    * Everything after header & before footer.
+    * 
+    * @since: 2.0.0
+    */
+
+    #addonify-container {
+
+        display: block;
+        position: relative;
+        margin: 150px 0;
+    }
+}

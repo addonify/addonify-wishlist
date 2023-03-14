@@ -1,0 +1,55 @@
+/* -------------------------------------------------------------------------- 
+	Hero
+-------------------------------------------------------------------------- */
+
+#adfy-hero {
+
+    position: relative;
+    max-width: 800px;
+    padding: 40px;
+    margin: 0 auto 50px auto;
+    color: white;
+    border-radius: 10px;
+    background-color: var(--addonify_primary_color);
+
+    .hero-title {
+
+        @include flex();
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        margin: 0 0 15px 0;
+        color: white;
+        
+        svg {
+
+            fill: #E8FF00;
+        }
+    }
+
+    .hero-description {
+
+        margin-left: 40px;
+    }
+
+    .action {
+
+        @include flex();
+        align-items: center;
+        gap: 20px;
+        margin-left: 40px;
+
+        .doc-link {
+
+            color: var(--addonify_primary_color);
+            background-color: white;
+        }
+
+        .review-link {
+
+            border-width: 2px;
+            border-color: white;
+            background-color: transparent;
+        }
+    }
+}
