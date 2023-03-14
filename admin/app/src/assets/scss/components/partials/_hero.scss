@@ -37,7 +37,14 @@
         .doc-link {
 
             color: var(--addonify_primary_color);
+            border-width: 2px;
             background-color: white;
+
+            &:hover {
+
+                color: white;
+                background-color: var(--addonify_secondary_color);
+            }
         }
 
         .review-link {
@@ -45,6 +52,14 @@
             border-width: 2px;
             border-color: white;
             background-color: transparent;
+
+            &:hover {
+
+                fill: white;
+                color: white;
+                background-color: transparent;
+                border-color: var(--addonify_secondary_color);
+            }
         }
     }
 }

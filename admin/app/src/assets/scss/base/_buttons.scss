@@ -9,6 +9,7 @@
     gap: 10px;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     font-family: var(--addonify_base_font_family);
     font-weight: normal;
     font-size: var(--addonify_button_font_size);
@@ -36,8 +37,6 @@
 
             display: inline-flex;
             line-height: 1;
-            fill: var(--addonify_button_text_color);
-            color: var(--addonify_button_text_color);
         }
     }
 

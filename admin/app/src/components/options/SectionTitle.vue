@@ -1,16 +1,15 @@
 <script setup>
-import Icon from "@components/Icon.vue";
+import Icon from "@components/core/Icon.vue";
 import { textdomain } from "@helpers/global";
 
 const { __ } = wp.i18n;
-const defDocLinkLabel = __("Check docs", textdomain);
 
 /**
  *
  * Define props.
  */
 const props = defineProps({
-	secTitle: {
+	title: {
 		type: String,
 		default: "?",
 		required: true,
@@ -18,7 +17,7 @@ const props = defineProps({
 
 	docLabel: {
 		type: String,
-		default: defDocLinkLabel,
+		default: "Check docs",
 		required: false,
 	},
 

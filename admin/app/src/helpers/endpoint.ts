@@ -17,5 +17,5 @@ export const saleEndpoint: string =
  * @since 2.0.0
  */
 
-const upgradeLanding: string =
+export const upgradeLanding: string =
 	"https://addonify.com/downloads/addonify-wishlist-pro/";
