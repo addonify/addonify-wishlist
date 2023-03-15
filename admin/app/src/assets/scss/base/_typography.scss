@@ -3,7 +3,8 @@
   -------------------------------------------------------------------------- */
 
 #addonify-wishlist-app {
-
+    
+    color: var(--addonify_base_text_color);
     font-family: var(--addonify_base_font_family);
     font-weight: normal;
     line-height: 1.6;
@@ -23,6 +24,7 @@
         
         display: block;
         margin: 30px 0 20px 0;
+        color: var(--addonify_base_text_color);
         font-family: var(--addonify_heading_font_family);
         font-weight: var(--addonify_heading_font_weight);
         line-height: 1.3;

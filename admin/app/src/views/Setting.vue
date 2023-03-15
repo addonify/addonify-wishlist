@@ -15,12 +15,7 @@ onMounted(() => {
 <template>
 	<section id="app-divider" class="app-divider">
 		<RouteLinks />
-		<OptionsContainer>
-			<pre>
-				{{ $route.params }}
-			</pre
-			>
-		</OptionsContainer>
+		<OptionsContainer />
 		<Sidebar />
 	</section>
 </template>

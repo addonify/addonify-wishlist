@@ -4,6 +4,7 @@
     position: relative;
     margin: 0 0 0 -20px;
     padding: 0;
+    min-height: 100vh; // Let the footer stay at the bottom of the page.
     box-sizing: border-box;
     @include better_font_rendering();
 

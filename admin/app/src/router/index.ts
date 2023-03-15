@@ -29,6 +29,7 @@ const defaultRoutes: any = [
 		path: "/",
 		name: "Index",
 		component: Index,
+		redirect: "/s/general", // Let's have this static entry point.
 	},
 	{
 		path: "/s/:slug",
