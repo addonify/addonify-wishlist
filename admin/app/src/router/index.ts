@@ -31,7 +31,7 @@ const defaultRoutes: any = [
 		component: Index,
 	},
 	{
-		path: "/tab/:slug",
+		path: "/s/:slug",
 		name: "Setting",
 		component: Setting,
 	},

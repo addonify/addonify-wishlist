@@ -89,15 +89,15 @@
     height: auto;
     padding: 0;
     border-radius: 0;
-    fill: var(--addonify_base_text_color);
-    color: var(--addonify_base_text_color);
+    fill: var(--addonify_text_button_color);
+    color: var(--addonify_text_button_color);
     border: none;
     background-color: transparent;
 
     &:hover {
 
-        fill: var(--addonify_secondary_color);
-        color: var(--addonify_secondary_color);
+        fill: var(--addonify_text_button_hover_color);
+        color: var(--addonify_text_button_hover_color);
         border: none;
         text-decoration: none;
         background-color: transparent;

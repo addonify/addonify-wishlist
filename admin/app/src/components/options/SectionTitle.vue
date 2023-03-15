@@ -1,8 +1,5 @@
 <script setup>
 import Icon from "@components/core/Icon.vue";
-import { textdomain } from "@helpers/global";
-
-const { __ } = wp.i18n;
 
 /**
  *
@@ -11,7 +8,7 @@ const { __ } = wp.i18n;
 const props = defineProps({
 	title: {
 		type: String,
-		default: "?",
+		default: "....",
 		required: true,
 	},
 
@@ -29,17 +26,20 @@ const props = defineProps({
 });
 </script>
 <template>
-	<div class="option-box-section-title">
-		<div class="adfy-flex">
-			<div class="column title">
-				<h3 class="x-heading">{{ props.secTitle }}</h3>
-			</div>
-			<div class="column action">
-				<a :href="props.docLink" target="_blank" rel="noopener noreferrer">
-					{{ props.docLabel }}
-					<Icon name="arrow-right" size="16px" />
-				</a>
-			</div>
+	<div class="box-title">
+		<div class="column title">
+			<h3 class="x-heading">{{ props.title }}</h3>
+		</div>
+		<div class="column action">
+			<a
+				:href="props.docLink"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="adfy-button fake-button link-external"
+			>
+				{{ props.docLabel }}
+				<Icon name="arrow-right" size="16px" />
+			</a>
 		</div>
 	</div>
 </template>

@@ -1,0 +1,59 @@
+
+/* -------------------------------------------------------------------------- 
+	Options jumbobox
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-app  {
+
+    .adfy-jumbo-boxes {
+
+        @include flex();
+        flex-direction: column;
+        gap: 40px;
+        margin-right: 40px;
+
+        .adfy-jumbo-box {
+
+            position: relative;
+            padding: 30px;
+            min-height: 600px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 60px 0 rgba( 0, 0, 0, 0.1 );
+
+            &:first-child {
+
+                border-top-left-radius: 0;
+            }
+
+            .box-title {
+
+                @include flex();
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 15px;
+                margin-bottom: 40px;
+                border-bottom: 1px solid var(--addonify_option_box_solid_border_color);
+
+                .x-heading {
+
+                    font-size: 18px;
+                    margin: 0;
+                    color: var(--addonify_base_text_color);
+                }
+
+                .adfy-button {
+                        
+                    gap: 5px;
+                    color: var(--addonify_base_link_color);
+
+                    &:hover {
+
+                        gap: 10px;
+                        color: var(--addonify_base_link_hover_color);
+                    }
+                }
+            }
+        }
+    }
+}

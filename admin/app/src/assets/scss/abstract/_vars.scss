@@ -15,6 +15,7 @@
   // Base colors
   --addonify_primary_color: #0286e7;
   --addonify_secondary_color: #2bc48a;
+  --addonify_ternary_color: #FF4949;
   --addonify_base_text_color: #585858;
   --addonify_base_link_color: #0366E0; // default link color
   --addonify_base_link_hover_color: var(--addonify_secondary_color);
@@ -32,6 +33,10 @@
 
   --addonify_text_button_color: var(--addonify_primary_color);
   --addonify_text_button_hover_color: var(--addonify_secondary_color);
+
+
+  // Options
+  --addonify_option_box_solid_border_color: #ECECEC;
 
   /* -------------------------------------------------------------------------- 
 	  Typography variables
