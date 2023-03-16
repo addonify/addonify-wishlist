@@ -715,7 +715,7 @@ class Addonify_Wishlist_Public {
 	public function ajax_add_to_wishlist_handler() {
 
 		$product_id  = isset( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
-		$wishlist_id = isset( $_POST['wishlistId'] ) ? sanitize_text_field( wp_unslash( $_POST['wishlistId'] ) ) : '';
+		$wishlist_id = isset( $_POST['wishlist_id'] ) ? sanitize_text_field( wp_unslash( $_POST['wishlist_id'] ) ) : '';
 		$nonce       = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
 		// Check if product id and nonce is set and valid.
@@ -1159,6 +1159,15 @@ class Addonify_Wishlist_Public {
 	 * @return string Table row.
 	 */
 	public function get_table_row( $product_id ) {
+		$wishlist = '';
+		if ( is_user_logged_in() ) {
+			$wishlist = new Addonify\Wishlist();
+
+			$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product_id );
+			if ( $parent_wishlist_id ) {
+				$wishlist = 'data-wishlist_id=' . $parent_wishlist_id;
+			}
+		}
 		ob_start();
 		$product = wc_get_product( $product_id );
 		?>
@@ -1173,6 +1182,7 @@ class Addonify_Wishlist_Public {
 						name="addonify_wishlist_remove"
 						data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 						value="<?php echo esc_attr( $product_id ); ?>"
+						<?php echo esc_attr( $wishlist ); ?>
 					>
 						<i class="adfy-wishlist-icon trash-2"></i>
 					</button>
@@ -1186,6 +1196,7 @@ class Addonify_Wishlist_Public {
 						name="addonify-remove-from-wishlist"
 						data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 						value="<?php echo esc_attr( $product_id ); ?>"
+						<?php echo esc_attr( $wishlist ); ?>
 					>
 						<i class="adfy-wishlist-icon trash-2"></i>
 					</button>

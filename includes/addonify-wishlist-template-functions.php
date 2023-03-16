@@ -95,8 +95,6 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 			$product = $product_;
 		}
 
-		$add_to_wishlist_button_args['button_classes'] = $classes;
-
 		$add_to_wishlist_button_args = array(
 			'product_id'           => $product->get_id(),
 			'button_label'         => addonify_wishlist_get_option( 'btn_label' ),
@@ -109,6 +107,15 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 			'require_login'        => false,
 			'display_popup_notice' => false,
 		);
+
+		if ( is_user_logged_in() ) {
+			$wishlist = new Addonify\Wishlist();
+
+			$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product->get_id() );
+			if ( $parent_wishlist_id ) {
+				$add_to_wishlist_button_args['parent_wishlist_id'] = $parent_wishlist_id;
+			}
+		}
 
 		// Add class, 'after-add-to-cart', if button is to be displayed after add to cart button.
 		if ( addonify_wishlist_get_option( 'btn_position' ) === 'after_add_to_cart' ) {
@@ -412,7 +419,16 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 	 */
 	function addonify_wishlist_render_sidebar_product( $product_id, $guest = false ) {
 
-		$product = wc_get_product( $product_id );
+		$product  = wc_get_product( $product_id );
+		$wishlist = '';
+		if ( is_user_logged_in() ) {
+			$wishlist = new Addonify\Wishlist();
+
+			$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product_id );
+			if ( $parent_wishlist_id ) {
+				$wishlist = 'data-wishlist_id=' . $parent_wishlist_id;
+			}
+		}
 
 		ob_start();
 		?>
@@ -459,6 +475,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 								name="addonify_wishlist_remove"
 								data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 								value="<?php echo esc_attr( $product->get_id() ); ?>"
+								<?php echo esc_attr( $wishlist ); ?>
 							>
 								<i class="adfy-wishlist-icon trash-2"></i>
 							</button>
@@ -472,6 +489,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 								name="addonify-remove-from-wishlist"
 								data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 								value="<?php echo esc_attr( $product->get_id() ); ?>"
+								<?php echo esc_attr( $wishlist ); ?>
 							>
 								<i class="adfy-wishlist-icon trash-2"></i>
 							</button>

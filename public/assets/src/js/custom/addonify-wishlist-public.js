@@ -142,6 +142,7 @@
             event.preventDefault();
             $('#addonify-wishlist-undo-deleted-product').html('');
             let product_id = $(this).data('product_id');
+            let wishlist_id = $(this).data('wishlist_id');
             let addToWishlistButton = $('button.addonify-add-to-wishlist-btn[data-product_id='+product_id+']');
             let $sidebar_items = $('ul.adfy-wishlist-sidebar-items-entry');
             let $table = $('#addonify-wishlist-table');
@@ -163,7 +164,8 @@
                         addonifyWishlistJSObject.ajax_url,
                         {
                             action: addonifyWishlistJSObject.addToWishlistActionSideBar,
-                            id: $(this).data('product_id'),
+                            id: product_id,
+                            wishlist_id: wishlist_id,
                             nonce: addonifyWishlistJSObject.nonce
                         },
                         function (response) {
@@ -220,6 +222,7 @@
                 let data = {
                     action: addonifyWishlistJSObject.addToWishlistAction,
                     id: product_id,
+                    wishlist_id: wishlist_id,
                     nonce: addonifyWishlistJSObject.nonce
                 };
                 $.post(
@@ -465,6 +468,7 @@
             let data = {
                 action: addonifyWishlistJSObject.addToWishlistAction,
                 id: addToWishlistButton.data('product_id'),
+                wishlist_id: addToWishlistButton.data('wishlist_id'),
                 nonce: addonifyWishlistJSObject.nonce
             };
 
@@ -613,10 +617,12 @@
         function addonifyRemoveFromWishlist(thisButton) {
 
             let product_id = parseInt(thisButton.val() ? thisButton.val() : thisButton.data('product_id'))
+            let wishlist_id = parseInt(thisButton.data('wishlist_id'))
 
             let ajaxData = {
                 action: 'addonify_remove_from_wishlist',
                 productId: product_id,
+                wishlistId: wishlist_id,
                 nonce: addonifyWishlistJSObject.nonce
             }
 
@@ -652,7 +658,7 @@
 
                         addonifyEmptyWishlistText(response.wishlist_count);
 
-                        addonifyUndoRemoveFromWishlist( thisButton.data('product_name'), product_id );
+                        addonifyUndoRemoveFromWishlist( thisButton.data('product_name'), product_id, wishlist_id );
                     }
                 },
                 "json"
@@ -769,7 +775,7 @@
          * @param {string} product_name Name of the product.
          * @param {int} product_id Product ID.
          */
-        function addonifyUndoRemoveFromWishlist( product_name, product_id ) {
+        function addonifyUndoRemoveFromWishlist( product_name, product_id, wishlist_id='' ) {
             clearTimeout(undoTimeout)
             let product_removed_text = addonifyWishlistJSObject.undoActionPrelabelText;
             product_removed_text = product_removed_text.replace('{product_name}', product_name);
@@ -777,7 +783,7 @@
             let undo_div = `
                 <p id="addonify-wishlist-undo-deleted-product-text">
                     ` + product_removed_text + `
-                    <a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="` + product_id + `"> ` + undo_text + ` </a>
+                    <a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="` + product_id + `" data-wishlist_id="` + wishlist_id + `"> ` + undo_text + ` </a>
                 </p>`;
             $('#addonify-wishlist-undo-deleted-product').html(undo_div);
             undoTimeout = setTimeout(

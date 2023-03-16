@@ -23,6 +23,11 @@ if ( $display_icon ) {
 	}
 }
 
+$wishlist = '';
+if ( isset( $parent_wishlist_id ) ) {
+	$wishlist = 'data-wishlist_id=' . $parent_wishlist_id;
+}
+
 if ( true === $require_login ) {
 	if ( $login_url ) {
 		?>
@@ -54,6 +59,7 @@ if ( true === $require_login ) {
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 			data-product_name="<?php echo esc_attr( $product_name ); ?>"
+			<?php echo esc_attr( $wishlist ); ?>
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</button>
@@ -65,6 +71,7 @@ if ( true === $require_login ) {
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 			data-product_name="<?php echo esc_attr( $product_name ); ?>"
+			<?php echo esc_attr( $wishlist ); ?>
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</a>
