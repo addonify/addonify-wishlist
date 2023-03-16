@@ -94,9 +94,11 @@ class Wishlist {
 			foreach ( $wishlist_data as $index => $row ) {
 				$insert_data = array();
 
+				$wishlist_name = 'Default Wishlist';
+
 				$insert_data['site_url']            = $index;
 				$insert_data['user_id']             = get_current_user_id();
-				$insert_data['wishlist_name']       = array_key_first( $row );
+				$insert_data['wishlist_name']       = $wishlist_name;
 				$insert_data['wishlist_visibility'] = 'public';
 
 				$wishlist_id = $this->insert_row( $insert_data );
@@ -133,4 +135,22 @@ class Wishlist {
 		return $this->insert_row( $insert_data );
 	}
 
+	/**
+	 * Get wishlist ID from product ID.
+	 *
+	 * @param int $product_id Product ID.
+	 */
+	public function get_wishlist_id_from_product_id( $product_id ) {
+		$where = array(
+			'site_url'   => get_bloginfo( 'url' ),
+			'product_id' => $product_id,
+			'user_id'    => get_current_user_id(),
+		);
+
+		$wishlist = $this->get_row( $where );
+		if ( ! empty( $wishlist ) ) {
+			return $wishlist->parent_wishlist_id;
+		}
+		return false;
+	}
 }
