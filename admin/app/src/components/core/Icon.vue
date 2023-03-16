@@ -82,7 +82,11 @@ const props = defineProps({
 		</svg>
 	</span>
 
-	<span v-if="props.name === 'check-circle'" class="icon" :class="props.class">
+	<span
+		v-if="props.name === 'check-circle'"
+		class="icon"
+		:class="props.class"
+	>
 		<svg
 			viewBox="0 0 24 24"
 			fill="currentColor"
@@ -113,7 +117,9 @@ const props = defineProps({
 			<path
 				d="M16.553,3.9A1,1,0,0,0,17.9,3.447l1-2a1,1,0,1,0-1.79-.894l-1,2A1,1,0,0,0,16.553,3.9Z"
 			/>
-			<path d="M6.105,3.447A1,1,0,0,0,7.9,2.553l-1-2a1,1,0,1,0-1.79.894Z" />
+			<path
+				d="M6.105,3.447A1,1,0,0,0,7.9,2.553l-1-2a1,1,0,1,0-1.79.894Z"
+			/>
 		</svg>
 	</span>
 	<span v-if="props.name === 'loading'" class="icon" :class="props.class">
@@ -143,6 +149,20 @@ const props = defineProps({
 		</svg>
 	</span>
 
+	<span v-if="props.name === 'info'" class="icon" :class="props.class">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			:width="props.size"
+			:height="props.size"
+		>
+			<path
+				d="M24,12A12,12,0,1,1,12,0,12.013,12.013,0,0,1,24,12ZM14,12a2,2,0,0,0-2-2H10v2h2v7h2ZM12,5a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,12,5Z"
+			/>
+		</svg>
+	</span>
+
 	<span v-if="props.name === 'hand-wave'" class="icon" :class="props.class">
 		<svg
 			viewBox="0 0 30 31"
@@ -160,7 +180,10 @@ const props = defineProps({
 					width="1"
 					height="1"
 				>
-					<use xlink:href="#image0_12_296" transform="scale(0.015625)" />
+					<use
+						xlink:href="#image0_12_296"
+						transform="scale(0.015625)"
+					/>
 				</pattern>
 				<image
 					id="image0_12_296"

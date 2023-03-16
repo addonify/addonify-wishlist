@@ -29,8 +29,8 @@
                 padding: 20px 10px 18px 15px;
                 background-color: transparent;
                 box-shadow: none;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
                 @include transition_delay();
 
                 &:hover {
@@ -41,12 +41,22 @@
 
                 .icon {
 
+                    display: inline-flex;
+                    line-height: 1;
 
+                    svg {
+
+                        display: inline-flex;
+                        width: 20px;
+                        height: 20px;
+                        line-height: 1;
+                    }
                 }
 
                 .label {
 
-
+                    display: inline-flex;
+                    line-height: 1.5;
                 }
 
                 &.router-link-exact-active {

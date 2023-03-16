@@ -16,7 +16,16 @@ export const useSettingsStore = defineStore({
 	id: "settings",
 
 	state: () => ({
-		settings: [], // Store all settings fetched from the api.
+		settings: {
+			color: "rgba(92, 22, 255, 1)",
+			border_radius: 30,
+			font: "",
+			font_weight: 400,
+			font_size: 16,
+			letter_spacing: 0.5,
+			line_height: 1.5,
+			text_traform: ["default", "Uppercase", "Lowercase", "Capitalize"],
+		},
 		status: {
 			isLoading: true, // Flag if something is loading.
 			isSaving: false, // Flag if something is saving.

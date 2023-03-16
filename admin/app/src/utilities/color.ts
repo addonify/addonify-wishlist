@@ -20,10 +20,10 @@ export const convertColorToHex = (color: string): string => {
 	// If color is in rgb or rgba format.
 	if (color.startsWith("rgb")) {
 		const [r, g, b, a = 1] = color.match(/\d+/g)!.map(Number); // extract rgb values and alpha if exists
-		const hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1); // convert rgb to hex
 		const alpha = Math.round(a * 255)
 			.toString(16)
 			.padStart(2, "0"); // convert alpha to hex
+		const hex = ((r << 16) + (g << 8) + b).toString(16).padStart(6, "0"); // convert rgb to hex
 		return `#${hex}${alpha}`;
 	}
 

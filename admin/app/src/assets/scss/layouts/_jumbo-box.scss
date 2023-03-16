@@ -43,7 +43,9 @@
                 }
 
                 .adfy-button {
-                        
+                    
+                    display: inline-flex;
+                    font-size: 15px;
                     gap: 5px;
                     color: var(--addonify_base_link_color);
 

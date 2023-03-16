@@ -1,9 +1,8 @@
 <script setup>
-import OptionBox from "@components/options/OptionBox.vue";
+import JumboBox from "@layouts/JumboBox.vue";
 </script>
 <template>
 	<main id="app-main app-primary" class="app-primary">
-		<OptionBox />
-		<slot></slot>
+		<JumboBox />
 	</main>
 </template>
