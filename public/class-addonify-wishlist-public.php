@@ -233,8 +233,6 @@ class Addonify_Wishlist_Public {
 
 		wp_enqueue_script( 'perfect-scrollbar', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/perfect-scrollbar.min.js', null, $this->version, true );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, true );
-
 		$login_url = ( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url();
 
 		if ( ! is_user_logged_in() ) {
@@ -279,6 +277,11 @@ class Addonify_Wishlist_Public {
 			";
 			// For making these functions globally available on page.
 			wp_add_inline_script( $this->plugin_name, $inline_script );
+
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/addonify-wishlist-public-guest.min.js', array( 'jquery' ), $this->version, true );
+
+		} else {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, true );
 		}
 
 		wp_localize_script(
