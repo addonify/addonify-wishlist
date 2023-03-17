@@ -136,20 +136,32 @@ class Wishlist {
 	}
 
 	/**
+	 * Check if wishlist table is created.
+	 */
+	public function check_wishlist_table_exists() {
+		$wishlist   = new Wishlist();
+		$table_name = $wishlist->get_table_name();
+
+		return $this->check_table_exists( $table_name );
+	}
+
+	/**
 	 * Get wishlist ID from product ID.
 	 *
 	 * @param int $product_id Product ID.
 	 */
 	public function get_wishlist_id_from_product_id( $product_id ) {
-		$where = array(
-			'site_url'   => get_bloginfo( 'url' ),
-			'product_id' => $product_id,
-			'user_id'    => get_current_user_id(),
-		);
+		if ( $this->check_wishlist_table_exists() ) {
+			$where = array(
+				'site_url'   => get_bloginfo( 'url' ),
+				'product_id' => $product_id,
+				'user_id'    => get_current_user_id(),
+			);
 
-		$wishlist = $this->get_row( $where );
-		if ( ! empty( $wishlist ) ) {
-			return $wishlist->parent_wishlist_id;
+			$wishlist = $this->get_row( $where );
+			if ( ! empty( $wishlist ) ) {
+				return $wishlist->parent_wishlist_id;
+			}
 		}
 		return false;
 	}
