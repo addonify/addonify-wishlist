@@ -47,13 +47,13 @@ if ( function_exists( 'wc_print_notices' ) ) {
 				<tbody>
 					<?php
 					foreach ( $wishlist_product_ids as $product_id ) {
-						$wishlist = '';
+						$wishlist_attr = '';
 						if ( is_user_logged_in() ) {
 							$wishlist = new Addonify\Wishlist();
 
 							$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product_id );
 							if ( $parent_wishlist_id ) {
-								$wishlist = 'data-wishlist_id=' . $parent_wishlist_id;
+								$wishlist_attr = 'data-wishlist_id=' . $parent_wishlist_id;
 							}
 						}
 
@@ -70,7 +70,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 										name="addonify_wishlist_remove"
 										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product_id ); ?>"
-										<?php echo esc_attr( $wishlist ); ?>
+										<?php echo esc_attr( $wishlist_attr ); ?>
 									>
 										<i class="adfy-wishlist-icon trash-2"></i>
 									</button>
@@ -84,7 +84,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 										name="addonify-remove-from-wishlist"
 										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product_id ); ?>"
-										<?php echo esc_attr( $wishlist ); ?>
+										<?php echo esc_attr( $wishlist_attr ); ?>
 									>
 										<i class="adfy-wishlist-icon trash-2"></i>
 									</button>
