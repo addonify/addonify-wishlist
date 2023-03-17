@@ -18,15 +18,19 @@ const props = defineProps({
 		required: false,
 	},
 	min: {
-		type: String,
+		type: [String, Number],
 		required: false,
 	},
 	max: {
-		type: String,
+		type: [String, Number],
 		required: false,
 	},
-	steps: {
-		type: String,
+	step: {
+		type: [String, Number],
+		required: false,
+	},
+	precision: {
+		type: [String, Number],
 		required: false,
 	},
 });
@@ -56,7 +60,8 @@ let value = computed({
 		v-model="value"
 		:min="props.min"
 		:max="props.max"
-		:steps="props.steps"
+		:step="props.steps"
+		:precision="props.precision"
 	/>
 	<el-input-number
 		v-else
@@ -64,6 +69,7 @@ let value = computed({
 		v-model="value"
 		:min="props.min"
 		:max="props.max"
-		:steps="props.steps"
+		:step="props.steps"
+		:precision="props.precision"
 	/>
 </template>

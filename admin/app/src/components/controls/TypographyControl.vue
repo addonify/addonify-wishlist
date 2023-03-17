@@ -55,24 +55,31 @@ const store = useSettingsStore();
 		</div>
 		<div class="input">
 			<p class="control-title">Font size</p>
-			<Number v-model="store.settings.font_size" />
+			<Number
+				v-model="store.settings.font_size"
+				max="50"
+				min="0"
+				step="1"
+			/>
 		</div>
 		<div class="input">
 			<p class="control-title">Letter spacing</p>
 			<Number
 				v-model="store.settings.letter_spacing"
-				steps="0.5"
+				step="0.5"
 				min="0"
 				max="5"
+				precision="2"
 			/>
 		</div>
 		<div class="input">
 			<p class="control-title">Line height</p>
 			<Number
 				v-model="store.settings.line_height"
-				steps="0.1"
-				min="0"
+				step="0.1"
+				min="1.0"
 				max="5"
+				precision="2"
 			/>
 		</div>
 		<div class="input">

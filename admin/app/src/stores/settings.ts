@@ -23,7 +23,7 @@ export const useSettingsStore = defineStore({
 			font_weight: 400,
 			font_size: 16,
 			letter_spacing: 0.5,
-			line_height: 1.5,
+			line_height: 1.6,
 			text_traform: ["default", "Uppercase", "Lowercase", "Capitalize"],
 		},
 		status: {
