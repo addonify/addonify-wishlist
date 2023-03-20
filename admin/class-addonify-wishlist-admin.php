@@ -298,17 +298,25 @@ class Addonify_Wishlist_Admin {
 					if ( $wishlist->check_table_exists( $table_name ) ) {
 						?>
 						<div class="notice notice-success is-dismissible">
+							<h3><?php esc_html_e( 'Addonify Wishlist database updated', 'addonify-wishlist' ); ?></h3>
 							<p>
-							<?php esc_html_e( 'Table created successfully.', 'addonify-wishlist' ); ?>
+							<?php esc_html_e( 'Addonify Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
 							</p>
+							<button class="button button-primary">
+								<?php esc_html_e( 'Thanks!', 'addonify-wishlist' ); ?>
+							</button>
 						</div>
 						<?php
 					} else {
 						?>
 						<div class="notice notice-error is-dismissible">
+							<h3><?php esc_html_e( 'Addonify Wishlist database could not updated', 'addonify-wishlist' ); ?></h3>
 							<p>
-							<?php esc_html_e( 'Table could not be created. Please contact plugin admin.', 'addonify-wishlist' ); ?>
+								<?php esc_html_e( 'There had been an error while updating Addonify Wishlist database. Please, try again. If the issue persists please contact plugin support.', 'addonify-wishlist' ); ?>
 							</p>
+							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
+								<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
+							</a>
 						</div>
 						<?php
 					}
@@ -323,18 +331,21 @@ class Addonify_Wishlist_Admin {
 	public function maybe_show_insert_table_notice() {
 		$wishlist   = new Addonify\Wishlist();
 		$table_name = $wishlist->get_table_name();
-		if ( ! $wishlist->check_table_exists( $table_name ) ) {
+		if ( ! $wishlist->check_table_exists( $table_name ) && ! isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
 			add_action(
 				'admin_notices',
 				function () {
 					?>
-					<div class="notice notice-error is-dismissible">
+					<div class="notice notice-info">
+						<h3>
+							<?php esc_html_e( 'Addonify Wishlist database update required', 'addonify-wishlist' ); ?>
+						</h3>
 						<p>
-							<?php esc_html_e( 'Data has been migrated to new table in newer versions of Addonify Wishlist.', 'addonify-wishlist' ); ?>
-							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>">
-								<?php esc_html_e( 'Click to migrate data.', 'addonify-wishlist' ); ?>
-							</a>
+							<?php esc_html_e( 'Update your database to keep the plugin running smoothly. The database update process takes a few moments, so please be patient.', 'addonify-wishlist' ); ?>
 						</p>
+						<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
+							<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
+						</a>
 					</div>
 					<?php
 				}
