@@ -176,15 +176,15 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 				$add_to_wishlist_button_args['login_url'] = ( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url();
 			}
 		} else {
-			if ( addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'show_popup_notice' ) {
+			if (
+				addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'show_popup_notice' ||
+				addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'none' ||
+				$in_wishlist
+			) {
 
 				$add_to_wishlist_button_args['display_popup_notice'] = true;
 
 				$add_to_wishlist_button_args['button_classes'][] = 'addonify-wishlist-ajax-add-to-wishlist';
-			} else {
-				if ( addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'none' ) {
-					$add_to_wishlist_button_args['button_classes'][] = 'addonify-wishlist-ajax-add-to-wishlist';
-				}
 			}
 		}
 
