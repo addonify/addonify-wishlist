@@ -67,6 +67,7 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'choices'     => array(
 					'show_popup_notice'         => __( 'Show Popup Notice', 'addonify-wishlist' ),
 					'redirect_to_wishlist_page' => __( 'Redirect to Wishlist Page', 'addonify-wishlist' ),
+					'none'                      => __( 'None', 'addonify-wishlist' ),
 				),
 			),
 			'remove_from_wishlist_if_added_to_cart' => array(

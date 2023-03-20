@@ -26,6 +26,8 @@ if ( $display_icon ) {
 $wishlist = '';
 if ( isset( $parent_wishlist_id ) ) {
 	$wishlist = 'data-wishlist_id=' . $parent_wishlist_id;
+} else {
+	$parent_wishlist_id = '';
 }
 
 if ( true === $require_login ) {
@@ -53,28 +55,40 @@ if ( true === $require_login ) {
 	}
 } else {
 
-	if ( $display_popup_notice || ! is_user_logged_in() ) {
+	if ( ( $display_popup_notice || addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'none' ) || ! is_user_logged_in() ) {
 		?>
 		<button 
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 			data-product_name="<?php echo esc_attr( $product_name ); ?>"
-			<?php echo esc_attr( $wishlist ); ?>
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</button>
 		<?php
 	} else {
-		?>
-		<a 
-			href="?addonify-add-to-wishlist=<?php echo esc_attr( $product_id ); ?>"
-			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
-			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
-			data-product_name="<?php echo esc_attr( $product_name ); ?>"
-			<?php echo esc_attr( $wishlist ); ?>
-		>
-			<?php echo wp_kses_post( $label ); ?>
-		</a>
-		<?php
+		if ( ! $in_wishlist ) {
+			?>
+			<a 
+				href="?addonify-add-to-wishlist=<?php echo esc_attr( $product_id ); ?>"
+				class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
+				data-product_id="<?php echo esc_attr( $product_id ); ?>" 
+				data-product_name="<?php echo esc_attr( $product_name ); ?>"
+				<?php echo esc_attr( $wishlist ); ?>
+			>
+				<?php echo wp_kses_post( $label ); ?>
+			</a>
+			<?php
+		} else {
+			?>
+			<a 
+				href="?addonify-remove-from-wishlist=<?php echo esc_attr( $product_id ); ?>&wishlist=<?php echo esc_attr( $parent_wishlist_id ); ?>"
+				class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
+				data-product_id="<?php echo esc_attr( $product_id ); ?>" 
+				data-product_name="<?php echo esc_attr( $product_name ); ?>"
+			>
+				<?php echo wp_kses_post( $label ); ?>
+			</a>
+			<?php
+		}
 	}
 }

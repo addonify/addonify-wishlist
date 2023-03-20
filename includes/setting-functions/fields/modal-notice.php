@@ -51,21 +51,6 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'product_removed_from_wishlist_text' ),
 			),
-			'show_wishlist_emptying_button'      => array(
-				'type'      => 'switch',
-				'className' => '',
-				'label'     => __( 'Show wishlist emptying button', 'addonify-wishlist' ),
-				'dependent' => array( 'enable_wishlist' ),
-				'value'     => addonify_wishlist_get_option( 'show_wishlist_emptying_button' ),
-			),
-			'wishlist_emptied_text'              => array(
-				'type'        => 'text',
-				'className'   => '',
-				'label'       => __( 'Wishlist Emptied Text', 'addonify-wishlist' ),
-				'description' => __( 'Text to display in notice when wishlist is emptied.', 'addonify-wihlist' ),
-				'dependent'   => array( 'enable_wishlist', 'show_wishlist_emptying_button' ),
-				'value'       => addonify_wishlist_get_option( 'wishlist_emptied_text' ),
-			),
 			'login_btn_label'                    => array(
 				'type'        => 'text',
 				'className'   => '',

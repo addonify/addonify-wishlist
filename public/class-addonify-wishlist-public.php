@@ -341,26 +341,22 @@ class Addonify_Wishlist_Public {
 		// Remove product from the wishlist.
 		// Only works if removal is done on form submit.
 		if (
-			isset( $_POST['addonify-remove-from-wishlist'] ) &&
-			! empty( $_POST['addonify-remove-from-wishlist'] )
+			isset( $_GET['addonify-remove-from-wishlist'] ) &&
+			! empty( $_GET['addonify-remove-from-wishlist'] )
 		) {
 
-			// If nonce is not valid, display error message and return.
-			if (
-				! isset( $_POST['nonce'] ) &&
-				empty( $_POST['nonce'] ) &&
-				! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), $this->plugin_name )
-			) {
-				wc_add_notice( __( 'Invalid security token.', 'addonify-wishlist' ), 'error' );
-				return;
-			}
-
-			$product_id = (int) sanitize_text_field( wp_unslash( $_POST['addonify-remove-from-wishlist'] ) );
+			$product_id = (int) sanitize_text_field( wp_unslash( $_GET['addonify-remove-from-wishlist'] ) );
 
 			$product = wc_get_product( $product_id );
 
+			if ( isset( $_GET['wishlist'] ) && ! empty( $_GET['wishlist'] ) ) {
+				$wishlist_id = (int) sanitize_text_field( wp_unslash( $_GET['wishlist'] ) );
+			} else {
+				$wishlist_id = $this->get_default_wishlist_id();
+			}
+
 			// Remove product from the wishlist.
-			if ( $this->remove_from_wishlist( $product_id ) ) {
+			if ( $this->remove_from_wishlist( $product_id, $wishlist_id ) ) {
 
 				wc_add_notice( __( "{$product->get_title()} is removed from the wishlist.", 'addonify-wishlist' ), 'success' ); //phpcs:ignore
 			} else {
@@ -428,9 +424,15 @@ class Addonify_Wishlist_Public {
 		) {
 			$product_id = (int) sanitize_text_field( wp_unslash( $_GET['addonify-add-to-wishlist'] ) );
 
+			if ( isset( $_GET['wishlist'] ) && ! empty( $_GET['wishlist'] ) ) {
+				$wishlist_id = (int) sanitize_text_field( wp_unslash( $_GET['wishlist'] ) );
+			} else {
+				$wishlist_id = $this->get_default_wishlist_id();
+			}
+
 			$product = wc_get_product( $product_id );
 
-			if ( $this->add_to_wishlist( $product_id ) ) {
+			if ( $this->add_to_wishlist( $wishlist_id, $product_id ) ) {
 
 				if (
 					addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'redirect_to_wishlist_page' &&

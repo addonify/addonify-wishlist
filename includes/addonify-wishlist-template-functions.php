@@ -136,6 +136,9 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 		}
 
 		$in_wishlist = addonify_wishlist_is_product_in_wishlist( $product->get_id() );
+
+		$add_to_wishlist_button_args['in_wishlist'] = $in_wishlist;
+
 		// If product is already in the wishlist, add a class, set button label and set button icon.
 		if ( $in_wishlist ) {
 
@@ -179,7 +182,7 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 
 				$add_to_wishlist_button_args['button_classes'][] = 'addonify-wishlist-ajax-add-to-wishlist';
 			} else {
-				if ( ! is_user_logged_in() ) {
+				if ( addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'none' ) {
 					$add_to_wishlist_button_args['button_classes'][] = 'addonify-wishlist-ajax-add-to-wishlist';
 				}
 			}

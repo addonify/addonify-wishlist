@@ -427,12 +427,14 @@
                 addToWishlistButton.addClass('added-to-wishlist');
 
                 addonifyEmptyWishlistText(wishlist.length);
-
-                addonifyShowPopupModal(
-                    popupAddedToWishlistText,
-                    addToWishlistButton.data('product_name'),
-                    'success'
-                );
+                
+                if ( afterAddToWishlistAction !== 'none' ) {
+                    addonifyShowPopupModal(
+                        popupAddedToWishlistText,
+                        addToWishlistButton.data('product_name'),
+                        'success'
+                    );
+                }
 
                 if (wishlist.length > 0) {
                     $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');

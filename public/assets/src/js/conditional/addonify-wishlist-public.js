@@ -377,11 +377,13 @@
                         // update button 
                         addToWishlistButton.addClass('added-to-wishlist');
 
-                        addonifyShowPopupModal(
-                            response.message,
-                            addToWishlistButton.data('product_name'),
-                            'success'
-                        );
+                        if ( addonifyWishlistJSObject.afterAddToWishlistAction !== 'none' ) {
+                            addonifyShowPopupModal(
+                                response.message,
+                                addToWishlistButton.data('product_name'),
+                                'success'
+                            );
+                        }
 
                         if (response.wishlist_count > 0) {
                             $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
