@@ -33,7 +33,7 @@ trait CommonDBFunctions {
 
 		global $wpdb;
 
-		return $wpdb->prefix . self::$db_prefix . self::$table_name;
+		return $wpdb->base_prefix . self::$db_prefix . self::$table_name;
 	}
 
 	/**

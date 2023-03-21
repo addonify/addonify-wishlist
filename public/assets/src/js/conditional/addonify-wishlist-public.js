@@ -377,11 +377,13 @@
                         // update button 
                         addToWishlistButton.addClass('added-to-wishlist');
 
-                        addonifyShowPopupModal(
-                            response.message,
-                            addToWishlistButton.data('product_name'),
-                            'success'
-                        );
+                        if ( addonifyWishlistJSObject.afterAddToWishlistAction !== 'none' ) {
+                            addonifyShowPopupModal(
+                                response.message,
+                                addToWishlistButton.data('product_name'),
+                                'success'
+                            );
+                        }
 
                         if (response.wishlist_count > 0) {
                             $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
@@ -420,6 +422,8 @@
          * @param {Object} thisButton Jquery object of the button clicked
          */
         function addonifyRemoveFromWishlist(thisButton) {
+
+            thisButton.addClass( 'loading' );
 
             let product_id = parseInt(thisButton.val() ? thisButton.val() : thisButton.data('product_id'))
             let wishlist_id = parseInt(thisButton.data('wishlist_id'))
@@ -468,6 +472,7 @@
                 },
                 "json"
             ).always(function() {
+                thisButton.removeClass( 'loading' );
                 if (parentProductRow) {
                     parentProductRow.remove();
                 }

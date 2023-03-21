@@ -24,6 +24,21 @@ if ( ! function_exists( 'addonify_wishlist_page_settings_fields' ) ) {
 		}
 
 		return array(
+			'show_wishlist_emptying_button'        => array(
+				'type'      => 'switch',
+				'className' => '',
+				'label'     => __( 'Show wishlist emptying button', 'addonify-wishlist' ),
+				'dependent' => array( 'enable_wishlist' ),
+				'value'     => addonify_wishlist_get_option( 'show_wishlist_emptying_button' ),
+			),
+			'wishlist_emptied_text'                => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Wishlist Emptied Text', 'addonify-wishlist' ),
+				'description' => __( 'Text to display in notice when wishlist is emptied.', 'addonify-wihlist' ),
+				'dependent'   => array( 'enable_wishlist', 'show_wishlist_emptying_button' ),
+				'value'       => addonify_wishlist_get_option( 'wishlist_emptied_text' ),
+			),
 			'empty_wishlist_label'                 => array(
 				'type'        => 'text',
 				'className'   => '',
@@ -37,7 +52,7 @@ if ( ! function_exists( 'addonify_wishlist_page_settings_fields' ) ) {
 				'className'   => '',
 				'label'       => __( 'Clear Wishlist Button Label', 'addonify-wishlist' ),
 				'description' => __( 'Set clear wishlist button label.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
+				'dependent'   => array( 'enable_wishlist', 'show_wishlist_emptying_button' ),
 				'value'       => addonify_wishlist_get_option( 'clear_wishlist_label' ),
 			),
 			'show_empty_wishlist_navigation_link'  => array(
