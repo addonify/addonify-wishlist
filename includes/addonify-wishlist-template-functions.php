@@ -177,9 +177,8 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 			}
 		} else {
 			if (
-				addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'show_popup_notice' ||
-				addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'none' ||
-				$in_wishlist
+				( addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) !== 'redirect_to_wishlist_page' ) ||
+				! is_user_logged_in()
 			) {
 
 				$add_to_wishlist_button_args['display_popup_notice'] = true;

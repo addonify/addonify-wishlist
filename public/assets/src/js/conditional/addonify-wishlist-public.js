@@ -423,6 +423,8 @@
          */
         function addonifyRemoveFromWishlist(thisButton) {
 
+            thisButton.addClass( 'loading' );
+
             let product_id = parseInt(thisButton.val() ? thisButton.val() : thisButton.data('product_id'))
             let wishlist_id = parseInt(thisButton.data('wishlist_id'))
 
@@ -470,6 +472,7 @@
                 },
                 "json"
             ).always(function() {
+                thisButton.removeClass( 'loading' );
                 if (parentProductRow) {
                     parentProductRow.remove();
                 }
