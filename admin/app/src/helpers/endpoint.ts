@@ -39,3 +39,14 @@ export const upgradeLanding: string =
  */
 
 export const docsLanding: string = "https://docs.addonify.com/";
+
+/**
+ *
+ * Endpoint: Github repo for recommended plugins.
+ * Used to display recommended plugins in dashboard.
+ *
+ * @since 2.0.0
+ */
+
+export const githubRepo: string =
+	'"https://raw.githubusercontent.com/addonify/recommended-products/main/products.json';
