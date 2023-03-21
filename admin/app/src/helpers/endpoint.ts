@@ -1,5 +1,15 @@
 /**
  *
+ * Base REST API endpoint for fetching and saving settings.
+ * Receiving the locoalized data from WordPress.
+ *
+ * @since 2.0.0
+ */
+
+export const apiEndpoint: string = "https://addonify.com/wp-json/addonify/v1";
+
+/**
+ *
  * Endpoint: Get sale notification.
  * Used to display sale badge in sidebar.
  *
