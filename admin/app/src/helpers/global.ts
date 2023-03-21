@@ -8,3 +8,13 @@
  */
 
 export const textdomain: string = "addonify-wishlist";
+
+/**
+ *
+ * Get the current version of the plugin.
+ * We are receiving the value of locolized variable.
+ *
+ * @since 2.0.0
+ */
+
+export const currentVersion = "2.0.0";

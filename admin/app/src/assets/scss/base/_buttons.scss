@@ -48,6 +48,19 @@
         background-color: var(--addonify_button_hover_background_color);
         text-decoration: none;
     }
+
+    &[data_loading="true"] {
+
+        cursor: not-allowed;
+        gap: 5px;
+        
+        .icon {
+
+            display: inline-flex;
+            line-height: 1;
+            animation: addonifySpinner 0.8s linear infinite;
+        }
+    }
 }
 
 .adfy-button:disabled {

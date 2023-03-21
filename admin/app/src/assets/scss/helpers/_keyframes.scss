@@ -1,5 +1,5 @@
 
-@keyframes pulse-ring {
+@keyframes addonifyPulseRring {
     
   0% {
     transform: scale(.33);
@@ -9,7 +9,7 @@
   }
 }
 
-@keyframes pulse-dot {
+@keyframes addonifyPulseDot {
 
   0% {
     transform: scale(.8);
@@ -22,7 +22,7 @@
   }
 }
 
-@keyframes spinner {
+@keyframes addonifySpinner {
 
   0% {
     transform: rotate(0deg);

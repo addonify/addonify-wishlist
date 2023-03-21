@@ -27,7 +27,7 @@ export const useSettingsStore = defineStore({
 			text_traform: ["default", "Uppercase", "Lowercase", "Capitalize"],
 		},
 		status: {
-			isLoading: true, // Flag if something is loading.
+			isLoading: false, // Flag if something is loading.
 			isSaving: false, // Flag if something is saving.
 			needSaving: false, // Flag if settings needs saving.
 			isDoingReset: false, // Flag if we are resetting settings.
