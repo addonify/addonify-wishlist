@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { dispatchToast } from "@helpers/message";
-import { githubRepo } from "@helpers/endpoint";
+import { productsList } from "@helpers/endpoint";
 import { textdomain } from "@helpers/global";
 
 /**
@@ -14,7 +14,7 @@ const { __ } = wp.i18n;
 /**
  *
  * Let's define products store.
- *
+ * 
  */
 export const useProductStore = defineStore({
 
@@ -27,6 +27,7 @@ export const useProductStore = defineStore({
 		hotAddons: {}, // Store hot recommended plugins.
 		generalAddons: {}, // Store general recommended plugins.
 		installedAddons: {}, // Store all installed plugins.
+
 		status: {
 			isFetching: true, // Fetching recommended plugins list from github.
 			isFetchingAllInstalledAddons: true, // Fetched all installed plugins.
@@ -43,13 +44,17 @@ export const useProductStore = defineStore({
 		 * @return {void} void
 		 */
 
-		async fetchGithubRepo() {
+		async fetchProductList() {
 
 			let errMessage = __('Error: couldn\'t fetch recommended plugins list.', textdomain);
 
 			try {
 
-				const res = await fetch(githubRepo);
+				const res = await fetch(productsList, {
+
+					method: 'GET',
+				});
+
 				const data = await res.json();
 
 				//console.log(data);
@@ -93,7 +98,7 @@ export const useProductStore = defineStore({
 		/**
 		* Action: Process the recommended plugins list.
 		* Create three arrays [hot, general & all]
-		* Called on fetchGithubRepo() action.
+		* Called on fetchProductList() action.
 		*
 		* @param {object} list
 		* @return {void} void

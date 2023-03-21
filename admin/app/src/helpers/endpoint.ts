@@ -48,5 +48,5 @@ export const docsLanding: string = "https://docs.addonify.com/";
  * @since 2.0.0
  */
 
-export const githubRepo: string =
+export const productsList: string =
 	'"https://raw.githubusercontent.com/addonify/recommended-products/main/products.json';
