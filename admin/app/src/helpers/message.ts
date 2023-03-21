@@ -20,7 +20,10 @@ const { __ } = wp.i18n;
  * @since 2.0.0
  */
 
-const dispatchToast = (message: string, type: string = "success"): void => {
+export const dispatchToast = (
+	message: string,
+	type: string = "success"
+): void => {
 	/**
 	 *
 	 * Define default options.

@@ -91,10 +91,6 @@ export const useSettingsStore = defineStore({
 			 *
 			 * Let's define a error message that can be displayed in toast alerts.
 			 */
-			let errorMessage = __(
-				"Something went wrong while fetching the settings!!!",
-				textdomain
-			);
 
 			try {
 				const res = await apiFetch({
@@ -125,7 +121,7 @@ export const useSettingsStore = defineStore({
 
 				console.log(err);
 
-				dispatchToast(errorMessage, "error");
+				dispatchToast(this.status.message, "error");
 			}
 		},
 
@@ -143,11 +139,6 @@ export const useSettingsStore = defineStore({
 			 *
 			 * Let's send the payload to the rest api endpoint.
 			 */
-
-			let errorMessage = __(
-				"Something went wrong while saving the settings!!!",
-				textdomain
-			);
 
 			try {
 				const res = await apiFetch({
