@@ -73,7 +73,7 @@ export const useSettingsStore = defineStore({
 		 * @since 2.0.0
 		 */
 		haveChanges: (state: any): boolean => {
-			return !isEqual(state.options, oldSettings) ? true : false;
+			return !isEqual(state.settings, oldSettings) ? true : false;
 		},
 	},
 
