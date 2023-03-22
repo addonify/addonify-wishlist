@@ -87,6 +87,9 @@ class Wishlist {
 	 * Migrate old usermeta wishlist data to new table.
 	 */
 	public function migrate_wishlist_data() {
+		if ( ! $this->check_wishlist_table_exists() ) {
+			return;
+		}
 		$wishlist_data = get_user_meta( get_current_user_id(), 'addonify-wishlist', true );
 		if ( ! empty( $wishlist_data ) ) {
 			$wishlist_data = json_decode( $wishlist_data, true );
@@ -115,6 +118,7 @@ class Wishlist {
 					$this->insert_multiple_rows( $insert_data );
 				}
 			}
+			delete_user_meta( get_current_user_id(), 'addonify-wishlist' );
 		}
 	}
 

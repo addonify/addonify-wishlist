@@ -99,6 +99,8 @@ class Addonify_Wishlist_Public {
 			return;
 		}
 
+		$this->maybe_migrate_metadata_to_table();
+
 		$this->wishlist_items = addonify_wishlist_get_wishlist_items();
 
 		$this->maybe_create_default_wishlist();
@@ -901,6 +903,13 @@ class Addonify_Wishlist_Public {
 			}
 		}
 		$this->wishlist_items = addonify_wishlist_get_wishlist_items();
+	}
+
+	/**
+	 * Migrate to table if not migrated already.
+	 */
+	private function maybe_migrate_metadata_to_table() {
+		$this->wishlist->migrate_wishlist_data();
 	}
 
 	/**
