@@ -40,7 +40,7 @@ const store = useSettingsStore();
 const confirmResetOptions = () => {
 	/**
 	 *
-	 * Ask before reset.
+	 * Let store handle the reset request.
 	 */
 	store.resetAllOptions();
 };

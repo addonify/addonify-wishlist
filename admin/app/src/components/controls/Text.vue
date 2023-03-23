@@ -73,16 +73,6 @@ let value = computed({
 					: __('Enter text here...', textdomain)
 			"
 			resize="vertical"
-			input-style="display:block;width: 100%;"
 		/>
 	</template>
 </template>
-
-<style scoped lang="scss">
-.adfy-options .el-textarea__inner {
-	display: block;
-	width: 100%;
-	font-family: monospace;
-	min-height: 200px;
-}
-</style>
