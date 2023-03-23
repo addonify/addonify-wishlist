@@ -62,16 +62,3 @@ let vModalValue = computed({
 		</el-radio-group>
 	</template>
 </template>
-<style lang="scss">
-.radio-input-group {
-	.el-radio-group {
-		.el-radio {
-			align-items: center;
-
-			.adfy-wishlist-icon {
-				font-size: 14px;
-			}
-		}
-	}
-}
-</style>
