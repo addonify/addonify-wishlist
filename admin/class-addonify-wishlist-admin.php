@@ -73,9 +73,9 @@ class Addonify_Wishlist_Admin {
 		// load styles in this plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
-			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'assets/fonts/icon.css', array(), $this->version, 'all' );
+			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'app/fonts/icon.css', array(), $this->version, 'all' );
 
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
+			//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
 		}
 	}
 
@@ -114,26 +114,26 @@ class Addonify_Wishlist_Admin {
 		// load scripts in plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
-			wp_enqueue_script( "{$this->plugin_name}-manifest" );
+			//wp_enqueue_script( "{$this->plugin_name}-manifest" );
 
-			wp_enqueue_script( "{$this->plugin_name}-vendor" );
+			//wp_enqueue_script( "{$this->plugin_name}-vendor" );
 
-			wp_enqueue_script( "{$this->plugin_name}-main" );
+			//wp_enqueue_script( "{$this->plugin_name}-main" );
 
-			wp_localize_script(
-				"{$this->plugin_name}-main",
-				'ADDONIFY_WISHLIST_LOCOLIZER',
-				array(
-					'admin_url'      => admin_url( '/' ),
-					'ajax_url'       => admin_url( 'admin-ajax.php' ),
-					'site_url'       => site_url( '/' ),
-					'rest_namespace' => 'addonify_wishlist_options_api',
-					'version_number' => $this->version,
-				)
-			);
+			//wp_localize_script(
+			//	"{$this->plugin_name}-main",
+			//	'ADDONIFY_WISHLIST_LOCOLIZER',
+			//	array(
+			//		'admin_url'      => admin_url( '/' ),
+			//		'ajax_url'       => admin_url( 'admin-ajax.php' ),
+			//		'site_url'       => site_url( '/' ),
+			//		'rest_namespace' => 'addonify_wishlist_options_api',
+			//		'version_number' => $this->version,
+			//	)
+			//);
 		}
 
-		wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
+		//wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
 	}
 
 	/**
@@ -225,7 +225,7 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function get_settings_screen_contents() {
 		?>
-		<div id="___adfy-wishlist-app___"></div>
+		<div id="addonify-wishlist-app"></div>
 		<?php
 	}
 

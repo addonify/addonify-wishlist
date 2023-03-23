@@ -1,0 +1,29 @@
+
+/* -------------------------------------------------------------------------- 
+	Typography control.
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-app {
+
+	.adfy-control[data_type="typography"] {
+
+		@include grid();
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: 30px;
+		row-gap: 30px;
+
+		.control-title {
+
+			@include flex();
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 15px;
+			font-size: 14px;
+			color: var(--addonify_base_ternary_text_color);
+		}
+
+		.input {
+
+		}
+	}
+}

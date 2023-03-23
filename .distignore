@@ -20,3 +20,9 @@ package-lock.json
 sftp-config.json
 composer.json
 composer.lock
+auto-imports.d.ts
+components.d.ts
+.editorconfig
+vite.config.js
+tsconfig.json
+postcss.config.cjs

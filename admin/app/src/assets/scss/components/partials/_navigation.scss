@@ -1,0 +1,84 @@
+/* -------------------------------------------------------------------------- 
+	Routes navigation links.
+-------------------------------------------------------------------------- */
+
+#adfy-navigation {
+
+    .route-lists {
+
+        @include flex();
+        gap: 10px;
+        flex-direction: column;
+        list-style: none;
+        margin: 0;
+
+        li {
+
+            display: block;
+            margin: 0;
+            padding: 0;
+
+            a {
+
+                @include grid();
+                grid-template-columns: 30px auto;
+                align-items: center;
+                font-size: 15px;
+                font-weight: normal;
+                line-height: 1;
+                padding: 20px 10px 18px 15px;
+                background-color: transparent;
+                box-shadow: none;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+                @include transition_delay();
+
+                &:hover {
+
+                    fill: var(--addonify_secondary_color);
+                    color: var(--addonify_secondary_color);
+                }
+
+                .icon {
+
+                    display: inline-flex;
+                    line-height: 1;
+
+                    svg {
+
+                        display: inline-flex;
+                        width: 20px;
+                        height: 20px;
+                        line-height: 1;
+                    }
+                }
+
+                .label {
+
+                    display: inline-flex;
+                    line-height: 1.5;
+                }
+
+                &.router-link-exact-active {
+
+                    fill: var(--addonify_primary_color);
+                    color: var(--addonify_primary_color);
+                    background-color: white;
+                    box-shadow: 0 0 60px 0 rgba( 0, 0, 0, 0.1 );
+                }
+
+                &.upsell-link {
+
+                    fill: var(--addonify_ternary_color);
+                    color: var(--addonify_ternary_color);
+
+                    &:hover {
+
+                        fill: var(--addonify_secondary_color);
+                        color: var(--addonify_secondary_color);
+                    }
+                }
+            }
+        }
+    }
+}

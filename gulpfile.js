@@ -99,6 +99,12 @@ const source__files__folders__to__compress = {
         '!./sftp-config.json',
         '!./webpack.mix.js',
         '!./babelrc',
+        '!./auto-imports.d.ts',
+        '!./components.d.ts',
+        '!./.editorconfig',
+        '!./vite.config.js',
+        '!./tsconfig.json',
+        '!./postcss.config.cjs'
     ],
 
     path__to__save__production__zip: "./",

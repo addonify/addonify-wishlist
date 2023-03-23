@@ -1,0 +1,65 @@
+/*================================================================
+[Define variables]
+==================================================================*/
+//
+// Since: 1.0.0
+// usage = color:var(--addonify_primary_color);
+/*==================================================================*/
+
+:root {
+  
+  /* -------------------------------------------------------------------------- 
+	  Colors variables
+  -------------------------------------------------------------------------- */
+
+  // Base colors
+  --addonify_primary_color: #0286e7;
+  --addonify_secondary_color: #2bc48a;
+  --addonify_ternary_color: #FF4949;
+  --addonify_base_text_color: #3c434a;
+  --addonify_base_ternary_text_color: #444444;
+  --addonify_base_link_color: #0366E0; // default link color
+  --addonify_base_link_hover_color: var(--addonify_secondary_color);
+  --addonify_border_color: #d5d5d5;
+
+  // Buttons
+  --addonify_button_text_color: white;
+  --addonify_button_background_color: #0286e7;
+  --addonify_button_hover_text_color: white;
+  --addonify_button_hover_background_color: var(--addonify_secondary_color);
+  --addonify_button_border_color: transparent;
+  --addonify_button_hover_border_color: transparent;
+  --addonify_button_border_width: 0;
+  --addonify_button_border_style: solid;
+
+  --addonify_text_button_color: var(--addonify_primary_color);
+  --addonify_text_button_hover_color: var(--addonify_secondary_color);
+
+
+  // Options
+  --addonify_option_box_solid_border_color: #ECECEC;
+
+  /* -------------------------------------------------------------------------- 
+	  Typography variables
+  -------------------------------------------------------------------------- */
+
+  // typography
+  --addonify_system_font_family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, Inter, Roboto, Segoe ui, System ui, sans-serif; // websafe
+  --addonify_monospace_font_family: monospace;
+
+  --addonify_base_font_family: 'Inter', sans-serif;
+  --addonify_base_font_weight: normal;
+  --addonify_heading_font_family: 'Manrope', sans-serif;
+  --addonify_heading_font_weight: 600;
+  --addonify_base_font_size: 16px;
+
+  --addonify_button_font_size: 15px;
+  --addonify_button_font_weight: normal;
+  --addonify_button_line_height: 1;
+
+  /* -------------------------------------------------------------------------- 
+	  Border radius
+  -------------------------------------------------------------------------- */
+
+  --addonify_buttons_border_radius: 3px;
+}

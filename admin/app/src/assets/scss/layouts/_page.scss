@@ -1,0 +1,18 @@
+/* -------------------------------------------------------------------------- 
+	Entire page.
+-------------------------------------------------------------------------- */
+
+[class*="page_addonify_wishlist"] {
+
+    /**
+    *
+    * Hide WordPress footer in our plugin pages.
+    *
+    * @since: 2.0.0
+    */
+    
+    #wpfooter {
+
+        display: none;
+    }
+}
