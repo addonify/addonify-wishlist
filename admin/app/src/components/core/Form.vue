@@ -1,4 +1,10 @@
 <script setup>
+/**
+ *
+ * Define props that we will use in this component.
+ * @since: 2.0.0
+ */
+
 let props = defineProps({
 	id: {
 		type: String,
