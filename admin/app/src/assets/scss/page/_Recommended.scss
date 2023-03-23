@@ -18,7 +18,7 @@
                 border-radius: 10px;
                 background-color: white;
                 box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.10);
-                @include transation_delay();
+                @include transition_delay();
 
                 &:hover {
 
@@ -75,12 +75,7 @@
 
             .el-skeleton__item {
 
-                background: linear-gradient(
-                    90deg,
-                    #e1e1e1 25%,
-                    #d8d8d8 37%,
-                    #c7c7c7 63%
-                );
+                background: linear-gradient(90deg,#e1e1e1 25%,#d8d8d8 37%,#c7c7c7 63%);
                 background-size: 400% 100%;
             }
         }

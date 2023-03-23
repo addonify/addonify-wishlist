@@ -7,8 +7,24 @@ import { currentVersion } from "@helpers/global";
 import Icon from "@components/core/Icon.vue";
 // @ts-ignore
 import { useSettingsStore } from "@stores/settings";
+// @ts-ignore
+import { textdomain } from "@helpers/global";
 
 const store = useSettingsStore();
+// @ts-ignore
+const { __ } = wp.i18n;
+/**
+ *
+ * Function to return the text for the save button.
+ *
+ * @return {string} string
+ */
+
+const saveButtonText = (): string => {
+	let saving = __("Saving ...", textdomain);
+	let save = __("Save Options", textdomain);
+	return store.status.isSaving ? saving : save;
+};
 </script>
 <template>
 	<header id="adfy-header">
@@ -21,13 +37,13 @@ const store = useSettingsStore();
 				<button
 					type="submit"
 					class="adfy-button"
-					:data_loading="store.status.isLoading"
-					:disabled="store.status.isLoading"
+					:data_loading="store.status.isSaving"
+					:disabled="store.status.isSaving"
 				>
-					Save Options
+					{{ saveButtonText() }}
 
 					<Icon
-						v-if="store.status.isLoading"
+						v-if="store.status.isSaving"
 						name="loading"
 						size="18px"
 					/>

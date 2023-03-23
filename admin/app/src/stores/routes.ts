@@ -11,10 +11,13 @@ export const useRoutesStore = defineStore({
 	id: "routes",
 
 	state: () => ({
-		routes: [], // Save the routes links.
+		data: {}, // An object that has "TAB" & section.
+		routes: {}, // Extracted routes from data.
 	}),
 
-	getters: {},
+	getters: {
+		extractRoutes: (state) => {},
+	},
 
 	actions: {},
 });

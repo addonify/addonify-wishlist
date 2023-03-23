@@ -1,9 +1,7 @@
-<script lang="ts" setup>
-// @ts-ignore
+<script setup>
+import { onMounted } from "vue";
 import Header from "@layouts/Header.vue";
-// @ts-ignore
 import Footer from "@layouts/Footer.vue";
-// @ts-ignore
 import Hero from "@components/partials/Hero.vue";
 </script>
 <template>

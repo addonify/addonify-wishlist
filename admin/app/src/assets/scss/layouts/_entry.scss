@@ -45,5 +45,15 @@
         max-width: 1800px;
         padding-left: 40px;
         padding-right: 40px;
+
+        /**
+        *
+        * Case where we are fetching routes links and options.
+        */
+        
+        &[data_loading="true"] {
+
+            grid-template-columns: auto 300px;
+        }
     }
 }
