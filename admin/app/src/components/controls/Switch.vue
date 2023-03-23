@@ -1,28 +1,17 @@
-<script lang="ts" setup>
+<script setup>
 import { computed } from "vue";
+import { Check, Close } from "@element-plus/icons-vue";
 
 /**
  *
  * Define props that we will use in this component.
- *
  * @since: 2.0.0
  */
 
-let props = defineProps({
+const props = defineProps({
 	modelValue: {
-		type: Boolean,
-		default: false,
+		type: [Boolean, Number],
 		required: true,
-	},
-	label: {
-		type: String,
-		default: "",
-		required: false,
-	},
-	style: {
-		type: String,
-		default: "default",
-		required: false,
 	},
 });
 
@@ -45,8 +34,11 @@ let value = computed({
 });
 </script>
 <template>
-	<template v-if="props.style === 'default'">
-		<el-checkbox v-model="value" label="{{props.label}}" size="large" />
-	</template>
-	<template v-if="props.style === 'checkbox-button'"></template>
+	<el-switch
+		v-model="value"
+		size="large"
+		inline-prompt
+		:active-icon="Check"
+		:inactive-icon="Close"
+	/>
 </template>
