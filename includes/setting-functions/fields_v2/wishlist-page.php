@@ -75,3 +75,4 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_page_v_2_options' ) ) {
 	}
 }
 
+add_filter( 'addonify_wishlist_wishlist_page_v_2_options', 'addonify_wishlist_wishlist_page_v_2_options' );

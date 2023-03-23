@@ -61,7 +61,7 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 				'label'       => __( 'After Add to Wishlist Action', 'addonify-wishlist' ),
 				'description' => __( 'Choose what to do after a product is successfully added to the wishlist.', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'after_add_to_wishlist_aciton' ),
+				'value'       => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
 				'choices'     => array(
 					'show_popup_notice'         => __( 'Show Popup Notice', 'addonify-wishlist' ),
 					'redirect_to_wishlist_page' => __( 'Redirect to Wishlist Page', 'addonify-wishlist' ),
@@ -126,3 +126,4 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 		);
 	}
 }
+add_filter( 'addonify_wishlist_general_v_2_options', 'addonify_wishlist_general_v_2_options' );

@@ -29,6 +29,15 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		 */
 		protected $rest_namespace = 'addonify_wishlist_options_api';
 
+		/**
+		 * The new namespace of the Rest API.
+		 *
+		 * @since    1.0.7
+		 * @access   protected
+		 * @var      string    $rest_namespace.
+		 */
+		protected $rest_namespace_v2 = 'addonify_wishlist_options_api/v2';
+
 
 		/**
 		 * Register new REST API endpoints.
@@ -56,6 +65,16 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 					'methods'             => 'GET',
 					'callback'            => array( $this, 'rest_handler_get_settings_fields' ),
 					'permission_callback' => array( $this, 'permission_callback' ),
+				)
+			);
+
+			register_rest_route(
+				$this->rest_namespace_v2,
+				'/get_options',
+				array(
+					'methods'             => 'GET',
+					'callback'            => array( $this, 'rest_handler_get_settings_fields_v2' ),
+					'permission_callback' => '__return_true',
 				)
 			);
 
@@ -109,6 +128,17 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		public function rest_handler_get_settings_fields() {
 
 			return addonify_wishlist_get_settings_fields();
+		}
+
+		/**
+		 * Callback function to get all settings options values.
+		 *
+		 * @since    2.0.0
+		 * @return array
+		 */
+		public function rest_handler_get_settings_fields_v2() {
+
+			return addonify_wishlist_v_2_get_settings_fields();
 		}
 
 

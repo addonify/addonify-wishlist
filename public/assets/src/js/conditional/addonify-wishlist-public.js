@@ -468,6 +468,12 @@
                         addonifyEmptyWishlistText(response.wishlist_count);
 
                         addonifyUndoRemoveFromWishlist( thisButton.data('product_name'), product_id, wishlist_id );
+                    } else {
+                        addonifyShowPopupModal(
+                            response.message,
+                            addToWishlistButton.data('product_name'),
+                            'error'
+                        );
                     }
                 },
                 "json"

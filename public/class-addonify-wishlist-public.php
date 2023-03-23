@@ -297,7 +297,7 @@ class Addonify_Wishlist_Public {
 				'addToWishlistActionSideBar'            => 'addonify_add_to_wishlist_sidebar_added_content',
 				'removeFromWishlistAfterAddedToCart'    => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
 				'removeAlreadyAddedProductFromWishlist' => (bool) addonify_wishlist_get_option( 'remove_already_added_product_from_wishlist' ),
-				'loginMessage'                          => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
+				'loginMessage'                          => addonify_wishlist_get_option( 'login_required_message' ),
 				'addedToWishlistText'                   => addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' ),
 				'initialAddToWishlistButtonLabel'       => addonify_wishlist_get_option( 'btn_label' ),
 				'alreadyInWishlistText'                 => __( 'Already in Wishlist', 'addonify-wishlist' ),
@@ -707,7 +707,7 @@ class Addonify_Wishlist_Public {
 				'ajax_remove_from_wishlist_error_return',
 				array(
 					'success' => false,
-					'message' => __( "Error removing {$product->get_title()} from the wishlist.", 'addonify-wishlist' ), //phpcs:ignore
+					'message' => addonify_wishlist_get_option( 'could_not_remove_from_wishlist_error_description' ), //phpcs:ignore
 				)
 			)
 		);
@@ -771,7 +771,7 @@ class Addonify_Wishlist_Public {
 				'addonify_wishlist_ajax_add_to_wishlist_return_error',
 				array(
 					'success' => false,
-					'message' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
+					'message' => addonify_wishlist_get_option( 'could_not_add_to_wishlist_error_description' ),
 				)
 			);
 		}

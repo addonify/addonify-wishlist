@@ -24,6 +24,19 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/
 
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/custom-css.php';
 
+/**
+ * Include required files for v2.
+ */
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/general.php';
+
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/popup-modal.php';
+
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/wishlist-button.php';
+
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/wishlist-page.php';
+
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/wishlist-sidebar.php';
+
 
 if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 	/**
@@ -84,6 +97,9 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'show_empty_wishlist_navigation_link'      => true,
 				'empty_wishlist_navigation_link'           => $page,
 				'empty_wishlist_navigation_link_label'     => __( 'Go to Shop', 'addonify-wishlist' ),
+				'login_required_message'                   => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
+				'could_not_add_to_wishlist_error_description' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
+				'could_not_remove_from_wishlist_error_description' => __( 'Something went wrong. <br>{product_name} was not removed wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
 
 				'load_styles_from_plugin'                  => false,
 				'wishlist_btn_text_color'                  => '#333333',
@@ -410,6 +426,234 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 					),
 				),
 				'tools'    => array(
+					'sections' => array(
+						'reset-options'  => array(
+							'type'   => 'options-box',
+							'fields' => array(
+								'reset-options' => array(
+									'label'          => esc_html__( 'Reset Options', 'addonify-wishlist' ),
+									'confirmText'    => esc_html__( 'Are you sure you want to reset all settings?', 'addonify-wishlist' ),
+									'confirmYesText' => esc_html__( 'Yes', 'addonify-wishlist' ),
+									'confirmNoText'  => esc_html__( 'No', 'addonify-wishlist' ),
+									'type'           => 'reset-option',
+									'description'    => esc_html__( 'All the settings will be set to default.', 'addonify-wishlist' ),
+								),
+							),
+						),
+						'export-options' => array(
+							'type'   => 'options-box',
+							'fields' => array(
+								'export-options' => array(
+									'label'       => esc_html__( 'Export Options', 'addonify-wishlist' ),
+									'description' => esc_html__( 'Backup all settings that can be imported in future.', 'addonify-wishlist' ),
+									'type'        => 'export-option',
+								),
+							),
+						),
+						'import-options' => array(
+							'type'   => 'options-box',
+							'title'  => esc_html__( 'Import Options', 'addonify-wishlist' ),
+							'fields' => array(
+								'import-options' => array(
+									'label'       => esc_html__( 'Import Options', 'addonify-wishlist' ),
+									'caption'     => esc_html__( 'Drop a file here or click here to upload.', 'addonify-wishlist' ),
+									'note'        => esc_html__( 'Only .json file is permitted.', 'addonify-wishlist' ),
+									'description' => esc_html__( 'Drag or upload the .json file that you had exported.', 'addonify-wishlist' ),
+									'type'        => 'import-option',
+									'className'   => 'fullwidth',
+								),
+							),
+						),
+					),
+				),
+			),
+		);
+	}
+}
+
+
+if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_values' ) ) {
+	/**
+	 * Get setting values.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return array Option values.
+	 */
+	function addonify_wishlist_v_2_get_settings_values() {
+
+		if ( addonify_wishlist_settings_defaults() ) {
+
+			$settings_values = array();
+
+			$setting_fields = addonify_wishlist_v_2_settings_fields();
+
+			foreach ( addonify_wishlist_settings_defaults() as $id => $value ) {
+
+				if ( array_key_exists( $id, $setting_fields ) ) {
+
+					$setting_type = $setting_fields[ $id ]['type'];
+
+					switch ( $setting_type ) {
+						case 'switch':
+							$settings_values[ $id ] = ( (int) addonify_wishlist_get_option( $id ) === 1 ) ? true : false;
+							break;
+						case 'number':
+							$settings_values[ $id ] = addonify_wishlist_get_option( $id );
+							break;
+						default:
+							$settings_values[ $id ] = addonify_wishlist_get_option( $id );
+					}
+				}
+			}
+
+			return $settings_values;
+		}
+	}
+}
+
+
+if ( ! function_exists( 'addonify_wishlist_v_2_update_settings' ) ) {
+	/**
+	 * Update settings
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $settings Setting.
+	 * @return bool true on success, false otherwise.
+	 */
+	function addonify_wishlist_v_2_update_settings( $settings = '' ) {
+
+		if (
+			is_array( $settings ) &&
+			count( $settings ) > 0
+		) {
+			$setting_fields = addonify_wishlist_v_2_settings_fields();
+
+			foreach ( $settings as $id => $value ) {
+
+				$sanitized_value = null;
+
+				$setting_type = $setting_fields[ $id ]['type'];
+
+				switch ( $setting_type ) {
+					case 'text':
+						$sanitized_value = sanitize_text_field( $value );
+						break;
+					case 'textarea':
+						$sanitized_value = sanitize_textarea_field( $value );
+						break;
+					case 'switch':
+						$sanitized_value = ( true === $value ) ? '1' : '0';
+						break;
+					case 'number':
+						$sanitized_value = (int) $value;
+						break;
+					case 'color':
+						$sanitized_value = sanitize_text_field( $value );
+						break;
+					case 'select':
+						$setting_choices = $setting_fields[ $id ]['choices'];
+						$sanitized_value = ( array_key_exists( $value, $setting_choices ) ) ? sanitize_text_field( $value ) : $setting_choices[0];
+						break;
+					default:
+						$sanitized_value = sanitize_text_field( $value );
+				}
+
+				if ( ! update_option( ADDONIFY_WISHLIST_DB_INITIALS . $id, $sanitized_value ) ) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+	}
+}
+
+/**
+ * Add setting fields into the global setting fields array.
+ *
+ * @since 2.0.0
+ * @param mixed $settings_fields Setting fields.
+ * @return array
+ */
+function addonify_wishlist_v_2_add_fields_to_settings_fields( $settings_fields ) {
+
+	$settings_fields = array_merge( $settings_fields, apply_filters( 'addonify_wishlist_general_v_2_options', array() ) );
+
+	$settings_fields = array_merge( $settings_fields, apply_filters( 'addonify_wishlist_popup_modal_v_2_options', array() ) );
+
+	$settings_fields = array_merge( $settings_fields, apply_filters( 'addonify_wishlist_wishlist_button_v_2_options', array() ) );
+
+	$settings_fields = array_merge( $settings_fields, apply_filters( 'addonify_wishlist_wishlist_page_v_2_options', array() ) );
+
+	$settings_fields = array_merge( $settings_fields, apply_filters( 'addonify_wishlist_wishlist_sidebar_v_2_options', array() ) );
+
+	return $settings_fields;
+}
+add_filter( 'addonify_wishlist_v_2_settings_fields', 'addonify_wishlist_v_2_add_fields_to_settings_fields' );
+
+
+if ( ! function_exists( 'addonify_wishlist_v_2_settings_fields' ) ) {
+	/**
+	 * Add setting fields into the global setting fields array.
+	 *
+	 * @since 2.0.0
+	 * @return array
+	 */
+	function addonify_wishlist_v_2_settings_fields() {
+		$setting_fields         = apply_filters( 'addonify_wishlist_v_2_settings_fields', array() );
+		$return_settings_fields = array();
+		foreach ( $setting_fields as $i => $field ) {
+			if ( 'sub_section' === $field['type'] ) {
+				$return_settings_fields = array_merge( $return_settings_fields, $field['sub_sections'] );
+				unset( $setting_fields[ $i ] );
+			}
+		}
+		$return_settings_fields = array_merge( $return_settings_fields, $setting_fields );
+		return $return_settings_fields;
+	}
+}
+
+if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
+	/**
+	 * Define settings sections and respective settings fields.
+	 *
+	 * @since 2.0.0
+	 * @return array
+	 */
+	function addonify_wishlist_v_2_get_settings_fields() {
+
+		return array(
+			'settings_values' => addonify_wishlist_v_2_get_settings_values(),
+			'tabs'            => array(
+				'general'          => array(
+					'title'    => __( 'General', 'addonify-wishlist' ),
+					'sections' => apply_filters( 'addonify_wishlist_general_v_2_options', array() ),
+				),
+				'popup_modal'      => array(
+					'title'    => __( 'Popup Modals', 'addonify-wishlist' ),
+					'sections' => apply_filters( 'addonify_wishlist_popup_modal_v_2_options', array() ),
+				),
+				'wishlist_button'  => array(
+					'title'    => __( 'Wishlist Button', 'addonify-wishlist' ),
+					'sections' => apply_filters( 'addonify_wishlist_wishlist_button_v_2_options', array() ),
+				),
+				'wishlist_page'    => array(
+					'title'    => __( 'Wishlist Page', 'addonify-wishlist' ),
+					'sections' => apply_filters( 'addonify_wishlist_wishlist_page_v_2_options', array() ),
+				),
+				'wishlist_sidebar' => array(
+					'title'    => __( 'Wishlist Sidebar', 'addonify-wishlist' ),
+					'sections' => apply_filters( 'addonify_wishlist_wishlist_sidebar_v_2_options', array() ),
+				),
+				'products'         => array(
+					'recommended' => array(
+						// Recommend plugins here.
+						'content' => __( 'Coming soon....', 'addonify-wishlist' ),
+					),
+				),
+				'tools'            => array(
 					'sections' => array(
 						'reset-options'  => array(
 							'type'   => 'options-box',

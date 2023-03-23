@@ -58,13 +58,38 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 			'error_modal'             => array(
 				'title'        => __( 'Error Modal', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
-				'sub_sections' => array(),
+				'sub_sections' => array(
+					'could_not_add_to_wishlist_error_description' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Product Could not be Added to Wishlist Text', 'addonify-wishlist' ),
+						'description' => __( '{product_name} placeholder will be replaced with the actual product name.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'could_not_add_to_wishlist_error_description' ),
+					),
+					'could_not_remove_from_wishlist_error_description' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Product Could not be Removed from Wishlist Text', 'addonify-wishlist' ),
+						'description' => __( '{product_name} placeholder will be replaced with the actual product name.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'could_not_remove_from_wishlist_error_description' ),
+					),
+				),
 			),
 			'login_modal'             => array(
 				'title'        => __( 'Login Modal', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
-					'login_btn_label' => array(
+					'login_required_message' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Login Required Description', 'addonify-wishlist' ),
+						'description' => __( 'Message displayed in modal when login is required.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'login_required_message' ),
+					),
+					'login_btn_label'        => array(
 						'type'        => 'text',
 						'className'   => '',
 						'label'       => __( 'Login Button Label', 'addonify-wishlist' ),
@@ -140,3 +165,4 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 	}
 }
 
+add_filter( 'addonify_wishlist_popup_modal_v_2_options', 'addonify_wishlist_popup_modal_v_2_options' );
