@@ -21,6 +21,7 @@ const store = useSettingsStore();
 <template>
 	<el-button
 		type="primary"
+		size="large"
 		@click="store.status.exportAllOptions"
 		:loading="store.status.isDoingExport"
 	>

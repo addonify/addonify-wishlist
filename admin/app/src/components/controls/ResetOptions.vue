@@ -56,7 +56,11 @@ const confirmResetOptions = () => {
 		@confirm="confirmResetOptions()"
 	>
 		<template #reference>
-			<el-button type="danger" :loading="store.status.isDoingReset">
+			<el-button
+				type="danger"
+				size="large"
+				:loading="store.status.isDoingReset"
+			>
 				{{ props.label }}
 			</el-button>
 		</template>
