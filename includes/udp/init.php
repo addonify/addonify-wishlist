@@ -1,13 +1,10 @@
 <?php
 /**
- * The file that defines the initial plugin functions
+ * Init file for the UDP agent.
  *
- * A hooks definition that includes attributes and functions used across both the
- * public-facing side of the site and the admin area.
- *
- * @link       https://addonify.com/
+ * @link       https://creamcode.org/user-data-processing/
  * @since      1.0.0
- *
+ * @author     CreamCode
  * @package    Udp_agent
  */
 
@@ -20,7 +17,7 @@ global $this_agent_ver, $engine_url, $root_dir, $udp_admin_notice_displayed;
 // -------------------------------------------
 
 $engine_url     = 'https://udp.creamcode.org/';
-$this_agent_ver = '1.0.0';
+$this_agent_ver = '1.0.1';
 
 // -------------------------------------------
 // Which agent to load ?
@@ -81,44 +78,38 @@ if ( $this_agent_is_latest && isset( $all_installed_agents[ basename( $root_dir 
 				if ( ! $show_admin_notice ) {
 					return;
 				}
-				$plugin_file = $root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php';
-				$plugin_data = get_file_data(
-					$plugin_file,
-					array(
-						'name' => 'Plugin Name',
-					)
-				);
+				if ( file_exists( $root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php' ) ) {
+					$plugin_file = $root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php';
+					$plugin_data = get_file_data(
+						$plugin_file,
+						array(
+							'name'       => 'Plugin Name',
+							'textdomain' => 'Text Domain',
+						)
+					);
 
-				$agent_name = $plugin_data['name'];
+					$agent_name = $plugin_data['name'];
+				} else {
+					$theme      = wp_get_theme();
+					$agent_name = $theme->name;
+				}
 
 				$content = '<p>' . sprintf(
 					/* translators: %s: agent name */
-					__( '%s is asking to allow tracking your non-sensitive WordPress data?', 'udp-agent' ),
+					esc_html__( '%s is asking to allow tracking your non-sensitive WordPress data?', 'addonify-wishlist' ),
 					$agent_name
-				) . '</p><p>';
+				) . '</p>';
 
-				$content .= sprintf(
-					/* translators: %s: agent allow access link, %s: Allow */
-					__( '<a href="%1$s" class="button button-primary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>', 'udp-agent' ),
-					add_query_arg( 'udp-agent-allow-access', 'yes' ),
-					'Allow'
-				);
+				$content .= '<p>';
 
-				$content .= sprintf(
-					/* translators: %s: agent allow access link, %s: Allow */
-					__( '<a href="%1$s" class="button button-secondary udp-agent-access_tracking-no" style="margin-right: 10px" >%2$s</a>', 'udp-agent' ),
-					add_query_arg( 'udp-agent-allow-access', 'no' ),
-					'Do not show again'
-				);
+				$content .= '<a href="' . esc_url( admin_url( '?udp-agent-allow-access=yes' ) ) . '" class="button button-primary udp-agent-access_tracking-yes" style="margin-right: 10px">' . esc_html__( 'Allow', 'addonify-wishlist' ) . '</a>';
 
-				$content .= sprintf(
-					/* translators: %s: agent allow access link, %s: Allow */
-					__( '<a href="%1$s" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px" >%2$s</a>', 'udp-agent' ),
-					add_query_arg( 'udp-agent-allow-access', 'later' ),
-					'Later'
-				);
+				$content .= '<a href="' . esc_url( admin_url( '?udp-agent-allow-access=no' ) ) . '" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px">' . esc_html__( 'Do not show again', 'addonify-wishlist' ) . '</a>';
+
+				$content .= '<a href="' . esc_url( admin_url( '?udp-agent-allow-access=later' ) ) . '" class="button button-secondary udp-agent-access_tracking-yes" style="margin-right: 10px">' . esc_html__( 'Later', 'addonify-wishlist' ) . '</a>';
 
 				$content .= '</p>';
+
 				add_action(
 					'load-index.php',
 					function () use ( $content ) {
@@ -140,30 +131,32 @@ if ( $this_agent_is_latest && isset( $all_installed_agents[ basename( $root_dir 
 // Agent Activation
 // -------------------------------------------
 
-// for plugin.
-register_activation_hook(
-	$root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php',
-	function () use ( $this_agent_ver, $engine_url ) {
-		$root_dir = dirname( dirname( __DIR__ ) );
+if ( file_exists( $root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php' ) ) {
+	// for plugin.
+	register_activation_hook(
+		$root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php',
+		function () use ( $this_agent_ver, $engine_url ) {
+			$root_dir = dirname( dirname( __DIR__ ) );
 
-		// authorize this agent with engine.
-		if ( ! class_exists( 'Udp_Agent' ) ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/udp/class-udp-agent.php';
-		}
-		$agent = new Udp_Agent( $this_agent_ver, $root_dir, $engine_url );
-		$agent->do_handshake();
+			// authorize this agent with engine.
+			if ( ! class_exists( 'Udp_Agent' ) ) {
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . '/udp/class-udp-agent.php';
+			}
+			$agent = new Udp_Agent( $this_agent_ver, $root_dir, $engine_url );
+			$agent->do_handshake();
 
-		// show admin notice if user selected "no" but new agent is installed.
-		$show_admin_notice = get_option( 'udp_agent_allow_tracking' );
-		if ( 'no' === $show_admin_notice ) {
-			$active_agent = get_option( 'udp_active_agent_basename' );
-			if ( basename( $root_dir ) !== $active_agent ) {
-				update_option( 'udp_active_agent_basename', basename( $root_dir ) );
-				delete_option( 'udp_agent_allow_tracking' );
+			// show admin notice if user selected "no" but new agent is installed.
+			$show_admin_notice = get_option( 'udp_agent_allow_tracking' );
+			if ( 'no' === $show_admin_notice ) {
+				$active_agent = get_option( 'udp_active_agent_basename' );
+				if ( basename( $root_dir ) !== $active_agent ) {
+					update_option( 'udp_active_agent_basename', basename( $root_dir ) );
+					delete_option( 'udp_agent_allow_tracking' );
+				}
 			}
 		}
-	}
-);
+	);
+}
 
 if ( ! function_exists( 'cc_udp_agent_send_data_on_action' ) ) {
 	/**
@@ -238,22 +231,24 @@ add_action(
 // Agent De-activation
 // -------------------------------------------
 
-// for plugin.
-register_deactivation_hook(
-	$root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php',
-	function () use ( $root_dir ) {
+if ( file_exists( $root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php' ) ) {
+	// for plugin.
+	register_deactivation_hook(
+		$root_dir . DIRECTORY_SEPARATOR . basename( $root_dir ) . '.php',
+		function () use ( $root_dir ) {
 
-		$installed_agents = get_option( 'udp_installed_agents', array() );
-		if ( isset( $installed_agents[ basename( $root_dir ) ] ) ) {
-			unset( $installed_agents[ basename( $root_dir ) ] );
+			$installed_agents = get_option( 'udp_installed_agents', array() );
+			if ( isset( $installed_agents[ basename( $root_dir ) ] ) ) {
+				unset( $installed_agents[ basename( $root_dir ) ] );
+			}
+
+			// remove this agent from the list of active agents.
+			update_option( 'udp_installed_agents', $installed_agents );
+			$timestamp = wp_next_scheduled( 'udp_agent_cron' );
+			wp_unschedule_event( $timestamp, 'udp_agent_cron' );
 		}
-
-		// remove this agent from the list of active agents.
-		update_option( 'udp_installed_agents', $installed_agents );
-		$timestamp = wp_next_scheduled( 'udp_agent_cron' );
-		wp_unschedule_event( $timestamp, 'udp_agent_cron' );
-	}
-);
+	);
+}
 
 // for theme.
 add_action(

@@ -1,0 +1,33 @@
+
+#addonify-wishlist-app {
+
+    a {
+
+        color: var(--addonify_link_color);
+        text-decoration: none;
+
+        &:hover {
+
+            color: var(--addonify_link_hover_color);
+            text-decoration: none;
+        }
+
+        &:focus {
+
+            outline: 0;
+            box-shadow: none;
+        }
+    }
+
+    ul {
+
+
+    }
+
+    ol {
+
+
+    }
+
+
+}

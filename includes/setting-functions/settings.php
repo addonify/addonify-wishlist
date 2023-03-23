@@ -20,6 +20,8 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/
 
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/sidebar.php';
 
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/wishlist-page.php';
+
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields/custom-css.php';
 
 
@@ -31,6 +33,13 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 	 */
 	function addonify_wishlist_settings_defaults( $setting_id = '' ) {
 
+		$shop = get_page_by_title( 'Shop' );
+		if ( null !== $shop ) {
+			$page = 'Shop';
+		} else {
+			$page = '';
+		}
+
 		$defaults = apply_filters(
 			'addonify_wishlist_setting_defaults',
 			array(
@@ -39,7 +48,6 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'require_login'                            => false,
 				'if_not_login_action'                      => 'default',
 				'remove_from_wishlist_if_added_to_cart'    => true,
-				'cookies_lifetime'                         => 30,
 				'btn_position'                             => 'before_add_to_cart',
 				'btn_position_on_single'                   => 'after_add_to_cart_form',
 				'btn_label'                                => __( 'Add to wishlist', 'addonify-wishlist' ),
@@ -66,6 +74,17 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'sidebar_btn_icon'                         => 'heart-style-one',
 				'ajaxify_remove_from_wishlist_button'      => true,
 				'view_wishlist_page_button_label'          => __( 'View All Wishlist Items', 'addonify-wishlist' ),
+				'empty_wishlist_label'                     => __( 'Empty wishlist.', 'addonify-wishlist' ),
+				'clear_wishlist_label'                     => __( 'Clear Wishlist!', 'addonify-wishlist' ),
+				'sidebar_empty_wishlist_label'             => __( 'Empty wishlist.', 'addonify-wishlist' ),
+				'undo_action_prelabel_text'                => __( '{product_name} has been removed.', 'addonify-wishlist' ),
+				'undo_action_label'                        => __( 'Undo?', 'addonify-wishlist' ),
+				'undo_notice_timeout'                      => 5,
+				'icon_position'                            => 'left',
+				'show_empty_wishlist_navigation_link'      => true,
+				'empty_wishlist_navigation_link'           => $page,
+				'empty_wishlist_navigation_link_label'     => __( 'Go to Shop', 'addonify-wishlist' ),
+
 				'load_styles_from_plugin'                  => false,
 				'wishlist_btn_text_color'                  => '#333333',
 				'wishlist_btn_icon_color'                  => '#333333',
@@ -255,6 +274,8 @@ function addonify_wishlist_add_fields_to_settings_fields( $settings_fields ) {
 
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_settings_fields() );
 
+	$settings_fields = array_merge( $settings_fields, addonify_wishlist_page_settings_fields() );
+
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_styles_settings_fields() );
 
 	$settings_fields = array_merge( $settings_fields, addonify_wishlist_sidebar_modal_toggle_button_styles_settings_fields() );
@@ -310,6 +331,11 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 							'title'       => __( 'Wishlist Sidebar Options', 'addonify-wishlist' ),
 							'description' => '',
 							'fields'      => addonify_wishlist_sidebar_settings_fields(),
+						),
+						'wishlist_page'          => array(
+							'title'       => __( 'Wishlist Page Options', 'addonify-wishlist' ),
+							'description' => '',
+							'fields'      => addonify_wishlist_page_settings_fields(),
 						),
 					),
 				),

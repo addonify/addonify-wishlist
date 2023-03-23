@@ -59,7 +59,7 @@ class Addonify_Wishlist_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -71,11 +71,11 @@ class Addonify_Wishlist_Admin {
 	public function enqueue_styles() {
 
 		// load styles in this plugin page only.
-		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
-			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'assets/fonts/icon.css', array(), $this->version, 'all' );
+			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'app/fonts/icon.css', array(), $this->version, 'all' );
 
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
+			//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
 		}
 	}
 
@@ -87,49 +87,62 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		wp_register_script( 
-			"{$this->plugin_name}-manifest", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js', 
-			null, 
-			$this->version, 
-			true 
+		wp_register_script(
+			"{$this->plugin_name}-manifest",
+			plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js',
+			null,
+			$this->version,
+			true
 		);
 
-		wp_register_script( 
-			"{$this->plugin_name}-vendor", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js', 
-			array(  "{$this->plugin_name}-manifest" ), 
-			$this->version, 
-			true 
+		wp_register_script(
+			"{$this->plugin_name}-vendor",
+			plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js',
+			array( "{$this->plugin_name}-manifest" ),
+			$this->version,
+			true
 		);
 
-		wp_register_script( 
-			"{$this->plugin_name}-main", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/main.js', 
-			array("{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ), 
-			$this->version, 
-			true 
+		wp_register_script(
+			"{$this->plugin_name}-main",
+			plugin_dir_url( __FILE__ ) . 'assets/js/main.js',
+			array( "{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ),
+			$this->version,
+			true
 		);
 
 		// load scripts in plugin page only.
-		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
-			wp_enqueue_script( "{$this->plugin_name}-manifest" );
+			//wp_enqueue_script( "{$this->plugin_name}-manifest" );
 
-			wp_enqueue_script( "{$this->plugin_name}-vendor" );
+			//wp_enqueue_script( "{$this->plugin_name}-vendor" );
 
-			wp_enqueue_script( "{$this->plugin_name}-main" );
+			//wp_enqueue_script( "{$this->plugin_name}-main" );
 
-			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WISHLIST_LOCOLIZER', array(
-				'admin_url'  						=> admin_url( '/' ),
-				'ajax_url'   						=> admin_url( 'admin-ajax.php' ),
-				'site_url'   						=> site_url( '/' ),
-				'rest_namespace' 					=> 'addonify_wishlist_options_api',
-				'version_number' 					=> $this->version,
-			) );
+			//wp_localize_script(
+			//	"{$this->plugin_name}-main",
+			//	'ADDONIFY_WISHLIST_LOCOLIZER',
+			//	array(
+			//		'admin_url'      => admin_url( '/' ),
+			//		'ajax_url'       => admin_url( 'admin-ajax.php' ),
+			//		'site_url'       => site_url( '/' ),
+			//		'rest_namespace' => 'addonify_wishlist_options_api',
+			//		'version_number' => $this->version,
+			//	)
+			//);
 		}
 
-		wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
+		//wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
+	}
+
+	/**
+	 * Admin initial functions.
+	 */
+	public function admin_init() {
+		$this->maybe_create_table();
+
+		$this->maybe_show_table_created_message();
 	}
 
 
@@ -151,36 +164,35 @@ class Addonify_Wishlist_Admin {
 
 		if ( ! $parent_menu_slug ) {
 
-			add_menu_page( 
-				'Addonify Settings', 
-				'Addonify', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				'dashicons-superhero', 
-				70 
+			add_menu_page(
+				'Addonify Settings',
+				'Addonify',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				'dashicons-superhero',
+				70
 			);
 
-			add_submenu_page( 
-				$this->settings_page_slug, 
-				'Wishlist Settings', 
-				'Wishlist', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				1 
+			add_submenu_page(
+				$this->settings_page_slug,
+				'Wishlist Settings',
+				'Wishlist',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				1
 			);
 
 		} else {
-			
-			add_submenu_page( 
-				$parent_menu_slug, 
-				'Wishlist Settings', 
-				'Wishlist', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				1 
+			add_submenu_page(
+				$parent_menu_slug,
+				'Wishlist Settings',
+				'Wishlist',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				1
 			);
 		}
 	}
@@ -213,7 +225,7 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function get_settings_screen_contents() {
 		?>
-		<div id="___adfy-wishlist-app___"></div>
+		<div id="addonify-wishlist-app"></div>
 		<?php
 	}
 
@@ -250,14 +262,95 @@ class Addonify_Wishlist_Admin {
 
 		$wishlist_page_id = addonify_wishlist_get_option( 'wishlist_page' ) ? (int) addonify_wishlist_get_option( 'wishlist_page' ) : '';
 
-		if ( 
-			get_post_type( $post->ID ) == 'page' && 
-			$post->ID == $wishlist_page_id 
+		if (
+			get_post_type( $post->ID ) === 'page' &&
+			(int) $post->ID === (int) $wishlist_page_id
 		) {
 			$states[] = __( 'Addonify Wishlist Page', 'addonify-wishlist' );
 		}
 
 		return $states;
+	}
+
+	/**
+	 * Create wishlist table if it does not exists.
+	 */
+	public function maybe_create_table() {
+		if ( isset( $_GET['addonify-Wishlist-Install-Table'] ) ) { // phpcs:ignore
+			$wishlist = new Addonify\Wishlist();
+			$wishlist->create_table();
+			$wishlist->migrate_wishlist_data();
+			wp_safe_redirect( esc_html( add_query_arg( 'addonify-wishlist-table-installed', true, admin_url() ) ) );
+			exit;
+		}
+	}
+
+	/**
+	 * Show table created message after table created.
+	 */
+	public function maybe_show_table_created_message() {
+		add_action(
+			'admin_notices',
+			function () {
+				if ( isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
+					$wishlist   = new Addonify\Wishlist();
+					$table_name = $wishlist->get_table_name();
+					if ( $wishlist->check_table_exists( $table_name ) ) {
+						?>
+						<div class="notice notice-success is-dismissible">
+							<h3><?php esc_html_e( 'Addonify Wishlist database updated', 'addonify-wishlist' ); ?></h3>
+							<p>
+							<?php esc_html_e( 'Addonify Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
+							</p>
+							<button class="button button-primary">
+								<?php esc_html_e( 'Thanks!', 'addonify-wishlist' ); ?>
+							</button>
+						</div>
+						<?php
+					} else {
+						?>
+						<div class="notice notice-error is-dismissible">
+							<h3><?php esc_html_e( 'Addonify Wishlist database could not updated', 'addonify-wishlist' ); ?></h3>
+							<p>
+								<?php esc_html_e( 'There had been an error while updating Addonify Wishlist database. Please, try again. If the issue persists please contact plugin support.', 'addonify-wishlist' ); ?>
+							</p>
+							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
+								<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
+							</a>
+						</div>
+						<?php
+					}
+				}
+			}
+		);
+	}
+
+	/**
+	 * Show insert table notice on admin dashboard if not exists.
+	 */
+	public function maybe_show_insert_table_notice() {
+		$wishlist   = new Addonify\Wishlist();
+		$table_name = $wishlist->get_table_name();
+		if ( ! $wishlist->check_table_exists( $table_name ) && ! isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
+			add_action(
+				'admin_notices',
+				function () {
+					?>
+					<div class="notice notice-info">
+						<h3>
+							<?php esc_html_e( 'Addonify Wishlist database update required', 'addonify-wishlist' ); ?>
+						</h3>
+						<p>
+							<?php esc_html_e( 'Update your database to keep the plugin running smoothly. The database update process takes a few moments, so please be patient.', 'addonify-wishlist' ); ?>
+						</p>
+						<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
+							<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
+						</a>
+					</div>
+					<?php
+				}
+			);
+		}
 	}
 
 }

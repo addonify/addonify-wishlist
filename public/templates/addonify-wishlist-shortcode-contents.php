@@ -18,6 +18,11 @@ if ( function_exists( 'wc_print_notices' ) ) {
 ?>
 
 <div id="addonify-wishlist-page-container">
+
+	<div id="addonify-wishlist-undo-deleted-product">
+	</div>
+	<div id="addonify-wishlist-empty">
+	</div>
 	<?php do_action( 'addonify_wishlist_before_wishlist_form' ); ?>
 	<?php
 	if (
@@ -42,6 +47,15 @@ if ( function_exists( 'wc_print_notices' ) ) {
 				<tbody>
 					<?php
 					foreach ( $wishlist_product_ids as $product_id ) {
+						$wishlist_attr = '';
+						if ( is_user_logged_in() ) {
+							$wishlist = new Addonify\Wishlist();
+
+							$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product_id );
+							if ( $parent_wishlist_id ) {
+								$wishlist_attr = 'data-wishlist_id=' . $parent_wishlist_id;
+							}
+						}
 
 						$product = wc_get_product( $product_id );
 						?>
@@ -56,6 +70,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 										name="addonify_wishlist_remove"
 										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product_id ); ?>"
+										<?php echo esc_attr( $wishlist_attr ); ?>
 									>
 										<i class="adfy-wishlist-icon trash-2"></i>
 									</button>
@@ -69,6 +84,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 										name="addonify-remove-from-wishlist"
 										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
 										value="<?php echo esc_attr( $product_id ); ?>"
+										<?php echo esc_attr( $wishlist_attr ); ?>
 									>
 										<i class="adfy-wishlist-icon trash-2"></i>
 									</button>
@@ -126,13 +142,17 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-page-toolbar">
 				<?php if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) : ?>
-					<button type="button" id="addonify-wishlist__clear-all" class="button">Clear Wishlist</button>
+					<button type="button" id="addonify-wishlist__clear-all" class="button"><?php echo esc_html( addonify_wishlist_get_option( 'clear_wishlist_label' ) ); ?></button>
 				<?php endif ?>
 			</div>		
 		</form>
 		<?php
 	} else {
-		echo esc_html__( 'Your wishlist is empty.', 'addonify-wishlist' );
+		echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
+		if ( addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ) ) {
+			$page_link = @get_page_link( get_page_by_title( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ); // phpcs:ignore
+			echo "<a href='" . esc_url( $page_link ) . "'>" . esc_html( addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ) ) . '</a>';
+		}
 	}
 	?>
 	<?php do_action( 'addonify_wishlist_after_wishlist_form' ); ?>

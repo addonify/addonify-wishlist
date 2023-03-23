@@ -57,15 +57,6 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				),
 				'value'       => addonify_wishlist_get_option( 'if_not_login_action' ),
 			),
-			'cookies_lifetime'                      => array(
-				'type'        => 'number',
-				'className'   => '',
-				'typeStyle'   => 'toggle', // Values for typeStyle are default, toggle & slider.
-				'label'       => __( 'Save Wishlist Cookie for [ x ] days', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'description' => __( 'Set the number of days to save the Wishlist data in browser cookie.', 'addonify-wsihlist' ),
-				'value'       => addonify_wishlist_get_option( 'cookies_lifetime' ),
-			),
 			'after_add_to_wishlist_action'          => array(
 				'type'        => 'select',
 				'className'   => '',
@@ -76,6 +67,7 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'choices'     => array(
 					'show_popup_notice'         => __( 'Show Popup Notice', 'addonify-wishlist' ),
 					'redirect_to_wishlist_page' => __( 'Redirect to Wishlist Page', 'addonify-wishlist' ),
+					'none'                      => __( 'None', 'addonify-wishlist' ),
 				),
 			),
 			'remove_from_wishlist_if_added_to_cart' => array(
@@ -92,6 +84,31 @@ if ( ! function_exists( 'addonify_wishlist_general_setting_fields' ) ) {
 				'description' => __( 'Remove the product from wishlist with ajax call.', 'addonify-wishlist' ),
 				'dependent'   => array( 'enable_wishlist', 'require_login' ),
 				'value'       => addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ),
+			),
+			'undo_action_prelabel_text'             => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Text Before Undo Action Label', 'addonify-wishlist' ),
+				'description' => __( 'Text displayed before undo action label. The placeholder, \'{product_name}\', when used,  is replaced by Product Name.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'undo_action_prelabel_text' ),
+			),
+			'undo_action_label'                     => array(
+				'type'        => 'text',
+				'className'   => '',
+				'label'       => __( 'Undo Action Label', 'addonify-wishlist' ),
+				'description' => __( 'Set undo action label.', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'value'       => addonify_wishlist_get_option( 'undo_action_label' ),
+			),
+			'undo_notice_timeout'                   => array(
+				'type'        => 'number',
+				'className'   => '',
+				'typeStyle'   => 'toggle', // Values for typeStyle are default, toggle & slider.
+				'label'       => __( 'Undo Notice Timeout (in seconds)', 'addonify-wishlist' ),
+				'dependent'   => array( 'enable_wishlist' ),
+				'description' => __( 'Set the time till when the undo notice is to displayed.', 'addonify-wsihlist' ),
+				'value'       => addonify_wishlist_get_option( 'undo_notice_timeout' ),
 			),
 		);
 	}

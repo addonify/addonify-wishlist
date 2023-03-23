@@ -128,6 +128,25 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 1.1.4 - ? = 
+
+- Added: Add Wishlist table on plugin activate.
+- Added: Migrate data from earlier version on both activation and manually migrate from admin notice.
+- Removed: Cookie lifetime(time for which user wishlist data persists).
+- Update: optionally load js file when user logged in and for guest users.
+
+= 1.1.3 - 03 March, 2023 =
+
+- Updated : UDP updated.
+- Added : Shortcode for 'add-to-wishist' button.
+- Updated: Undo remove from wishlist action. Add undo notice timeout time option, action text, and undo link label.
+- Updated: For 0 value of the setting, Save Wishlist Cookie for [x] days, wishlist data remains forever.
+- Added: Option for icon position on Add to Wishlist button.
+- Added: Text option for empty wishlist in wishlist sidebar and wishlist page.
+- Removed: Footer notification for removed product in wishlist sidebar.
+- Added: Spinner when performing undo removed item.
+- Added: Stock status in each product in wishlist sidebar.
+
 = 1.1.2 - 22 February , 2023 =
 
 - Added: Clear Wishlist button in wishlist shortcode content for removing all items in wishlist.

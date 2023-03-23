@@ -99,6 +99,11 @@ class Addonify_Wishlist {
 	private function load_dependencies() {
 
 		/**
+		 * Wishlist Database functions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/db/class-wishlist.php';
+
+		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
@@ -115,14 +120,6 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-addonify-wishlist-admin.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public.php';
-
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
-
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/settings.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/helpers.php';
@@ -132,6 +129,23 @@ class Addonify_Wishlist {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-functions.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-hooks.php';
+
+		$wishlist   = new Addonify\Wishlist();
+		$table_name = $wishlist->get_table_name();
+		if ( $wishlist->check_table_exists( $table_name ) ) {
+
+			/**
+			 * The class responsible for defining all actions that occur in the public-facing
+			 * side of the site.
+			 */
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
+		} else {
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public-deprecated.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions-deprecated.php';
+		}
 
 		/**
 		 * User data processing functions.
@@ -173,6 +187,13 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		/**
+		 * Maybe create table when plugin updates.
+		 */
+		$this->loader->add_action( 'upgrader_process_complete', $this, 'check_for_table', 20, 2 );
+
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'admin_init' );
+
 		// admin menu.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_callback', 20 );
 
@@ -182,11 +203,13 @@ class Addonify_Wishlist {
 		// show notice if woocommerce is not active.
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'show_woocommerce_not_active_notice_callback' );
 
+		// show migrate data to new table notice if table not created.
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'maybe_show_insert_table_notice' );
+
 		// add custom post status "Addonify Wishlist Page" after page name.
 		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
 
 	}
-
 
 	/**
 	 * Register rest api endpoints for admin settings page.
@@ -207,8 +230,13 @@ class Addonify_Wishlist {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
-		$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
+		$wishlist   = new Addonify\Wishlist();
+		$table_name = $wishlist->get_table_name();
+		if ( $wishlist->check_table_exists( $table_name ) ) {
+			$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
+		} else {
+			$plugin_public = new Addonify_Wishlist_Public_Deprecated( $this->get_plugin_name(), $this->get_version() );
+		}
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'public_init' );
 	}
@@ -255,6 +283,26 @@ class Addonify_Wishlist {
 	public function get_version() {
 
 		return $this->version;
+	}
+
+	/**
+	 * Function runs during upgrade.
+	 *
+	 * @param object $upgrader_object Upgrader Object.
+	 * @param array  $options Options.
+	 */
+	public function check_for_table( $upgrader_object, $options ) {
+		$current_plugin_path_name = plugin_basename( ADDONIFY_WISHLIST_PLUGIN_FILE );
+
+		if ( 'update' === $options['action'] && 'plugin' === $options['type'] ) {
+			foreach ( $options['plugins'] as $each_plugin ) {
+				if ( $each_plugin === $current_plugin_path_name ) {
+					$wishlist = new Addonify\Wishlist();
+					$wishlist->create_table();
+					$wishlist->migrate_wishlist_data();
+				}
+			}
+		}
 	}
 }
 
