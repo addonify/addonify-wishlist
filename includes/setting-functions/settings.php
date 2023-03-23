@@ -220,35 +220,36 @@ if ( ! function_exists( 'addonify_wishlist_update_settings' ) ) {
 			foreach ( $settings as $id => $value ) {
 
 				$sanitized_value = null;
+				if ( array_key_exists( $id, $setting_fields ) ) {
+					$setting_type = $setting_fields[ $id ]['type'];
 
-				$setting_type = $setting_fields[ $id ]['type'];
+					switch ( $setting_type ) {
+						case 'text':
+							$sanitized_value = sanitize_text_field( $value );
+							break;
+						case 'textarea':
+							$sanitized_value = sanitize_textarea_field( $value );
+							break;
+						case 'switch':
+							$sanitized_value = ( true === $value ) ? '1' : '0';
+							break;
+						case 'number':
+							$sanitized_value = (int) $value;
+							break;
+						case 'color':
+							$sanitized_value = sanitize_text_field( $value );
+							break;
+						case 'select':
+							$setting_choices = $setting_fields[ $id ]['choices'];
+							$sanitized_value = ( array_key_exists( $value, $setting_choices ) ) ? sanitize_text_field( $value ) : $setting_choices[0];
+							break;
+						default:
+							$sanitized_value = sanitize_text_field( $value );
+					}
 
-				switch ( $setting_type ) {
-					case 'text':
-						$sanitized_value = sanitize_text_field( $value );
-						break;
-					case 'textarea':
-						$sanitized_value = sanitize_textarea_field( $value );
-						break;
-					case 'switch':
-						$sanitized_value = ( true === $value ) ? '1' : '0';
-						break;
-					case 'number':
-						$sanitized_value = (int) $value;
-						break;
-					case 'color':
-						$sanitized_value = sanitize_text_field( $value );
-						break;
-					case 'select':
-						$setting_choices = $setting_fields[ $id ]['choices'];
-						$sanitized_value = ( array_key_exists( $value, $setting_choices ) ) ? sanitize_text_field( $value ) : $setting_choices[0];
-						break;
-					default:
-						$sanitized_value = sanitize_text_field( $value );
-				}
-
-				if ( ! update_option( ADDONIFY_WISHLIST_DB_INITIALS . $id, $sanitized_value ) ) {
-					return false;
+					if ( ! update_option( ADDONIFY_WISHLIST_DB_INITIALS . $id, $sanitized_value ) ) {
+						return false;
+					}
 				}
 			}
 
@@ -471,6 +472,100 @@ if ( ! function_exists( 'addonify_wishlist_get_settings_fields' ) ) {
 	}
 }
 
+if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_values' ) ) {
+	/**
+	 * Get setting values.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return array Option values.
+	 */
+	function addonify_wishlist_v_2_get_settings_values() {
+
+		if ( addonify_wishlist_settings_defaults() ) {
+
+			$settings_values = array();
+
+			$setting_fields = addonify_wishlist_v_2_settings_fields();
+
+			foreach ( addonify_wishlist_settings_defaults() as $id => $value ) {
+
+				$setting_type = $setting_fields[ $id ]['type'];
+
+				switch ( $setting_type ) {
+					case 'switch':
+						$settings_values[ $id ] = ( (int) addonify_wishlist_get_option( $id ) === 1 ) ? true : false;
+						break;
+					case 'number':
+						$settings_values[ $id ] = addonify_wishlist_get_option( $id );
+						break;
+					default:
+						$settings_values[ $id ] = addonify_wishlist_get_option( $id );
+				}
+			}
+
+			return $settings_values;
+		}
+	}
+}
+
+if ( ! function_exists( 'addonify_wishlist_v_2_update_settings' ) ) {
+	/**
+	 * Update settings
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $settings Setting.
+	 * @return bool true on success, false otherwise.
+	 */
+	function addonify_wishlist_v_2_update_settings( $settings = '' ) {
+
+		if (
+			is_array( $settings ) &&
+			count( $settings ) > 0
+		) {
+			$setting_fields = addonify_wishlist_v_2_settings_fields();
+
+			foreach ( $settings as $id => $value ) {
+
+				$sanitized_value = null;
+				if ( array_key_exists( $id, $setting_fields ) ) {
+					$setting_type = $setting_fields[ $id ]['type'];
+
+					switch ( $setting_type ) {
+						case 'text':
+							$sanitized_value = sanitize_text_field( $value );
+							break;
+						case 'textarea':
+							$sanitized_value = sanitize_textarea_field( $value );
+							break;
+						case 'switch':
+							$sanitized_value = ( true === $value ) ? '1' : '0';
+							break;
+						case 'number':
+							$sanitized_value = (int) $value;
+							break;
+						case 'color':
+							$sanitized_value = sanitize_text_field( $value );
+							break;
+						case 'select':
+							$setting_choices = $setting_fields[ $id ]['choices'];
+							$sanitized_value = ( array_key_exists( $value, $setting_choices ) ) ? sanitize_text_field( $value ) : $setting_choices[0];
+							break;
+						default:
+							$sanitized_value = sanitize_text_field( $value );
+					}
+
+					if ( ! update_option( ADDONIFY_WISHLIST_DB_INITIALS . $id, $sanitized_value ) ) {
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+	}
+}
 
 if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_values' ) ) {
 	/**

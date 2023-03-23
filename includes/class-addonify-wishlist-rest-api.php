@@ -74,7 +74,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				array(
 					'methods'             => 'GET',
 					'callback'            => array( $this, 'rest_handler_get_settings_fields_v2' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'permission_callback' ),
 				)
 			);
 
