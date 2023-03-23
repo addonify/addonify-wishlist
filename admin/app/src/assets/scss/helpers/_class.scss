@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- 
+	Loading
+-------------------------------------------------------------------------- */
+
 .adfy-loading {
 
     display: block;
@@ -25,7 +29,7 @@
             margin-top: -100%;
             border-radius: 100%;
             background-color: #C5C5C5;
-            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            animation: addonifyPulseRing 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
     
         &:after {
@@ -40,10 +44,14 @@
             border-radius: 100%;
             background-color: white;
             box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.01);
-            animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
+            animation: addonifyPulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
         }
     }
 }
+
+/* -------------------------------------------------------------------------- 
+	Section title
+-------------------------------------------------------------------------- */
 
 .option-box-section-title {
 
