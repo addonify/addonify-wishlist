@@ -6,7 +6,7 @@ const store = useSettingsStore();
 	<aside id="app-routes">
 		<nav id="adfy-navigation">
 			<ul class="route-lists">
-				<li v-for="(route, key) in store.data.tabs" class="list">
+				<li v-for="(route, key) in store.data" class="list">
 					<router-link :to="key">
 						<template v-if="route.icon !== ''">
 							<span class="icon" v-html="route.icon"></span>

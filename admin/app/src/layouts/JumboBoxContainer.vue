@@ -1,8 +1,8 @@
 <script setup>
-import { computed, watchEffect } from "vue";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import Form from "@components/core/Form.vue";
 import JumboBox from "@layouts/JumboBox.vue";
-import { useRoute } from "vue-router";
 
 /**
  *
@@ -12,15 +12,17 @@ import { useRoute } from "vue-router";
 const props = defineProps({
 	section: {
 		type: Object,
-		required: true,
+		required: false,
 	},
 	reactiveState: {
 		type: Object,
-		required: true,
+		required: false,
+	},
+	route: {
+		type: String,
+		required: false,
 	},
 });
-
-//console.log(props.section);
 
 /**
  *
@@ -37,28 +39,35 @@ const getRouterSlug = computed(() => "adfy-form-" + route.params.slug);
 /**
  *
  * Match the route slug with the section object key.
- * Pass the json object to the JumboBox component.
+ * Pass the section object to the JumboBox component.
  *
  * @return {Boolean} true/false
  * @since: 2.0.0
  */
 
-/**
- *
- * watchEffect: Perform the side effect based on the below condition.
- * -
- *
- * @since: 2.0.0
- */
-watchEffect(() => {});
+const getSectionBasedOnRoute = computed(() => {
+	let section = false;
+	if (props.section) {
+		Object.keys(props.section).forEach((key) => {
+			if (key === route.params.slug) {
+				/**
+				 *
+				 * Case: Success. Route slug matched.
+				 *
+				 */
+				section = props.section[key];
+			}
+		});
+	}
+	return section;
+});
 </script>
 <template>
 	<main id="app-main app-primary" class="app-primary">
 		<Form :id="getRouterSlug">
 			<JumboBox
-				:section="props.section.general"
-				:sectionTitle="props.section.general.title"
-				:reactiveState="props.reactiveState"
+				:section="getSectionBasedOnRoute"
+				:route="route.params.slug"
 			/>
 		</Form>
 	</main>

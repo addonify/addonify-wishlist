@@ -1,7 +1,7 @@
 <script setup>
+import { watchEffect } from "vue";
 import OptionBox from "@components/options/OptionBox.vue";
 import JumboBoxTitle from "@layouts/JumboBoxTitle.vue";
-import { useRoute } from "vue-router";
 
 /**
  *
@@ -12,19 +12,18 @@ import { useRoute } from "vue-router";
 const props = defineProps({
 	section: {
 		type: Object,
-		required: true,
-	},
-	sectionTitle: {
-		type: String,
 		required: false,
 	},
 	reactiveState: {
 		type: Object,
-		required: true,
+		required: false,
+	},
+	route: {
+		type: String,
+		required: false,
 	},
 });
 
-const route = useRoute();
 const docLink = "https://docs.addonify.com/";
 const mockTitle = "Mock section";
 
@@ -33,10 +32,17 @@ console.log(props.section);
 <template>
 	<div class="adfy-jumbo-boxes">
 		<div class="adfy-jumbo-box">
-			<JumboBoxTitle :title="props.sectionTitle" :doc-link="docLink" />
+			<JumboBoxTitle :title="mockTitle" :doc-link="docLink" />
+			<p>
+				Page to render: <span class="red">{{ props.route }}</span>
+			</p>
 			<pre>{{ props.section }}</pre>
-			<!--<pre> {{ box }} </pre>-->
 			<!--<OptionBox />-->
 		</div>
 	</div>
 </template>
+<style scoped>
+.red {
+	color: red;
+}
+</style>
