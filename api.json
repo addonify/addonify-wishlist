@@ -1,0 +1,1070 @@
+{
+    "settings_values": {
+        "enable_wishlist": true,
+        "wishlist_page": "1526",
+        "require_login": false,
+        "if_not_login_action": "show_popup",
+        "remove_from_wishlist_if_added_to_cart": false,
+        "btn_position": "before_add_to_cart",
+        "btn_position_on_single": "after_add_to_cart_form",
+        "btn_label": "Add to wishlist",
+        "btn_label_when_added_to_wishlist": "Added to wishlist",
+        "btn_label_if_added_to_wishlist": "Already in wishlist",
+        "login_btn_label": "Login",
+        "show_icon": true,
+        "remove_already_added_product_from_wishlist": false,
+        "btn_custom_class": "",
+        "after_add_to_wishlist_action": "show_popup_notice",
+        "view_wishlist_btn_text": "View wishlist",
+        "product_added_to_wishlist_text": "{product_name} added to wishlist",
+        "product_already_in_wishlist_text": "{product_name} already in wishlist",
+        "product_removed_from_wishlist_text": "{product_name} removed from wishlist",
+        "show_wishlist_emptying_button": true,
+        "wishlist_emptied_text": "Wishlist cleared.",
+        "popup_close_btn_text": "Close",
+        "show_sidebar": false,
+        "sidebar_position": "right",
+        "sidebar_title": "My wishlist",
+        "sidebar_btn_label": "view wishlist",
+        "sidebar_btn_position_offset": "-60",
+        "sidebar_show_icon": true,
+        "sidebar_btn_icon": "heart-o-style-three",
+        "ajaxify_remove_from_wishlist_button": true,
+        "view_wishlist_page_button_label": "View All Wishlist Items",
+        "empty_wishlist_label": "Empty wishlist.",
+        "clear_wishlist_label": "Clear Wishlist!",
+        "sidebar_empty_wishlist_label": "Empty wishlist.",
+        "undo_action_prelabel_text": "{product_name} has been removed.",
+        "undo_action_label": "Undo?",
+        "undo_notice_timeout": 5,
+        "icon_position": "left",
+        "show_empty_wishlist_navigation_link": true,
+        "empty_wishlist_navigation_link": "",
+        "empty_wishlist_navigation_link_label": "Go to Shop",
+        "login_required_message": "Please login before adding item to Wishlist",
+        "could_not_add_to_wishlist_error_description": "Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.",
+        "could_not_remove_from_wishlist_error_description": "Something went wrong. <br>{product_name} was not removed wishlist. Please refresh page and try again.",
+        "load_styles_from_plugin": "1",
+        "wishlist_btn_text_color": "#333333",
+        "wishlist_btn_icon_color": "#333333",
+        "wishlist_btn_text_color_hover": "#96588a",
+        "wishlist_btn_icon_color_hover": "#96588a",
+        "wishlist_btn_bg_color": "",
+        "wishlist_btn_bg_color_hover": "",
+        "sidebar_modal_overlay_bg_color": "",
+        "popup_modal_overlay_bg_color": "",
+        "popup_modal_bg_color": "",
+        "sidebar_modal_general_border_color": "",
+        "popup_modal_icon_color": "",
+        "popup_modal_text_color": "",
+        "popup_modal_btn_text_color": "",
+        "popup_modal_btn_text_color_hover": "",
+        "popup_modal_btn_bg_color": "",
+        "popup_modal_btn_bg_color_hover": "",
+        "sidebar_modal_toggle_btn_label_color": "",
+        "sidebar_modal_toggle_btn_label_color_hover": "",
+        "sidebar_modal_toggle_btn_bg_color": "",
+        "sidebar_modal_toggle_btn_bg_color_hover": "",
+        "sidebar_modal_bg_color": "",
+        "sidebar_modal_title_color": "",
+        "sidebar_modal_empty_text_color": "",
+        "sidebar_modal_close_icon_color": "",
+        "sidebar_modal_close_icon_color_hover": "",
+        "sidebar_modal_product_title_color": "",
+        "sidebar_modal_product_title_color_hover": "",
+        "sidebar_modal_product_regular_price_color": "",
+        "sidebar_modal_product_sale_price_color": "",
+        "sidebar_modal_product_add_to_cart_label_color": "",
+        "sidebar_modal_product_add_to_cart_label_color_hover": "",
+        "sidebar_modal_product_add_to_cart_bg_color": "",
+        "sidebar_modal_product_add_to_cart_bg_color_hover": "",
+        "sidebar_modal_product_remove_from_wishlist_icon_color": "",
+        "sidebar_modal_product_remove_from_wishlist_icon_color_hover": "",
+        "sidebar_modal_view_wishlist_btn_label_color": "",
+        "sidebar_modal_view_wishlist_btn_label_color_hover": "",
+        "sidebar_modal_view_wishlist_btn_bg_color": "",
+        "sidebar_modal_view_wishlist_btn_bg_color_hover": "",
+        "sidebar_modal_notification_text_color": "",
+        "sidebar_modal_notification_bg_color": "",
+        "custom_css": ""
+    },
+    "tabs": {
+        "general": {
+            "title": "General settings",
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path d='M12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z' /><path d='M21.294,13.9l-.444-.256a9.1,9.1,0,0,0,0-3.29l.444-.256a3,3,0,1,0-3-5.2l-.445.257A8.977,8.977,0,0,0,15,3.513V3A3,3,0,0,0,9,3v.513A8.977,8.977,0,0,0,6.152,5.159L5.705,4.9a3,3,0,0,0-3,5.2l.444.256a9.1,9.1,0,0,0,0,3.29l-.444.256a3,3,0,1,0,3,5.2l.445-.257A8.977,8.977,0,0,0,9,20.487V21a3,3,0,0,0,6,0v-.513a8.977,8.977,0,0,0,2.848-1.646l.447.258a3,3,0,0,0,3-5.2Zm-2.548-3.776a7.048,7.048,0,0,1,0,3.75,1,1,0,0,0,.464,1.133l1.084.626a1,1,0,0,1-1,1.733l-1.086-.628a1,1,0,0,0-1.215.165,6.984,6.984,0,0,1-3.243,1.875,1,1,0,0,0-.751.969V21a1,1,0,0,1-2,0V19.748a1,1,0,0,0-.751-.969A6.984,6.984,0,0,1,7.006,16.9a1,1,0,0,0-1.215-.165l-1.084.627a1,1,0,1,1-1-1.732l1.084-.626a1,1,0,0,0,.464-1.133,7.048,7.048,0,0,1,0-3.75A1,1,0,0,0,4.79,8.992L3.706,8.366a1,1,0,0,1,1-1.733l1.086.628A1,1,0,0,0,7.006,7.1a6.984,6.984,0,0,1,3.243-1.875A1,1,0,0,0,11,4.252V3a1,1,0,0,1,2,0V4.252a1,1,0,0,0,.751.969A6.984,6.984,0,0,1,16.994,7.1a1,1,0,0,0,1.215.165l1.084-.627a1,1,0,1,1,1,1.732l-1.084.626A1,1,0,0,0,18.746,10.125Z'/></svg>",
+            "sections": {
+                "enable_wishlist": {
+                    "label": "Enable wishlist",
+                    "description": "If disabled, addonify wishlist plugin functionality will not be functional.",
+                    "type": "switch",
+                    "className": "",
+                    "badge": "Required",
+                    "value": "1"
+                },
+                "wishlist_page": {
+                    "type": "select",
+                    "className": "",
+                    "placeholder": "Select a page",
+                    "label": "Wishlist Page",
+                    "description": "Select a page to display wishlist table.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "choices": {
+                        "133": "About me",
+                        "213": "Cart",
+                        "214": "Checkout",
+                        "215": "My account",
+                        "216": "Refund & return policy",
+                        "566": "Contact",
+                        "574": "Forums",
+                        "612": "PMPro Account",
+                        "614": "PMPro Billing",
+                        "616": "PMPro Checkout",
+                        "621": "PMPro Invoice",
+                        "623": "PMPro Pricing",
+                        "625": "PMPro Profile",
+                        "628": "PMPro Cancel",
+                        "630": "PMPro Purchase Confirmation",
+                        "632": "PMPro Login",
+                        "738": "EDD Checkout",
+                        "740": "EDD Purchase Confirmation",
+                        "742": "Checkout",
+                        "743": "Purchase Confirmation",
+                        "744": "Transaction Failed",
+                        "745": "Purchase History",
+                        "749": "EDD Purchase History",
+                        "754": "EDD Transaction Failed",
+                        "769": "EDD Subscription",
+                        "782": "EDD Login",
+                        "784": "EDD Register",
+                        "868": "Courses",
+                        "869": "Account",
+                        "870": "Checkout",
+                        "871": "Learn",
+                        "872": "Instructor Registration",
+                        "886": "EDD Profile",
+                        "919": "Adfy Woo Ele block One",
+                        "1180": "Docs",
+                        "1222": "WooCommerce products",
+                        "1290": "Adfy Woo Ele Block Two",
+                        "1337": "Adfy Woo Ele Block Three",
+                        "1406": "Adfy Post Block One",
+                        "1412": "Adfy Hero Slider One",
+                        "1526": "Wishlist",
+                        "1532": "Yatra Checkout",
+                        "1533": "Yatra Cart",
+                        "1534": "Yatra My Account",
+                        "1535": "Yatra Thank You",
+                        "1536": "Yatra Transaction Failed",
+                        "1575": "Hi",
+                        "1656": "Wishlist",
+                        "1666": "Checkout",
+                        "1667": "Transaction Success",
+                        "1668": "Transaction Failed",
+                        "1669": "Account",
+                        "1670": "Login",
+                        "1671": "Register",
+                        "1672": "Lost Password"
+                    },
+                    "value": "1526"
+                },
+                "require_login": {
+                    "type": "switch",
+                    "label": "Require Login",
+                    "description": "A user is required to be logged-in inorder to add products in the wishlist.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "0"
+                },
+                "if_not_login_action": {
+                    "type": "select",
+                    "className": "",
+                    "placeholder": "Select Action",
+                    "label": "If not login action",
+                    "description": "If user is required to be logged-in, choose what to do if the user tries to add product into the wishlist..",
+                    "dependent": [
+                        "enable_wishlist",
+                        "require_login"
+                    ],
+                    "choices": {
+                        "default": "Redirect to login page",
+                        "show_popup": "Display login popup notice"
+                    },
+                    "value": "show_popup"
+                },
+                "after_add_to_wishlist_action": {
+                    "type": "select",
+                    "className": "",
+                    "label": "After Add to Wishlist Action",
+                    "description": "Choose what to do after a product is successfully added to the wishlist.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "show_popup_notice",
+                    "choices": {
+                        "show_popup_notice": "Show Popup Notice",
+                        "redirect_to_wishlist_page": "Redirect to Wishlist Page",
+                        "none": "None"
+                    }
+                },
+                "remove_from_wishlist_if_added_to_cart": {
+                    "type": "switch",
+                    "className": "",
+                    "label": "Remove Product From Wishlist",
+                    "description": "Remove the product from wishlist if the product is successfully added to cart.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "0"
+                },
+                "ajaxify_remove_from_wishlist_button": {
+                    "type": "switch",
+                    "label": "Ajaxify Remove from Wishlist Action",
+                    "description": "Remove the product from wishlist with ajax call.",
+                    "dependent": [
+                        "enable_wishlist",
+                        "require_login"
+                    ],
+                    "value": "1"
+                },
+                "custom_css": {
+                    "type": "textarea",
+                    "className": "custom-css-box fullwidth",
+                    "inputClassName": "custom-css-textarea",
+                    "label": "Custom CSS",
+                    "description": "If required, add your custom CSS code here.",
+                    "placeholder": "#app { color: blue; }",
+                    "value": ""
+                },
+                "product_removal_undo_notice": {
+                    "title": "Product Removal Undo Notice",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "undo_action_prelabel_text": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Text Before Undo Action Label",
+                            "description": "Text displayed before undo action label. The placeholder, '{product_name}', when used,  is replaced by Product Name.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "{product_name} has been removed."
+                        },
+                        "undo_action_label": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Undo Action Label",
+                            "description": "Set undo action label.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Undo?"
+                        },
+                        "undo_notice_timeout": {
+                            "type": "number",
+                            "className": "",
+                            "typeStyle": "toggle",
+                            "label": "Undo Notice Timeout (in seconds)",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "description": "Set the time till when the undo notice is to displayed.",
+                            "value": 5
+                        }
+                    }
+                }
+            }
+        },
+        "popup_modal": {
+            "title": "Popup modals",
+            "icon": "",
+            "sections": {
+                "popup_close_btn_text": {
+                    "type": "text",
+                    "className": "",
+                    "label": "Close Button Label",
+                    "description": "Label for button to close the popup modal box.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "Close"
+                },
+                "added_to_wishlist_modal": {
+                    "title": "Added to Wishlist Modal",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "view_wishlist_btn_text": {
+                            "type": "text",
+                            "className": "",
+                            "label": "View Wishlist Button Link Label",
+                            "description": "Label for button to link to wishlist page inside the popup modal box.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "View wishlist"
+                        },
+                        "product_added_to_wishlist_text": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Product Added to Wishlist Text",
+                            "description": "{product_name} placeholder will be replaced with the actual product name.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "{product_name} added to wishlist"
+                        },
+                        "product_already_in_wishlist_text": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Product Already in Wishlist Text",
+                            "description": "{product_name} placeholder will be replaced with the actual product name.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "{product_name} already in wishlist"
+                        }
+                    }
+                },
+                "error_modal": {
+                    "title": "Error Modal",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "could_not_add_to_wishlist_error_description": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Product Could not be Added to Wishlist Text",
+                            "description": "{product_name} placeholder will be replaced with the actual product name.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again."
+                        },
+                        "could_not_remove_from_wishlist_error_description": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Product Could not be Removed from Wishlist Text",
+                            "description": "{product_name} placeholder will be replaced with the actual product name.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Something went wrong. <br>{product_name} was not removed wishlist. Please refresh page and try again."
+                        }
+                    }
+                },
+                "login_modal": {
+                    "title": "Login Modal",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "login_required_message": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Login Required Description",
+                            "description": "Message displayed in modal when login is required.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Please login before adding item to Wishlist"
+                        },
+                        "login_btn_label": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Login Button Label",
+                            "description": "Label for button to redirect to login page.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Login"
+                        }
+                    }
+                },
+                "modal_colors": {
+                    "title": "Modal Colors",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "popup_modal_overlay_bg_color": {
+                            "type": "color",
+                            "label": "Overlay Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "popup_modal_bg_color": {
+                            "type": "color",
+                            "label": "Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "popup_modal_icon_color": {
+                            "type": "color",
+                            "label": "Icon Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "popup_modal_text_color": {
+                            "type": "color",
+                            "label": "Text Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "popup_modal_btn_text_color": {
+                            "type": "color",
+                            "label": "Buttons Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "popup_modal_btn_text_color_hover": {
+                            "type": "color",
+                            "label": "Buttons On Hover Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "popup_modal_btn_bg_color": {
+                            "type": "color",
+                            "label": "Buttons Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "popup_modal_btn_bg_color_hover": {
+                            "type": "color",
+                            "label": "Buttons On Hover Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        }
+                    }
+                }
+            }
+        },
+        "wishlist_button": {
+            "title": "Wishlist button",
+            "icon": "",
+            "sections": {
+                "btn_position": {
+                    "type": "select",
+                    "className": "",
+                    "label": "Button Position",
+                    "description": "Choose where to place the Add to Wishlist button.",
+                    "choices": {
+                        "after_add_to_cart": "After Add to Cart Button",
+                        "before_add_to_cart": "Before Add to Cart Button"
+                    },
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "before_add_to_cart"
+                },
+                "btn_position_on_single": {
+                    "type": "select",
+                    "className": "",
+                    "label": "Button Position on Product Single Page",
+                    "description": "Choose where to place the Add to Wishlist button.",
+                    "choices": {
+                        "before_add_to_cart_form": "Before Add to Cart Form",
+                        "before_add_to_cart_button": "Before Add to Cart Button",
+                        "after_add_to_cart_button": "After Add to Cart Button",
+                        "after_add_to_cart_form": "After Add to Cart Form"
+                    },
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "after_add_to_cart_form"
+                },
+                "remove_already_added_product_from_wishlist": {
+                    "type": "switch",
+                    "className": "",
+                    "label": "Remove Added Product from Wishlist on Click",
+                    "description": "If Add to Wishlist button is clicked when the product is already in wishlist, remove the product from wishlist.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": false
+                },
+                "btn_custom_class": {
+                    "type": "text",
+                    "className": "",
+                    "placeholder": "my_button rounded_button",
+                    "label": "Custom CSS Class",
+                    "badge": "Optional",
+                    "description": "Add custom CSS class(es) to Add to Wishlist button. Separate CSS classes with spaces.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": ""
+                },
+                "wishlist_btn_bg_color": {
+                    "type": "color",
+                    "label": "Background Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "wishlist_btn_bg_color_hover": {
+                    "type": "color",
+                    "label": "On Hover Background Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "button_labels": {
+                    "title": "Button Labels",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "btn_label": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Button Label",
+                            "description": "Label for Add to Wishlist button.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Add to wishlist"
+                        },
+                        "btn_label_when_added_to_wishlist": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Added to Wishlist Button Label",
+                            "description": "Set the label for Add to Wishlist button, if a product is added to the wishlist.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Added to wishlist"
+                        },
+                        "btn_label_if_added_to_wishlist": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Already in Wishlist Button Label",
+                            "description": "Set the label for Add to Wishlist button, if a product is already in the wishlist.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": "Already in wishlist"
+                        },
+                        "wishlist_btn_text_color": {
+                            "type": "color",
+                            "label": "Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": "#333333"
+                        },
+                        "wishlist_btn_text_color_hover": {
+                            "type": "color",
+                            "label": "On Hover Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": "#96588a"
+                        }
+                    }
+                },
+                "button_icon": {
+                    "title": "Button icon",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "show_icon": {
+                            "type": "switch",
+                            "className": "",
+                            "label": "Show Icon in Button",
+                            "description": "Display heart icon on Add to Wishlist button label.",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": true
+                        },
+                        "icon_position": {
+                            "type": "select",
+                            "className": "",
+                            "label": "Button Icon Position",
+                            "description": "Choose where to place the Add to Wishlist button Icon.",
+                            "choices": {
+                                "left": "Before Button Label",
+                                "right": "After Button Label"
+                            },
+                            "dependent": [
+                                "enable_wishlist",
+                                "show_icon"
+                            ],
+                            "value": "left"
+                        },
+                        "wishlist_btn_icon_color": {
+                            "type": "color",
+                            "label": "Icon Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": "#333333"
+                        },
+                        "wishlist_btn_icon_color_hover": {
+                            "type": "color",
+                            "label": "On Hover Icon Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": "#96588a"
+                        }
+                    }
+                }
+            }
+        },
+        "wishlist_page": {
+            "title": "Wishlist page",
+            "icon": "",
+            "sections": {
+                "empty_wishlist_label": {
+                    "type": "text",
+                    "className": "",
+                    "label": "Empty Wishlist Text",
+                    "description": "Set empty wishlist text.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "Empty wishlist."
+                },
+                "show_empty_wishlist_navigation_link": {
+                    "type": "switch",
+                    "className": "",
+                    "label": "Display Link",
+                    "description": "Display a link when wishlist is empty.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": true
+                },
+                "empty_wishlist_navigation_link": {
+                    "type": "select",
+                    "className": "",
+                    "label": "Link to Page",
+                    "description": "Page to be linked in the link when wishlist is empty.",
+                    "dependent": [
+                        "enable_wishlist",
+                        "show_empty_wishlist_navigation_link"
+                    ],
+                    "choices": {
+                        "133": "About me",
+                        "213": "Cart",
+                        "214": "Checkout",
+                        "215": "My account",
+                        "216": "Refund & return policy",
+                        "566": "Contact",
+                        "574": "Forums",
+                        "612": "PMPro Account",
+                        "614": "PMPro Billing",
+                        "616": "PMPro Checkout",
+                        "621": "PMPro Invoice",
+                        "623": "PMPro Pricing",
+                        "625": "PMPro Profile",
+                        "628": "PMPro Cancel",
+                        "630": "PMPro Purchase Confirmation",
+                        "632": "PMPro Login",
+                        "738": "EDD Checkout",
+                        "740": "EDD Purchase Confirmation",
+                        "742": "Checkout",
+                        "743": "Purchase Confirmation",
+                        "744": "Transaction Failed",
+                        "745": "Purchase History",
+                        "749": "EDD Purchase History",
+                        "754": "EDD Transaction Failed",
+                        "769": "EDD Subscription",
+                        "782": "EDD Login",
+                        "784": "EDD Register",
+                        "868": "Courses",
+                        "869": "Account",
+                        "870": "Checkout",
+                        "871": "Learn",
+                        "872": "Instructor Registration",
+                        "886": "EDD Profile",
+                        "919": "Adfy Woo Ele block One",
+                        "1180": "Docs",
+                        "1222": "WooCommerce products",
+                        "1290": "Adfy Woo Ele Block Two",
+                        "1337": "Adfy Woo Ele Block Three",
+                        "1406": "Adfy Post Block One",
+                        "1412": "Adfy Hero Slider One",
+                        "1526": "Wishlist",
+                        "1532": "Yatra Checkout",
+                        "1533": "Yatra Cart",
+                        "1534": "Yatra My Account",
+                        "1535": "Yatra Thank You",
+                        "1536": "Yatra Transaction Failed",
+                        "1575": "Hi",
+                        "1656": "Wishlist",
+                        "1666": "Checkout",
+                        "1667": "Transaction Success",
+                        "1668": "Transaction Failed",
+                        "1669": "Account",
+                        "1670": "Login",
+                        "1671": "Register",
+                        "1672": "Lost Password"
+                    },
+                    "value": ""
+                },
+                "empty_wishlist_navigation_link_label": {
+                    "type": "text",
+                    "className": "",
+                    "label": "Link label",
+                    "description": "Set label for the link.",
+                    "dependent": [
+                        "enable_wishlist",
+                        "show_empty_wishlist_navigation_link"
+                    ],
+                    "value": "Go to Shop"
+                },
+                "clear_wishlist_button": {
+                    "title": "Clear Wishlist Button",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "show_wishlist_emptying_button": {
+                            "type": "switch",
+                            "className": "",
+                            "label": "Show wishlist emptying button",
+                            "dependent": [
+                                "enable_wishlist"
+                            ],
+                            "value": true
+                        },
+                        "clear_wishlist_label": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Clear Wishlist Button Label",
+                            "description": "Set clear wishlist button label.",
+                            "dependent": [
+                                "enable_wishlist",
+                                "show_wishlist_emptying_button"
+                            ],
+                            "value": "Clear Wishlist!"
+                        }
+                    }
+                }
+            }
+        },
+        "wishlist_sidebar": {
+            "title": "Wishlist sidebar",
+            "icon": "",
+            "sections": {
+                "show_sidebar": {
+                    "type": "switch",
+                    "className": "",
+                    "label": "Show Sidebar",
+                    "description": "Sidebar off-canvas modal will be enabled to display wishlist items.",
+                    "dependent": [
+                        "enable_wishlist"
+                    ],
+                    "value": "0"
+                },
+                "sidebar_position": {
+                    "type": "select",
+                    "dependent": [
+                        "enable_wishlist",
+                        "show_sidebar"
+                    ],
+                    "className": "",
+                    "label": "Sidebar Position",
+                    "description": "Choose position of the sidebar to be displayed.",
+                    "choices": {
+                        "left": "Left",
+                        "right": "Right"
+                    },
+                    "value": "right"
+                },
+                "sidebar_title": {
+                    "type": "text",
+                    "className": "",
+                    "label": "Sidebar Title",
+                    "description": "Set the title of the wishlist to be displayed inside the sidebar.",
+                    "dependent": [
+                        "enable_wishlist",
+                        "show_sidebar"
+                    ],
+                    "value": "My wishlist"
+                },
+                "view_wishlist_page_button_label": {
+                    "type": "text",
+                    "className": "",
+                    "label": "View Wishlist Page Button Label",
+                    "description": "Set the button label of link to wishlist page.",
+                    "dependent": [
+                        "enable_wishlist",
+                        "show_sidebar"
+                    ],
+                    "value": "View All Wishlist Items"
+                },
+                "sidebar_empty_wishlist_label": {
+                    "type": "text",
+                    "className": "",
+                    "label": "Empty Wishlist Text",
+                    "description": "Set empty wishlist text.",
+                    "dependent": [
+                        "enable_wishlist",
+                        "show_sidebar"
+                    ],
+                    "value": "Empty wishlist."
+                },
+                "sidebar_modal_overlay_bg_color": {
+                    "type": "color",
+                    "label": "Overlay Background Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "sidebar_modal_bg_color": {
+                    "type": "color",
+                    "label": "Background Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "sidebar_modal_general_border_color": {
+                    "type": "color",
+                    "label": "General Border Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "sidebar_modal_title_color": {
+                    "type": "color",
+                    "label": "Title Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "sidebar_modal_empty_text_color": {
+                    "type": "color",
+                    "label": "Empty Wishlist Text Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "sidebar_modal_close_icon_color": {
+                    "type": "color",
+                    "label": "Close Icon Color",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "sidebar_modal_close_icon_color_hover": {
+                    "type": "color",
+                    "label": "Close Icon Color On Hover",
+                    "isAlphaPicker": true,
+                    "className": "",
+                    "value": ""
+                },
+                "sidebar_toggle_button": {
+                    "title": "Sidebar Toggle Button",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "sidebar_btn_label": {
+                            "type": "text",
+                            "className": "",
+                            "label": "Sidebar Toggle Button Label",
+                            "description": "Set sidebar toggle button label.",
+                            "dependent": [
+                                "enable_wishlist",
+                                "show_sidebar"
+                            ],
+                            "value": "view wishlist"
+                        },
+                        "sidebar_btn_position_offset": {
+                            "type": "number",
+                            "typeStyle": "slider",
+                            "typeMinVal": -300,
+                            "typeMaxVal": 300,
+                            "typeStepVal": 1,
+                            "typeToolTipText": "px",
+                            "className": "fullwidth",
+                            "label": "Sidebar Toggle Button Position Offset",
+                            "description": "Set left or right position distance offset value.",
+                            "dependent": [
+                                "enable_wishlist",
+                                "show_sidebar"
+                            ],
+                            "value": "-60"
+                        },
+                        "sidebar_show_icon": {
+                            "type": "switch",
+                            "label": "Show Icon in Sidebar Toggle Button",
+                            "description": "Enable to display an icon with the label in sidebar toggle button.",
+                            "dependent": [
+                                "enable_wishlist",
+                                "show_sidebar"
+                            ],
+                            "value": "1"
+                        },
+                        "sidebar_btn_icon": {
+                            "type": "radio",
+                            "typeStyle": "radio_icon",
+                            "className": "fullwidth radio-input-group",
+                            "label": "Select Icon",
+                            "description": "Select icon to be displayed in the sidebar toggle button.",
+                            "choices": {
+                                "heart-style-one": "<i class=\"adfy-wishlist-icon heart-style-one\"></i>",
+                                "heart-o-style-one": "<i class=\"adfy-wishlist-icon heart-o-style-one\"></i>",
+                                "heart-o-style-three": "<i class=\"adfy-wishlist-icon heart-o-style-three\"></i>",
+                                "flash": "<i class=\"adfy-wishlist-icon flash\"></i>",
+                                "eye": "<i class=\"adfy-wishlist-icon eye\"></i>",
+                                "loader": "<i class=\"adfy-wishlist-icon loader\"></i>",
+                                "settings": "<i class=\"adfy-wishlist-icon settings\"></i>"
+                            },
+                            "dependent": [
+                                "enable_wishlist",
+                                "show_sidebar",
+                                "sidebar_show_icon"
+                            ],
+                            "value": "heart-o-style-three"
+                        },
+                        "sidebar_modal_toggle_btn_label_color": {
+                            "type": "color",
+                            "label": "Button Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_toggle_btn_label_color_hover": {
+                            "type": "color",
+                            "label": "Button On Hover Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_toggle_btn_bg_color": {
+                            "type": "color",
+                            "label": "Button Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_toggle_btn_bg_color_hover": {
+                            "type": "color",
+                            "label": "Button On Hover Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        }
+                    }
+                },
+                "sidebar_product_colors": {
+                    "title": "Sidebar Product Colors",
+                    "type": "sub_section",
+                    "sub_sections": {
+                        "sidebar_modal_product_title_color": {
+                            "type": "color",
+                            "label": "Title Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_title_color_hover": {
+                            "type": "color",
+                            "label": "Title Color on Hover",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_regular_price_color": {
+                            "type": "color",
+                            "label": "Regular Price Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_sale_price_color": {
+                            "type": "color",
+                            "label": "Sale Price Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_add_to_cart_label_color": {
+                            "type": "color",
+                            "label": "Add to Cart Button Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_add_to_cart_label_color_hover": {
+                            "type": "color",
+                            "label": "Add to Cart Button On Hover Label Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_add_to_cart_bg_color": {
+                            "type": "color",
+                            "label": "Add to Cart Button Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_add_to_cart_bg_color_hover": {
+                            "type": "color",
+                            "label": "Add to Cart Button On Hover Background Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_remove_from_wishlist_icon_color": {
+                            "type": "color",
+                            "label": "Remove Icon Color",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        },
+                        "sidebar_modal_product_remove_from_wishlist_icon_color_hover": {
+                            "type": "color",
+                            "label": "Remove Icon Color on Hover",
+                            "isAlphaPicker": true,
+                            "className": "",
+                            "value": ""
+                        }
+                    }
+                }
+            }
+        },
+        "tools": {
+            "title": "Tools",
+            "icon": "",
+            "sections": {
+                "reset-options": {
+                    "type": "options-box",
+                    "fields": {
+                        "reset-options": {
+                            "label": "Reset Options",
+                            "confirmText": "Are you sure you want to reset all settings?",
+                            "confirmYesText": "Yes",
+                            "confirmNoText": "No",
+                            "type": "reset-option",
+                            "description": "All the settings will be set to default."
+                        }
+                    }
+                },
+                "export-options": {
+                    "type": "options-box",
+                    "fields": {
+                        "export-options": {
+                            "label": "Export Options",
+                            "description": "Backup all settings that can be imported in future.",
+                            "type": "export-option"
+                        }
+                    }
+                },
+                "import-options": {
+                    "type": "options-box",
+                    "title": "Import Options",
+                    "fields": {
+                        "import-options": {
+                            "label": "Import Options",
+                            "caption": "Drop a file here or click here to upload.",
+                            "note": "Only .json file is permitted.",
+                            "description": "Drag or upload the .json file that you had exported.",
+                            "type": "import-option",
+                            "className": "fullwidth"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

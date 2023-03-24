@@ -17,7 +17,7 @@ let props = defineProps({
 });
 </script>
 <template>
-	<form :id="props.id" :class="props.class" @submit.prevent>
+	<form :id="props.id" class="adfy-form" :class="props.class" @submit.prevent>
 		<slot></slot>
 	</form>
 </template>

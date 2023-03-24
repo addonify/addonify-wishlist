@@ -48,7 +48,7 @@ export const useSettingsStore = defineStore({
 		data: {}, // Store object for tabs that includes all settings.
 		settings: {}, // Store "settings_values" object from rest api endpoint.
 		status: {
-			isLoading: false, // Flag if something is loading.
+			isLoading: true, // Flag if something is loading.
 			isSaving: false, // Flag if something is saving.
 			needSaving: false, // Flag if settings needs saving.
 			isDoingReset: false, // Flag if we are resetting settings.
@@ -88,7 +88,6 @@ export const useSettingsStore = defineStore({
 			 * Let's define a error message that can be displayed in toast alerts.
 			 */
 
-			this.status.isLoading = true;
 			let errorMessage: string = __(
 				"Something went wrong. Please reload the page again.",
 				textdomain
@@ -104,12 +103,12 @@ export const useSettingsStore = defineStore({
 					 * Case: Success.
 					 * We have the data, lets hydrate the state.
 					 */
-					console.log(res);
+					//console.log(res);
 					const routeStore = useRoutesStore();
 					this.settings = res.settings_values;
-					this.data = res.tabs;
+					this.data = res;
 					oldSettings = cloneDeep(res.setting_values);
-					routeStore.data = res.tabs;
+					routeStore.data = res;
 				})
 				.catch((err: any) => {
 					/**
