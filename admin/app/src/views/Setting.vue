@@ -22,7 +22,7 @@ onMounted(() => {
 		:data_loading="store.status.isLoading"
 	>
 		<template v-if="store.status.isLoading">
-			<Loading />
+			<el-skeleton :rows="30" animated />
 		</template>
 		<template v-else>
 			<RouteLinks />

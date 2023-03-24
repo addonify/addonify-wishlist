@@ -1,6 +1,25 @@
 <script setup>
+import { onMounted } from "vue";
 import { textdomain } from "@helpers/global";
 let { __ } = wp.i18n;
+
+/**
+ *
+ * Scroll to the top of the page.
+ *
+ * @since: 2.0.0
+ */
+
+const scrollToTop = () => {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth",
+	});
+};
+
+onMounted(() => {
+	scrollToTop();
+});
 </script>
 <template>
 	<section id="dead-end">
@@ -8,7 +27,7 @@ let { __ } = wp.i18n;
 		<p class="adfy-description">
 			{{
 				__(
-					"Oops, something seems broken. I am not sure how to handle your request.",
+					"Oops, something seems broken. We can't find the page you're looking for.",
 					textdomain
 				)
 			}}
