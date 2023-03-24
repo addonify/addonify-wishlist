@@ -17,7 +17,7 @@ const store = useSettingsStore();
 			</div>
 			<div class="column column-right">
 				<div class="adfy-option">
-					<ColorControl v-model="store.settings.color" />
+					<!--<ColorControl v-model="store.settings.color" />-->
 				</div>
 			</div>
 		</div>
@@ -28,7 +28,7 @@ const store = useSettingsStore();
 			</div>
 			<div class="column column-right">
 				<div class="adfy-option">
-					<ColorControl v-model="store.settings.color" />
+					<!--<ColorControl v-model="store.settings.color" />-->
 				</div>
 			</div>
 		</div>
@@ -39,9 +39,9 @@ const store = useSettingsStore();
 			</div>
 			<div class="column column-right">
 				<div class="adfy-option">
-					<BorderRadiusControl
+					<!--<BorderRadiusControl
 						v-model="store.settings.border_radius"
-					/>
+					/>-->
 				</div>
 			</div>
 		</div>
@@ -52,7 +52,7 @@ const store = useSettingsStore();
 			</div>
 			<div class="column column-right">
 				<div class="adfy-option">
-					<TypographyControl />
+					<!--<TypographyControl />-->
 				</div>
 			</div>
 		</div>

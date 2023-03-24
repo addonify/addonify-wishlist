@@ -4,18 +4,36 @@ import { useRoute } from "vue-router";
 import JumboBoxContainer from "@layouts/JumboBoxContainer.vue";
 import Sidebar from "@layouts/Sidebar.vue";
 import RouteLinks from "@layouts/RouteLinks.vue";
+import Loading from "@components/core/Loading.vue";
+import { useSettingsStore } from "@stores/settings";
 
 const route = useRoute();
+const store = useSettingsStore();
+
+//watchEffect(() => {
+//	console.log(route.params);
+//});
 
 onMounted(() => {
-	// Get params from vue route.
-	console.log(route.params);
+	store.fetchSettings();
 });
 </script>
 <template>
-	<section id="app-divider" class="app-divider">
-		<RouteLinks />
-		<JumboBoxContainer />
+	<section
+		id="app-divider"
+		class="app-divider"
+		:data_loading="store.status.isLoading"
+	>
+		<template v-if="store.status.isLoading">
+			<Loading />
+		</template>
+		<template v-else>
+			<RouteLinks />
+			<JumboBoxContainer
+				:section="store.data"
+				:reactiveState="store.settings"
+			/>
+		</template>
 		<Sidebar />
 	</section>
 </template>

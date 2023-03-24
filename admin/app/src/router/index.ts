@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router"; // @ts-ignore
 import Index from "@views/Index.vue"; // @ts-ignore
-import Setting from "@views/Setting.vue"; // @ts-ignore
+//import Setting from "@views/Setting.vue"; // @ts-ignore
 import Upsell from "@views/Upsell.vue"; // @ts-ignore
 import Products from "@views/Products.vue"; // @ts-ignore
 import Error404 from "@views/404.vue"; // @ts-ignore
@@ -33,8 +33,8 @@ const defaultRoutes: any = [
 	},
 	{
 		path: "/s/:slug",
-		name: "Setting",
-		component: Setting,
+		name: "Index",
+		component: Index,
 	},
 ];
 

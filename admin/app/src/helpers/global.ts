@@ -27,4 +27,5 @@ export const jsonFileName: string = "addonify_wishlist";
  * @since 2.0.0
  */
 
-export const currentVersion = "2.0.0";
+// @ts-ignore
+export const currentVersion = addonify_wishlist_localizer.version_number;

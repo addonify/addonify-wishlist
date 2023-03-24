@@ -1,10 +1,14 @@
 import { defineStore } from "pinia";
 // @ts-ignore
+import { useRoutesStore } from "@stores/routes";
+// @ts-ignore
 import { apiEndpoint } from "@helpers/endpoint";
 // @ts-ignore
 import { textdomain } from "@helpers/global";
 // @ts-ignore
 import { dispatchToast, unExpectedResponse } from "@helpers/message";
+// @ts-ignore
+import { apiEndpoint } from "@helpers/endpoint";
 
 /**
  *
@@ -27,7 +31,7 @@ const { __ } = wp.i18n;
  * @since 2.0.0
  */
 
-let oldSettings: [] = [];
+let oldSettings: Object = {};
 
 /**
  *
@@ -41,18 +45,10 @@ export const useSettingsStore = defineStore({
 	id: "settings",
 
 	state: () => ({
-		settings: {
-			color: "rgba(92, 22, 255, 1)",
-			border_radius: 30,
-			font: "",
-			font_weight: 400,
-			font_size: 16,
-			letter_spacing: 0.5,
-			line_height: 1.6,
-			text_traform: ["default", "Uppercase", "Lowercase", "Capitalize"],
-		},
+		data: {}, // Store object for tabs that includes all settings.
+		settings: {}, // Store "settings_values" object from rest api endpoint.
 		status: {
-			isLoading: false, // Flag if something is loading.
+			isLoading: true, // Flag if something is loading.
 			isSaving: false, // Flag if something is saving.
 			needSaving: false, // Flag if settings needs saving.
 			isDoingReset: false, // Flag if we are resetting settings.
@@ -86,43 +82,46 @@ export const useSettingsStore = defineStore({
 		 * @since 2.0.0
 		 */
 
-		async fetchSettings(): Promise<void> {
+		fetchSettings(): void {
 			/**
 			 *
 			 * Let's define a error message that can be displayed in toast alerts.
 			 */
 
-			try {
-				const res = await apiFetch({
-					path: apiEndpoint + "/get_options",
-					method: "GET",
-				});
+			let errorMessage: string = __(
+				"Something went wrong. Please reload the page again.",
+				textdomain
+			);
 
-				if (res.status === 200) {
+			apiFetch({
+				path: apiEndpoint + "/get_options",
+				method: "GET",
+			})
+				.then((res: any) => {
 					/**
 					 *
-					 * We have the data, lets handle the mutations and other side effects.
+					 * Case: Success.
+					 * We have the data, lets hydrate the state.
 					 */
+					//console.log(res);
+					const routeStore = useRoutesStore();
+					this.settings = res.settings_values;
+					this.data = res;
 					oldSettings = cloneDeep(res.setting_values);
-				} else {
+					routeStore.data = res;
+				})
+				.catch((err: any) => {
 					/**
 					 *
-					 * Let unExpectedResponse function do the rest.
+					 * Case: Error.
+					 * We have to handle the error here.
 					 */
-
-					unExpectedResponse(res);
+					console.log(err);
+					dispatchToast(errorMessage, "error");
+				})
+				.finally(() => {
 					this.status.isLoading = false;
-				}
-			} catch (err: any) {
-				/**
-				 *
-				 * Handle the error here.
-				 */
-
-				console.log(err);
-
-				dispatchToast(this.status.message, "error");
-			}
+				});
 		},
 
 		/**

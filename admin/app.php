@@ -30,12 +30,12 @@ if ( isset( $_GET['page'] ) && 'addonify_wishlist' === $_GET['page'] ) { //phpcs
 
 			wp_localize_script(
 				$handle,
-				'ADDONIFY_WISHLIST_LOCOLIZER',
+				'addonify_wishlist_localizer',
 				array(
 					'admin_url'      => admin_url( '/' ),
 					'ajax_url'       => admin_url( 'admin-ajax.php' ),
 					'site_url'       => site_url( '/' ),
-					'rest_namespace' => 'addonify_wishlist_options_api',
+					'rest_namespace' => 'addonify_wishlist_options_api/v2',
 					'version_number' => ADDONIFY_WISHLIST_VERSION,
 				)
 			);

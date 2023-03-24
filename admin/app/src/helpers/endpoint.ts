@@ -6,7 +6,8 @@
  * @since 2.0.0
  */
 
-export const apiEndpoint: string = "https://addonify.com/wp-json/addonify/v1";
+// @ts-ignore
+export const apiEndpoint: string = addonify_wishlist_localizer.rest_namespace;
 
 /**
  *

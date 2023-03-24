@@ -1,6 +1,5 @@
 <template>
-	<section class="adfy-loading">
+	<div id="adfy-loading">
 		<span class="pulse"></span>
-	</section>
+	</div>
 </template>
-<script setup></script>

@@ -13,18 +13,23 @@ import { textdomain } from "@helpers/global";
 const props = defineProps({
 	slug: {
 		type: String,
+		required: true,
 	},
 	name: {
 		type: String,
+		required: false,
 	},
 	description: {
 		type: String,
+		required: false,
 	},
 	thumb: {
 		type: String,
+		required: false,
 	},
 	status: {
 		type: String,
+		required: false,
 	},
 });
 
