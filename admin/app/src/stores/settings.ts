@@ -106,7 +106,7 @@ export const useSettingsStore = defineStore({
 					//console.log(res);
 					const routeStore = useRoutesStore();
 					this.settings = res.settings_values;
-					this.data = res;
+					this.data = res.tabs;
 					oldSettings = cloneDeep(res.setting_values);
 					routeStore.data = res;
 				})
