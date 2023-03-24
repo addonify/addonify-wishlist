@@ -56,16 +56,6 @@ const upsellRoutes: any = [
 
 /**
  *
- * Routes for premium addon routes.
- *
- * @param {Array} premiumRoutes
- * @since 2.0.0
- */
-
-const premiumAddonRoutes: any = [];
-
-/**
- *
  * Routes for products listing addon.
  *
  * @param {Array} productRoutes
@@ -106,7 +96,6 @@ const catchAllRoutes: any = [
 
 const routes: any = [
 	...defaultRoutes,
-	...premiumAddonRoutes,
 	...upsellRoutes,
 	...productRoutes,
 	...catchAllRoutes,
