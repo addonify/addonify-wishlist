@@ -57,3 +57,19 @@
     font-weight: bold;
     line-height: 1.2;
 }
+
+/* -------------------------------------------------------------------------- 
+	Skelation
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-app {
+
+    .el-skeleton.is-animated {
+
+        .el-skeleton__item {
+
+            background: linear-gradient(90deg, #dbdbdb 25%, #ebebeb 37%, #d7d7d7 63%);
+            background-size: 400% 100%;
+        }
+    }
+}

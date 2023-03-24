@@ -1,9 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router"; // @ts-ignore
 import Index from "@views/Index.vue"; // @ts-ignore
-//import Setting from "@views/Setting.vue"; // @ts-ignore
+import Setting from "@views/Setting.vue"; // @ts-ignore
 import Upsell from "@views/Upsell.vue"; // @ts-ignore
 import Products from "@views/Products.vue"; // @ts-ignore
-import Error404 from "@views/404.vue"; // @ts-ignore
+import Error404 from "@views/404.vue";
 
 /**
  *
@@ -33,8 +33,8 @@ const defaultRoutes: any = [
 	},
 	{
 		path: "/s/:slug",
-		name: "Index",
-		component: Index,
+		name: "Setting",
+		component: Setting,
 	},
 ];
 
@@ -53,16 +53,6 @@ const upsellRoutes: any = [
 		component: Upsell,
 	},
 ];
-
-/**
- *
- * Routes for premium addon routes.
- *
- * @param {Array} premiumRoutes
- * @since 2.0.0
- */
-
-const premiumAddonRoutes: any = [];
 
 /**
  *
@@ -106,7 +96,6 @@ const catchAllRoutes: any = [
 
 const routes: any = [
 	...defaultRoutes,
-	...premiumAddonRoutes,
 	...upsellRoutes,
 	...productRoutes,
 	...catchAllRoutes,
