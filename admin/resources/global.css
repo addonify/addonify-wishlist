@@ -1,0 +1,65 @@
+/* -------------------------------------------------------------------------- 
+	Database upgrade notice
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-upgrade-notice {
+
+    position: relative;
+    display: block;
+    padding: 20px;
+    margin: 20px 0;
+    border-style: solid;
+    border-color: #E0E0E0;
+    border-width: 1px;
+    border-left-width: 4px;
+    box-shadow: 0px 1px 2px 0px rgba( 0, 0, 0, 0.1 );
+    background-color: white;
+    border-radius: 5px;
+}
+
+#addonify-wishlist-upgrade-notice.notice-info {
+
+    border-left-color: #007CFF;
+}
+
+#addonify-wishlist-upgrade-notice.notice-success {
+
+    border-left-color: #00A32A;
+}
+
+#addonify-wishlist-upgrade-notice.notice-warning {
+
+    border-left-color: #DBA617;
+}
+
+#addonify-wishlist-upgrade-notice.notice-error {
+
+    border-left-color: #CB0206;
+}
+
+#addonify-wishlist-upgrade-notice > h3 {
+
+    margin: 0 0 10px 0;
+}
+
+#addonify-wishlist-upgrade-notice > p {
+
+    display: block;
+    margin: 0 0 10px 0;
+}
+
+#addonify-wishlist-upgrade-notice .button {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* -------------------------------------------------------------------------- 
+	Case: Success
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-upgrade-notice.notice-success {
+
+    padding: 15px;
+}
