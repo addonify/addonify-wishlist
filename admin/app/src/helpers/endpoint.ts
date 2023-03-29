@@ -39,7 +39,8 @@ export const upgradeLanding: string =
  * @since 2.0.0
  */
 
-export const docsLanding: string = "https://docs.addonify.com/";
+export const docsLanding: string =
+	"https://docs.addonify.com/kb/woocommerce-wishlist/";
 
 /**
  *
