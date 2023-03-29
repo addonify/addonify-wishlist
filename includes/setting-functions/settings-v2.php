@@ -335,6 +335,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 					'sections' => array(
 						'reset-options'  => array(
 							'type'   => 'options-box',
+							'title'  => esc_html__( 'Reset Options', 'addonify-wishlist' ),
 							'fields' => array(
 								'reset-options' => array(
 									'label'          => esc_html__( 'Reset Options', 'addonify-wishlist' ),
@@ -348,6 +349,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 						),
 						'export-options' => array(
 							'type'   => 'options-box',
+							'title'  => esc_html__( 'Export Options', 'addonify-wishlist' ),
 							'fields' => array(
 								'export-options' => array(
 									'label'       => esc_html__( 'Export Options', 'addonify-wishlist' ),

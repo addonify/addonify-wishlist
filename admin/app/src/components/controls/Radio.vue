@@ -17,7 +17,7 @@ const props = defineProps({
 		type: [Array, Object],
 		required: true,
 	},
-	type: {
+	design: {
 		type: String,
 		default: "default",
 		required: false,
@@ -43,7 +43,7 @@ let vModalValue = computed({
 });
 </script>
 <template>
-	<template v-if="props.type === 'default'">
+	<template v-if="props.design === 'default'">
 		<el-radio-group
 			v-model="vModalValue"
 			v-for="(value, key) in props.choices"
@@ -51,12 +51,14 @@ let vModalValue = computed({
 			<el-radio :label="key">{{ value }}</el-radio>
 		</el-radio-group>
 	</template>
-	<template v-if="props.type === 'radio-icons'">
-		<el-radio-group
-			v-model="vModalVal"
-			v-for="(value, key) in props.choices"
-		>
-			<el-radio :label="key" size="large" border>
+	<template v-if="props.design === 'radioIcons'">
+		<el-radio-group v-model="vModalValue">
+			<el-radio
+				v-for="(value, key) in props.choices"
+				:label="key"
+				size="large"
+				border
+			>
 				<span v-html="value"></span>
 			</el-radio>
 		</el-radio-group>

@@ -46,5 +46,14 @@
         -el-input-inner-height: calc(var(--el-input-height, 40px) - 2px);
         background-color: transparent;
     }
+
+    .el-textarea__inner {
+        
+        display: block;
+        width: 100%;
+        font-family: monospace;
+        min-height: 200px;
+        padding: 15px;
+    }
 }
 

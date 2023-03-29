@@ -5,12 +5,16 @@
 
 #addonify-wishlist-app {
 
-    .adfy-control {
+    .adfy-option {
 
         .el-radio-group {
+
+            @include flex();
+            gap: 20px;
             
             .el-radio {
 
+                margin: 0;
                 align-items: center;
 
                 .adfy-wishlist-icon {

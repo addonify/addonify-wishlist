@@ -26,7 +26,7 @@ let props = defineProps({
 	},
 	type: {
 		type: String,
-		default: "default",
+		default: "text",
 		required: false,
 	},
 });
@@ -50,7 +50,7 @@ let value = computed({
 });
 </script>
 <template>
-	<template v-if="props.type === 'default'">
+	<template v-if="props.type === 'text'">
 		<el-input
 			v-model="value"
 			:placeholder="
