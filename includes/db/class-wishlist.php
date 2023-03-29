@@ -169,3 +169,6 @@ class Wishlist {
 		return false;
 	}
 }
+
+global $wishlist;
+$wishlist = new Wishlist();
