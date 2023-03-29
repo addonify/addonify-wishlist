@@ -77,6 +77,9 @@ class Addonify_Wishlist_Admin {
 
 			//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
 		}
+
+		// Load global admin styles.
+		wp_enqueue_style( "{$this->plugin_name}-global-admin", plugin_dir_url( __FILE__ ) . 'resources/global.css', array(), $this->version, 'all' );
 	}
 
 
@@ -297,10 +300,9 @@ class Addonify_Wishlist_Admin {
 					$table_name = $wishlist->get_table_name();
 					if ( $wishlist->check_table_exists( $table_name ) ) {
 						?>
-						<div class="notice notice-success is-dismissible">
-							<h3><?php esc_html_e( 'Addonify Wishlist database updated', 'addonify-wishlist' ); ?></h3>
+						<div class="notice notice-success is-dismissible" id="addonify-wishlist-upgrade-notice">
 							<p>
-							<?php esc_html_e( 'Addonify Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
+								<?php esc_html_e( 'Addonify Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
 							</p>
 							<a class="button button-primary" href="<?php echo esc_url( admin_url() ); ?>">
 								<?php esc_html_e( 'Thanks!', 'addonify-wishlist' ); ?>
@@ -309,8 +311,8 @@ class Addonify_Wishlist_Admin {
 						<?php
 					} else {
 						?>
-						<div class="notice notice-error is-dismissible">
-							<h3><?php esc_html_e( 'Addonify Wishlist database could not updated', 'addonify-wishlist' ); ?></h3>
+						<div class="notice notice-error" id="addonify-wishlist-upgrade-notice">
+							<h3><?php esc_html_e( 'Addonify Wishlist database could not updated!!', 'addonify-wishlist' ); ?></h3>
 							<p>
 								<?php esc_html_e( 'There had been an error while updating Addonify Wishlist database. Please, try again. If the issue persists please contact plugin support.', 'addonify-wishlist' ); ?>
 							</p>
@@ -336,9 +338,9 @@ class Addonify_Wishlist_Admin {
 				'admin_notices',
 				function () {
 					?>
-					<div class="notice notice-info">
+					<div class="notice notice-info" id="addonify-wishlist-upgrade-notice">
 						<h3>
-							<?php esc_html_e( 'Addonify Wishlist database update required', 'addonify-wishlist' ); ?>
+							<?php esc_html_e( 'Addonify Wishlist database update required!', 'addonify-wishlist' ); ?>
 						</h3>
 						<p>
 							<?php esc_html_e( 'Update your database to keep the plugin running smoothly. The database update process takes a few moments, so please be patient.', 'addonify-wishlist' ); ?>
