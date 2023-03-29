@@ -302,9 +302,9 @@ class Addonify_Wishlist_Admin {
 							<p>
 							<?php esc_html_e( 'Addonify Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
 							</p>
-							<button class="button button-primary">
+							<a class="button button-primary" href="<?php echo esc_url( admin_url() ); ?>">
 								<?php esc_html_e( 'Thanks!', 'addonify-wishlist' ); ?>
-							</button>
+							</a>
 						</div>
 						<?php
 					} else {
