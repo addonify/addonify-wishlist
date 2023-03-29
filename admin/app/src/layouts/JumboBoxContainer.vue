@@ -14,10 +14,6 @@ const props = defineProps({
 		type: Object,
 		required: false,
 	},
-	reactiveState: {
-		type: Object,
-		required: false,
-	},
 	route: {
 		type: String,
 		required: false,
