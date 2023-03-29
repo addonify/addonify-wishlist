@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed } from "vue"; // @ts-ignore
+import { rgbaToHex } from "@helpers/color";
 
 /**
  *
@@ -13,6 +14,7 @@ const props = defineProps({
 	},
 	size: {
 		type: String,
+		default: "normal",
 		required: false,
 	},
 	title: {
@@ -90,7 +92,7 @@ const colorChangedHandler = (color: any) => {
 				@active-change="colorChangedHandler"
 			/>
 			<span class="color-code">
-				{{ value }}
+				{{ rgbaToHex(value).toUpperCase() }}
 			</span>
 		</div>
 	</div>

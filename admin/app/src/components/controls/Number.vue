@@ -9,12 +9,12 @@ import { computed } from "vue";
 
 const props = defineProps({
 	modelValue: {
-		type: Number,
+		type: [Number, String],
 		required: true,
 	},
-	type: {
+	design: {
 		type: String,
-		default: "default",
+		default: "arrow",
 		required: false,
 	},
 	min: {
@@ -31,6 +31,15 @@ const props = defineProps({
 	},
 	precision: {
 		type: [String, Number],
+		required: false,
+	},
+	sliderTipText: {
+		type: String,
+		required: false,
+	},
+	sliderInput: {
+		type: Boolean,
+		default: true,
 		required: false,
 	},
 });
@@ -51,21 +60,42 @@ let value = computed({
 		emit("update:modelValue", newValue);
 	},
 });
+
+/**
+ *
+ * Append slider tooltip text.
+ *
+ * @param {string} val
+ * @returns {string} val
+ * @since: 2.0.0
+ */
+
+const appendSliderToolTip = (val) => val + " " + props.sliderTipText;
 </script>
 <template>
 	<el-input-number
-		v-if="props.type === 'default'"
+		v-if="props.design === 'plus-minus'"
 		size="large"
-		controls-position="right"
 		v-model="value"
 		:min="props.min"
 		:max="props.max"
 		:step="props.steps"
 		:precision="props.precision"
 	/>
+	<el-slider
+		v-else-if="props.design === 'slider'"
+		v-model="value"
+		:min="props.min ? props.min : 0"
+		:max="props.max ? props.max : 1000"
+		:step="props.step ? props.step : 1"
+		:show-input="props.sliderInput ? true : false"
+		:format-tooltip="props.sliderTipText ? appendSliderToolTip : null"
+		size="large"
+	/>
 	<el-input-number
 		v-else
 		size="large"
+		controls-position="right"
 		v-model="value"
 		:min="props.min"
 		:max="props.max"
