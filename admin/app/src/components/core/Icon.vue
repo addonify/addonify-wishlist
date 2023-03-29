@@ -171,7 +171,38 @@ const props = defineProps({
 			/>
 		</svg>
 	</span>
-
+	<span v-if="props.name === 'download'" class="icon" :class="props.class">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			:width="props.size"
+			:height="props.size"
+			fill="currentColor"
+			viewBox="0 0 16 16"
+		>
+			<path
+				d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+			/>
+			<path
+				d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+			/>
+		</svg>
+	</span>
+	<span v-if="props.name === 'reset'" class="icon" :class="props.class">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			:width="props.size"
+			:height="props.size"
+			fill="currentColor"
+		>
+			<path
+				d="M12,0A11.972,11.972,0,0,0,4,3.073V1A1,1,0,0,0,2,1V4A3,3,0,0,0,5,7H8A1,1,0,0,0,8,5H5a.854.854,0,0,1-.1-.021A9.987,9.987,0,1,1,2,12a1,1,0,0,0-2,0A12,12,0,1,0,12,0Z"
+			/>
+			<path
+				d="M12,6a1,1,0,0,0-1,1v5a1,1,0,0,0,.293.707l3,3a1,1,0,0,0,1.414-1.414L13,11.586V7A1,1,0,0,0,12,6Z"
+			/>
+		</svg>
+	</span>
 	<span v-if="props.name === 'hand-wave'" class="icon" :class="props.class">
 		<svg
 			viewBox="0 0 30 31"

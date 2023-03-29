@@ -41,6 +41,11 @@ a.adfy-button {
         }
     }
 
+    &.danger {
+
+        background-color: rgb(255, 19, 19);
+    }
+
     &:hover {
 
         fill: var(--addonify_button_hover_text_color);
