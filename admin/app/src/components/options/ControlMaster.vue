@@ -8,6 +8,9 @@ import Number from "@components/controls/Number.vue";
 import ColorControl from "@components/controls/ColorControl.vue";
 import BorderRadiusControl from "@components/controls/BorderRadiusControl.vue";
 import TypographyControl from "@components/controls/TypographyControl.vue";
+import ImportOptions from "@components/controls/ImportOptions.vue";
+import ExportOptions from "@components/controls/ExportOptions.vue";
+import ResetOptions from "@components/controls/ResetOptions.vue";
 import InvalidControl from "@components/controls/InvalidControl.vue";
 
 /**

@@ -1,5 +1,5 @@
 <script setup>
-import { useSettingsStore } from "@stores/options";
+import { useSettingsStore } from "@stores/settings";
 import { Loading, InfoFilled } from "@element-plus/icons-vue";
 
 /**
