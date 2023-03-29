@@ -26,10 +26,7 @@ onMounted(() => {
 		</template>
 		<template v-else>
 			<RouteLinks />
-			<JumboBoxContainer
-				:section="store.data"
-				:reactiveState="store.settings"
-			/>
+			<JumboBoxContainer :section="store.data" />
 		</template>
 		<Sidebar />
 	</section>
