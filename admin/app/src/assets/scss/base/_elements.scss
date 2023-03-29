@@ -1,7 +1,7 @@
 
 #addonify-wishlist-app {
 
-    a {
+    a:not(.adfy-button) {
 
         color: var(--addonify_link_color);
         text-decoration: none;

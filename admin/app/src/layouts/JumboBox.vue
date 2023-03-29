@@ -36,7 +36,10 @@ console.log(props.section);
 			<p>
 				Page to render: <span class="red">{{ props.route }}</span>
 			</p>
-			<pre>{{ props.section }}</pre>
+			<pre>
+				{{ props.section }}
+			</pre
+			>
 			<!--<OptionBox />-->
 		</div>
 	</div>
@@ -44,5 +47,10 @@ console.log(props.section);
 <style scoped>
 .red {
 	color: red;
+}
+
+pre {
+	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 </style>
