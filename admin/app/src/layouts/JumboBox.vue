@@ -1,5 +1,5 @@
 <script setup>
-import { watchEffect } from "vue";
+import { docsLanding } from "@helpers/endpoint";
 import OptionBox from "@components/options/OptionBox.vue";
 import JumboBoxTitle from "@layouts/JumboBoxTitle.vue";
 
@@ -20,33 +20,16 @@ const props = defineProps({
 	},
 });
 
-const docLink = "https://docs.addonify.com/";
-const mockTitle = "Mock section";
-
-console.log(props.section);
+//console.log(props.section);
 </script>
 <template>
 	<div class="adfy-jumbo-boxes">
-		<div class="adfy-jumbo-box">
-			<JumboBoxTitle :title="mockTitle" :doc-link="docLink" />
-			<p>
-				Page to render: <span class="red">{{ props.route }}</span>
-			</p>
-			<pre>
-				{{ props.section }}
-			</pre
-			>
-			<!--<OptionBox />-->
+		<div class="adfy-jumbo-box" v-for="box in props.section.sections">
+			<JumboBoxTitle
+				:title="box.title"
+				:doc-link="box.docs_link ? box.docs_link : docsLanding"
+			/>
+			<OptionBox :optionBox="box" />
 		</div>
 	</div>
 </template>
-<style scoped>
-.red {
-	color: red;
-}
-
-pre {
-	word-wrap: break-word;
-	white-space: pre-wrap;
-}
-</style>

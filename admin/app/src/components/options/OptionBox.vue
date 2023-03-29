@@ -1,18 +1,43 @@
 <script setup>
-import { useSettingsStore } from "@stores/settings";
-import ColorControl from "@components/controls/ColorControl.vue";
-import BorderRadiusControl from "@components/controls/BorderRadiusControl.vue";
-import TypographyControl from "@components/controls/TypographyControl.vue";
+import HelpTip from "@components/core/HelpTip.vue";
+import ControlMaster from "@components/options/ControlMaster.vue";
+
+/**
+ *
+ * Define props that we will use in this component.
+ * @since: 2.0.0
+ */
+
+const props = defineProps({
+	optionBox: {
+		type: Object,
+		required: false,
+	},
+});
+
+//console.log(props.optionBox);
 </script>
 <template>
 	<div class="adfy-option-boxes">
-		<div class="adfy-option-box" data_width="default">
+		<div
+			class="adfy-option-box"
+			:class="field.className ? field.className : ''"
+			:data_width="field.width ? field.width : 'default'"
+			v-for="(field, fieldKey) in props.optionBox.sub_sections"
+		>
 			<div class="column column-left">
-				<p class="option-label">Color add to wishlist button</p>
+				<p class="option-label">
+					{{ field.label ? field.label : "?????" }}
+					<HelpTip
+						v-if="field.hasOwnProperty('description')"
+						:content="field.description"
+					/>
+				</p>
 			</div>
 			<div class="column column-right">
 				<div class="adfy-option">
-					<!--<ColorControl v-model="store.settings.color" />-->
+					<ControlMaster :field="field" :fieldKey="fieldKey" />
+					!!! CONTROL !!!
 				</div>
 			</div>
 		</div>
