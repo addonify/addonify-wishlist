@@ -86,5 +86,21 @@ const reactiveState = store.settings;
 		:size="props.field.size"
 		:title="props.field.title"
 	/>
+	<ExportOptions
+		v-else-if="props.field.type === 'export-option'"
+		:label="props.field.label"
+	/>
+	<ImportOptions
+		v-else-if="props.field.type === 'import-option'"
+		:caption="props.field.caption"
+		:note="props.field.note"
+	/>
+	<ResetOptions
+		v-else-if="props.field.type === 'reset-option'"
+		:label="props.field.label"
+		:confirmText="props.field.confirmText"
+		:confirmYesText="props.field.confirmYesText"
+		:confirmNoText="props.field.confirmNoText"
+	/>
 	<InvalidControl v-else />
 </template>
