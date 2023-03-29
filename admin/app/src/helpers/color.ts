@@ -9,7 +9,7 @@
 export const rgbaToHex = (color: string): string => {
 	/**
 	 *
-	 * If 'color' is not hex and not rgba, return it.
+	 * If 'color' is not hex and not rgba, return it immediately.
 	 */
 
 	if (color.substring(0, 1) !== "#" && color.substring(0, 4) !== "rgba") {

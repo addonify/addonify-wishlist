@@ -1,7 +1,7 @@
 <script setup>
-import { Loading } from "@element-plus/icons-vue";
 import { useSettingsStore } from "@stores/settings";
-
+import Icon from "@components/core/Icon.vue";
+import { textdomain } from "@helpers/global";
 /**
  *
  * Define props that we will use in this component.
@@ -16,15 +16,21 @@ const props = defineProps({
 	},
 });
 
+const { __ } = wp.i18n;
 const store = useSettingsStore();
+const isExportingText = __("Processing...", textdomain);
 </script>
 <template>
-	<el-button
-		type="primary"
-		size="large"
-		@click="store.status.exportAllOptions"
-		:loading="store.status.isDoingExport"
+	<button
+		type="submit"
+		class="adfy-button"
+		:data_loading="store.status.isExporting"
+		:disabled="store.status.isExporting"
+		@click="store.exportSettings"
 	>
-		{{ props.label }}
-	</el-button>
+		{{ store.status.isExporting ? isExportingText : props.label }}
+
+		<Icon v-if="!store.status.isExporting" name="download" size="20px" />
+		<Icon v-if="store.status.isExporting" name="loading" size="18px" />
+	</button>
 </template>

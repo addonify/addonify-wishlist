@@ -133,54 +133,49 @@ export const useSettingsStore = defineStore({
 		 * @since 2.0.0
 		 */
 
-		async saveSettings(payload: []): Promise<void> {
+		saveSettings(payload: []): void {
 			/**
 			 *
 			 * Let's send the payload to the rest api endpoint.
 			 */
 
-			try {
-				const res = await apiFetch({
-					path: apiEndpoint + "/update_options",
-					method: "POST",
-					data: {
-						settings_values: payload,
-					},
-				});
+			this.status.isSaving = true;
+			let errorMessage: string = __(
+				"Error saving settings. Please try again.",
+				textdomain
+			);
 
-				this.status.message = res.message;
-
-				if (res.status === 200) {
+			apiFetch({
+				path: apiEndpoint + "/update_options",
+				method: "POST",
+				data: {
+					settings_values: payload,
+				},
+			})
+				.then((res: any) => {
 					/**
 					 *
-					 * We have the data, lets handle the mutations and other side effects.
+					 * Case: Success.
+					 * Saving successfully done.
 					 */
-
+					this.status.message = res.message;
 					oldSettings = cloneDeep(res.setting_values);
 					dispatchToast(this.status.message, "success");
-					this.status.isSaving = false;
 					this.fetchSettings();
-				} else {
+				})
+				.catch((err: any) => {
 					/**
 					 *
-					 * Let unExpectedResponse function do the rest.
+					 * Case: Error.
+					 * Couldn't save.
 					 */
 
-					unExpectedResponse(res);
+					console.log(err);
+					dispatchToast(errorMessage, "error");
+				})
+				.finally(() => {
 					this.status.isSaving = false;
-				}
-			} catch (err: any) {
-				/**
-				 *
-				 * Handle the error here.
-				 */
-
-				console.log(err);
-
-				dispatchToast(this.status.message, "error");
-
-				this.status.isSaving = false;
-			}
+				});
 		},
 
 		/**
@@ -248,7 +243,7 @@ export const useSettingsStore = defineStore({
 		 * @since 2.0.0
 		 */
 
-		async exportSettings(): Promise<void> {
+		exportSettings(): void {
 			/**
 			 *
 			 * Begin the export process.
@@ -256,20 +251,17 @@ export const useSettingsStore = defineStore({
 
 			this.status.isExporting = true;
 
-			try {
-				const res = await apiFetch({
-					path: apiEndpoint + "/export_options",
-					method: "GET",
-				});
-
-				this.status.message = res.message; // Get the message.
-
-				if (res.status === 200) {
+			apiFetch({
+				path: apiEndpoint + "/export_options",
+				method: "GET",
+			})
+				.then((res: any) => {
 					/**
 					 *
-					 * Allow the user to download the JSON file.
+					 * Case: Success.
+					 * Export is successful.
 					 */
-
+					this.status.message = res.message; // Get the message.
 					let date = new Date().getTime();
 					let link = document.createElement("a");
 					link.href = res.url;
@@ -279,26 +271,20 @@ export const useSettingsStore = defineStore({
 					);
 					document.body.appendChild(link);
 					link.click(); // Simulate the click event.
-					this.status.isExporting = false; // Stop the export process.
-				} else {
+				})
+				.catch((err: any) => {
 					/**
 					 *
-					 * Let unExpectedResponse function do the rest.
+					 * Case: Error.
+					 * Export was un-successful.
 					 */
 
-					unExpectedResponse(res);
-					this.status.isExporting = false; // Bail out.
-				}
-			} catch (err: any) {
-				/**
-				 *
-				 * Handle the error here.
-				 */
-
-				console.log(err);
-				dispatchToast(this.status.message, "error");
-				this.status.isExporting = false; // Bail out.
-			}
+					console.log(err);
+					dispatchToast(this.status.message, "error");
+				})
+				.finally(() => {
+					this.status.isExporting = false;
+				});
 		},
 
 		/**
