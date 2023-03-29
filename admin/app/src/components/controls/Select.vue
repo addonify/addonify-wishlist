@@ -14,6 +14,10 @@ const props = defineProps({
 		type: [Array, String, Number, Object],
 		required: true,
 	},
+	choices: {
+		type: [Array, Object],
+		required: false,
+	},
 	placeholder: {
 		type: String,
 		required: false,
@@ -44,12 +48,14 @@ let value = computed({
 		filterable
 		clearable
 		:placeholder="
-			props.placeholder
-				? props.placeholder
-				: __('Enter text here...', textdomain)
+			props.placeholder ? props.placeholder : __('Select', textdomain)
 		"
 	>
-		<el-option />
+		<el-option
+			v-for="(label, key) in props.choices"
+			:label="label"
+			:value="key"
+		/>
 	</el-select>
 </template>
 <style lang="css">

@@ -37,7 +37,6 @@ const props = defineProps({
 			<div class="column column-right">
 				<div class="adfy-option">
 					<ControlMaster :field="field" :fieldKey="fieldKey" />
-					!!! CONTROL !!!
 				</div>
 			</div>
 		</div>
