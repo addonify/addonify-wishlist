@@ -17,13 +17,19 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 	 */
 	function addonify_wishlist_popup_modal_v_2_options() {
 		return array(
-			'popup_close_btn_text'    => array(
-				'type'        => 'text',
-				'className'   => '',
-				'label'       => __( 'Close Button Label', 'addonify-wishlist' ),
-				'description' => __( 'Label for button to close the popup modal box.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'popup_close_btn_text' ),
+			'popup_button_options'    => array(
+				'title'        => __( 'Popup Button Option', 'addonify-wishlist' ),
+				'type'         => 'sub_section',
+				'sub_sections' => array(
+					'popup_close_btn_text' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Close Button Label', 'addonify-wishlist' ),
+						'description' => __( 'Label for button to close the popup modal box.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'popup_close_btn_text' ),
+					),
+				),
 			),
 			'added_to_wishlist_modal' => array(
 				'title'        => __( 'Added to Wishlist Modal', 'addonify-wishlist' ),
