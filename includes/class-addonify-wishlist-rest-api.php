@@ -58,7 +58,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		 */
 		public function register_rest_endpoints() {
 
-			register_rest_route(
+			register_rest_route( // Get options.
 				$this->rest_namespace,
 				'/get_options',
 				array(
@@ -68,7 +68,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
+			register_rest_route( // Get options version 2.
 				$this->rest_namespace_v2,
 				'/get_options',
 				array(
@@ -78,7 +78,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
+			register_rest_route( // Update options.
 				$this->rest_namespace,
 				'/update_options',
 				array(
@@ -88,7 +88,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
+			register_rest_route( // Reset options.
 				$this->rest_namespace,
 				'/reset_options',
 				array(
@@ -98,7 +98,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
+			register_rest_route( // Export options.
 				$this->rest_namespace,
 				'/export_options',
 				array(
@@ -108,7 +108,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
+			register_rest_route( // Import options.
 				$this->rest_namespace,
 				'/import_options',
 				array(

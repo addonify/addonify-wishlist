@@ -17,65 +17,71 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 	 */
 	function addonify_wishlist_wishlist_button_v_2_options() {
 		return array(
-			'btn_position'                               => array(
-				'type'        => 'select',
-				'className'   => '',
-				'label'       => __( 'Button Position', 'addonify-wishlist' ),
-				'description' => __( 'Choose where to place the Add to Wishlist button.', 'addonify-wishlist' ),
-				'choices'     => array(
-					'after_add_to_cart'  => __( 'After Add to Cart Button', 'addonify-wishlist' ),
-					'before_add_to_cart' => __( 'Before Add to Cart Button', 'addonify-wishlist' ),
+			'wishlist_button_options' => array(
+				'title'        => __( 'Wishlist Button Options', 'addonify-wishlist' ),
+				'type'         => 'sub_section',
+				'sub_sections' => array(
+					'btn_position'                => array(
+						'type'        => 'select',
+						'className'   => '',
+						'label'       => __( 'Button Position', 'addonify-wishlist' ),
+						'description' => __( 'Choose where to place the Add to Wishlist button.', 'addonify-wishlist' ),
+						'choices'     => array(
+							'after_add_to_cart'  => __( 'After Add to Cart Button', 'addonify-wishlist' ),
+							'before_add_to_cart' => __( 'Before Add to Cart Button', 'addonify-wishlist' ),
+						),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'btn_position' ),
+					),
+					'btn_position_on_single'      => array(
+						'type'        => 'select',
+						'className'   => '',
+						'label'       => __( 'Button Position on Product Single Page', 'addonify-wishlist' ),
+						'description' => __( 'Choose where to place the Add to Wishlist button.', 'addonify-wishlist' ),
+						'choices'     => array(
+							'before_add_to_cart_form'   => __( 'Before Add to Cart Form', 'addonify-wishlist' ),
+							'before_add_to_cart_button' => __( 'Before Add to Cart Button', 'addonify-wishlist' ),
+							'after_add_to_cart_button'  => __( 'After Add to Cart Button', 'addonify-wishlist' ),
+							'after_add_to_cart_form'    => __( 'After Add to Cart Form', 'addonify-wishlist' ),
+						),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'btn_position_on_single' ),
+					),
+					'remove_already_added_product_from_wishlist' => array(
+						'type'        => 'switch',
+						'className'   => '',
+						'label'       => __( 'Remove Added Product from Wishlist on Click', 'addonify-wishlist' ),
+						'description' => __( 'If Add to Wishlist button is clicked when the product is already in wishlist, remove the product from wishlist.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'remove_already_added_product_from_wishlist' ),
+					),
+					'btn_custom_class'            => array(
+						'type'        => 'text',
+						'className'   => '',
+						'placeholder' => 'my_button rounded_button',
+						'label'       => __( 'Custom CSS Class', 'addonify-wishlist' ),
+						'badge'       => __( 'Optional', 'addonify-wishlist' ),
+						'description' => __( 'Add custom CSS class(es) to Add to Wishlist button. Separate CSS classes with spaces.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'btn_custom_class' ),
+					),
+					'wishlist_btn_bg_color'       => array(
+						'type'          => 'color',
+						'label'         => __( 'Background Color', 'addonify-wishlist' ),
+						'isAlphaPicker' => true,
+						'className'     => '',
+						'value'         => addonify_wishlist_get_option( 'wishlist_btn_bg_color' ),
+					),
+					'wishlist_btn_bg_color_hover' => array(
+						'type'          => 'color',
+						'label'         => __( 'On Hover Background Color', 'addonify-wishlist' ),
+						'isAlphaPicker' => true,
+						'className'     => '',
+						'value'         => addonify_wishlist_get_option( 'wishlist_btn_bg_color_hover' ),
+					),
 				),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'btn_position' ),
 			),
-			'btn_position_on_single'                     => array(
-				'type'        => 'select',
-				'className'   => '',
-				'label'       => __( 'Button Position on Product Single Page', 'addonify-wishlist' ),
-				'description' => __( 'Choose where to place the Add to Wishlist button.', 'addonify-wishlist' ),
-				'choices'     => array(
-					'before_add_to_cart_form'   => __( 'Before Add to Cart Form', 'addonify-wishlist' ),
-					'before_add_to_cart_button' => __( 'Before Add to Cart Button', 'addonify-wishlist' ),
-					'after_add_to_cart_button'  => __( 'After Add to Cart Button', 'addonify-wishlist' ),
-					'after_add_to_cart_form'    => __( 'After Add to Cart Form', 'addonify-wishlist' ),
-				),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'btn_position_on_single' ),
-			),
-			'remove_already_added_product_from_wishlist' => array(
-				'type'        => 'switch',
-				'className'   => '',
-				'label'       => __( 'Remove Added Product from Wishlist on Click', 'addonify-wishlist' ),
-				'description' => __( 'If Add to Wishlist button is clicked when the product is already in wishlist, remove the product from wishlist.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'remove_already_added_product_from_wishlist' ),
-			),
-			'btn_custom_class'                           => array(
-				'type'        => 'text',
-				'className'   => '',
-				'placeholder' => 'my_button rounded_button',
-				'label'       => __( 'Custom CSS Class', 'addonify-wishlist' ),
-				'badge'       => __( 'Optional', 'addonify-wishlist' ),
-				'description' => __( 'Add custom CSS class(es) to Add to Wishlist button. Separate CSS classes with spaces.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'btn_custom_class' ),
-			),
-			'wishlist_btn_bg_color'                      => array(
-				'type'          => 'color',
-				'label'         => __( 'Background Color', 'addonify-wishlist' ),
-				'isAlphaPicker' => true,
-				'className'     => '',
-				'value'         => addonify_wishlist_get_option( 'wishlist_btn_bg_color' ),
-			),
-			'wishlist_btn_bg_color_hover'                => array(
-				'type'          => 'color',
-				'label'         => __( 'On Hover Background Color', 'addonify-wishlist' ),
-				'isAlphaPicker' => true,
-				'className'     => '',
-				'value'         => addonify_wishlist_get_option( 'wishlist_btn_bg_color_hover' ),
-			),
-			'button_labels'                              => array(
+			'button_labels'           => array(
 				'title'        => __( 'Button Labels', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
@@ -119,7 +125,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 					),
 				),
 			),
-			'button_icon'                                => array(
+			'button_icon'             => array(
 				'title'        => __( 'Button icon', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(

@@ -55,7 +55,6 @@ class Wishlist {
 			created_at TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
 			parent_wishlist_id BIGINT NULL,
 			product_id BIGINT NULL,
-			product_added_at TIMESTAMP NULL,
 			share_key BIGINT NULL,
 			PRIMARY KEY (id)
 		) {$charset_collate};";
