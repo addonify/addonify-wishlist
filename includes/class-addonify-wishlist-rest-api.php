@@ -79,7 +79,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			);
 
 			register_rest_route( // Update options.
-				$this->rest_namespace,
+				$this->rest_namespace_v2,
 				'/update_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -89,7 +89,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			);
 
 			register_rest_route( // Reset options.
-				$this->rest_namespace,
+				$this->rest_namespace_v2,
 				'/reset_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -99,7 +99,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			);
 
 			register_rest_route( // Export options.
-				$this->rest_namespace,
+				$this->rest_namespace_v2,
 				'/export_options',
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
@@ -109,7 +109,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			);
 
 			register_rest_route( // Import options.
-				$this->rest_namespace,
+				$this->rest_namespace_v2,
 				'/import_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,

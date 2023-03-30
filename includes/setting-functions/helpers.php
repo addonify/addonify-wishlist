@@ -33,6 +33,30 @@ if ( ! function_exists( 'addonify_wishlist_get_pages' ) ) {
 	}
 }
 
+if ( ! function_exists( 'addonify_wishlist_get_shop_page_title' ) ) {
+	/**
+	 * Get the list of pages.
+	 *
+	 * @since 1.0.0
+	 * @return array $page_list
+	 */
+	function addonify_wishlist_get_shop_page_title() {
+
+		$pages = get_pages();
+
+		if ( ! empty( $pages ) ) {
+
+			foreach ( $pages as $page ) {
+
+				if ( $page->post_title === 'Shop' ) {
+					return $page->post_title;
+				}
+			}
+		}
+
+		return '';
+	}
+}
 
 if ( ! function_exists( 'addonify_wishlist_get_sidebar_icons' ) ) {
 	/**

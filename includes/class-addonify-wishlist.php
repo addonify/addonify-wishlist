@@ -103,6 +103,8 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/db/class-wishlist.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-adfy-wishlist.php';
+
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
