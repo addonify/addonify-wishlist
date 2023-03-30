@@ -14,9 +14,9 @@ const props = defineProps({
 		type: Object,
 		required: false,
 	},
-	route: {
-		type: String,
-		required: false,
+	reactiveState: {
+		type: Object,
+		required: true,
 	},
 });
 
@@ -64,6 +64,7 @@ const getSectionBasedOnRoute = computed(() => {
 			<JumboBox
 				:section="getSectionBasedOnRoute"
 				:route="route.params.slug"
+				:reactiveState="props.reactiveState"
 			/>
 		</Form>
 	</main>

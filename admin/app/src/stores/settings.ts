@@ -2,6 +2,7 @@ import { defineStore } from "pinia"; // @ts-ignore
 import { apiEndpoint } from "@helpers/endpoint"; // @ts-ignore
 import { textdomain } from "@helpers/global"; // @ts-ignore
 import { dispatchToast } from "@helpers/message";
+import { ElMessage } from "element-plus";
 
 /**
  *
@@ -136,8 +137,6 @@ export const useSettingsStore = defineStore({
 				}
 			});
 
-			//console.log(payload);
-
 			/**
 			 *
 			 * Pass payload to the api.
@@ -163,9 +162,12 @@ export const useSettingsStore = defineStore({
 					 * Case: Success.
 					 * Saving successfully done.
 					 */
+
 					this.status.message = res.message;
-					oldSettings = cloneDeep(res.setting_values);
-					dispatchToast(this.status.message, "success");
+
+					if (res.success === true) {
+						dispatchToast(this.status.message, "success");
+					}
 				})
 				.catch((err: any) => {
 					/**
@@ -176,6 +178,11 @@ export const useSettingsStore = defineStore({
 
 					console.log(err);
 					dispatchToast(errorMessage, "error");
+					ElMessage.error({
+						message: this.status.message,
+						offset: 100,
+						duration: 10000,
+					});
 				})
 				.finally(() => {
 					this.fetchSettings();

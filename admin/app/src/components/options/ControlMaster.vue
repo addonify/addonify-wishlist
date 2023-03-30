@@ -20,6 +20,10 @@ import InvalidControl from "@components/controls/InvalidControl.vue";
  */
 
 const props = defineProps({
+	reactiveState: {
+		type: Object,
+		required: true,
+	},
 	field: {
 		type: [Object, String],
 		required: true,
@@ -33,24 +37,15 @@ const props = defineProps({
 		required: false,
 	},
 });
-
-/**
- *
- * Get settings store
- * @since: 2.0.0
- */
-
-const store = useSettingsStore();
-const reactiveState = store.settings;
 </script>
 <template>
 	<Switch
 		v-if="props.field.type === 'switch'"
-		v-model="reactiveState[props.fieldKey]"
+		v-model="props.reactiveState[props.fieldKey]"
 	/>
 	<Radio
 		v-else-if="props.field.type === 'radio'"
-		v-model="reactiveState[props.fieldKey]"
+		v-model="props.reactiveState[props.fieldKey]"
 		:design="props.field.design"
 		:choices="props.field.choices"
 	/>
@@ -58,13 +53,13 @@ const reactiveState = store.settings;
 		v-else-if="
 			props.field.type === 'text' || props.field.type === 'textarea'
 		"
-		v-model="reactiveState[props.fieldKey]"
+		v-model="props.reactiveState[props.fieldKey]"
 		:type="props.field.type"
 		:placeholder="props.field.placeholder"
 	/>
 	<Number
 		v-else-if="props.field.type === 'number'"
-		v-model="reactiveState[props.fieldKey]"
+		v-model="props.reactiveState[props.fieldKey]"
 		:design="props.field.design"
 		:min="props.field.min"
 		:max="props.field.max"
@@ -76,13 +71,13 @@ const reactiveState = store.settings;
 	/>
 	<Select
 		v-else-if="props.field.type === 'select'"
-		v-model="reactiveState[props.fieldKey]"
+		v-model="props.reactiveState[props.fieldKey]"
 		:choices="props.field.choices"
 		:placeholder="props.field.placeholder"
 	/>
 	<ColorControl
 		v-else-if="props.field.type === 'color'"
-		v-model="reactiveState[props.fieldKey]"
+		v-model="props.reactiveState[props.fieldKey]"
 		:size="props.field.size"
 		:title="props.field.title"
 	/>
