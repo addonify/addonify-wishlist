@@ -13,6 +13,10 @@ const props = defineProps({
 		type: Object,
 		required: false,
 	},
+	reactiveState: {
+		type: Object,
+		required: true,
+	},
 });
 
 //console.log(props.optionBox);
@@ -36,7 +40,11 @@ const props = defineProps({
 			</div>
 			<div class="column column-right">
 				<div class="adfy-option">
-					<ControlMaster :field="field" :fieldKey="fieldKey" />
+					<ControlMaster
+						:field="field"
+						:fieldKey="fieldKey"
+						:reactiveState="props.reactiveState"
+					/>
 				</div>
 			</div>
 		</div>

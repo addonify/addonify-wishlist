@@ -14,9 +14,9 @@ const props = defineProps({
 		type: Object,
 		required: false,
 	},
-	route: {
-		type: String,
-		required: false,
+	reactiveState: {
+		type: Object,
+		required: true,
 	},
 });
 
@@ -29,7 +29,7 @@ const props = defineProps({
 				:title="box.title"
 				:doc-link="box.docs_link ? box.docs_link : docsLanding"
 			/>
-			<OptionBox :optionBox="box" />
+			<OptionBox :optionBox="box" :reactiveState="props.reactiveState" />
 		</div>
 	</div>
 </template>
