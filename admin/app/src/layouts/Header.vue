@@ -38,7 +38,8 @@ const saveButtonText = (): string => {
 					type="submit"
 					class="adfy-button"
 					:data_loading="store.status.isSaving"
-					:disabled="store.status.isSaving"
+					:disabled="!store.haveChanges || store.status.isSaving"
+					@click="store.saveSettings()"
 				>
 					{{ saveButtonText() }}
 

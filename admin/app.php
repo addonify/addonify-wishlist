@@ -20,7 +20,7 @@ if ( isset( $_GET['page'] ) && 'addonify_wishlist' === $_GET['page'] ) { //phpcs
 				'admin/app/src/main.js',
 				array(
 					'handle'           => $handle,
-					'dependencies'     => array( 'wp-api-fetch', 'wp-i18n', 'lodash' ), // Dependencies.
+					'dependencies'     => array('lodash', 'wp-api-fetch', 'wp-i18n'), // Dependencies.
 					'css-dependencies' => array(), // Optional style dependencies. Defaults to empty array.
 					'css-media'        => 'all', // Optional.
 					'css-only'         => false, // Optional. Set to true to only load style assets in production mode.
