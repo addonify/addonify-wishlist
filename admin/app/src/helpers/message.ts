@@ -39,13 +39,15 @@ export const dispatchToast = (
 	 */
 
 	if (type === "success") {
-		ElMessage.success({
+		ElMessage({
+			type: "success",
 			message: message,
 			...defaults,
 			duration: 3000,
 		});
 	} else {
-		ElMessage.error({
+		ElMessage({
+			type: "error",
 			message: message,
 			...defaults,
 			duration: 10000,

@@ -1,14 +1,7 @@
-import { defineStore } from "pinia";
-// @ts-ignore
-import { useRoutesStore } from "@stores/routes";
-// @ts-ignore
-import { apiEndpoint } from "@helpers/endpoint";
-// @ts-ignore
-import { textdomain } from "@helpers/global";
-// @ts-ignore
-import { dispatchToast, unExpectedResponse } from "@helpers/message";
-// @ts-ignore
-import { apiEndpoint } from "@helpers/endpoint";
+import { defineStore } from "pinia"; // @ts-ignore
+import { apiEndpoint } from "@helpers/endpoint"; // @ts-ignore
+import { textdomain } from "@helpers/global"; // @ts-ignore
+import { dispatchToast } from "@helpers/message";
 
 /**
  *
@@ -18,10 +11,8 @@ import { apiEndpoint } from "@helpers/endpoint";
  */
 
 // @ts-ignore
-const { apiFetch } = wp;
-// @ts-ignore
-const { isEqual, cloneDeep } = lodash;
-// @ts-ignore
+const { apiFetch } = wp; // @ts-ignore
+const { isEqual, cloneDeep } = lodash; // @ts-ignore
 const { __ } = wp.i18n;
 
 /**
@@ -31,7 +22,7 @@ const { __ } = wp.i18n;
  * @since 2.0.0
  */
 
-let oldSettings: Object = {};
+let oldSettings: any = {};
 
 /**
  *
@@ -50,7 +41,6 @@ export const useSettingsStore = defineStore({
 		status: {
 			isLoading: true, // Flag if something is loading.
 			isSaving: false, // Flag if something is saving.
-			needSaving: false, // Flag if settings needs saving.
 			isDoingReset: false, // Flag if we are resetting settings.
 			isImporting: false, // Flag if we are importing settings.
 			isExporting: false, // Flag if we are exporting settings.
@@ -68,9 +58,8 @@ export const useSettingsStore = defineStore({
 		 * @returns {boolean} true/false
 		 * @since 2.0.0
 		 */
-		haveChanges: (state: any): boolean => {
-			return !isEqual(state.settings, oldSettings) ? true : false;
-		},
+		haveChanges: (state: any): boolean =>
+			!isEqual(state.settings, oldSettings) ? true : false,
 	},
 
 	actions: {
@@ -103,12 +92,12 @@ export const useSettingsStore = defineStore({
 					 * Case: Success.
 					 * We have the data, lets hydrate the state.
 					 */
+
 					//console.log(res);
-					const routeStore = useRoutesStore();
 					this.settings = res.settings_values;
 					this.data = res.tabs;
-					oldSettings = cloneDeep(res.setting_values);
-					routeStore.data = res;
+					oldSettings = cloneDeep(this.settings);
+					//dispatchToast("Success!", "success");
 				})
 				.catch((err: any) => {
 					/**
@@ -128,115 +117,70 @@ export const useSettingsStore = defineStore({
 		 *
 		 * Save options, make api call and update the state.
 		 *
-		 * @param {Object} payload
 		 * @returns {string} success/failed
 		 * @since 2.0.0
 		 */
 
-		async saveSettings(payload: []): Promise<void> {
+		saveSettings(): void {
 			/**
 			 *
-			 * Let's send the payload to the rest api endpoint.
+			 * Handle the payload.
 			 */
 
-			try {
-				const res = await apiFetch({
-					path: apiEndpoint + "/update_options",
-					method: "POST",
-					data: {
-						settings_values: payload,
-					},
-				});
+			let payload: any = new Object();
+			let reactiveSettings: any = this.settings;
 
-				this.status.message = res.message;
+			Object.keys(reactiveSettings).map((key) => {
+				if (!isEqual(reactiveSettings[key], oldSettings[key])) {
+					payload[key] = reactiveSettings[key];
+				}
+			});
 
-				if (res.status === 200) {
+			//console.log(payload);
+
+			/**
+			 *
+			 * Pass payload to the api.
+			 */
+
+			this.status.isSaving = true;
+
+			let errorMessage: string = __(
+				"Error saving settings. Please try again.",
+				textdomain
+			);
+
+			apiFetch({
+				path: apiEndpoint + "/update_options",
+				method: "POST",
+				data: {
+					settings_values: payload,
+				},
+			})
+				.then((res: any) => {
 					/**
 					 *
-					 * We have the data, lets handle the mutations and other side effects.
+					 * Case: Success.
+					 * Saving successfully done.
 					 */
-
+					this.status.message = res.message;
 					oldSettings = cloneDeep(res.setting_values);
 					dispatchToast(this.status.message, "success");
-					this.status.isSaving = false;
-					this.fetchSettings();
-				} else {
+				})
+				.catch((err: any) => {
 					/**
 					 *
-					 * Let unExpectedResponse function do the rest.
+					 * Case: Error.
+					 * Couldn't save.
 					 */
 
-					unExpectedResponse(res);
+					console.log(err);
+					dispatchToast(errorMessage, "error");
+				})
+				.finally(() => {
+					this.fetchSettings();
 					this.status.isSaving = false;
-				}
-			} catch (err: any) {
-				/**
-				 *
-				 * Handle the error here.
-				 */
-
-				console.log(err);
-
-				dispatchToast(this.status.message, "error");
-
-				this.status.isSaving = false;
-			}
-		},
-
-		/**
-		 *
-		 * Reset all settings and set the default values.
-		 *
-		 * @returns {string} success/failed
-		 * @since 2.0.0
-		 */
-
-		async resetAllSettings(): Promise<void> {
-			/**
-			 *
-			 * Let api know we are resetting the settings.
-			 */
-
-			this.status.isDoingReset = true;
-
-			try {
-				const res = await apiFetch({
-					path: apiEndpoint + "/reset_options",
-					method: "POST",
 				});
-
-				this.status.message = res.message; // Get the message.
-
-				if (res.status === 200) {
-					/**
-					 *
-					 * We have the data, lets handle the mutations and other side effects.
-					 */
-
-					dispatchToast(this.status.message, "success");
-					this.status.isDoingReset = false;
-					this.fetchSettings();
-				} else {
-					/**
-					 *
-					 * Let unExpectedResponse function do the rest.
-					 */
-
-					unExpectedResponse(res);
-					this.status.isDoingReset = false;
-				}
-			} catch (err: any) {
-				/**
-				 *
-				 * Handle the error here.
-				 */
-
-				console.log(err);
-
-				dispatchToast(this.status.message, "error");
-
-				this.status.isDoingReset = false;
-			}
 		},
 
 		/**
@@ -248,7 +192,7 @@ export const useSettingsStore = defineStore({
 		 * @since 2.0.0
 		 */
 
-		async exportSettings(): Promise<void> {
+		exportSettings(): void {
 			/**
 			 *
 			 * Begin the export process.
@@ -256,20 +200,17 @@ export const useSettingsStore = defineStore({
 
 			this.status.isExporting = true;
 
-			try {
-				const res = await apiFetch({
-					path: apiEndpoint + "/export_options",
-					method: "GET",
-				});
-
-				this.status.message = res.message; // Get the message.
-
-				if (res.status === 200) {
+			apiFetch({
+				path: apiEndpoint + "/export_options",
+				method: "GET",
+			})
+				.then((res: any) => {
 					/**
 					 *
-					 * Allow the user to download the JSON file.
+					 * Case: Success.
+					 * Export is successful.
 					 */
-
+					this.status.message = res.message; // Get the message.
 					let date = new Date().getTime();
 					let link = document.createElement("a");
 					link.href = res.url;
@@ -278,27 +219,21 @@ export const useSettingsStore = defineStore({
 						`${textdomain}-all-settings-${date}.json`
 					);
 					document.body.appendChild(link);
-					link.click(); // Simulate the click event.
-					this.status.isExporting = false; // Stop the export process.
-				} else {
+					link.click();
+				})
+				.catch((err: any) => {
 					/**
 					 *
-					 * Let unExpectedResponse function do the rest.
+					 * Case: Error.
+					 * Export was un-successful.
 					 */
 
-					unExpectedResponse(res);
-					this.status.isExporting = false; // Bail out.
-				}
-			} catch (err: any) {
-				/**
-				 *
-				 * Handle the error here.
-				 */
-
-				console.log(err);
-				dispatchToast(this.status.message, "error");
-				this.status.isExporting = false; // Bail out.
-			}
+					console.log(err);
+					dispatchToast(this.status.message, "error");
+				})
+				.finally(() => {
+					this.status.isExporting = false;
+				});
 		},
 
 		/**
@@ -311,7 +246,7 @@ export const useSettingsStore = defineStore({
 		 * @since 2.0.0
 		 */
 
-		async importSettings(payload: any): Promise<void> {
+		importSettings(payload: any): void {
 			/**
 			 *
 			 * Begin the import process.
@@ -319,42 +254,83 @@ export const useSettingsStore = defineStore({
 
 			this.status.isImporting = true;
 
-			try {
-				const res = await apiFetch({
-					path: apiEndpoint + "/import_options",
-					method: "POST",
-					body: payload,
+			apiFetch({
+				path: apiEndpoint + "/import_options",
+				method: "POST",
+				body: payload,
+			})
+				.then((res: any) => {
+					/**
+					 *
+					 * Case: Success.
+					 * Import is successful.
+					 */
+
+					if (res.success === true) {
+						this.status.message = res.message;
+						dispatchToast(this.status.message, "success");
+					}
+				})
+				.catch((err: any) => {
+					/**
+					 *
+					 * Case: Error.
+					 * Import was un-successful.
+					 */
+
+					console.log(err);
+					dispatchToast(this.status.message, "error");
+				})
+				.finally(() => {
+					this.fetchSettings();
+					this.status.isImporting = false;
 				});
+		},
 
-				this.status.message = res.message; // Get the message.
+		/**
+		 *
+		 * Reset all settings and set the default values.
+		 *
+		 * @returns {string} success/failed
+		 * @since 2.0.0
+		 */
 
-				if (res.status === 200) {
+		resetAllSettings(): void {
+			/**
+			 *
+			 * Let api know we are resetting the settings.
+			 */
+
+			this.status.isDoingReset = true;
+
+			apiFetch({
+				path: apiEndpoint + "/reset_options",
+				method: "POST",
+			})
+				.then((res: any) => {
 					/**
 					 *
-					 * File has been imported successfully.
+					 * Case: Success.
+					 * Resetting successfully done.
 					 */
 
+					this.status.message = res.message;
 					dispatchToast(this.status.message, "success");
-					this.status.isImporting = false; // Stop the export process.
-				} else {
+				})
+				.catch((err: any) => {
 					/**
 					 *
-					 * Let unExpectedResponse function do the rest.
+					 * Case: Error.
+					 * Couldn't reset.
 					 */
 
-					unExpectedResponse(res);
-					this.status.isImporting = false; // Bail out.
-				}
-			} catch (err: any) {
-				/**
-				 *
-				 * Handle the error here.
-				 */
-
-				console.log(err);
-				dispatchToast(this.status.message, "error");
-				this.status.isImporting = false; // Bail out.
-			}
+					console.log(err);
+					dispatchToast(this.status.message, "error");
+				})
+				.finally(() => {
+					this.fetchSettings();
+					this.status.isDoingReset = false;
+				});
 		},
 	},
 });

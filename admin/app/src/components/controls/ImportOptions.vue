@@ -96,16 +96,16 @@ const handleFileUpload = (file) => {
 
 	//console.log(formData);
 
-	store.importOptions(formData); // Send to store.
+	store.importSettings(formData); // Send to store.
 
 	fileList.value = []; // Clear the upload list.
 };
 </script>
 <template>
-	<div v-show="store.status.isImportingFile === true" id="loading-skelaton">
+	<div v-show="store.status.isImporting === true" id="loading-skelaton">
 		<el-skeleton :rows="3" animated />
 	</div>
-	<div v-show="store.status.isImportingFile !== true" id="input-type-upload">
+	<div v-show="store.status.isImporting !== true" id="input-type-upload">
 		<el-upload
 			v-model:file-list="fileList"
 			drag

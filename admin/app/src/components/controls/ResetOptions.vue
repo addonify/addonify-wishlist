@@ -1,6 +1,8 @@
 <script setup>
 import { useSettingsStore } from "@stores/settings";
-import { Loading, InfoFilled } from "@element-plus/icons-vue";
+import { textdomain } from "@helpers/global";
+import { InfoFilled } from "@element-plus/icons-vue";
+import Icon from "@components/core/Icon.vue";
 
 /**
  *
@@ -28,7 +30,9 @@ const props = defineProps({
 	},
 });
 
+const { __ } = wp.i18n;
 const store = useSettingsStore();
+const isDoingResetText = __("Processing...", textdomain);
 
 /**
  *
@@ -42,7 +46,7 @@ const confirmResetOptions = () => {
 	 *
 	 * Let store handle the reset request.
 	 */
-	store.resetAllOptions();
+	store.resetAllSettings();
 };
 </script>
 <template>
@@ -56,13 +60,24 @@ const confirmResetOptions = () => {
 		@confirm="confirmResetOptions()"
 	>
 		<template #reference>
-			<el-button
-				type="danger"
-				size="large"
-				:loading="store.status.isDoingReset"
+			<button
+				type="submit"
+				class="adfy-button danger"
+				:data_loading="store.status.isDoingReset"
+				:disabled="store.status.isDoingReset"
 			>
-				{{ props.label }}
-			</el-button>
+				{{ store.status.isDoingReset ? isDoingResetText : props.label }}
+				<Icon
+					v-if="!store.status.isDoingReset"
+					name="reset"
+					size="18px"
+				/>
+				<Icon
+					v-if="store.status.isDoingReset"
+					name="loading"
+					size="18px"
+				/>
+			</button>
 		</template>
 	</el-popconfirm>
 </template>
