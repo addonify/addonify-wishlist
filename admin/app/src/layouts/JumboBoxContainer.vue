@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import Form from "@components/core/Form.vue";
 import JumboBox from "@layouts/JumboBox.vue";
 
@@ -29,6 +29,7 @@ const props = defineProps({
  */
 
 const route = useRoute();
+const router = useRouter();
 const getRouterSlug = computed(() => "adfy-form-" + route.params.slug);
 //console.log(route.params);
 
@@ -45,16 +46,27 @@ const getSectionBasedOnRoute = computed(() => {
 	let section = false;
 	if (props.section) {
 		Object.keys(props.section).forEach((key) => {
+			/**
+			 *
+			 * Case: Success. Route slug matched.
+			 *
+			 */
 			if (key === route.params.slug) {
-				/**
-				 *
-				 * Case: Success. Route slug matched.
-				 *
-				 */
 				section = props.section[key];
 			}
 		});
 	}
+
+	/**
+	 *
+	 * Case: Error. Route slug did not match.
+	 *
+	 */
+
+	if (!section) {
+		router.push("/404");
+	}
+
 	return section;
 });
 </script>
