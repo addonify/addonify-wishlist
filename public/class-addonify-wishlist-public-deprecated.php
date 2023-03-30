@@ -316,13 +316,13 @@ class Addonify_Wishlist_Public_Deprecated {
 				'thisSiteUrl'                           => get_bloginfo( 'url' ),
 				'checkoutPageURL'                       => wc_get_checkout_url(),
 				'afterAddToWishlistAction'              => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
-				'wishlistPageURL'                       => esc_url( get_permalink( get_page_by_title( 'Wishlist' ) ) ),
+				'wishlistPageURL'                       => esc_url( get_permalink( addonify_wishlist_get_page_by_title( 'Wishlist' ) ) ),
 				'requireLogin'                          => (bool) addonify_wishlist_get_option( 'require_login' ),
 				'loginURL'                              => $login_url,
 				/* Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag. */
 				'loginRequiredMessage'                  => sprintf( __( 'Login required. Please %1$s click here %2$s to login.', 'addonify-wishlist' ), '<a href="' . $login_url . '">', '</a>' ),
 				'ajaxAddToCart'                         => ( 'yes' === get_option( 'woocommerce_enable_ajax_add_to_cart' ) ),
-				'pageLink'                              => @get_page_link( get_page_by_title( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ),//phpcs:ignore
+				'pageLink'                              => @get_page_link( addonify_wishlist_get_page_by_title( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ),//phpcs:ignore
 				'pageLinkLabel'                         => addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ),
 				'showPageLinkLabel'                     => (bool) addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ),
 			)
