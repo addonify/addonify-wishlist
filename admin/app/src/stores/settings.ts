@@ -1,8 +1,7 @@
-import { defineStore } from "pinia"; // @ts-ignore
+import { defineStore } from "pinia";
+import { ElMessage, ElNotification } from "element-plus"; // @ts-ignore
 import { apiEndpoint } from "@helpers/endpoint"; // @ts-ignore
 import { textdomain } from "@helpers/global"; // @ts-ignore
-import { dispatchToast } from "@helpers/message";
-import { ElMessage } from "element-plus";
 
 /**
  *
@@ -78,8 +77,8 @@ export const useSettingsStore = defineStore({
 			 * Let's define a error message that can be displayed in toast alerts.
 			 */
 
-			let errorMessage: string = __(
-				"Something went wrong. Please reload the page again.",
+			let errMessage: string = __(
+				"Couldn't fetch settings. Please reload the page again.",
 				textdomain
 			);
 
@@ -98,7 +97,6 @@ export const useSettingsStore = defineStore({
 					this.settings = res.settings_values;
 					this.data = res.tabs;
 					oldSettings = cloneDeep(this.settings);
-					//dispatchToast("Success!", "success");
 				})
 				.catch((err: any) => {
 					/**
@@ -107,7 +105,12 @@ export const useSettingsStore = defineStore({
 					 * We have to handle the error here.
 					 */
 					console.log(err);
-					dispatchToast(errorMessage, "error");
+
+					ElMessage.error({
+						message: errMessage,
+						offset: 50,
+						duration: 10000,
+					});
 				})
 				.finally(() => {
 					this.status.isLoading = false;
@@ -144,7 +147,7 @@ export const useSettingsStore = defineStore({
 
 			this.status.isSaving = true;
 
-			let errorMessage: string = __(
+			let errMessage: string = __(
 				"Error saving settings. Please try again.",
 				textdomain
 			);
@@ -165,8 +168,20 @@ export const useSettingsStore = defineStore({
 
 					this.status.message = res.message;
 
+					//console.log(res);
+
 					if (res.success === true) {
-						dispatchToast(this.status.message, "success");
+						ElMessage.success({
+							message: res.message,
+							offset: 50,
+							duration: 3000,
+						});
+					} else {
+						ElMessage.error({
+							message: res.message,
+							offset: 50,
+							duration: 10000,
+						});
 					}
 				})
 				.catch((err: any) => {
@@ -177,10 +192,9 @@ export const useSettingsStore = defineStore({
 					 */
 
 					console.log(err);
-					dispatchToast(errorMessage, "error");
 					ElMessage.error({
-						message: this.status.message,
-						offset: 100,
+						message: errMessage,
+						offset: 50,
 						duration: 10000,
 					});
 				})
@@ -204,7 +218,10 @@ export const useSettingsStore = defineStore({
 			 *
 			 * Begin the export process.
 			 */
-
+			const errMessage = __(
+				"Error couldn't export settings.",
+				textdomain
+			);
 			this.status.isExporting = true;
 
 			apiFetch({
@@ -236,7 +253,12 @@ export const useSettingsStore = defineStore({
 					 */
 
 					console.log(err);
-					dispatchToast(this.status.message, "error");
+
+					ElMessage.error({
+						message: errMessage,
+						offset: 50,
+						duration: 10000,
+					});
 				})
 				.finally(() => {
 					this.status.isExporting = false;
@@ -258,6 +280,10 @@ export const useSettingsStore = defineStore({
 			 *
 			 * Begin the import process.
 			 */
+			const errMessage = __(
+				"Error couldn't import settings.",
+				textdomain
+			);
 
 			this.status.isImporting = true;
 
@@ -275,7 +301,12 @@ export const useSettingsStore = defineStore({
 
 					if (res.success === true) {
 						this.status.message = res.message;
-						dispatchToast(this.status.message, "success");
+
+						ElMessage.success({
+							message: this.status.message,
+							offset: 50,
+							duration: 3000,
+						});
 					}
 				})
 				.catch((err: any) => {
@@ -286,7 +317,12 @@ export const useSettingsStore = defineStore({
 					 */
 
 					console.log(err);
-					dispatchToast(this.status.message, "error");
+
+					ElMessage.error({
+						message: errMessage,
+						offset: 50,
+						duration: 10000,
+					});
 				})
 				.finally(() => {
 					this.fetchSettings();
@@ -307,6 +343,7 @@ export const useSettingsStore = defineStore({
 			 *
 			 * Let api know we are resetting the settings.
 			 */
+			const errMessage = __("Error resetting settings.", textdomain);
 
 			this.status.isDoingReset = true;
 
@@ -322,7 +359,12 @@ export const useSettingsStore = defineStore({
 					 */
 
 					this.status.message = res.message;
-					dispatchToast(this.status.message, "success");
+
+					ElMessage.success({
+						message: this.status.message,
+						offset: 50,
+						duration: 3000,
+					});
 				})
 				.catch((err: any) => {
 					/**
@@ -332,7 +374,12 @@ export const useSettingsStore = defineStore({
 					 */
 
 					console.log(err);
-					dispatchToast(this.status.message, "error");
+
+					ElMessage.error({
+						message: errMessage,
+						offset: 50,
+						duration: 10000,
+					});
 				})
 				.finally(() => {
 					this.fetchSettings();

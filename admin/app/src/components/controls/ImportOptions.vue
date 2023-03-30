@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import { UploadFilled, Loading } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
+import { UploadFilled } from "@element-plus/icons-vue";
 import { useSettingsStore } from "@stores/settings";
 import { textdomain, jsonFileName } from "@helpers/global";
-import { dispatchToast } from "@helpers/message";
 
 /**
  *
@@ -56,7 +56,11 @@ const handleBeforeUpload = (rawFile) => {
 		 * Case: False | File is NOT a JSON.
 		 * Show error message.
 		 */
-		dispatchToast(errorMessage, "error");
+		ElMessage.error({
+			message: errorMessage,
+			offset: 50,
+			duration: 10000,
+		});
 	}
 
 	fileList.value = []; // Clear the upload list.
@@ -65,7 +69,7 @@ const handleBeforeUpload = (rawFile) => {
 /**
  *
  * Function that process the file.
- * Once the file is processed, it will be sent to the store.
+ * Once the file is processed, it will be sentzto the store.
  *
  * @param {file} rawFile
  * @return {void} void

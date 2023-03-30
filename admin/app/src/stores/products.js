@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { dispatchToast } from "@helpers/message";
+import { ElMessage } from "element-plus";
 import { productsList } from "@helpers/endpoint";
 import { textdomain } from "@helpers/global";
 
@@ -79,7 +79,12 @@ export const useProductStore = defineStore({
 					*/
 
 					console.error("Couldn't fetch Github repo " + res);
-					dispatchToast(errMessage, 'error');
+
+					ElMessage.error({
+						message: errMessage,
+						offset: 50,
+						duration: 10000,
+					});
 				}
 
 			} catch (err) {
@@ -90,7 +95,13 @@ export const useProductStore = defineStore({
 				* Something went wrong while fetching the list.
 				*/
 				console.error(err);
-				dispatchToast(message, 'error');
+
+				ElMessage.error({
+					message: errMessage,
+					offset: 50,
+					duration: 10000,
+				});
+
 				this.status.isFetching = false;
 			}
 		},
@@ -135,7 +146,12 @@ export const useProductStore = defineStore({
 				*/
 
 				console.error("💥 Couldn't process the list plugins list.");
-				dispatchToast(errMessage, 'error');
+
+				ElMessage.error({
+					message: errMessage,
+					offset: 50,
+					duration: 10000,
+				});
 			}
 		},
 
@@ -176,8 +192,13 @@ export const useProductStore = defineStore({
 				*/
 
 				console.log(err);
-				dispatchToast(errMessage, 'error');
 				this.status.isFetchingAllInstalledAddons = false;
+
+				ElMessage.error({
+					message: errMessage,
+					offset: 50,
+					duration: 10000,
+				});
 			}
 		},
 
@@ -234,7 +255,7 @@ export const useProductStore = defineStore({
 		async handleAddonInstallation(slug) {
 
 			let successMessage = __('Plugin installed successfully.', textdomain);
-			let errorMessage = __('Error: couldn\'t install the plugin.', textdomain);
+			let errMessage = __('Error: couldn\'t install the plugin.', textdomain);
 
 			try {
 
@@ -261,8 +282,14 @@ export const useProductStore = defineStore({
 					* Plugin was successfully installed.
 					*/
 					console.log(`=> Plugin ${slug} installed successfully.`);
-					dispatchToast(successMessage, 'success');
 					this.allProductSlugStatus[slug] = 'active'; // Update the status of the plugin.
+
+					ElMessage.success({
+						message: errMessage,
+						offset: 50,
+						duration: 3000,
+					});
+
 					return await res;
 				}
 
@@ -274,8 +301,14 @@ export const useProductStore = defineStore({
 				* We couldn't install the plugin.
 				*/
 				console.error(err);
-				dispatchToast(errorMessage, 'error');
 				this.status.isWaitingForInstallation = false;
+
+				ElMessage.error({
+					message: successMessage,
+					offset: 50,
+					duration: 10000,
+				});
+
 				return await err;
 			}
 		},
@@ -292,7 +325,7 @@ export const useProductStore = defineStore({
 		async updateAddonStatus(slug) {
 
 			let successMessage = __('Plugin activated successfully.', textdomain);
-			let errorMessage = __('Error: couldn\'t activate the plugin.', textdomain);
+			let errMessage = __('Error: couldn\'t activate the plugin.', textdomain);
 
 			try {
 
@@ -319,9 +352,14 @@ export const useProductStore = defineStore({
 					*/
 
 					console.log(`=> Plugin ${slug} activated successfully.`);
-
-					dispatchToast(successMessage, 'success');
 					this.allProductSlugStatus[slug] = 'active'; // Update the status of the plugin.
+
+					ElMessage.success({
+						message: successMessage,
+						offset: 50,
+						duration: 3000,
+					});
+
 					return await res;
 				}
 
@@ -334,7 +372,13 @@ export const useProductStore = defineStore({
 				*/
 
 				console.log(err);
-				dispatchToast(errorMessage, 'error');
+
+				ElMessage.error({
+					message: errMessage,
+					offset: 50,
+					duration: 10000,
+				});
+
 				return await err;
 			}
 		}

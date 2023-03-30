@@ -12,7 +12,7 @@
     "zip": "vite build && gulp zip"
   },
   "dependencies": {
-    "element-plus": "^2.3.0",
+    "element-plus": "^2.3.1",
     "pinia": "^2.0.33",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
