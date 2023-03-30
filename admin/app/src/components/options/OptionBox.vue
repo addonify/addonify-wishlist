@@ -29,7 +29,7 @@ const props = defineProps({
 				<p class="option-label">
 					{{ field.label ? field.label : "?????" }}
 					<HelpTip
-						v-if="field.hasOwnProperty('description')"
+						v-if="Object.hasOwn(field, 'description')"
 						:content="field.description"
 					/>
 				</p>
