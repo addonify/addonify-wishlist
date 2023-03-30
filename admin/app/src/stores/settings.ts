@@ -1,14 +1,7 @@
-import { defineStore } from "pinia";
-// @ts-ignore
-import { apiEndpoint } from "@helpers/endpoint";
-// @ts-ignore
-import { textdomain } from "@helpers/global";
-// @ts-ignore
+import { defineStore } from "pinia"; // @ts-ignore
+import { apiEndpoint } from "@helpers/endpoint"; // @ts-ignore
+import { textdomain } from "@helpers/global"; // @ts-ignore
 import { dispatchToast } from "@helpers/message";
-// @ts-ignore
-import { apiEndpoint } from "@helpers/endpoint";
-// @ts-ignore
-import { unExpectedResponse, unExpectedResponse } from "../helpers/message";
 
 /**
  *
@@ -18,10 +11,8 @@ import { unExpectedResponse, unExpectedResponse } from "../helpers/message";
  */
 
 // @ts-ignore
-const { apiFetch } = wp;
-// @ts-ignore
-const { isEqual, cloneDeep } = lodash;
-// @ts-ignore
+const { apiFetch } = wp; // @ts-ignore
+const { isEqual, cloneDeep } = lodash; // @ts-ignore
 const { __ } = wp.i18n;
 
 /**
@@ -101,6 +92,7 @@ export const useSettingsStore = defineStore({
 					 * Case: Success.
 					 * We have the data, lets hydrate the state.
 					 */
+
 					//console.log(res);
 					this.settings = res.settings_values;
 					this.data = res.tabs;
@@ -241,6 +233,57 @@ export const useSettingsStore = defineStore({
 				})
 				.finally(() => {
 					this.status.isExporting = false;
+				});
+		},
+
+		/**
+		 *
+		 * Import json file and send the file to the rest api endpoint.
+		 * This json files contains all the settings and their values.
+		 *
+		 * @param {Object} payload
+		 * @returns {string} success/failed
+		 * @since 2.0.0
+		 */
+
+		importSettings(payload: any): void {
+			/**
+			 *
+			 * Begin the import process.
+			 */
+
+			this.status.isImporting = true;
+
+			apiFetch({
+				path: apiEndpoint + "/import_options",
+				method: "POST",
+				body: payload,
+			})
+				.then((res: any) => {
+					/**
+					 *
+					 * Case: Success.
+					 * Import is successful.
+					 */
+
+					if (res.success === true) {
+						this.status.message = res.message;
+						dispatchToast(this.status.message, "success");
+					}
+				})
+				.catch((err: any) => {
+					/**
+					 *
+					 * Case: Error.
+					 * Import was un-successful.
+					 */
+
+					console.log(err);
+					dispatchToast(this.status.message, "error");
+				})
+				.finally(() => {
+					this.fetchSettings();
+					this.status.isImporting = false;
 				});
 		},
 
