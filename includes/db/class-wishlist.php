@@ -170,5 +170,5 @@ class Wishlist {
 	}
 }
 
-global $wishlist;
-$wishlist = new Wishlist();
+global $addonify_wishlist;
+$addonify_wishlist = new Wishlist();
