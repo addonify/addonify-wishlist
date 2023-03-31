@@ -234,16 +234,27 @@ export const useSettingsStore = defineStore({
 					 * Case: Success.
 					 * Export is successful.
 					 */
+
 					this.status.message = res.message; // Get the message.
-					let date = new Date().getTime();
-					let link = document.createElement("a");
-					link.href = res.url;
-					link.setAttribute(
-						"download",
-						`${textdomain}-all-settings-${date}.json`
-					);
-					document.body.appendChild(link);
-					link.click();
+
+					if (res.success === true) {
+						let date = new Date().getTime();
+						let link = document.createElement("a");
+						link.href = res.url;
+						link.setAttribute(
+							"download",
+							`${textdomain}-all-settings-${date}.json`
+						);
+						document.body.appendChild(link);
+						link.click();
+					} else {
+						ElMessage.error({
+							message: errMessage,
+							offset: 50,
+							duration: 10000,
+						});
+						return;
+					}
 				})
 				.catch((err: any) => {
 					/**
@@ -298,14 +309,19 @@ export const useSettingsStore = defineStore({
 					 * Case: Success.
 					 * Import is successful.
 					 */
+					this.status.message = res.message;
 
 					if (res.success === true) {
-						this.status.message = res.message;
-
 						ElMessage.success({
 							message: this.status.message,
 							offset: 50,
 							duration: 3000,
+						});
+					} else {
+						ElMessage.error({
+							message: this.status.message,
+							offset: 50,
+							duration: 10000,
 						});
 					}
 				})
@@ -360,11 +376,19 @@ export const useSettingsStore = defineStore({
 
 					this.status.message = res.message;
 
-					ElMessage.success({
-						message: this.status.message,
-						offset: 50,
-						duration: 3000,
-					});
+					if (res.success === true) {
+						ElMessage.success({
+							message: this.status.message,
+							offset: 50,
+							duration: 3000,
+						});
+					} else {
+						ElMessage.error({
+							message: this.status.message,
+							offset: 50,
+							duration: 10000,
+						});
+					}
 				})
 				.catch((err: any) => {
 					/**
