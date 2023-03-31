@@ -131,3 +131,17 @@ a.adfy-button.fake-button {
         background-color: transparent;
     }
 }
+
+/* -------------------------------------------------------------------------- 
+	Element plus button
+  -------------------------------------------------------------------------- */
+
+[class*="page_addonify_wishlist"] {
+
+    .el-button {
+
+        font-family: var(--addonify_base_font_family);
+        font-weight: normal;
+        @include transition_delay();
+    }
+}

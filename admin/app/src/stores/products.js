@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ElMessage } from "element-plus";
-import { productsList } from "@helpers/endpoint";
+import { useSettingsStore } from "@stores/settings";
+import { recommendedProductsList } from "@helpers/endpoint";
 import { textdomain } from "@helpers/global";
 
 /**
@@ -10,6 +11,7 @@ import { textdomain } from "@helpers/global";
 
 const { apiFetch } = wp;
 const { __ } = wp.i18n;
+
 
 /**
  *
@@ -35,6 +37,30 @@ export const useProductStore = defineStore({
 		}
 	}),
 
+	getters: {
+
+		/**
+		 * 
+		 * This getter returns the state of the store.
+		 * Used to indicate the product page loading state. 
+		 *
+		 * @param {*} state 
+		 * @returns {boolean} boolean
+		 * @since 2.0.0
+		 */
+		isLoading: (state) => {
+
+
+			/**
+			 * 
+			 * Get settings store.
+			 */
+			const settingsStore = useSettingsStore();
+
+			return settingsStore.status.isLoading || state.status.isFetching || state.status.isFetchingAllInstalledAddons || state.status.isSettingAddonStatus
+		}
+	},
+
 	actions: {
 
 		/**
@@ -50,9 +76,9 @@ export const useProductStore = defineStore({
 
 			try {
 
-				const res = await fetch(productsList, {
+				const res = await fetch(recommendedProductsList, {
 
-					method: 'GET',
+					method: "GET",
 				});
 
 				const data = await res.json();
@@ -78,7 +104,7 @@ export const useProductStore = defineStore({
 					* Something went wrong while fetching the list.
 					*/
 
-					console.error("Couldn't fetch Github repo " + res);
+					console.log("Couldn't fetch Github repo " + res);
 
 					ElMessage.error({
 						message: errMessage,
@@ -94,7 +120,7 @@ export const useProductStore = defineStore({
 				* Case: Error!
 				* Something went wrong while fetching the list.
 				*/
-				console.error(err);
+				console.log(err);
 
 				ElMessage.error({
 					message: errMessage,
@@ -117,9 +143,9 @@ export const useProductStore = defineStore({
 
 		processRecommendedPluginsList(list) {
 
-			let errMessage = __('Error: couldn\'t process the recommended plugins list.', textdomain);
-
 			console.log("=> Processing the list that was retrived....");
+
+			let errMessage = __('Error: couldn\'t process the recommended plugins list.', textdomain);
 
 			this.hotAddons = list.data.hot;
 			this.generalAddons = list.data.general;
@@ -145,7 +171,7 @@ export const useProductStore = defineStore({
 				* We couldn't process the list.
 				*/
 
-				console.error("💥 Couldn't process the list plugins list.");
+				console.log("💥 Couldn't process the list plugins list.");
 
 				ElMessage.error({
 					message: errMessage,
@@ -300,7 +326,7 @@ export const useProductStore = defineStore({
 				* Case: Error!
 				* We couldn't install the plugin.
 				*/
-				console.error(err);
+				console.log(err);
 				this.status.isWaitingForInstallation = false;
 
 				ElMessage.error({

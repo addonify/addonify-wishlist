@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import { Loading } from "@element-plus/icons-vue";
 import { useProductStore } from "@stores/products";
+import { Loading } from "@element-plus/icons-vue";
 import { textdomain } from "@helpers/global";
+import { trimText } from "@helpers/text";
 
 /**
  *
@@ -23,6 +24,10 @@ const props = defineProps({
 		type: String,
 		required: false,
 	},
+	category: {
+		type: String,
+		required: false,
+	},
 	thumb: {
 		type: String,
 		required: false,
@@ -35,7 +40,7 @@ const props = defineProps({
 
 const { __ } = wp.i18n;
 const proStore = useProductStore();
-const { slug, name, thumb, description } = props;
+const { slug, name, thumb, description, category } = props;
 
 const isLoading = ref(false);
 const isDisabled = ref(false);
@@ -46,7 +51,7 @@ const activateText = __("Activate now", textdomain);
 const activitingText = __("Activating...", textdomain);
 const installText = __("Install now", textdomain);
 const installingText = __("Installing...", textdomain);
-const installedText = __("Installed", textdomain);
+const installedText = __("Already installed", textdomain);
 
 /**
  *
@@ -107,13 +112,17 @@ const installAddonHandler = async (slug) => {
 
 <template>
 	<div class="adfy-product-card">
+		<span class="adfy-category">{{ category }}</span>
 		<div class="adfy-product-box">
 			<figure class="adfy-product-thumb">
 				<img :src="thumb" :alt="slug" />
 			</figure>
 			<div class="content">
-				<h3 class="adfy-product-title" v-html="name"></h3>
-				<p class="adfy-product-description" v-html="description"></p>
+				<h3 class="adfy-product-title" v-html="trimText(name, 65)"></h3>
+				<p
+					class="adfy-product-description"
+					v-html="trimText(description, 100)"
+				></p>
 				<div class="adfy-product-actions">
 					<el-button
 						v-if="
