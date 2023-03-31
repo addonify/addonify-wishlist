@@ -311,7 +311,7 @@ export const useProductStore = defineStore({
 					this.allProductSlugStatus[slug] = 'active'; // Update the status of the plugin.
 
 					ElMessage.success({
-						message: errMessage,
+						message: successMessage,
 						offset: 50,
 						duration: 3000,
 					});
@@ -330,7 +330,7 @@ export const useProductStore = defineStore({
 				this.status.isWaitingForInstallation = false;
 
 				ElMessage.error({
-					message: successMessage,
+					message: errMessage,
 					offset: 50,
 					duration: 10000,
 				});
