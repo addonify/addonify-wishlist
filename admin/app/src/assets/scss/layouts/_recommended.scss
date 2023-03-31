@@ -1,0 +1,92 @@
+/* -------------------------------------------------------------------------- 
+	Recommended products page.
+-------------------------------------------------------------------------- */
+
+#recommended-product-list {
+
+    @include grid();
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 40px;
+    column-gap: 40px;
+
+    .adfy-product-card {
+
+        position: relative;
+        padding: 40px;
+        border-radius: 10px;
+        border: 1px solid #E2E2E2;
+        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+        @include transition_delay();
+
+        &:hover {
+
+            box-shadow: 0 0 65px rgba(0,0,0,.1);
+            transform: translateY(-10px);
+            border-color: transparent;
+        }
+
+        .adfy-category {
+
+            display: inline-flex;
+            position: absolute;
+            z-index: 10;
+            right: 15px;
+            top: 15px;
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 1;
+            color: #E8AA39;
+            padding: 8px 15px;
+            background-color: #FFF5E3;
+            border-radius: 30px;
+        }
+
+        .adfy-product-box {
+
+            position: relative;
+
+            .adfy-product-thumb {
+
+                display: block;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+
+                img {
+
+                    width: 100px;
+                    height: 100px;
+                    padding: 0;
+                    margin: 0;
+                    border-radius: 100%;
+                }
+            }
+
+            .adfy-product-title {
+
+                display: block;
+                font-size: 18px;
+                font-weight: 500;
+                line-height: 1.4;
+                margin: 20px 0 15px 0;
+            }
+
+            .adfy-product-description {
+
+                font-size: 14px;
+                font-weight: normal;
+                margin: 0 0 20px 0;
+            }
+
+            .el-button--large {
+                
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 30px;
+                height: 48px;
+                border-radius: 30px;
+            }
+        }
+    }
+}

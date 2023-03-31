@@ -1,5 +1,6 @@
 <script setup>
 import Icon from "@components/core/Icon.vue";
+import { textdomain } from "@helpers/global";
 
 /**
  *
@@ -12,9 +13,14 @@ const props = defineProps({
 		required: true,
 	},
 
+	disableDocs: {
+		type: Boolean,
+		default: false,
+		required: false,
+	},
+
 	docLabel: {
 		type: String,
-		default: "Check docs",
 		required: false,
 	},
 
@@ -24,6 +30,8 @@ const props = defineProps({
 		required: false,
 	},
 });
+
+const { __ } = wp.i18n;
 </script>
 <template>
 	<div class="box-title">
@@ -32,12 +40,17 @@ const props = defineProps({
 		</div>
 		<div class="column action">
 			<a
+				v-if="props.disableDoc !== true"
 				:href="props.docLink"
 				target="_blank"
 				rel="noopener noreferrer"
 				class="adfy-button fake-button link-external"
 			>
-				{{ props.docLabel }}
+				{{
+					props.docLabel
+						? props.docLabel
+						: __("Check docs", textdomain)
+				}}
 				<Icon name="arrow-right" size="16px" />
 			</a>
 		</div>

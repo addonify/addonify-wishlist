@@ -1,13 +1,24 @@
 <script setup>
 import { useSettingsStore } from "@stores/settings";
 const store = useSettingsStore();
+
+/**
+ *
+ * Return the route link attaching "/s/" to the route.
+ *
+ * @param {string} route
+ * @return {string} string
+ * @since 1.0.0
+ */
+
+const buildDynamicRouteLink = (route) => "/s/" + route;
 </script>
 <template>
 	<aside id="app-routes">
 		<nav id="adfy-navigation">
 			<ul class="route-lists">
 				<li v-for="(route, key) in store.data" class="list">
-					<router-link :to="key">
+					<router-link :to="buildDynamicRouteLink(key)">
 						<template v-if="route.icon !== ''">
 							<span class="icon" v-html="route.icon"></span>
 						</template>
