@@ -49,9 +49,9 @@ if ( function_exists( 'wc_print_notices' ) ) {
 					foreach ( $wishlist_product_ids as $product_id ) {
 						$wishlist_attr = '';
 						if ( is_user_logged_in() ) {
-							$wishlist = new Addonify\Wishlist();
+							global $addonify_wishlist;
 
-							$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product_id );
+							$parent_wishlist_id = $addonify_wishlist->get_wishlist_id_from_product_id( $product_id );
 							if ( $parent_wishlist_id ) {
 								$wishlist_attr = 'data-wishlist_id=' . $parent_wishlist_id;
 							}

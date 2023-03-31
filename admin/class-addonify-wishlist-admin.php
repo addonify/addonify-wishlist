@@ -280,9 +280,9 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function maybe_create_table() {
 		if ( isset( $_GET['addonify-Wishlist-Install-Table'] ) ) { // phpcs:ignore
-			$wishlist = new Addonify\Wishlist();
-			$wishlist->create_table();
-			$wishlist->migrate_wishlist_data();
+			global $addonify_wishlist;
+			$addonify_wishlist->create_table();
+			$addonify_wishlist->migrate_wishlist_data();
 			wp_safe_redirect( esc_html( add_query_arg( 'addonify-wishlist-table-installed', true, admin_url() ) ) );
 			exit;
 		}
@@ -296,9 +296,8 @@ class Addonify_Wishlist_Admin {
 			'admin_notices',
 			function () {
 				if ( isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
-					$wishlist   = new Addonify\Wishlist();
-					$table_name = $wishlist->get_table_name();
-					if ( $wishlist->check_table_exists( $table_name ) ) {
+					global $addonify_wishlist;
+					if ( $addonify_wishlist->check_wishlist_table_exists() ) {
 						?>
 						<div class="notice notice-success is-dismissible" id="addonify-wishlist-upgrade-notice">
 							<p>
@@ -331,9 +330,8 @@ class Addonify_Wishlist_Admin {
 	 * Show insert table notice on admin dashboard if not exists.
 	 */
 	public function maybe_show_insert_table_notice() {
-		$wishlist   = new Addonify\Wishlist();
-		$table_name = $wishlist->get_table_name();
-		if ( ! $wishlist->check_table_exists( $table_name ) && ! isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
+		global $addonify_wishlist;
+		if ( ! $addonify_wishlist->check_wishlist_table_exists() && ! isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
 			add_action(
 				'admin_notices',
 				function () {

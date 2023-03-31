@@ -109,9 +109,9 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 		);
 
 		if ( is_user_logged_in() ) {
-			$wishlist = new Addonify\Wishlist();
+			global $addonify_wishlist;
 
-			$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product->get_id() );
+			$parent_wishlist_id = $addonify_wishlist->get_wishlist_id_from_product_id( $product->get_id() );
 			if ( $parent_wishlist_id ) {
 				$add_to_wishlist_button_args['parent_wishlist_id'] = $parent_wishlist_id;
 			}
@@ -205,9 +205,8 @@ if ( ! function_exists( 'addonify_wishlist_render_wishlist_content' ) ) {
 
 		$wishlist_product_ids = array();
 
-		$wishlist   = new Addonify\Wishlist();
-		$table_name = $wishlist->get_table_name();
-		if ( $wishlist->check_table_exists( $table_name ) ) {
+		global $addonify_wishlist;
+		if ( $addonify_wishlist->check_wishlist_table_exists() ) {
 
 			if ( addonify_wishlist_get_wishlist_items_count() > 0 ) {
 				$wishlists = addonify_wishlist_get_wishlist_items();
@@ -361,9 +360,8 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_loop' ) ) {
 		if ( is_user_logged_in() ) {
 			$wishlist_product_ids = array();
 
-			$wishlist   = new Addonify\Wishlist();
-			$table_name = $wishlist->get_table_name();
-			if ( $wishlist->check_table_exists( $table_name ) ) {
+			global $addonify_wishlist;
+			if ( $addonify_wishlist->check_wishlist_table_exists() ) {
 				if ( addonify_wishlist_get_wishlist_items_count() > 0 ) {
 					$wishlists = addonify_wishlist_get_wishlist_items();
 					foreach ( $wishlists as $data ) {
@@ -424,9 +422,9 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 		$product       = wc_get_product( $product_id );
 		$wishlist_attr = '';
 		if ( is_user_logged_in() ) {
-			$wishlist = new Addonify\Wishlist();
+			global $addonify_wishlist;
 
-			$parent_wishlist_id = $wishlist->get_wishlist_id_from_product_id( $product_id );
+			$parent_wishlist_id = $addonify_wishlist->get_wishlist_id_from_product_id( $product_id );
 			if ( $parent_wishlist_id ) {
 				$wishlist_attr = 'data-wishlist_id=' . $parent_wishlist_id;
 			}

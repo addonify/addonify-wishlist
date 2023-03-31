@@ -133,9 +133,8 @@ class Addonify_Wishlist {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-hooks.php';
 
-		$wishlist   = new Addonify\Wishlist();
-		$table_name = $wishlist->get_table_name();
-		if ( $wishlist->check_table_exists( $table_name ) ) {
+		global $addonify_wishlist;
+		if ( $addonify_wishlist->check_wishlist_table_exists() ) {
 
 			/**
 			 * The class responsible for defining all actions that occur in the public-facing
@@ -233,9 +232,8 @@ class Addonify_Wishlist {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		$wishlist   = new Addonify\Wishlist();
-		$table_name = $wishlist->get_table_name();
-		if ( $wishlist->check_table_exists( $table_name ) ) {
+		global $addonify_wishlist;
+		if ( $addonify_wishlist->check_wishlist_table_exists() ) {
 			$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
 		} else {
 			$plugin_public = new Addonify_Wishlist_Public_Deprecated( $this->get_plugin_name(), $this->get_version() );
@@ -300,9 +298,9 @@ class Addonify_Wishlist {
 		if ( 'update' === $options['action'] && 'plugin' === $options['type'] ) {
 			foreach ( $options['plugins'] as $each_plugin ) {
 				if ( $each_plugin === $current_plugin_path_name ) {
-					$wishlist = new Addonify\Wishlist();
-					$wishlist->create_table();
-					$wishlist->migrate_wishlist_data();
+					global $addonify_wishlist;
+					$addonify_wishlist->create_table();
+					$addonify_wishlist->migrate_wishlist_data();
 				}
 			}
 		}
