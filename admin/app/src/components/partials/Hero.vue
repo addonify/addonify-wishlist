@@ -7,17 +7,13 @@ const { __ } = wp.i18n;
 	<section id="adfy-hero">
 		<div class="content">
 			<h3 class="hero-title">
-				👋
-				{{ __("Hello!", textdomain) }}
-			</h3>
-			<p class="hero-description">
 				{{
 					__(
-						"Sell more with Addonify Wishlist. We hope you love using it.",
+						"Loving addonify wishlist? Help us make a better software",
 						textdomain
 					)
 				}}
-			</p>
+			</h3>
 		</div>
 		<div class="action">
 			<a
