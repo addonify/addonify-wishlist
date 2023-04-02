@@ -35,13 +35,42 @@ const scrollToTop = () => {
 };
 
 onBeforeMount(() => {
-	proStore.fetchInstalledAddons();
+	/**
+	 *
+	 * Fetch the installed addons if we don't have it's state set.
+	 * Use cache method.
+	 *
+	 * @since: 2.0.0
+	 */
+
+	if (typeof proStore.installedAddons === "object") {
+		if (Object.keys(proStore.installedAddons).length === 0) {
+			proStore.fetchInstalledAddons();
+		}
+	} else {
+		console.log("Bailing. Couldn't identify the type of installedAddons.");
+	}
 });
 
 onMounted(() => {
 	scrollToTop();
 	store.fetchSettings(); // For the route links.
-	proStore.fetchProductList();
+
+	/**
+	 *
+	 * Fetch the recommdended addons if we don't have it's state set.
+	 * Use cache method.
+	 *
+	 * @since: 2.0.0
+	 */
+
+	if (typeof proStore.allAddons === "object") {
+		if (Object.keys(proStore.allAddons).length === 0) {
+			proStore.fetchProductList();
+		}
+	} else {
+		console.log("Bailing. Couldn't identify the type of allAddons.");
+	}
 });
 </script>
 <template>
