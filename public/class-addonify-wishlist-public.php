@@ -187,20 +187,17 @@ class Addonify_Wishlist_Public {
 		$css .= '}';
 		wp_add_inline_style( $this->plugin_name, $css );
 
-		if ( (int) addonify_wishlist_get_option( 'load_styles_from_plugin' ) === 1 ) {
+		$inline_css = $this->dynamic_css();
 
-			$inline_css = $this->dynamic_css();
+		$custom_css = addonify_wishlist_get_option( 'custom_css' );
 
-			$custom_css = addonify_wishlist_get_option( 'custom_css' );
-
-			if ( $custom_css ) {
-				$inline_css .= $custom_css;
-			}
-
-			$inline_css = $this->minify_css( $inline_css );
-
-			wp_add_inline_style( $this->plugin_name, $inline_css );
+		if ( $custom_css ) {
+			$inline_css .= $custom_css;
 		}
+
+		$inline_css = $this->minify_css( $inline_css );
+
+		wp_add_inline_style( $this->plugin_name, $inline_css );
 	}
 
 
@@ -785,14 +782,9 @@ class Addonify_Wishlist_Public {
 	 * @since    1.0.0
 	 */
 	public function get_shortcode_contents() {
-
-		if ( wp_doing_ajax() ) {
-			ob_start();
-			addonify_wishlist_render_wishlist_content();
-			return ob_end_clean();
-		} else {
-			do_action( 'addonify_wishlist_render_shortcode_content' );
-		}
+		ob_start();
+		do_action( 'addonify_wishlist_render_shortcode_content' );
+		return ob_get_clean();
 	}
 
 	/**

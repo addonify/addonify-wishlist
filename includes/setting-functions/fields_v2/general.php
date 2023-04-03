@@ -94,7 +94,7 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 						'label'          => __( 'Custom CSS', 'addonify-wishlist' ),
 						'description'    => __( 'If required, add your custom CSS code here.', 'addonify-wishlist' ),
 						'placeholder'    => '#app { color: blue; }',
-						'width'    		 => 'full',
+						'width'          => 'full',
 						'value'          => addonify_wishlist_get_option( 'custom_css' ),
 					),
 				),
@@ -121,10 +121,10 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 					),
 					'undo_notice_timeout'       => array(
 						'type'        => 'number',
-						'design'   	  => 'arrow', // Arrow & plus-minus.
-						'min'		  => 1,
-						'max'		  => 30,
-						'step'		  => 1,
+						'design'      => 'arrow', // Arrow & plus-minus.
+						'min'         => 1,
+						'max'         => 30,
+						'step'        => 1,
 						'precision'   => 0, // Eg. 1.00, 2.00, 3.00.
 						'className'   => '',
 						'label'       => __( 'Undo Notice Timeout (in seconds)', 'addonify-wishlist' ),

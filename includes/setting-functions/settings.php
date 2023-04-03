@@ -130,20 +130,6 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 	}
 }
 
-if ( ! function_exists( 'addonify_wishlist_get_option' ) ) {
-	/**
-	 * Get stored option from db or return default if not.
-	 *
-	 * @param int $setting_id Setting ID.
-	 * @return mixed Option value.
-	 */
-	function addonify_wishlist_get_option( $setting_id ) {
-
-		return get_option( ADDONIFY_WISHLIST_DB_INITIALS . $setting_id, addonify_wishlist_settings_defaults( $setting_id ) );
-	}
-}
-
-
 if ( ! function_exists( 'addonify_wishlist_get_settings_values' ) ) {
 	/**
 	 * Get setting values.
