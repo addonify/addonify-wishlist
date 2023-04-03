@@ -785,14 +785,9 @@ class Addonify_Wishlist_Public {
 	 * @since    1.0.0
 	 */
 	public function get_shortcode_contents() {
-
-		if ( wp_doing_ajax() ) {
-			ob_start();
-			addonify_wishlist_render_wishlist_content();
-			return ob_end_clean();
-		} else {
-			do_action( 'addonify_wishlist_render_shortcode_content' );
-		}
+		ob_start();
+		do_action( 'addonify_wishlist_render_shortcode_content' );
+		return ob_get_clean();
 	}
 
 	/**
