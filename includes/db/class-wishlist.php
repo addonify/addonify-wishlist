@@ -184,7 +184,7 @@ class Wishlist {
 	 */
 	public function remove_wishlist_options() {
 		global $wpdb;
-		$wpdb->query( "delete from wp_options where option_name regexp '" . ADDONIFY_WISHLIST_DB_INITIALS . ".*'" ); // phpcs:ignore
+		$wpdb->query( "delete from $wpdb->options where option_name regexp '" . ADDONIFY_WISHLIST_DB_INITIALS . ".*'" ); // phpcs:ignore
 	}
 }
 
