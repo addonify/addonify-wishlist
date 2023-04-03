@@ -64,6 +64,16 @@ class Wishlist {
 	}
 
 	/**
+	 * Delete wishlist table.
+	 */
+	public function delete_table() {
+		global $wpdb;
+		$table_name = $this->get_table_name();
+		$sql        = "DROP TABLE IF EXISTS `$table_name`;";
+		$wpdb->query( $sql ); //phpcs:ignore
+	}
+
+	/**
 	 * Check if table exists.
 	 *
 	 * @param string $table_name Table name.
@@ -167,6 +177,14 @@ class Wishlist {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Remove all wishlist options from options table.
+	 */
+	public function remove_wishlist_options() {
+		global $wpdb;
+		$wpdb->query( "delete from wp_options where option_name regexp '" . ADDONIFY_WISHLIST_DB_INITIALS . ".*'" ); // phpcs:ignore
 	}
 }
 
