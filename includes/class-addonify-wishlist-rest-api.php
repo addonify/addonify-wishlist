@@ -164,7 +164,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				return $return_data;
 			}
 
-			if ( addonify_wishlist_update_settings( $params['settings_values'] ) === true ) {
+			if ( addonify_wishlist_v_2_update_settings( $params['settings_values'] ) === true ) {
 
 				$return_data['success'] = true;
 				$return_data['message'] = __( 'Settings saved successfully', 'addonify-wishlist' );
@@ -183,7 +183,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		public function rest_handler_reset_options( $request ) {
 			global $wpdb;
 
-			$option_keys = array_keys( addonify_wishlist_settings_defaults() );
+			$option_keys = array_keys( addonify_wishlist_v_2_settings_fields() );
 
 			$where  = '';
 			$first  = true;

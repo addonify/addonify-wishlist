@@ -29,7 +29,11 @@ class Addonify_Wishlist_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+		if ( addonify_wishlist_get_option( 'remove_all_plugin_data_on_uninstall' ) ) {
+			global $addonify_wishlist;
+			$addonify_wishlist->delete_table();
+			$addonify_wishlist->remove_wishlist_options();
+		}
 	}
 
 }

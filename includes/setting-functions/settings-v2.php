@@ -23,13 +23,13 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/wishlist-sidebar.php';
 
 
-if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
+if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 	/**
 	 * Default Settings
 	 *
 	 * @param int $setting_id Setting ID.
 	 */
-	function addonify_wishlist_settings_defaults( $setting_id = '' ) {
+	function addonify_wishlist_v_2_settings_defaults( $setting_id = '' ) {
 
 		$defaults = apply_filters(
 			'addonify_wishlist_setting_defaults',
@@ -78,8 +78,8 @@ if ( ! function_exists( 'addonify_wishlist_settings_defaults' ) ) {
 				'login_required_message'                   => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
 				'could_not_add_to_wishlist_error_description' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
 				'could_not_remove_from_wishlist_error_description' => __( 'Something went wrong. <br>{product_name} was not removed wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
+				'remove_all_plugin_data_on_uninstall'      => false,
 
-				'load_styles_from_plugin'                  => false,
 				'wishlist_btn_text_color'                  => '#333333',
 				'wishlist_btn_icon_color'                  => '#333333',
 				'wishlist_btn_text_color_hover'            => '#96588a',
@@ -138,7 +138,7 @@ if ( ! function_exists( 'addonify_wishlist_get_option' ) ) {
 	 */
 	function addonify_wishlist_get_option( $setting_id ) {
 
-		return get_option( ADDONIFY_WISHLIST_DB_INITIALS . $setting_id, addonify_wishlist_settings_defaults( $setting_id ) );
+		return get_option( ADDONIFY_WISHLIST_DB_INITIALS . $setting_id, addonify_wishlist_v_2_settings_defaults( $setting_id ) );
 	}
 }
 
@@ -152,7 +152,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_values' ) ) {
 	 */
 	function addonify_wishlist_v_2_get_settings_values() {
 
-		$settings_default = addonify_wishlist_settings_defaults();
+		$settings_default = addonify_wishlist_v_2_settings_defaults();
 
 		if ( $settings_default ) {
 
@@ -281,6 +281,14 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_fields' ) ) {
 			}
 		}
 		$return_settings_fields = array_merge( $return_settings_fields, $setting_fields );
+
+		$return_settings_fields['remove_all_plugin_data_on_uninstall'] = array(
+			'label'       => __( 'Remove all wishlist data on uninstall', 'addonify-wishlist' ),
+			'description' => __( 'If enabled, all of addonify wishlist plugin\'s data will be removed without leaving a footprint.', 'addonify-wishlist' ),
+			'type'        => 'switch',
+			'className'   => '',
+			'value'       => addonify_wishlist_get_option( 'remove_all_plugin_data_on_uninstall' ),
+		);
 		return $return_settings_fields;
 	}
 }
@@ -341,7 +349,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 									'note'        => esc_html__( 'Only .json file is permitted.', 'addonify-wishlist' ),
 									'description' => esc_html__( 'Drag or upload the .json file that you had exported.', 'addonify-wishlist' ),
 									'type'        => 'import-option',
-									'width'   	  => 'full',
+									'width'       => 'full',
 								),
 								'reset-options'  => array(
 									'label'          => esc_html__( 'Reset Options', 'addonify-wishlist' ),
@@ -350,6 +358,14 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 									'confirmNoText'  => esc_html__( 'No', 'addonify-wishlist' ),
 									'type'           => 'reset-option',
 									'description'    => esc_html__( 'All the settings will be set to default.', 'addonify-wishlist' ),
+								),
+								'remove_all_plugin_data_on_uninstall' => array(
+									'label'       => __( 'Remove all wishlist data on uninstall', 'addonify-wishlist' ),
+									'description' => __( 'If enabled, all of addonify wishlist plugin\'s data will be removed without leaving a footprint.', 'addonify-wishlist' ),
+									'type'        => 'switch',
+									'className'   => '',
+									'badge'       => 'Required',
+									'value'       => addonify_wishlist_get_option( 'remove_all_plugin_data_on_uninstall' ),
 								),
 							),
 						),
