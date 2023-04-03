@@ -18,7 +18,7 @@ export const apiEndpoint: string = addonify_wishlist_localizer.rest_namespace;
  */
 
 export const saleEndpoint: string =
-	"https://creamcode.org/upsell/v1/sale-notification.json";
+	"https://alerts.creamcode.org/upsell/sale.json";
 
 /**
  *
