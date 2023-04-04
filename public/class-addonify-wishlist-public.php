@@ -298,7 +298,7 @@ class Addonify_Wishlist_Public {
 				/* Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag. */
 				'loginRequiredMessage'                  => sprintf( __( 'Login required. Please %1$s click here %2$s to login.', 'addonify-wishlist' ), '<a href="' . $login_url . '">', '</a>' ),
 				'ajaxAddToCart'                         => ( 'yes' === get_option( 'woocommerce_enable_ajax_add_to_cart' ) ),
-				'pageLink'                              => @get_page_link( addonify_wishlist_get_page_by_title( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ),//phpcs:ignore
+				'pageLink'                              => @get_page_link( get_post( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ),//phpcs:ignore
 				'pageLinkLabel'                         => addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ),
 				'showPageLinkLabel'                     => (bool) addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ),
 			)

@@ -150,7 +150,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 	} else {
 		echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
 		if ( addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ) ) {
-			$page_link = @get_page_link( addonify_wishlist_get_page_by_title( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ); // phpcs:ignore
+			$page_link = @get_page_link( get_post( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ); // phpcs:ignore
 			echo "<a href='" . esc_url( $page_link ) . "'>" . esc_html( addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ) ) . '</a>';
 		}
 	}
