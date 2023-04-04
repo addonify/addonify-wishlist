@@ -8,9 +8,9 @@ import Number from "@components/controls/Number.vue";
 import ColorControl from "@components/controls/ColorControl.vue";
 import BorderRadiusControl from "@components/controls/BorderRadiusControl.vue";
 import TypographyControl from "@components/controls/TypographyControl.vue";
+import ActionButton from "@components/controls/ActionButton.vue";
 import ImportOptions from "@components/controls/ImportOptions.vue";
 import ExportOptions from "@components/controls/ExportOptions.vue";
-import ResetOptions from "@components/controls/ResetOptions.vue";
 import InvalidControl from "@components/controls/InvalidControl.vue";
 
 /**
@@ -81,21 +81,19 @@ const props = defineProps({
 		:size="props.field.size"
 		:title="props.field.title"
 	/>
+	<ActionButton
+		v-else-if="props.field.type === 'action-button'"
+		:task="props.field.task"
+	/>
 	<ExportOptions
 		v-else-if="props.field.type === 'export-option'"
 		:label="props.field.label"
+		:buttonLabel="props.field.buttonLabel"
 	/>
 	<ImportOptions
 		v-else-if="props.field.type === 'import-option'"
 		:caption="props.field.caption"
 		:note="props.field.note"
-	/>
-	<ResetOptions
-		v-else-if="props.field.type === 'reset-option'"
-		:label="props.field.label"
-		:confirmText="props.field.confirmText"
-		:confirmYesText="props.field.confirmYesText"
-		:confirmNoText="props.field.confirmNoText"
 	/>
 	<InvalidControl v-else />
 </template>

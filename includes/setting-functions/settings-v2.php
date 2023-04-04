@@ -338,12 +338,24 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 							'title'        => 'Generate page',
 							'type'         => 'sub_section',
 							'sub_sections' => array(
-								'reset-options' => array(
-									'label'          => esc_html__( 'Generate Wishlist page', 'addonify-wishlist' ),
-									'confirmText'    => esc_html__( 'Are you sure you want to generate wishlist page?', 'addonify-wishlist' ),
-									'confirmYesText' => esc_html__( 'Yes', 'addonify-wishlist' ),
-									'confirmNoText'  => esc_html__( 'No', 'addonify-wishlist' ),
-									'type'           => 'reset-option',
+								'generate-wishlist-page' => array(
+									'label'          => esc_html__( 'Generate wishlist page', 'addonify-wishlist' ),
+									'type'           => 'action-button',
+									'task'          	=> array(
+										'type'			=> 'POST',
+										'endpoint'		=> 'create_wishlist_page',
+										'opperation' 	=> 'reset',
+										'buttonLabel' 	=> esc_html__( 'Generate', 'addonify-wishlist' ),
+										'buttonIcon' 	=> '',
+										'buttonClass' 	=> '',
+										'confirm'		=> array(
+											'required'  		=> true,
+											'confirmBtnLabel' 	=> esc_html__( 'Yes', 'addonify-wishlist' ),
+											'cancelBtnLabel' 	=> esc_html__( 'No, cancel', 'addonify-wishlist' ),
+											'content' 			=> esc_html__( 'Do you really want to create new wishlist page?', 'addonify-wishlist' ),
+											'size'			    => '350px',
+										),
+									),
 								),
 							),
 						),
@@ -355,6 +367,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 									'label'       => esc_html__( 'Export Options', 'addonify-wishlist' ),
 									'description' => esc_html__( 'Backup all settings that can be imported in future.', 'addonify-wishlist' ),
 									'type'        => 'export-option',
+									'buttonLabel' => esc_html__( 'Export', 'addonify-wishlist' ),
 								),
 								'import-options' => array(
 									'label'       => esc_html__( 'Import Options', 'addonify-wishlist' ),
@@ -366,10 +379,22 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 								),
 								'reset-options'  => array(
 									'label'          => esc_html__( 'Reset Options', 'addonify-wishlist' ),
-									'confirmText'    => esc_html__( 'Are you sure you want to reset all settings?', 'addonify-wishlist' ),
-									'confirmYesText' => esc_html__( 'Yes', 'addonify-wishlist' ),
-									'confirmNoText'  => esc_html__( 'No', 'addonify-wishlist' ),
-									'type'           => 'reset-option',
+									'type'           => 'action-button',
+									'task'          	=> array(
+										'type'			=> 'POST',
+										'endpoint'		=> 'reset_options',
+										'opperation' 	=> 'reset',
+										'buttonLabel' 	=> esc_html__( 'Reset', 'addonify-wishlist' ),
+										'buttonIcon' 	=> '',
+										'buttonClass' 	=> 'danger',
+										'confirm'		=> array(
+											'required'  		=> true,
+											'confirmBtnLabel' 	=> esc_html__( 'Yes', 'addonify-wishlist' ),
+											'cancelBtnLabel' 	=> esc_html__( 'No, cancel', 'addonify-wishlist' ),
+											'content' 			=> esc_html__( 'Are you sure you would like to reset all settings?', 'addonify-wishlist' ),
+											'size'			    => '200px',
+										),
+									),
 									'description'    => esc_html__( 'All the settings will be set to default.', 'addonify-wishlist' ),
 								),
 								'remove_all_plugin_data_on_uninstall' => array(

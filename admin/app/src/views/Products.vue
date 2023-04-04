@@ -10,7 +10,6 @@ import Form from "@components/core/Form.vue";
 import JumboBoxTitle from "@layouts/JumboBoxTitle.vue";
 import { useProductStore } from "@stores/products";
 import { useSettingsStore } from "@stores/settings";
-import { textdomain } from "@helpers/global";
 
 const { __ } = wp.i18n;
 
@@ -18,7 +17,7 @@ const store = useSettingsStore();
 const proStore = useProductStore();
 
 const disableDocsLink = true; // Disable docs link next to the jumbo box title.
-const boxTitle = __("Recommended products", textdomain);
+const boxTitle = __("Recommended products", "addonify-wishlist");
 
 /**
  *

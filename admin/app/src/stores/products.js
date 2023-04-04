@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { ElMessage } from "element-plus";
 import { useSettingsStore } from "@stores/settings";
 import { recommendedProductsList } from "@helpers/endpoint";
-import { textdomain } from "@helpers/global";
 
 /**
  *
@@ -72,7 +71,7 @@ export const useProductStore = defineStore({
 
 		async fetchProductList() {
 
-			let errMessage = __('Error: couldn\'t fetch recommended plugins list.', textdomain);
+			let errMessage = __('Error: couldn\'t fetch recommended plugins list.', "addonify-wishlist");
 
 			try {
 
@@ -145,7 +144,7 @@ export const useProductStore = defineStore({
 
 			console.log("=> Processing the list that was retrived....");
 
-			let errMessage = __('Error: couldn\'t process the recommended plugins list.', textdomain);
+			let errMessage = __('Error: couldn\'t process the recommended plugins list.', "addonify-wishlist");
 
 			this.hotAddons = list.data.hot;
 			this.generalAddons = list.data.general;
@@ -191,7 +190,7 @@ export const useProductStore = defineStore({
 
 		async fetchInstalledAddons() {
 
-			let errMessage = __('Error: couldn\'t fetch installed plugins list.', textdomain);
+			let errMessage = __('Error: couldn\'t fetch installed plugins list.', "addonify-wishlist");
 
 			console.log("=> Getting the list of all plugins installed on the site....");
 
@@ -281,8 +280,8 @@ export const useProductStore = defineStore({
 
 		async handleAddonInstallation(slug) {
 
-			let successMessage = __('Plugin installed successfully.', textdomain);
-			let errMessage = __('Error: couldn\'t install the plugin.', textdomain);
+			let successMessage = __('Plugin installed successfully.', "addonify-wishlist");
+			let errMessage = __('Error: couldn\'t install the plugin.', "addonify-wishlist");
 
 			try {
 
@@ -351,8 +350,8 @@ export const useProductStore = defineStore({
 
 		async updateAddonStatus(slug) {
 
-			let successMessage = __('Plugin activated successfully.', textdomain);
-			let errMessage = __('Error: couldn\'t activate the plugin.', textdomain);
+			let successMessage = __('Plugin activated successfully.', "addonify-wishlist");
+			let errMessage = __('Error: couldn\'t activate the plugin.', "addonify-wishlist");
 
 			try {
 

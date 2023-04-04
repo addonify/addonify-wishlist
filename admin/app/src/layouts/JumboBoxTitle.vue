@@ -1,6 +1,5 @@
 <script setup>
 import Icon from "@components/core/Icon.vue";
-import { textdomain } from "@helpers/global";
 
 /**
  *
@@ -49,7 +48,7 @@ const { __ } = wp.i18n;
 				{{
 					props.docLabel
 						? props.docLabel
-						: __("Check docs", textdomain)
+						: __("Check docs", "addonify-wishlist")
 				}}
 				<Icon name="arrow-right" size="16px" />
 			</a>

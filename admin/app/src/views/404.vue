@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted } from "vue";
-import { textdomain } from "@helpers/global";
 let { __ } = wp.i18n;
 
 /**
@@ -23,12 +22,12 @@ onMounted(() => {
 </script>
 <template>
 	<section id="dead-end">
-		<h3 class="adfy-heading">{{ __("404", textdomain) }}</h3>
+		<h3 class="adfy-heading">{{ __("404", "addonify-wishlist") }}</h3>
 		<p class="adfy-description">
 			{{
 				__(
 					"Oops, something seems broken. We can't find the page you're looking for.",
-					textdomain
+					"addonify-wishlist"
 				)
 			}}
 		</p>
@@ -45,7 +44,7 @@ onMounted(() => {
 					/>
 				</svg>
 			</span>
-			{{ __("Go to home", textdomain) }}
+			{{ __("Go to home", "addonify-wishlist") }}
 		</router-link>
 	</section>
 </template>

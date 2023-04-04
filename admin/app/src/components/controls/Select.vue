@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from "vue";
-import { textdomain } from "@helpers/global";
 
 /**
  *
@@ -41,6 +40,8 @@ let value = computed({
 });
 
 const { __ } = wp.i18n;
+
+const defPlaceholder = __("Select", "addonify-wishlist");
 </script>
 <template>
 	<el-select
@@ -48,9 +49,7 @@ const { __ } = wp.i18n;
 		size="large"
 		filterable
 		clearable
-		:placeholder="
-			props.placeholder ? props.placeholder : __('Select', textdomain)
-		"
+		:placeholder="props.placeholder ? props.placeholder : defPlaceholder"
 	>
 		<el-option
 			v-for="(label, key) in props.choices"
