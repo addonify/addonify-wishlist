@@ -134,6 +134,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Added: Migrate data from earlier version on both activation and manually migrate from admin notice.
 - Removed: Cookie lifetime(time for which user wishlist data persists).
 - Update: optionally load js file when user logged in and for guest users.
+- Added: Option to manually generate wishlist page.
 
 = 1.1.3 - 03 March, 2023 =
 
