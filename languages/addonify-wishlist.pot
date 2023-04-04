@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-31T08:29:34+00:00\n"
+"POT-Creation-Date: 2023-04-04T08:57:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: addonify-wishlist\n"
@@ -35,7 +35,7 @@ msgid "https://www.addonify.com"
 msgstr ""
 
 #: admin/class-addonify-wishlist-admin.php:216
-#: includes/setting-functions/settings.php:304
+#: includes/setting-functions/settings.php:290
 msgid "Settings"
 msgstr ""
 
@@ -43,32 +43,32 @@ msgstr ""
 msgid "Addonify Wishlist Page"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:305
+#: admin/class-addonify-wishlist-admin.php:304
 msgid "Addonify Wishlist database update has been completed. Thank you for updating to the latest version!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:308
+#: admin/class-addonify-wishlist-admin.php:307
 msgid "Thanks!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:315
+#: admin/class-addonify-wishlist-admin.php:314
 msgid "Addonify Wishlist database could not updated!!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:317
+#: admin/class-addonify-wishlist-admin.php:316
 msgid "There had been an error while updating Addonify Wishlist database. Please, try again. If the issue persists please contact plugin support."
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:320
-#: admin/class-addonify-wishlist-admin.php:349
+#: admin/class-addonify-wishlist-admin.php:319
+#: admin/class-addonify-wishlist-admin.php:347
 msgid "Update database"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:343
+#: admin/class-addonify-wishlist-admin.php:341
 msgid "Addonify Wishlist database update required!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:346
+#: admin/class-addonify-wishlist-admin.php:344
 msgid "Update your database to keep the plugin running smoothly. The database update process takes a few moments, so please be patient."
 msgstr ""
 
@@ -76,7 +76,8 @@ msgstr ""
 msgid "Addonify Wishlist is enabled but not effective. It requires WooCommerce in order to work."
 msgstr ""
 
-#: includes/class-addonify-wishlist-activator.php:79
+#: includes/class-addonify-wishlist-activator.php:78
+#: includes/class-addonify-wishlist-activator.php:89
 #: includes/setting-functions/settings-v2.php:62
 #: includes/setting-functions/settings.php:63
 msgid "Wishlist"
@@ -95,34 +96,35 @@ msgid "Settings saved successfully"
 msgstr ""
 
 #: includes/class-addonify-wishlist-rest-api.php:207
+#: includes/class-addonify-wishlist-rest-api.php:212
 msgid "Options reset success."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:212
+#: includes/class-addonify-wishlist-rest-api.php:217
 msgid "Error! Options reset unsuccessful."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:243
+#: includes/class-addonify-wishlist-rest-api.php:248
 msgid "Error! Options export failed!."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:261
+#: includes/class-addonify-wishlist-rest-api.php:266
 msgid "No file provided."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:271
+#: includes/class-addonify-wishlist-rest-api.php:276
 msgid "File format not supported."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:282
+#: includes/class-addonify-wishlist-rest-api.php:287
 msgid "Ooops, error saving settings!!! File does not contain supported json."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:294
+#: includes/class-addonify-wishlist-rest-api.php:299
 msgid "Addonify Wishlist options has been imported successfully."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:310
+#: includes/class-addonify-wishlist-rest-api.php:315
 msgid "Ooops, you are allowed to manage options."
 msgstr ""
 
@@ -762,7 +764,7 @@ msgid "Set label for the link."
 msgstr ""
 
 #: includes/setting-functions/fields_v2/general.php:21
-#: includes/setting-functions/settings.php:307
+#: includes/setting-functions/settings.php:293
 msgid "General Options"
 msgstr ""
 
@@ -824,7 +826,7 @@ msgid "Button icon"
 msgstr ""
 
 #: includes/setting-functions/fields_v2/wishlist-page.php:21
-#: includes/setting-functions/settings.php:327
+#: includes/setting-functions/settings.php:313
 msgid "Wishlist Page Options"
 msgstr ""
 
@@ -870,7 +872,7 @@ msgstr ""
 #: includes/setting-functions/settings-v2.php:47
 #: includes/setting-functions/settings.php:48
 #: public/class-addonify-wishlist-public-deprecated.php:1033
-#: public/class-addonify-wishlist-public.php:1061
+#: public/class-addonify-wishlist-public.php:920
 msgid "Login"
 msgstr ""
 
@@ -902,7 +904,7 @@ msgstr ""
 #: includes/setting-functions/settings-v2.php:58
 #: includes/setting-functions/settings.php:59
 #: public/class-addonify-wishlist-public-deprecated.php:1042
-#: public/class-addonify-wishlist-public.php:1070
+#: public/class-addonify-wishlist-public.php:929
 msgid "Close"
 msgstr ""
 
@@ -960,163 +962,173 @@ msgstr ""
 msgid "Something went wrong. <br>{product_name} was not removed wishlist. Please refresh page and try again."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:301
+#: includes/setting-functions/settings-v2.php:286
+#: includes/setting-functions/settings-v2.php:363
+msgid "Remove all wishlist data on uninstall"
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:287
+#: includes/setting-functions/settings-v2.php:364
+msgid "If enabled, all of addonify wishlist plugin's data will be removed without leaving a footprint."
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:309
 msgid "General settings"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:306
+#: includes/setting-functions/settings-v2.php:314
 msgid "Popup modals"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:311
+#: includes/setting-functions/settings-v2.php:319
 msgid "Wishlist button"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:316
+#: includes/setting-functions/settings-v2.php:324
 msgid "Wishlist page"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:321
+#: includes/setting-functions/settings-v2.php:329
 msgid "Wishlist sidebar"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:326
+#: includes/setting-functions/settings-v2.php:334
 msgid "Tools"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:334
-#: includes/setting-functions/settings.php:424
+#: includes/setting-functions/settings-v2.php:342
+#: includes/setting-functions/settings.php:410
 msgid "Export Options"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:335
-#: includes/setting-functions/settings.php:425
+#: includes/setting-functions/settings-v2.php:343
+#: includes/setting-functions/settings.php:411
 msgid "Backup all settings that can be imported in future."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:339
-#: includes/setting-functions/settings.php:432
-#: includes/setting-functions/settings.php:435
+#: includes/setting-functions/settings-v2.php:347
+#: includes/setting-functions/settings.php:418
+#: includes/setting-functions/settings.php:421
 msgid "Import Options"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:340
-#: includes/setting-functions/settings.php:436
+#: includes/setting-functions/settings-v2.php:348
+#: includes/setting-functions/settings.php:422
 msgid "Drop a file here or click here to upload."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:341
-#: includes/setting-functions/settings.php:437
+#: includes/setting-functions/settings-v2.php:349
+#: includes/setting-functions/settings.php:423
 msgid "Only .json file is permitted."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:342
-#: includes/setting-functions/settings.php:438
+#: includes/setting-functions/settings-v2.php:350
+#: includes/setting-functions/settings.php:424
 msgid "Drag or upload the .json file that you had exported."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:347
-#: includes/setting-functions/settings.php:411
+#: includes/setting-functions/settings-v2.php:355
+#: includes/setting-functions/settings.php:397
 msgid "Reset Options"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:348
-#: includes/setting-functions/settings.php:412
+#: includes/setting-functions/settings-v2.php:356
+#: includes/setting-functions/settings.php:398
 msgid "Are you sure you want to reset all settings?"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:349
-#: includes/setting-functions/settings.php:413
+#: includes/setting-functions/settings-v2.php:357
+#: includes/setting-functions/settings.php:399
 msgid "Yes"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:350
-#: includes/setting-functions/settings.php:414
+#: includes/setting-functions/settings-v2.php:358
+#: includes/setting-functions/settings.php:400
 msgid "No"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:352
-#: includes/setting-functions/settings.php:416
+#: includes/setting-functions/settings-v2.php:360
+#: includes/setting-functions/settings.php:402
 msgid "All the settings will be set to default."
 msgstr ""
 
-#: includes/setting-functions/settings.php:312
+#: includes/setting-functions/settings.php:298
 msgid "Add to Wishlist Button Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:317
+#: includes/setting-functions/settings.php:303
 msgid "Popup Notice Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:322
+#: includes/setting-functions/settings.php:308
 msgid "Wishlist Sidebar Options"
 msgstr ""
 
-#: includes/setting-functions/settings.php:336
+#: includes/setting-functions/settings.php:322
 msgid "General"
 msgstr ""
 
-#: includes/setting-functions/settings.php:343
+#: includes/setting-functions/settings.php:329
 msgid "Add to Wishlist Button Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:344
+#: includes/setting-functions/settings.php:330
 msgid "Set Add to Wishlist button label and background colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:350
+#: includes/setting-functions/settings.php:336
 msgid "Popup Modal Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:351
+#: includes/setting-functions/settings.php:337
 msgid "Set popup modal icon, message, and button colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:357
+#: includes/setting-functions/settings.php:343
 msgid "Sidebar Wishlist Modal Toggle Button Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:358
+#: includes/setting-functions/settings.php:344
 msgid "Set sidebar wishlist off-canvas modal toggle button label and background colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:364
+#: includes/setting-functions/settings.php:350
 msgid "Sidebar Wishlist Modal Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:365
+#: includes/setting-functions/settings.php:351
 msgid "Set colors of sidebar wishlist off-canvas modal general elements."
 msgstr ""
 
-#: includes/setting-functions/settings.php:371
+#: includes/setting-functions/settings.php:357
 msgid "Sidebar Wishlist Product Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:372
+#: includes/setting-functions/settings.php:358
 msgid "Set colors of product content of sidebar wishlist off-canvas modal."
 msgstr ""
 
-#: includes/setting-functions/settings.php:378
+#: includes/setting-functions/settings.php:364
 msgid "Sidebar Wishlist Notification Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:379
+#: includes/setting-functions/settings.php:365
 msgid "Set text and background color of notification."
 msgstr ""
 
-#: includes/setting-functions/settings.php:385
+#: includes/setting-functions/settings.php:371
 msgid "Sidebar Wishlist View Wishlist Button Colors"
 msgstr ""
 
-#: includes/setting-functions/settings.php:386
+#: includes/setting-functions/settings.php:372
 msgid "Set view wishlist button label and background colors."
 msgstr ""
 
-#: includes/setting-functions/settings.php:392
+#: includes/setting-functions/settings.php:378
 msgid "Developer"
 msgstr ""
 
-#: includes/setting-functions/settings.php:402
+#: includes/setting-functions/settings.php:388
 msgid "Coming soon...."
 msgstr ""
 
@@ -1150,56 +1162,56 @@ msgid "Later"
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:302
-#: public/class-addonify-wishlist-public.php:303
+#: public/class-addonify-wishlist-public.php:278
 msgid "Already in Wishlist"
 msgstr ""
 
 #. Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag.
 #: public/class-addonify-wishlist-public-deprecated.php:323
-#: public/class-addonify-wishlist-public.php:324
+#: public/class-addonify-wishlist-public.php:299
 msgid "Login required. Please %1$s click here %2$s to login."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:355
 #: public/class-addonify-wishlist-public-deprecated.php:389
-#: public/class-addonify-wishlist-public.php:386
+#: public/class-addonify-wishlist-public.php:361
 msgid "Invalid security token."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:446
 #: public/class-addonify-wishlist-public-deprecated.php:457
-#: public/class-addonify-wishlist-public.php:449
-#: public/class-addonify-wishlist-public.php:460
+#: public/class-addonify-wishlist-public.php:424
+#: public/class-addonify-wishlist-public.php:435
 msgid "View Wishlist"
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:578
 #: public/class-addonify-wishlist-public-deprecated.php:640
-#: public/class-addonify-wishlist-public.php:601
-#: public/class-addonify-wishlist-public.php:663
+#: public/class-addonify-wishlist-public.php:518
+#: public/class-addonify-wishlist-public.php:580
 msgid "Missing or invalid secutiry token."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:591
 #: public/class-addonify-wishlist-public-deprecated.php:655
-#: public/class-addonify-wishlist-public.php:614
-#: public/class-addonify-wishlist-public.php:678
+#: public/class-addonify-wishlist-public.php:531
+#: public/class-addonify-wishlist-public.php:595
 msgid "Missing product id."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:789
-#: public/class-addonify-wishlist-public.php:822
+#: public/class-addonify-wishlist-public.php:739
 msgid "Error emptying wishlist."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:1206
-#: public/class-addonify-wishlist-public.php:1245
+#: public/class-addonify-wishlist-public.php:1102
 #: public/templates/addonify-wishlist-shortcode-contents.php:120
 msgid "In Stock"
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:1209
-#: public/class-addonify-wishlist-public.php:1248
+#: public/class-addonify-wishlist-public.php:1105
 #: public/templates/addonify-wishlist-shortcode-contents.php:123
 msgid "Out of Stock"
 msgstr ""

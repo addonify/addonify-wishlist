@@ -1,6 +1,5 @@
 <script setup>
 import Icon from "@components/core/Icon.vue";
-import { textdomain } from "@helpers/global";
 
 /**
  *
@@ -14,6 +13,10 @@ const props = defineProps({
 		required: true,
 	},
 });
+
+const { __ } = wp.i18n;
+
+const emptyContent = __("No content", "addonify-wishlist");
 </script>
 <template>
 	<el-tooltip
@@ -21,7 +24,7 @@ const props = defineProps({
 		popper-class="tooltip"
 		effect="dark"
 		placement="top"
-		:content="props.content ? props.content : __('No content', textdomain)"
+		:content="props.content ? props.content : emptyContent"
 	>
 		<span class="icon">
 			<svg

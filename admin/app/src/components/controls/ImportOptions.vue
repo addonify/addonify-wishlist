@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import { UploadFilled } from "@element-plus/icons-vue";
 import { useSettingsStore } from "@stores/settings";
-import { textdomain, jsonFileName } from "@helpers/global";
+import { jsonFileName } from "@helpers/global";
 
 /**
  *
@@ -40,7 +40,7 @@ let fileList = ref();
 const handleBeforeUpload = (rawFile) => {
 	//console.log(rawFile);
 
-	let errorMessage = __("Only JSON file is permitted.", textdomain);
+	let errorMessage = __("Only JSON file is permitted.", "addonify-wishlist");
 
 	if (rawFile.type == "application/json") {
 		/**

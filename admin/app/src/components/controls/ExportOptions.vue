@@ -1,7 +1,6 @@
 <script setup>
 import { useSettingsStore } from "@stores/settings";
 import Icon from "@components/core/Icon.vue";
-import { textdomain } from "@helpers/global";
 /**
  *
  * Define props that we will use in this component.
@@ -14,11 +13,15 @@ const props = defineProps({
 		type: String,
 		required: true,
 	},
+	buttonLabel: {
+		type: String,
+		required: true,
+	},
 });
 
 const { __ } = wp.i18n;
 const store = useSettingsStore();
-const isExportingText = __("Processing...", textdomain);
+const isExportingText = __("Processing...", "addonify-wishlist");
 </script>
 <template>
 	<button
@@ -28,9 +31,8 @@ const isExportingText = __("Processing...", textdomain);
 		:disabled="store.status.isExporting"
 		@click="store.exportSettings"
 	>
-		{{ store.status.isExporting ? isExportingText : props.label }}
+		{{ store.status.isExporting ? isExportingText : props.buttonLabel }}
 
-		<Icon v-if="!store.status.isExporting" name="download" size="20px" />
 		<Icon v-if="store.status.isExporting" name="loading" size="18px" />
 	</button>
 </template>

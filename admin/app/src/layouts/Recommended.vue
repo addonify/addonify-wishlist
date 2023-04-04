@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useProductStore } from "@stores/products";
 import { Loading } from "@element-plus/icons-vue";
-import { textdomain } from "@helpers/global";
 import { trimText } from "@helpers/text";
 
 /**
@@ -47,11 +46,11 @@ const isDisabled = ref(false);
 const isActiviting = ref(false);
 const isInstalling = ref(false);
 
-const activateText = __("Activate now", textdomain);
-const activitingText = __("Activating...", textdomain);
-const installText = __("Install now", textdomain);
-const installingText = __("Installing...", textdomain);
-const installedText = __("Already installed", textdomain);
+const activateText = __("Activate now", "addonify-wishlist");
+const activitingText = __("Activating...", "addonify-wishlist");
+const installText = __("Install now", "addonify-wishlist");
+const installingText = __("Installing...", "addonify-wishlist");
+const installedText = __("Already installed", "addonify-wishlist");
 
 /**
  *

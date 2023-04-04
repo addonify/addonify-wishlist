@@ -1,8 +1,5 @@
 <script setup>
 import { computed } from "vue";
-import { textdomain } from "@helpers/global";
-
-let { __ } = wp.i18n;
 
 /**
  *
@@ -48,15 +45,17 @@ let value = computed({
 		emit("update:modelValue", newValue);
 	},
 });
+
+const { __ } = wp.i18n;
+
+const defPlaceholder = __("Enter text...", "addonify-wishlist");
 </script>
 <template>
 	<template v-if="props.type === 'text'">
 		<el-input
 			v-model="value"
 			:placeholder="
-				props.placeholder
-					? props.placeholder
-					: __('Enter text...', textdomain)
+				props.placeholder ? props.placeholder : defPlaceholder
 			"
 			size="large"
 		/>
@@ -68,9 +67,7 @@ let value = computed({
 			type="textarea"
 			rows="10"
 			:placeholder="
-				props.placeholder
-					? props.placeholder
-					: __('Enter text here...', textdomain)
+				props.placeholder ? props.placeholder : defPlaceholder
 			"
 			resize="vertical"
 		/>

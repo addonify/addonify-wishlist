@@ -1,6 +1,5 @@
 <script setup>
 import Icon from "@components/core/Icon.vue";
-import { textdomain } from "@helpers/global";
 const { __ } = wp.i18n;
 </script>
 <template>
@@ -10,7 +9,7 @@ const { __ } = wp.i18n;
 				{{
 					__(
 						"Loving addonify wishlist? Help us make a better software",
-						textdomain
+						"addonify-wishlist"
 					)
 				}}
 			</h3>
@@ -21,7 +20,7 @@ const { __ } = wp.i18n;
 				href="https://wordpress.org/support/plugin/addonify-wishlist/reviews/#new-post"
 				target="_blank"
 			>
-				{{ __("Drop a review", textdomain) }}
+				{{ __("Drop a review", "addonify-wishlist") }}
 				<Icon name="comment" size="18px" />
 			</a>
 		</div>

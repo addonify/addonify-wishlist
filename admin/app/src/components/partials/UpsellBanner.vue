@@ -2,7 +2,6 @@
 import { onMounted, onUnmounted } from "vue";
 import Icon from "@components/core/Icon.vue";
 import { upgradeLanding } from "@helpers/endpoint";
-import { textdomain } from "@helpers/global";
 import { useUpsellStore } from "@stores/upsell";
 
 const { __ } = wp.i18n;
@@ -59,7 +58,10 @@ onUnmounted(() => {
 			<div class="block-title">
 				<h3 class="upsell-heading">
 					{{
-						__("Get Addonify Wishlist premium version.", textdomain)
+						__(
+							"Get Addonify Wishlist premium version.",
+							"addonify-wishlist"
+						)
 					}}
 				</h3>
 			</div>
@@ -68,25 +70,32 @@ onUnmounted(() => {
 					<li>
 						<Icon name="check" size="14px" />
 						<span class="text">
-							{{ __("Unlock multi wishlist", textdomain) }}
+							{{
+								__("Unlock multi wishlist", "addonify-wishlist")
+							}}
 						</span>
 					</li>
 					<li>
 						<Icon name="check" size="14px" />
 						<span class="text">
-							{{ __("Back in stock email", textdomain) }}
+							{{ __("Back in stock email", "addonify-wishlist") }}
 						</span>
 					</li>
 					<li>
 						<Icon name="check" size="14px" />
 						<span class="text">
-							{{ __("Low in stock email", textdomain) }}
+							{{ __("Low in stock email", "addonify-wishlist") }}
 						</span>
 					</li>
 					<li>
 						<Icon name="check" size="14px" />
 						<span class="text">
-							{{ __("Enable cost estimation", textdomain) }}
+							{{
+								__(
+									"Enable cost estimation",
+									"addonify-wishlist"
+								)
+							}}
 						</span>
 					</li>
 					<li>
@@ -95,7 +104,7 @@ onUnmounted(() => {
 							{{
 								__(
 									"Allow sharing wishlists in social media",
-									textdomain
+									"addonify-wishlist"
 								)
 							}}
 						</span>
@@ -103,29 +112,37 @@ onUnmounted(() => {
 					<li>
 						<Icon name="check" size="14px" />
 						<span class="text">
-							{{ __("Additional color options", textdomain) }}
+							{{
+								__(
+									"Additional color options",
+									"addonify-wishlist"
+								)
+							}}
 						</span>
 					</li>
 					<li>
 						<Icon name="check" size="14px" />
 						<span class="text">
 							{{
-								__("Additional typography options", textdomain)
+								__(
+									"Additional typography options",
+									"addonify-wishlist"
+								)
 							}}
 						</span>
 					</li>
 					<li>
 						<Icon name="check" size="14px" />
-						<span class="text">{{
-							__("...& many more.", textdomain)
-						}}</span>
+						<span class="text">
+							{{ __("...& many more.", "addonify-wishlist") }}
+						</span>
 					</li>
 				</ul>
 			</div>
 			<div class="action">
 				<a :href="upgradeLanding" class="adfy-button">
 					<Icon name="diamond" size="18px" />
-					{{ __("Upgrade to pro", textdomain) }}
+					{{ __("Upgrade to pro", "addonify-wishlist") }}
 				</a>
 			</div>
 		</div>

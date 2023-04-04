@@ -1,28 +1,23 @@
-<script lang="ts" setup>
-// @ts-ignore
+<script setup>
 import Logo from "@components/core/Logo.vue";
-// @ts-ignore
 import { currentVersion } from "@helpers/global";
-// @ts-ignore
 import Icon from "@components/core/Icon.vue";
-// @ts-ignore
 import { useSettingsStore } from "@stores/settings";
-// @ts-ignore
-import { textdomain } from "@helpers/global";
 
 const store = useSettingsStore();
-// @ts-ignore
 const { __ } = wp.i18n;
+
 /**
  *
  * Function to return the text for the save button.
  *
+ * @since: 2.0.0
  * @return {string} string
  */
 
-const saveButtonText = (): string => {
-	let saving = __("Saving ...", textdomain);
-	let save = __("Save Options", textdomain);
+const saveButtonText = () => {
+	let saving = __("Saving ...", "addonify-wishlist");
+	let save = __("Save Options", "addonify-wishlist");
 	return store.status.isSaving ? saving : save;
 };
 </script>

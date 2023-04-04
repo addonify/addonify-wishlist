@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import { ElMessage, ElNotification } from "element-plus"; // @ts-ignore
+import { ElMessage } from "element-plus"; // @ts-ignore
 import { apiEndpoint } from "@helpers/endpoint"; // @ts-ignore
-import { textdomain } from "@helpers/global"; // @ts-ignore
+import { jsonFileName } from "@helpers/global"; // @ts-ignore
 
 /**
  *
@@ -46,6 +46,16 @@ export const useSettingsStore = defineStore({
 			isExporting: false, // Flag if we are exporting settings.
 			message: "", // Message to show.
 		},
+
+		/**
+		 *
+		 * Special state for tools/action button setting page.
+		 */
+
+		actionEvent: {
+			endpoint: "",
+			isProcessing: false,
+		},
 	}),
 
 	getters: {
@@ -79,7 +89,7 @@ export const useSettingsStore = defineStore({
 
 			let errMessage: string = __(
 				"Couldn't fetch settings. Please reload the page again.",
-				textdomain
+				"addonify-wishlist"
 			);
 
 			apiFetch({
@@ -119,6 +129,75 @@ export const useSettingsStore = defineStore({
 
 		/**
 		 *
+		 * Send's an empty POST request to the rest api endpoint without any payload.
+		 * Used for tools and action buttons.
+		 * Check doc here: ?
+		 *
+		 * @returns {string} success/failed
+		 * @since 2.0.0
+		 */
+		dispatchEmptyPostRequest(endpoint: string): void {
+			/**
+			 *
+			 * Let api know we are resetting the settings.
+			 */
+			const errMessage = __(
+				"Error something went wrong. Please try again.",
+				"addonify-wishlist"
+			);
+
+			this.actionEvent.isProcessing = true;
+
+			apiFetch({
+				path: `${apiEndpoint}/${endpoint}`,
+				method: "POST",
+			})
+				.then((res: any) => {
+					/**
+					 *
+					 * Case: Success.
+					 * Resetting successfully done.
+					 */
+
+					this.status.message = res.message;
+
+					if (res.success === true) {
+						ElMessage.success({
+							message: this.status.message,
+							offset: 50,
+							duration: 3000,
+						});
+					} else {
+						ElMessage.error({
+							message: this.status.message,
+							offset: 50,
+							duration: 10000,
+						});
+					}
+				})
+				.catch((err: any) => {
+					/**
+					 *
+					 * Case: Error.
+					 * Couldn't reset.
+					 */
+
+					console.log(err);
+
+					ElMessage.error({
+						message: errMessage,
+						offset: 50,
+						duration: 10000,
+					});
+				})
+				.finally(() => {
+					this.fetchSettings();
+					this.actionEvent.isProcessing = false;
+				});
+		},
+
+		/**
+		 *
 		 * Save options, make api call and update the state.
 		 *
 		 * @returns {string} success/failed
@@ -149,7 +228,7 @@ export const useSettingsStore = defineStore({
 
 			let errMessage: string = __(
 				"Error saving settings. Please try again.",
-				textdomain
+				"addonify-wishlist"
 			);
 
 			apiFetch({
@@ -220,7 +299,7 @@ export const useSettingsStore = defineStore({
 			 */
 			const errMessage = __(
 				"Error couldn't export settings.",
-				textdomain
+				"addonify-wishlist"
 			);
 			this.status.isExporting = true;
 
@@ -243,7 +322,7 @@ export const useSettingsStore = defineStore({
 						link.href = res.url;
 						link.setAttribute(
 							"download",
-							`${textdomain}-all-settings-${date}.json`
+							`${jsonFileName}-all-settings-${date}.json`
 						);
 						document.body.appendChild(link);
 						link.click();
@@ -293,7 +372,7 @@ export const useSettingsStore = defineStore({
 			 */
 			const errMessage = __(
 				"Error couldn't import settings.",
-				textdomain
+				"addonify-wishlist"
 			);
 
 			this.status.isImporting = true;
@@ -343,71 +422,6 @@ export const useSettingsStore = defineStore({
 				.finally(() => {
 					this.fetchSettings();
 					this.status.isImporting = false;
-				});
-		},
-
-		/**
-		 *
-		 * Reset all settings and set the default values.
-		 *
-		 * @returns {string} success/failed
-		 * @since 2.0.0
-		 */
-
-		resetAllSettings(): void {
-			/**
-			 *
-			 * Let api know we are resetting the settings.
-			 */
-			const errMessage = __("Error resetting settings.", textdomain);
-
-			this.status.isDoingReset = true;
-
-			apiFetch({
-				path: apiEndpoint + "/reset_options",
-				method: "POST",
-			})
-				.then((res: any) => {
-					/**
-					 *
-					 * Case: Success.
-					 * Resetting successfully done.
-					 */
-
-					this.status.message = res.message;
-
-					if (res.success === true) {
-						ElMessage.success({
-							message: this.status.message,
-							offset: 50,
-							duration: 3000,
-						});
-					} else {
-						ElMessage.error({
-							message: this.status.message,
-							offset: 50,
-							duration: 10000,
-						});
-					}
-				})
-				.catch((err: any) => {
-					/**
-					 *
-					 * Case: Error.
-					 * Couldn't reset.
-					 */
-
-					console.log(err);
-
-					ElMessage.error({
-						message: errMessage,
-						offset: 50,
-						duration: 10000,
-					});
-				})
-				.finally(() => {
-					this.fetchSettings();
-					this.status.isDoingReset = false;
 				});
 		},
 	},

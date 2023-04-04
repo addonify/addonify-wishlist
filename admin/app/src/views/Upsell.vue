@@ -5,7 +5,6 @@ import RouteLinks from "@layouts/RouteLinks.vue";
 import Loading from "@components/core/Loading.vue";
 import Hero from "@components/partials/Hero.vue";
 import { useSettingsStore } from "@stores/settings";
-import { textdomain } from "@helpers/global";
 
 const { __ } = wp.i18n;
 
@@ -35,7 +34,7 @@ onMounted(() => {
 								{{
 									__(
 										"We are currently working on premium version. Stay tuned....",
-										textdomain
+										"addonify-wishlist"
 									)
 								}}
 							</p>
