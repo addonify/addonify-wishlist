@@ -93,7 +93,7 @@ export const useSettingsStore = defineStore({
 					 * We have the data, lets hydrate the state.
 					 */
 
-					console.log(res);
+					//console.log(res);
 					this.settings = res.settings_values;
 					this.data = res.tabs;
 					oldSettings = cloneDeep(this.settings);
