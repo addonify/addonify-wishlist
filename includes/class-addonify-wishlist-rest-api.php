@@ -117,6 +117,16 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 					'permission_callback' => array( $this, 'permission_callback' ),
 				)
 			);
+
+			register_rest_route( // Import options.
+				$this->rest_namespace_v2,
+				'/create_wishlist_page',
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'rest_handler_create_wishlist_page' ),
+					'permission_callback' => array( $this, 'permission_callback' ),
+				)
+			);
 		}
 
 
@@ -215,6 +225,39 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				$return_data = array(
 					'success' => false,
 					'message' => esc_html__( 'Error! Options reset unsuccessful.', 'addonify-wishlist' ),
+				);
+			}
+
+			return rest_ensure_response( $return_data );
+		}
+
+		/**
+		 * REST handler function for creating wishlist page.
+		 */
+		public function rest_handler_create_wishlist_page() {
+
+			// Create page object.
+			$new_page = array(
+				'post_title'   => __( 'Wishlist', 'addonify-wishlist' ),
+				'post_content' => '[addonify_wishlist]',
+				'post_status'  => 'publish',
+				'post_author'  => get_current_user_id(),
+				'post_type'    => 'page',
+			);
+
+			// Insert the post into the database.
+			$page_id = wp_insert_post( $new_page );
+
+			if ( ! ( $page_id instanceof WP_Error || 0 === $page_id ) ) {
+				update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $page_id );
+				$return_data = array(
+					'success' => true,
+					'message' => esc_html__( 'Wishlist page generate success.', 'addonify-wishlist' ),
+				);
+			} else {
+				$return_data = array(
+					'success' => false,
+					'message' => esc_html__( 'Error! Wishlist page generate unsuccessful.', 'addonify-wishlist' ),
 				);
 			}
 
