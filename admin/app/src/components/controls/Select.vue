@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from "vue";
 import { textdomain } from "@helpers/global";
-const { __ } = wp.i18n;
 
 /**
  *
@@ -40,6 +39,8 @@ let value = computed({
 		emit("update:modelValue", newValue);
 	},
 });
+
+const { __ } = wp.i18n;
 </script>
 <template>
 	<el-select
