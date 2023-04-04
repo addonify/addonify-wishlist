@@ -150,6 +150,7 @@ export const useProductStore = defineStore({
 			this.hotAddons = list.data.hot;
 			this.generalAddons = list.data.general;
 			this.allAddons = { ...this.hotAddons, ...this.generalAddons };
+			//console.log(this.allAddons);
 
 			//console.log(this.generalAddons);
 
