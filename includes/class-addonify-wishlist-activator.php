@@ -74,6 +74,16 @@ class Addonify_Wishlist_Activator {
 			return;
 		}
 
+		$args = array(
+			'pagename' => __( 'Wishlist', 'addonify-wishlist' ),
+		);
+
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) {
+			update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $query->post->ID );
+			return;
+		}
+
 		// Create page object.
 		$new_page = array(
 			'post_title'   => __( 'Wishlist', 'addonify-wishlist' ),

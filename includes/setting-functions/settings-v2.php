@@ -73,7 +73,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'undo_notice_timeout'                      => 5,
 				'icon_position'                            => 'left',
 				'show_empty_wishlist_navigation_link'      => true,
-				'empty_wishlist_navigation_link'           => addonify_wishlist_get_shop_page_title(),
+				'empty_wishlist_navigation_link'           => addonify_wishlist_get_shop_page_id(),
 				'empty_wishlist_navigation_link_label'     => __( 'Go to Shop', 'addonify-wishlist' ),
 				'login_required_message'                   => __( 'Please login before adding item to Wishlist', 'addonify-wishlist' ),
 				'could_not_add_to_wishlist_error_description' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
