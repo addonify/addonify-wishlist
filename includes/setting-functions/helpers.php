@@ -35,14 +35,31 @@ if ( ! function_exists( 'addonify_wishlist_get_pages' ) ) {
 
 if ( ! function_exists( 'addonify_wishlist_get_shop_page_id' ) ) {
 	/**
-	 * Get the shop page title if exists.
+	 * Get the shop page id if exists.
 	 *
 	 * @since 2.0.0
-	 * @return string
+	 * @return string|int
 	 */
 	function addonify_wishlist_get_shop_page_id() {
 
 		$page = addonify_wishlist_get_page_by_title( 'Shop' );
+		if ( $page && '' !== $page ) {
+			return $page->ID;
+		}
+		return '';
+	}
+}
+
+if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_id' ) ) {
+	/**
+	 * Get the wishlist page id if exists.
+	 *
+	 * @since 2.0.0
+	 * @return string|int
+	 */
+	function addonify_wishlist_get_wishlist_page_id() {
+
+		$page = addonify_wishlist_get_page_by_title( 'Wishlist' );
 		if ( $page && '' !== $page ) {
 			return $page->ID;
 		}

@@ -199,9 +199,14 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				}
 			}
 
-			$query = 'DELETE FROM ' . $wpdb->options . ' WHERE ' . $where;
-
-			if ( $wpdb->query( $wpdb->prepare( $query, $values ) ) ) { //phpcs:ignore
+			$query  = 'DELETE FROM ' . $wpdb->options . ' WHERE ' . $where;
+			$result = $wpdb->query( $wpdb->prepare( $query, $values ) ); //phpcs:ignore
+			if ( $result ) {
+				$return_data = array(
+					'success' => true,
+					'message' => esc_html__( 'Options reset success.', 'addonify-wishlist' ),
+				);
+			} elseif ( 0 === $result ) {
 				$return_data = array(
 					'success' => true,
 					'message' => esc_html__( 'Options reset success.', 'addonify-wishlist' ),

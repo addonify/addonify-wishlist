@@ -35,7 +35,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 			'addonify_wishlist_setting_defaults',
 			array(
 				'enable_wishlist'                          => true,
-				'wishlist_page'                            => '',
+				'wishlist_page'                            => addonify_wishlist_get_wishlist_page_id(),
 				'require_login'                            => false,
 				'if_not_login_action'                      => 'default',
 				'remove_from_wishlist_if_added_to_cart'    => true,
