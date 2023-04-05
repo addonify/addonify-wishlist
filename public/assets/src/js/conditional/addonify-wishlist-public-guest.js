@@ -48,7 +48,9 @@
                     let product_button = $('.adfy-wishlist-btn[data-product_id="' + value + '"]')
                     product_button.find('span').html(addedToWishlistButtonLabel);
                     product_button.find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
+                    $('.addonify_wishlist-cart-item-add-to-wishlist[data-product_id="' + value + '"]').hide();
                 });
+
                 // actions on wishlist page.
                 if ($body.find('div#addonify-wishlist-page-container').length > 0) {
                     if (requireLogin) {
@@ -101,6 +103,9 @@
                 $body.on('click', '.addonify-wishlist-ajax-add-to-wishlist', function (e) {
                     e.preventDefault();
                     let addToWishlistButton = $(this);
+                    if ( addToWishlistButton.hasClass('addonify_wishlist-cart-item-add-to-wishlist') ) {
+                        addToWishlistButton.hide();
+                    }
                     if (addToWishlistButton.hasClass('added-to-wishlist')) {
                         if (removeAlreadyAddedProductFromWishlist) {
                             addonifyLocalRemoveFromWishlist(addToWishlistButton)
@@ -462,6 +467,9 @@
                 if (removeAlreadyAddedProductFromWishlist) {
                     addonifyLocalRemoveFromWishlist(addToWishlistButton)
                 }
+            }
+            if ( addToWishlistButton.hasClass('addonify_wishlist-cart-item-add-to-wishlist') ) {
+                addToWishlistButton.hide();
             }
 
         }

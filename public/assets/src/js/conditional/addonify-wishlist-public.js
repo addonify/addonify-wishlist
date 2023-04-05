@@ -414,6 +414,9 @@
                 "json"
             ).always( function() {
                 addToWishlistButton.removeClass( 'loading' );
+                if ( addToWishlistButton.hasClass('addonify_wishlist-cart-item-add-to-wishlist') ) {
+                    addToWishlistButton.hide();
+                }
             } );
         }
 
