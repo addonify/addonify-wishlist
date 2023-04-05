@@ -88,11 +88,7 @@ class Addonify_Wishlist_Public {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
-		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
-
-		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
-
-		add_shortcode( 'addonify_wishlist_button', array( $this, 'get_wishlist_button_shortcode' ) );
+		$this->add_actions_and_filters();
 
 		$this->register_ajax_actions();
 	}
@@ -100,7 +96,7 @@ class Addonify_Wishlist_Public {
 	/**
 	 * Register all actions required.
 	 */
-	public function add_actions() {
+	public function add_actions_and_filters() {
 
 		if ( addonify_wishlist_get_option( 'btn_position' ) === 'after_add_to_cart' ) {
 			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 15 );
@@ -121,9 +117,19 @@ class Addonify_Wishlist_Public {
 
 		add_action( 'addonify_wishlist_before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
 
-		add_action( 'woocommerce_after_cart_item_name', array( $this, 'render_add_to_wishlist_button_in_cart_page_items_after_name' ), 11, 2 );
+		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
 
-		add_filter( 'woocommerce_cart_item_subtotal', array( $this, 'render_add_to_wishlist_button_in_cart_page_items_after_subtotal' ), 11, 3 );
+		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
+
+		add_shortcode( 'addonify_wishlist_button', array( $this, 'get_wishlist_button_shortcode' ) );
+
+		if ( addonify_wishlist_get_option( 'enable_save_for_later' ) ) {
+			if ( 'after_product_name' === addonify_wishlist_get_option( 'save_for_later_btn_position' ) ) {
+				add_action( 'woocommerce_after_cart_item_name', array( $this, 'render_add_to_wishlist_button_in_cart_page_items_after_name' ), 11, 2 );
+			} else {
+				add_filter( 'woocommerce_cart_item_subtotal', array( $this, 'render_add_to_wishlist_button_in_cart_page_items_after_subtotal' ), 11, 3 );
+			}
+		}
 	}
 
 	/**
@@ -804,7 +810,7 @@ class Addonify_Wishlist_Public {
 	 * @param string|int   $_         Cart item key.
 	 */
 	public function render_add_to_wishlist_button_in_cart_page_items_after_name( $cart_item, $_ ) {
-
+		echo $this->render_add_to_wishlist_button_in_cart_page_items( $cart_item['product_id'] ); // phpcs:ignore
 	}
 
 	/**
@@ -815,7 +821,29 @@ class Addonify_Wishlist_Public {
 	 * @param string|int   $__         Cart item key.
 	 */
 	public function render_add_to_wishlist_button_in_cart_page_items_after_subtotal( $_, $cart_item, $__ ) {
+		return $_ . $this->render_add_to_wishlist_button_in_cart_page_items( $cart_item['product_id'] );
+	}
 
+	/**
+	 * Add add-to-wishlist button in cart page items.
+	 *
+	 * @param int $product_id Cart item.
+	 */
+	public function render_add_to_wishlist_button_in_cart_page_items( $product_id ) {
+		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
+			return;
+		}
+		$class = 'addonify_wishlist-cart-item-add-to-wishlist';
+		if ( ! is_user_logged_in() ) {
+			$class .= ' hidden';
+		}
+		$attrs = array(
+			'id'    => $product_id,
+			'class' => $class,
+			'label' => addonify_wishlist_get_option( 'save_for_later_btn_label' ),
+		);
+
+		return $this->get_wishlist_button_shortcode( $attrs );
 	}
 
 	/**
@@ -837,17 +865,25 @@ class Addonify_Wishlist_Public {
 			array(
 				'id'    => '',
 				'class' => '',
+				'label' => false,
 			),
 			$atts,
 			'addonify_wishlist_button'
 		);
 		if ( '' === $atts['id'] ) {
-			return 'id required';
+			return '<button>' . __( 'id required', 'addonify-wishlist' ) . '</button>';
 		} else {
 			$product = wc_get_product( $atts['id'] );
-			ob_start();
-			addonify_wishlist_render_add_to_wishlist_button( $product, $atts['class'] );
-			return ob_get_clean();
+			if ( $product ) {
+				if ( 'string' === gettype( $atts['class'] ) ) {
+					$atts['class'] = explode( ' ', $atts['class'] );
+				}
+				ob_start();
+				addonify_wishlist_render_add_to_wishlist_button( $product, $atts['class'], $atts['label'] );
+				return ob_get_clean();
+			} else {
+				return '<button>' . __( 'Product does not exists.', 'addonify-wishlist' ) . '</button>';
+			}
 		}
 	}
 

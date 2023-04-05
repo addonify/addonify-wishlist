@@ -79,6 +79,9 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'could_not_add_to_wishlist_error_description' => __( 'Something went wrong. <br>{product_name} was not added to wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
 				'could_not_remove_from_wishlist_error_description' => __( 'Something went wrong. <br>{product_name} was not removed wishlist. Please refresh page and try again.', 'addonify-wishlist' ),
 				'remove_all_plugin_data_on_uninstall'      => false,
+				'enable_save_for_later'                    => false,
+				'save_for_later_btn_position'              => 'after_product_name',
+				'save_for_later_btn_label'                 => __( 'save for later', 'addonify-wishlist' ),
 
 				'wishlist_btn_text_color'                  => '#333333',
 				'wishlist_btn_icon_color'                  => '#333333',

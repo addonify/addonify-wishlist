@@ -67,9 +67,9 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
 						'choices'     => array(
+							'none'                      => __( 'None', 'addonify-wishlist' ),
 							'show_popup_notice'         => __( 'Show Popup Notice', 'addonify-wishlist' ),
 							'redirect_to_wishlist_page' => __( 'Redirect to Wishlist Page', 'addonify-wishlist' ),
-							'none'                      => __( 'None', 'addonify-wishlist' ),
 						),
 					),
 					'remove_from_wishlist_if_added_to_cart' => array(
@@ -86,6 +86,13 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 						'description' => __( 'Remove the product from wishlist with ajax call.', 'addonify-wishlist' ),
 						'dependent'   => array( 'enable_wishlist', 'require_login' ),
 						'value'       => addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ),
+					),
+					'enable_save_for_later'               => array(
+						'label'       => __( 'Enable save for later button', 'addonify-wishlist' ),
+						'description' => __( 'Enables save to wishlist button in Cart page on cart items.', 'addonify-wishlist' ),
+						'type'        => 'switch',
+						'className'   => '',
+						'value'       => addonify_wishlist_get_option( 'enable_save_for_later' ),
 					),
 					'custom_css'                          => array(
 						'type'           => 'textarea',

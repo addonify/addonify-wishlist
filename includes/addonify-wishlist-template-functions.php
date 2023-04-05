@@ -77,10 +77,11 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 	/**
 	 * Render add to wishlist button.
 	 *
-	 * @param object|false $product_ Product object.
-	 * @param array        $classes Classes to be added to button.
+	 * @param object|false $product_     Product object.
+	 * @param array        $classes      Classes to be added to button.
+	 * @param bool|string  $button_label Custom Button label.
 	 */
-	function addonify_wishlist_render_add_to_wishlist_button( $product_ = false, $classes = array() ) {
+	function addonify_wishlist_render_add_to_wishlist_button( $product_ = false, $classes = array(), $button_label = false ) {
 
 		// Return if button label and icon is not set.
 		if (
@@ -97,7 +98,7 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 
 		$add_to_wishlist_button_args = array(
 			'product_id'           => $product->get_id(),
-			'button_label'         => addonify_wishlist_get_option( 'btn_label' ),
+			'button_label'         => $button_label ? $button_label : addonify_wishlist_get_option( 'btn_label' ),
 			'button_classes'       => array( 'button', 'adfy-wishlist-btn', 'addonify-add-to-wishlist-btn' ),
 			'product_name'         => $product->get_title(),
 			'display_icon'         => (bool) addonify_wishlist_get_option( 'show_icon' ),
@@ -115,6 +116,10 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 			if ( $parent_wishlist_id ) {
 				$add_to_wishlist_button_args['parent_wishlist_id'] = $parent_wishlist_id;
 			}
+		}
+
+		if ( $classes ) {
+			$add_to_wishlist_button_args['button_classes'] = $classes;
 		}
 
 		// Add class, 'after-add-to-cart', if button is to be displayed after add to cart button.
