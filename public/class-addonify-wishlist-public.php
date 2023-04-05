@@ -88,6 +88,20 @@ class Addonify_Wishlist_Public {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
+		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
+
+		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
+
+		add_shortcode( 'addonify_wishlist_button', array( $this, 'get_wishlist_button_shortcode' ) );
+
+		$this->register_ajax_actions();
+	}
+
+	/**
+	 * Register all actions required.
+	 */
+	public function add_actions() {
+
 		if ( addonify_wishlist_get_option( 'btn_position' ) === 'after_add_to_cart' ) {
 			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 15 );
 		}
@@ -105,15 +119,11 @@ class Addonify_Wishlist_Public {
 		add_action( 'wp_footer', array( $this, 'wishlist_modal_wrapper' ) );
 		add_action( 'wp_footer', array( $this, 'wishlist_sidebar_template' ) );
 
-		add_filter( 'woocommerce_login_redirect', array( $this, 'myaccount_login' ) );
-
 		add_action( 'addonify_wishlist_before_wishlist_form_table', array( $this, 'ajaxify_wishlist_form' ) );
 
-		add_shortcode( 'addonify_wishlist', array( $this, 'get_shortcode_contents' ) );
+		add_action( 'woocommerce_after_cart_item_name', array( $this, 'render_add_to_wishlist_button_in_cart_page_items_after_name' ), 11, 2 );
 
-		add_shortcode( 'addonify_wishlist_button', array( $this, 'get_wishlist_button_shortcode' ) );
-
-		$this->register_ajax_actions();
+		add_filter( 'woocommerce_cart_item_subtotal', array( $this, 'render_add_to_wishlist_button_in_cart_page_items_after_subtotal' ), 11, 3 );
 	}
 
 	/**
@@ -785,6 +795,27 @@ class Addonify_Wishlist_Public {
 		ob_start();
 		do_action( 'addonify_wishlist_render_shortcode_content' );
 		return ob_get_clean();
+	}
+
+	/**
+	 * Add add-to-wishlist button in cart page items.
+	 *
+	 * @param object|array $cart_item Cart item.
+	 * @param string|int   $_         Cart item key.
+	 */
+	public function render_add_to_wishlist_button_in_cart_page_items_after_name( $cart_item, $_ ) {
+
+	}
+
+	/**
+	 * Add add-to-wishlist button in cart page items.
+	 *
+	 * @param string|int   $_         Item subtotal.
+	 * @param object|array $cart_item Cart item.
+	 * @param string|int   $__         Cart item key.
+	 */
+	public function render_add_to_wishlist_button_in_cart_page_items_after_subtotal( $_, $cart_item, $__ ) {
+
 	}
 
 	/**
