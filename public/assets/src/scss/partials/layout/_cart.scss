@@ -1,0 +1,18 @@
+/* --------------------------------------------------------------------------
+	#. Cart table
+  -------------------------------------------------------------------------- */
+
+.woocommerce-cart-form {
+
+    .addonify_wishlist-cart-item-add-to-wishlist {
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 5px;
+        height: auto;
+        padding: 10px 20px;
+        border-radius: 4px;
+    }
+}

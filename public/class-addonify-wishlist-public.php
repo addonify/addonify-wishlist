@@ -833,9 +833,9 @@ class Addonify_Wishlist_Public {
 		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
 			return;
 		}
-		$class = 'addonify_wishlist-cart-item-add-to-wishlist';
+		$class = 'adfy-wishlist-btn addonify_wishlist-cart-item-add-to-wishlist';
 		if ( ! is_user_logged_in() ) {
-			$class .= ' hidden';
+			$class .= ' adfy-wishlist-hide';
 		}
 		$attrs = array(
 			'id'    => $product_id,
