@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-04-04T08:57:58+00:00\n"
+"POT-Creation-Date: 2023-04-05T06:59:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: addonify-wishlist\n"
@@ -78,53 +78,62 @@ msgstr ""
 
 #: includes/class-addonify-wishlist-activator.php:78
 #: includes/class-addonify-wishlist-activator.php:89
+#: includes/class-addonify-wishlist-rest-api.php:241
 #: includes/setting-functions/settings-v2.php:62
 #: includes/setting-functions/settings.php:63
 msgid "Wishlist"
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:156
+#: includes/class-addonify-wishlist-rest-api.php:166
 msgid "Ooops, error saving settings!!!"
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:163
+#: includes/class-addonify-wishlist-rest-api.php:173
 msgid "No settings values to update!!!"
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:170
+#: includes/class-addonify-wishlist-rest-api.php:180
 msgid "Settings saved successfully"
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:207
-#: includes/class-addonify-wishlist-rest-api.php:212
+#: includes/class-addonify-wishlist-rest-api.php:217
+#: includes/class-addonify-wishlist-rest-api.php:222
 msgid "Options reset success."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:217
+#: includes/class-addonify-wishlist-rest-api.php:227
 msgid "Error! Options reset unsuccessful."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:248
+#: includes/class-addonify-wishlist-rest-api.php:255
+msgid "Wishlist page generate success."
+msgstr ""
+
+#: includes/class-addonify-wishlist-rest-api.php:260
+msgid "Error! Wishlist page generate unsuccessful."
+msgstr ""
+
+#: includes/class-addonify-wishlist-rest-api.php:291
 msgid "Error! Options export failed!."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:266
+#: includes/class-addonify-wishlist-rest-api.php:309
 msgid "No file provided."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:276
+#: includes/class-addonify-wishlist-rest-api.php:319
 msgid "File format not supported."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:287
+#: includes/class-addonify-wishlist-rest-api.php:330
 msgid "Ooops, error saving settings!!! File does not contain supported json."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:299
+#: includes/class-addonify-wishlist-rest-api.php:342
 msgid "Addonify Wishlist options has been imported successfully."
 msgstr ""
 
-#: includes/class-addonify-wishlist-rest-api.php:315
+#: includes/class-addonify-wishlist-rest-api.php:358
 msgid "Ooops, you are allowed to manage options."
 msgstr ""
 
@@ -963,12 +972,12 @@ msgid "Something went wrong. <br>{product_name} was not removed wishlist. Please
 msgstr ""
 
 #: includes/setting-functions/settings-v2.php:286
-#: includes/setting-functions/settings-v2.php:363
+#: includes/setting-functions/settings-v2.php:401
 msgid "Remove all wishlist data on uninstall"
 msgstr ""
 
 #: includes/setting-functions/settings-v2.php:287
-#: includes/setting-functions/settings-v2.php:364
+#: includes/setting-functions/settings-v2.php:402
 msgid "If enabled, all of addonify wishlist plugin's data will be removed without leaving a footprint."
 msgstr ""
 
@@ -997,57 +1006,77 @@ msgid "Tools"
 msgstr ""
 
 #: includes/setting-functions/settings-v2.php:342
+msgid "Generate wishlist page"
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:348
+msgid "Generate"
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:353
+#: includes/setting-functions/settings-v2.php:392
+#: includes/setting-functions/settings.php:399
+msgid "Yes"
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:354
+#: includes/setting-functions/settings-v2.php:393
+msgid "No, cancel"
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:355
+msgid "Do you really want to create new wishlist page?"
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:367
 #: includes/setting-functions/settings.php:410
 msgid "Export Options"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:343
+#: includes/setting-functions/settings-v2.php:368
 #: includes/setting-functions/settings.php:411
 msgid "Backup all settings that can be imported in future."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:347
+#: includes/setting-functions/settings-v2.php:370
+msgid "Export"
+msgstr ""
+
+#: includes/setting-functions/settings-v2.php:373
 #: includes/setting-functions/settings.php:418
 #: includes/setting-functions/settings.php:421
 msgid "Import Options"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:348
+#: includes/setting-functions/settings-v2.php:374
 #: includes/setting-functions/settings.php:422
 msgid "Drop a file here or click here to upload."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:349
+#: includes/setting-functions/settings-v2.php:375
 #: includes/setting-functions/settings.php:423
 msgid "Only .json file is permitted."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:350
+#: includes/setting-functions/settings-v2.php:376
 #: includes/setting-functions/settings.php:424
 msgid "Drag or upload the .json file that you had exported."
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:355
+#: includes/setting-functions/settings-v2.php:381
 #: includes/setting-functions/settings.php:397
 msgid "Reset Options"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:356
-#: includes/setting-functions/settings.php:398
-msgid "Are you sure you want to reset all settings?"
+#: includes/setting-functions/settings-v2.php:387
+msgid "Reset"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:357
-#: includes/setting-functions/settings.php:399
-msgid "Yes"
+#: includes/setting-functions/settings-v2.php:394
+msgid "Are you sure you would like to reset all settings?"
 msgstr ""
 
-#: includes/setting-functions/settings-v2.php:358
-#: includes/setting-functions/settings.php:400
-msgid "No"
-msgstr ""
-
-#: includes/setting-functions/settings-v2.php:360
+#: includes/setting-functions/settings-v2.php:398
 #: includes/setting-functions/settings.php:402
 msgid "All the settings will be set to default."
 msgstr ""
@@ -1130,6 +1159,14 @@ msgstr ""
 
 #: includes/setting-functions/settings.php:388
 msgid "Coming soon...."
+msgstr ""
+
+#: includes/setting-functions/settings.php:398
+msgid "Are you sure you want to reset all settings?"
+msgstr ""
+
+#: includes/setting-functions/settings.php:400
+msgid "No"
 msgstr ""
 
 #: includes/udp/class-udp-agent.php:116
@@ -1238,4 +1275,32 @@ msgstr ""
 
 #: public/templates/addonify-wishlist-sidebar.php:40
 msgid "Your wishlist is empty"
+msgstr ""
+
+#: admin/app/src/stores/products.js:74
+msgid "Error: couldn't fetch recommended plugins list."
+msgstr ""
+
+#: admin/app/src/stores/products.js:147
+msgid "Error: couldn't process the recommended plugins list."
+msgstr ""
+
+#: admin/app/src/stores/products.js:193
+msgid "Error: couldn't fetch installed plugins list."
+msgstr ""
+
+#: admin/app/src/stores/products.js:283
+msgid "Plugin installed successfully."
+msgstr ""
+
+#: admin/app/src/stores/products.js:284
+msgid "Error: couldn't install the plugin."
+msgstr ""
+
+#: admin/app/src/stores/products.js:353
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: admin/app/src/stores/products.js:354
+msgid "Error: couldn't activate the plugin."
 msgstr ""
