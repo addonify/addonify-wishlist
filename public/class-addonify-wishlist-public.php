@@ -291,7 +291,6 @@ class Addonify_Wishlist_Public {
 				'loginMessage'                          => addonify_wishlist_get_option( 'login_required_message' ),
 				'addedToWishlistText'                   => addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' ),
 				'initialAddToWishlistButtonLabel'       => addonify_wishlist_get_option( 'btn_label' ),
-				'alreadyInWishlistText'                 => __( 'Already in Wishlist', 'addonify-wishlist' ),
 				'popupAddedToWishlistText'              => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
 				'popupAlreadyInWishlistText'            => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
 				'emptyWishlistText'                     => addonify_wishlist_get_option( 'empty_wishlist_label' ),
