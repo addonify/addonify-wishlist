@@ -173,6 +173,24 @@
                                     background-color: transparent;
                                 }
                             }
+
+                            .adfy-wishlist-woo-stock {
+
+                                display: block;
+                                margin-top: 2px;
+                                font-weight: normal;
+                                font-size: 14px;
+
+                                .in-stock {
+
+                                    color: var(--adfy_wishlist_sidebar_modal_in_stock_text_color);
+                                }
+
+                                .out-of-stock {
+
+                                    color: var(--adfy_wishlist_sidebar_modal_out_of_stock_text_color);
+                                }
+                            }
                         }
                     }
 

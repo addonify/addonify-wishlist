@@ -14,5 +14,10 @@
         height: auto;
         padding: 10px 20px;
         border-radius: 4px;
+
+        &.adfy-wishlist-hide {
+
+            display: none;
+        }
     }
 }
