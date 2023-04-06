@@ -109,6 +109,10 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 			'display_popup_notice' => false,
 		);
 
+		if ( $classes ) {
+			$add_to_wishlist_button_args['button_classes'] = array_merge( $add_to_wishlist_button_args['button_classes'], $classes );
+		}
+
 		if ( is_user_logged_in() ) {
 			global $addonify_wishlist;
 
@@ -116,10 +120,6 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 			if ( $parent_wishlist_id ) {
 				$add_to_wishlist_button_args['parent_wishlist_id'] = $parent_wishlist_id;
 			}
-		}
-
-		if ( $classes ) {
-			$add_to_wishlist_button_args['button_classes'] = $classes;
 		}
 
 		// Add class, 'after-add-to-cart', if button is to be displayed after add to cart button.

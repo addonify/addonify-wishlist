@@ -87,13 +87,6 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist', 'require_login' ),
 						'value'       => addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ),
 					),
-					'enable_save_for_later'               => array(
-						'label'       => __( 'Enable save for later button', 'addonify-wishlist' ),
-						'description' => __( 'Enables save to wishlist button in Cart page on cart items.', 'addonify-wishlist' ),
-						'type'        => 'switch',
-						'className'   => '',
-						'value'       => addonify_wishlist_get_option( 'enable_save_for_later' ),
-					),
 					'custom_css'                          => array(
 						'type'           => 'textarea',
 						'className'      => 'custom-css-box fullwidth',
@@ -167,8 +160,8 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 						'label'       => __( 'Save For Later Button Position', 'addonify-wishlist' ),
 						'description' => __( 'Choose where to place the Save For Later button on Cart page.', 'addonify-wishlist' ),
 						'choices'     => array(
-							'after_product_name'      => __( 'After Product Name', 'addonify-wishlist' ),
-							'before_product_subtotal' => __( 'Before Product Subtotal', 'addonify-wishlist' ),
+							'after_product_name'     => __( 'After Product Name', 'addonify-wishlist' ),
+							'after_product_subtotal' => __( 'After Product Subtotal', 'addonify-wishlist' ),
 						),
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'save_for_later_btn_position' ),
