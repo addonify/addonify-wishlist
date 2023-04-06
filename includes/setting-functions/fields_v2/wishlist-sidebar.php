@@ -130,19 +130,19 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 						'value'       => addonify_wishlist_get_option( 'sidebar_btn_label' ),
 					),
 					'sidebar_btn_position_offset'          => array(
-						'type'            => 'number',
-						'design'       	  => 'slider', // arrow, plus-minus & slider.
-						'sliderInput'	  => true, // Optional.
-						'min'      		  => -300, // Optional.
-						'max'      		  => 300, // Optional.
-						'step'            => 1, // Optional.
-						'sliderTipText'	  => 'px', // Optional.
-						'width'			  => 'full',
-						'className'       => 'fullwidth', // Optional.
-						'label'           => __( 'Sidebar Toggle Button Position Offset', 'addonify-wishlist' ),
-						'description'     => __( 'Set left or right position distance offset value. The value is in px', 'addonify-wishlist' ),
-						'dependent'       => array( 'enable_wishlist', 'show_sidebar' ),
-						'value'           => addonify_wishlist_get_option( 'sidebar_btn_position_offset' ),
+						'type'          => 'number',
+						'design'        => 'slider', // arrow, plus-minus & slider.
+						'sliderInput'   => true, // Optional.
+						'min'           => -300, // Optional.
+						'max'           => 300, // Optional.
+						'step'          => 1, // Optional.
+						'sliderTipText' => 'px', // Optional.
+						'width'         => 'full',
+						'className'     => 'fullwidth', // Optional.
+						'label'         => __( 'Sidebar Toggle Button Position Offset', 'addonify-wishlist' ),
+						'description'   => __( 'Set left or right position distance offset value. The value is in px', 'addonify-wishlist' ),
+						'dependent'     => array( 'enable_wishlist', 'show_sidebar' ),
+						'value'         => addonify_wishlist_get_option( 'sidebar_btn_position_offset' ),
 					),
 					'sidebar_show_icon'                    => array(
 						'type'        => 'switch',
@@ -153,8 +153,8 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 					),
 					'sidebar_btn_icon'                     => array(
 						'type'        => 'radio',
-						'design'   	  => 'radioIcons',
-						'width'		  => 'full',
+						'design'      => 'radioIcons',
+						'width'       => 'full',
 						'className'   => 'radio-input-group',
 						'label'       => __( 'Select Icon', 'addonify-wishlist' ),
 						'description' => __( 'Select icon to be displayed in the sidebar toggle button.', 'addonify-wishlist' ),
@@ -265,6 +265,20 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 						'isAlphaPicker' => true,
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'sidebar_modal_product_remove_from_wishlist_icon_color' ),
+					),
+					'sidebar_modal_in_stock_text_color' => array(
+						'type'          => 'color',
+						'label'         => __( 'InStock Text Color', 'addonify-wishlist' ),
+						'isAlphaPicker' => true,
+						'className'     => '',
+						'value'         => addonify_wishlist_get_option( 'sidebar_modal_in_stock_text_color' ),
+					),
+					'sidebar_modal_out_of_stock_text_color' => array(
+						'type'          => 'color',
+						'label'         => __( 'Out Of Stock Text Color', 'addonify-wishlist' ),
+						'isAlphaPicker' => true,
+						'className'     => '',
+						'value'         => addonify_wishlist_get_option( 'sidebar_modal_out_of_stock_text_color' ),
 					),
 				),
 			),

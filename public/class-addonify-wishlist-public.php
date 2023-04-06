@@ -830,11 +830,10 @@ class Addonify_Wishlist_Public {
 	 * @param int $product_id Cart item.
 	 */
 	public function render_add_to_wishlist_button_in_cart_page_items( $product_id ) {
-		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
-			return;
-		}
 		$class = 'adfy-wishlist-btn addonify_wishlist-cart-item-add-to-wishlist';
-		if ( ! is_user_logged_in() ) {
+		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
+			$class .= ' adfy-wishlist-hide';
+		} elseif ( ! is_user_logged_in() ) {
 			$class .= ' adfy-wishlist-hide';
 		}
 		$attrs = array(
@@ -843,7 +842,7 @@ class Addonify_Wishlist_Public {
 			'label' => addonify_wishlist_get_option( 'save_for_later_btn_label' ),
 		);
 
-		return $this->get_wishlist_button_shortcode( $attrs );
+		return '<div class="addonify_wishlist-save-for-later">' . $this->get_wishlist_button_shortcode( $attrs ) . '</div>';
 	}
 
 	/**
@@ -871,7 +870,7 @@ class Addonify_Wishlist_Public {
 			'addonify_wishlist_button'
 		);
 		if ( '' === $atts['id'] ) {
-			return '<button>' . __( 'id required', 'addonify-wishlist' ) . '</button>';
+			return '<button>' . __( 'Id required', 'addonify-wishlist' ) . '</button>';
 		} else {
 			$product = wc_get_product( $atts['id'] );
 			if ( $product ) {
@@ -903,10 +902,15 @@ class Addonify_Wishlist_Public {
 	 * @since    1.0.0
 	 */
 	public function wishlist_sidebar_template() {
-		if ( ( addonify_wishlist_get_option( 'wishlist_page' ) !== '' && ! is_page( addonify_wishlist_get_option( 'wishlist_page' ) ) ) || ! addonify_wishlist_get_option( 'require_login' ) ) {
-			do_action( 'addonify_wishlist_render_sidebar_toggle_button' );
+		if ( ! ( is_cart() || is_page( 'cart' ) || is_checkout() || is_page( 'checkout' ) ) ) {
+			if (
+				( addonify_wishlist_get_option( 'wishlist_page' ) !== '' && ! is_page( addonify_wishlist_get_option( 'wishlist_page' ) ) ) ||
+				! addonify_wishlist_get_option( 'require_login' )
+			) {
+				do_action( 'addonify_wishlist_render_sidebar_toggle_button' );
 
-			do_action( 'addonify_wishlist_render_sidebar' );
+				do_action( 'addonify_wishlist_render_sidebar' );
+			}
 		}
 	}
 
@@ -1250,6 +1254,8 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_sidebar_modal_view_wishlist_btn_bg_color_hover' => addonify_wishlist_get_option( 'sidebar_modal_view_wishlist_btn_bg_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_notification_text_color' => addonify_wishlist_get_option( 'sidebar_modal_notification_text_color' ),
 			'--adfy_wishlist_sidebar_modal_notification_bg_color' => addonify_wishlist_get_option( 'sidebar_modal_notification_bg_color' ),
+			'--adfy_wishlist_sidebar_modal_in_stock_text_color' => addonify_wishlist_get_option( 'sidebar_modal_in_stock_text_color' ),
+			'--adfy_wishlist_sidebar_modal_out_of_stock_text_color' => addonify_wishlist_get_option( 'sidebar_modal_out_of_stock_text_color' ),
 		);
 
 		$css = ':root {';

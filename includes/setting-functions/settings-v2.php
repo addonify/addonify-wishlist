@@ -124,6 +124,8 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'sidebar_modal_view_wishlist_btn_bg_color_hover' => '',
 				'sidebar_modal_notification_text_color'    => '',
 				'sidebar_modal_notification_bg_color'      => '',
+				'sidebar_modal_in_stock_text_color'        => '',
+				'sidebar_modal_out_of_stock_text_color'    => '',
 				'custom_css'                               => '',
 			)
 		);
