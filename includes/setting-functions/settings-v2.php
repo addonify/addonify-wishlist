@@ -81,7 +81,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'remove_all_plugin_data_on_uninstall'      => false,
 				'enable_save_for_later'                    => false,
 				'save_for_later_btn_position'              => 'after_product_name',
-				'save_for_later_btn_label'                 => __( 'save for later', 'addonify-wishlist' ),
+				'save_for_later_btn_label'                 => __( 'Save for Later', 'addonify-wishlist' ),
 
 				'wishlist_btn_text_color'                  => '#333333',
 				'wishlist_btn_icon_color'                  => '#333333',
