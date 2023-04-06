@@ -33,18 +33,6 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'btn_position' ),
 					),
-					'save_for_later_btn_position' => array(
-						'type'        => 'select',
-						'className'   => '',
-						'label'       => __( 'Save For Later Button Position', 'addonify-wishlist' ),
-						'description' => __( 'Choose where to place the Save For Later button on Cart page.', 'addonify-wishlist' ),
-						'choices'     => array(
-							'after_product_name'      => __( 'After Product Name', 'addonify-wishlist' ),
-							'before_product_subtotal' => __( 'Before Product Subtotal', 'addonify-wishlist' ),
-						),
-						'dependent'   => array( 'enable_wishlist' ),
-						'value'       => addonify_wishlist_get_option( 'save_for_later_btn_position' ),
-					),
 					'btn_position_on_single'      => array(
 						'type'        => 'select',
 						'className'   => '',
@@ -120,14 +108,6 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 						'description' => __( 'Set the label for Add to Wishlist button, if a product is already in the wishlist.', 'addonify-wishlist' ),
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' ),
-					),
-					'save_for_later_btn_label'         => array(
-						'type'        => 'text',
-						'className'   => '',
-						'label'       => __( 'Save For Later Button Label', 'addonify-wishlist' ),
-						'description' => __( 'Label for Save For Later button.', 'addonify-wishlist' ),
-						'dependent'   => array( 'enable_wishlist' ),
-						'value'       => addonify_wishlist_get_option( 'save_for_later_btn_label' ),
 					),
 					'wishlist_btn_text_color'          => array(
 						'type'          => 'color',
