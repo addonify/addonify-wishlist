@@ -831,6 +831,9 @@ class Addonify_Wishlist_Public {
 	 * @param int $product_id Cart item.
 	 */
 	public function render_add_to_wishlist_button_in_cart_page_items( $product_id ) {
+		if ( ! ( is_cart() || is_page( 'cart' ) ) ) {
+			return;
+		}
 		$class = 'adfy-wishlist-btn addonify_wishlist-cart-item-add-to-wishlist';
 		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
 			$class .= ' adfy-wishlist-hide';
