@@ -116,13 +116,13 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 				),
 			),
 			'button_labels'           => array(
-				'title'        => __( 'Add to Wishlist Button Labels', 'addonify-wishlist' ),
+				'title'        => __( 'Button Labels', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
 					'btn_label'                        => array(
 						'type'        => 'text',
 						'className'   => '',
-						'label'       => __( 'Button Label', 'addonify-wishlist' ),
+						'label'       => __( 'Add to Wishlist Button Label', 'addonify-wishlist' ),
 						'description' => __( 'Label for Add to Wishlist button.', 'addonify-wishlist' ),
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'btn_label' ),
