@@ -81,8 +81,42 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 					),
 				),
 			),
+			'save_for_later'          => array(
+				'title'        => __( 'Save for Later Button Options', 'addonify-wishlist' ),
+				'type'         => 'sub_section',
+				'sub_sections' => array(
+					'enable_save_for_later'       => array(
+						'label'       => __( 'Enable save for later button', 'addonify-wishlist' ),
+						'description' => __( 'Enables save to wishlist button in Cart page on cart items.', 'addonify-wishlist' ),
+						'type'        => 'switch',
+						'className'   => '',
+						'value'       => addonify_wishlist_get_option( 'enable_save_for_later' ),
+					),
+					'save_for_later_btn_label'    => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Save For Later Button Label', 'addonify-wishlist' ),
+						'description' => __( 'Label for Save For Later button.', 'addonify-wishlist' ),
+						'placeholder' => __( 'Save for Later', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'save_for_later_btn_label' ),
+					),
+					'save_for_later_btn_position' => array(
+						'type'        => 'select',
+						'className'   => '',
+						'label'       => __( 'Save For Later Button Position', 'addonify-wishlist' ),
+						'description' => __( 'Choose where to place the Save For Later button on Cart page.', 'addonify-wishlist' ),
+						'choices'     => array(
+							'after_product_name'     => __( 'After Product Name', 'addonify-wishlist' ),
+							'after_product_subtotal' => __( 'After Product Subtotal', 'addonify-wishlist' ),
+						),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'save_for_later_btn_position' ),
+					),
+				),
+			),
 			'button_labels'           => array(
-				'title'        => __( 'Button Labels', 'addonify-wishlist' ),
+				'title'        => __( 'Add to Wishlist Button Labels', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
 					'btn_label'                        => array(

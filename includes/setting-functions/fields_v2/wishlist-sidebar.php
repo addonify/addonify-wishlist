@@ -268,7 +268,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 					),
 					'sidebar_modal_in_stock_text_color' => array(
 						'type'          => 'color',
-						'label'         => __( 'InStock Text Color', 'addonify-wishlist' ),
+						'label'         => __( 'In Stock Text Color', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'sidebar_modal_in_stock_text_color' ),
