@@ -203,17 +203,19 @@ class Addonify_Wishlist_Public {
 		$css .= '}';
 		wp_add_inline_style( $this->plugin_name, $css );
 
-		$inline_css = $this->dynamic_css();
+		if ( addonify_wishlist_get_option( 'enable_styles_from_plugin' ) ) {
+			$inline_css = $this->dynamic_css();
 
-		$custom_css = addonify_wishlist_get_option( 'custom_css' );
+			$custom_css = addonify_wishlist_get_option( 'custom_css' );
 
-		if ( $custom_css ) {
-			$inline_css .= $custom_css;
+			if ( $custom_css ) {
+				$inline_css .= $custom_css;
+			}
+
+			$inline_css = $this->minify_css( $inline_css );
+
+			wp_add_inline_style( $this->plugin_name, $inline_css );
 		}
-
-		$inline_css = $this->minify_css( $inline_css );
-
-		wp_add_inline_style( $this->plugin_name, $inline_css );
 	}
 
 
