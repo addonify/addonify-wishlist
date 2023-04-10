@@ -96,7 +96,7 @@ const catchAllRoutes: any = [
 
 const routes: any = [
 	...defaultRoutes,
-	...upsellRoutes,
+	//...upsellRoutes, // # Uncomment this line to show upsell page.
 	...productRoutes,
 	...catchAllRoutes,
 ];

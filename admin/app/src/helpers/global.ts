@@ -18,3 +18,13 @@ export const jsonFileName: string = "addonify_wishlist";
 
 // @ts-ignore
 export const currentVersion = addonify_wishlist_localizer.version_number;
+
+/**
+ *
+ * Advertise upsell in plugin setting page.
+ *
+ * @options {boolean} true | false
+ * @since 2.0.0
+ */
+
+export const advertiseUpsell: boolean = false;

@@ -1,0 +1,134 @@
+/* -------------------------------------------------------------------------- 
+	Quick links
+-------------------------------------------------------------------------- */
+
+#quick-links {
+
+    position: relative;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.1);
+
+    .title-holder {
+
+        .box-title {
+
+            display: block;
+            margin: 0;
+            padding: 0 0 10px 0;
+            font-size: 17px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--addonify_option_box_solid_border_color);
+        }
+    }
+
+    .list-holder {
+
+        margin: 30px 0 0;
+
+        .lists {
+
+            @include flex();
+            flex-direction: column;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+
+                @include flex();
+                align-items: center;
+                gap: 20px;
+
+                .icon-holder {
+
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 5px;
+                    background-color: #F5F5F5;
+
+                    svg {
+
+                        display: inline-flex;
+                        align-items: center;
+                        width: 18px;
+                        height: 18px;
+                        fill: currentColor;
+                    }
+                }
+
+                .elink {
+
+                    @include flex();
+                    align-items: center;
+                    gap: 10px;
+                    font-size: 15px;
+                    font-weight: normal;
+                    text-decoration: none;
+                    //color: var(--addonify_base_link_color);
+                    @include transition_delay();
+
+                    .icon {
+
+                        line-height: 1;
+                    }
+
+                    &:hover {
+
+                        color: var(--addonify_base_link_hover_color);
+                    }
+                }
+
+                &.support {
+
+                    .icon-holder {
+
+                        color: #0327d8;
+                        background-color: #cbd4ff;
+                    }
+                }
+
+                &.report-issue {
+
+                    .icon-holder {
+
+                        color: #ff3636;
+                        background-color: #ffe6e6;
+                    }
+                }
+
+                &.docs {
+
+                    .icon-holder {
+
+                        color: #077c3b;
+                        background-color: #d9ffea;
+                    }
+                }
+
+                &.translate {
+
+                    .icon-holder {
+
+                        color: #ae7004;
+                        background-color: #FFEDCD;
+                    }
+                }
+
+                &.review {
+
+                    .icon-holder {
+
+                        color: #036572;
+                        background-color: #d3faff;
+                    }
+                }
+            }
+        }
+    }
+}
