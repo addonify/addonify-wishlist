@@ -7,6 +7,7 @@ import RouteLinks from "@layouts/RouteLinks.vue";
 import Loading from "@components/core/Loading.vue";
 import Hero from "@components/partials/Hero.vue";
 import { useSettingsStore } from "@stores/settings";
+import { advertiseUpsell } from "@helpers/global";
 
 const store = useSettingsStore();
 

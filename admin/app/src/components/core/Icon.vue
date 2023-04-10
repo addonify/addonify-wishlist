@@ -48,7 +48,40 @@ const props = defineProps({
 			/>
 		</svg>
 	</span>
-
+	<span
+		v-if="props.name === 'arrow-right-alt'"
+		class="icon"
+		:class="props.class"
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			:width="props.size"
+			:height="props.size"
+		>
+			<path
+				d="M23.12,9.91,19.25,6a1,1,0,0,0-1.42,0h0a1,1,0,0,0,0,1.41L21.39,11H1a1,1,0,0,0-1,1H0a1,1,0,0,0,1,1H21.45l-3.62,3.61a1,1,0,0,0,0,1.42h0a1,1,0,0,0,1.42,0l3.87-3.88A3,3,0,0,0,23.12,9.91Z"
+			/>
+		</svg>
+	</span>
+	<span
+		v-if="props.name === 'arrow-up-right'"
+		class="icon"
+		:class="props.class"
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			:width="props.size"
+			:height="props.size"
+			fill="currentColor"
+		>
+			<path
+				d="M20,0H11c-.553,0-1,.448-1,1s.447,1,1,1h9c.179,0,.352,.024,.518,.068L.293,22.293c-.391,.391-.391,1.023,0,1.414,.195,.195,.451,.293,.707,.293s.512-.098,.707-.293L21.932,3.482c.044,.165,.068,.339,.068,.518V13c0,.552,.447,1,1,1s1-.448,1-1V4c0-2.206-1.794-4-4-4Z"
+			/>
+		</svg>
+	</span>
 	<span v-if="props.name === 'comment'" class="icon" :class="props.class">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

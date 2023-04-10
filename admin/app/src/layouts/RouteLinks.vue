@@ -1,4 +1,5 @@
 <script setup>
+import { advertiseUpsell } from "@helpers/global";
 import { useSettingsStore } from "@stores/settings";
 const store = useSettingsStore();
 
@@ -47,7 +48,7 @@ const buildDynamicRouteLink = (route) => "/s/" + route;
 						</span>
 					</router-link>
 				</li>
-				<li class="list">
+				<li v-if="advertiseUpsell" class="list">
 					<router-link to="/upsell" class="upsell-link">
 						<span class="icon">
 							<svg
