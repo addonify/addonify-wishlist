@@ -74,8 +74,6 @@ class Addonify_Wishlist_Admin {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
 			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'app/fonts/icon.css', array(), $this->version, 'all' );
-
-			//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
 		}
 
 		// Load global admin styles.
@@ -117,12 +115,6 @@ class Addonify_Wishlist_Admin {
 		// load scripts in plugin page only.
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
-			//wp_enqueue_script( "{$this->plugin_name}-manifest" );
-
-			//wp_enqueue_script( "{$this->plugin_name}-vendor" );
-
-			//wp_enqueue_script( "{$this->plugin_name}-main" );
-
 			wp_localize_script(
 				"{$this->plugin_name}-main",
 				'ADDONIFY_WISHLIST_LOCOLIZER',
@@ -135,8 +127,6 @@ class Addonify_Wishlist_Admin {
 				)
 			);
 		}
-
-		//wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
 	}
 
 	/**
@@ -146,6 +136,8 @@ class Addonify_Wishlist_Admin {
 		$this->maybe_create_table();
 
 		$this->maybe_show_table_created_message();
+
+		$this->maybe_update_user_review_status();
 	}
 
 
@@ -351,6 +343,57 @@ class Addonify_Wishlist_Admin {
 				}
 			);
 		}
+	}
+
+	/**
+	 * Review notice update on user choice.
+	 */
+	public function maybe_update_user_review_status() {
+		if ( isset( $_GET['addonify-Wishlist-review-notice-already-did'] ) ) { //phpcs:ignore
+			update_option( 'addonify_wishlist_plugin_review_status', 'reviewed' );
+			wp_safe_redirect( esc_url( admin_url() ) );
+		}
+		if ( isset( $_GET['addonify-Wishlist-review-notice-maybe-later'] ) ) { //phpcs:ignore
+			set_transient( 'addonify_wishlist_ask_for_review_transient', '1', 3 * DAY_IN_SECONDS );
+			wp_safe_redirect( esc_url( admin_url() ) );
+		}
+	}
+
+	/**
+	 * Show add a review admin notice.
+	 *
+	 * @since 2.0.0
+	 */
+	public function show_add_a_review_notice() {
+		add_action(
+			'load-index.php',
+			function () {
+				add_action(
+					'admin_notices',
+					function () {
+						?>
+						<div class="notice notice-info" id="addonify-wishlist-upgrade-notice">
+							<h3>
+								<?php esc_html_e( 'Add a Review', 'addonify-wishlist' ); ?>
+							</h3>
+							<p>
+								<?php esc_html_e( 'Your review helps us improve our software. Please provide us with your invaluable reviews.', 'addonify-wishlist' ); ?>
+							</p>
+							<a href="<?php echo esc_html( 'https://wordpress.org/plugins/addonify-floating-cart/#reviews' ); ?>" class="button button-primary">
+								<?php esc_html_e( 'Yes, I Will', 'addonify-wishlist' ); ?>
+							</a>
+							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-already-did', true, admin_url() ) ); ?>" class="button button-primary">
+								<?php esc_html_e( 'I already did', 'addonify-wishlist' ); ?>
+							</a>
+							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-maybe-later', true, admin_url() ) ); ?>" class="button button-primary">
+								<?php esc_html_e( 'Maybe later', 'addonify-wishlist' ); ?>
+							</a>
+						</div>
+						<?php
+					}
+				);
+			}
+		);
 	}
 
 }

@@ -59,6 +59,8 @@ class Addonify_Wishlist_Activator {
 		}
 
 		self::create_wishlist_page();
+
+		set_transient( 'addonify_wishlist_ask_for_review_transient', '1', 5 * DAY_IN_SECONDS );
 	}
 
 	/**

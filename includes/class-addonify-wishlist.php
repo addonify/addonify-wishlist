@@ -211,6 +211,14 @@ class Addonify_Wishlist {
 		// add custom post status "Addonify Wishlist Page" after page name.
 		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
 
+		// display reveiw message on certain time interval if not already reviewed.
+		if ( ! get_transient( 'addonify_wishlist_ask_for_review_transient' ) ) {
+			$review_status = get_option( 'addonify_wishlist_plugin_review_status' );
+			if ( ! $review_status || 'reviewed' !== $review_status ) {
+				$this->loader->add_action( 'admin_init', $plugin_admin, 'show_add_a_review_notice' );
+			}
+		}
+
 	}
 
 	/**
