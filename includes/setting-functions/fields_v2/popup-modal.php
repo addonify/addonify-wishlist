@@ -3,7 +3,7 @@
  * Define popup modal settings fields of plugin.
  *
  * @link       https://addonify.com/
- * @since      1.1.4
+ * @since      2.0.0
  *
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/includes/setting-functions/fields
@@ -17,20 +17,6 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 	 */
 	function addonify_wishlist_popup_modal_v_2_options() {
 		return array(
-			'popup_button_options'    => array(
-				'title'        => __( 'Popup Button Option', 'addonify-wishlist' ),
-				'type'         => 'sub_section',
-				'sub_sections' => array(
-					'popup_close_btn_text' => array(
-						'type'        => 'text',
-						'className'   => '',
-						'label'       => __( 'Close Button Label', 'addonify-wishlist' ),
-						'description' => __( 'Label for button to close the popup modal box.', 'addonify-wishlist' ),
-						'dependent'   => array( 'enable_wishlist' ),
-						'value'       => addonify_wishlist_get_option( 'popup_close_btn_text' ),
-					),
-				),
-			),
 			'added_to_wishlist_modal' => array(
 				'title'        => __( 'Added to Wishlist Modal', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
@@ -109,49 +95,61 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 				'title'        => __( 'Modal Colors', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
-					'popup_modal_overlay_bg_color'     => array(
+					'popup_close_btn_icon_color'          => array(
+						'type'      => 'color',
+						'label'     => __( 'Modal Close Button Icon Color', 'addonify-wishlist' ),
+						'className' => '',
+						'value'     => addonify_wishlist_get_option( 'popup_close_btn_icon_color' ),
+					),
+					'popup_close_btn_icon_color_on_hover' => array(
+						'type'      => 'color',
+						'label'     => __( 'Modal Close Button Icon Color On Hover', 'addonify-wishlist' ),
+						'className' => '',
+						'value'     => addonify_wishlist_get_option( 'popup_close_btn_icon_color_on_hover' ),
+					),
+					'popup_modal_overlay_bg_color'        => array(
 						'type'      => 'color',
 						'label'     => __( 'Overlay Background Color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_overlay_bg_color' ),
 					),
-					'popup_modal_bg_color'             => array(
+					'popup_modal_bg_color'                => array(
 						'type'      => 'color',
 						'label'     => __( 'Background Color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_bg_color' ),
 					),
-					'popup_modal_icon_color'           => array(
+					'popup_modal_icon_color'              => array(
 						'type'      => 'color',
 						'label'     => __( 'Icon Color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_icon_color' ),
 					),
-					'popup_modal_text_color'           => array(
+					'popup_modal_text_color'              => array(
 						'type'      => 'color',
 						'label'     => __( 'Text Color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_text_color' ),
 					),
-					'popup_modal_btn_text_color'       => array(
+					'popup_modal_btn_text_color'          => array(
 						'type'      => 'color',
 						'label'     => __( 'Buttons Label Color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_btn_text_color' ),
 					),
-					'popup_modal_btn_text_color_hover' => array(
+					'popup_modal_btn_text_color_hover'    => array(
 						'type'      => 'color',
 						'label'     => __( 'Buttons On Hover Label Color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_btn_text_color_hover' ),
 					),
-					'popup_modal_btn_bg_color'         => array(
+					'popup_modal_btn_bg_color'            => array(
 						'type'      => 'color',
 						'label'     => __( 'Buttons Background Color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_btn_bg_color' ),
 					),
-					'popup_modal_btn_bg_color_hover'   => array(
+					'popup_modal_btn_bg_color_hover'      => array(
 						'type'      => 'color',
 						'label'     => __( 'Buttons On Hover Background Color', 'addonify-wishlist' ),
 						'className' => '',

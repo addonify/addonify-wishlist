@@ -52,7 +52,7 @@ class Wishlist {
 			site_url VARCHAR(250) NOT NULL,
 			wishlist_name VARCHAR(100) NULL,
 			wishlist_visibility ENUM('public','shared','private') NULL,
-			created_at TIMESTAMP DEFAULT (CURRENT_TIMESTAMP),
+			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			parent_wishlist_id BIGINT NULL,
 			product_id BIGINT NULL,
 			share_key BIGINT NULL,

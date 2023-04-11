@@ -2,9 +2,10 @@
 
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
-Requires at least: 5.6
+Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.1.2
+Stable tag: 2.0.0
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,7 +129,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 1.1.4 - ? = 
+= 2.0.0 - ? = 
 
 - Added: Add Wishlist table on plugin activate.
 - Added: Migrate data from earlier version on both activation and manually migrate from admin notice.
@@ -136,6 +137,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Update: optionally load js file when user logged in and for guest users.
 - Added: Option to manually generate wishlist page.
 - Added: Save For Later button for cart items in cart page with it's settings.
+- Added: Feedback notice in dashboard page.
 
 = 1.1.3 - 03 March, 2023 =
 

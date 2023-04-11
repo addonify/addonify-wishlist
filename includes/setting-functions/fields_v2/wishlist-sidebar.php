@@ -3,7 +3,7 @@
  * Define wishlist sidebar settings fields of plugin.
  *
  * @link       https://addonify.com/
- * @since      1.1.4
+ * @since      2.0.0
  *
  * @package    Addonify_Wishlist
  * @subpackage Addonify_Wishlist/includes/setting-functions/fields

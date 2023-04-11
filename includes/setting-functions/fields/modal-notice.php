@@ -59,14 +59,6 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_settings_fields' ) ) {
 				'dependent'   => array( 'enable_wishlist' ),
 				'value'       => addonify_wishlist_get_option( 'login_btn_label' ),
 			),
-			'popup_close_btn_text'               => array(
-				'type'        => 'text',
-				'className'   => '',
-				'label'       => __( 'Close Button Label', 'addonify-wishlist' ),
-				'description' => __( 'Label for button to close the popup modal box.', 'addonify-wishlist' ),
-				'dependent'   => array( 'enable_wishlist' ),
-				'value'       => addonify_wishlist_get_option( 'popup_close_btn_text' ),
-			),
 		);
 	}
 }
@@ -82,56 +74,70 @@ if ( ! function_exists( 'addonify_wishlist_modal_notice_styles_settings_fields' 
 	function addonify_wishlist_modal_notice_styles_settings_fields() {
 
 		return array(
-			'popup_modal_overlay_bg_color'     => array(
+			'popup_close_btn_icon_color'          => array(
+				'label'         => __( 'Modal Close Button Icon Color', 'addonify-wishlist' ),
+				'type'          => 'color',
+				'className'     => '',
+				'isAlphaPicker' => true,
+				'value'         => addonify_wishlist_get_option( 'popup_close_btn_icon_color' ),
+			),
+			'popup_close_btn_icon_color_on_hover' => array(
+				'label'         => __( 'Modal Close Button Icon Color On Hover', 'addonify-wishlist' ),
+				'type'          => 'color',
+				'className'     => '',
+				'isAlphaPicker' => true,
+				'value'         => addonify_wishlist_get_option( 'popup_close_btn_icon_color_on_hover' ),
+			),
+			'popup_modal_overlay_bg_color'        => array(
 				'type'          => 'color',
 				'label'         => __( 'Overlay Background Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
 				'className'     => '',
 				'value'         => addonify_wishlist_get_option( 'popup_modal_overlay_bg_color' ),
 			),
-			'popup_modal_bg_color'             => array(
+			'popup_modal_bg_color'                => array(
 				'type'          => 'color',
 				'label'         => __( 'Background Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
 				'className'     => '',
 				'value'         => addonify_wishlist_get_option( 'popup_modal_bg_color' ),
 			),
-			'popup_modal_icon_color'           => array(
+			'popup_modal_icon_color'              => array(
 				'type'          => 'color',
 				'label'         => __( 'Icon Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
 				'className'     => '',
 				'value'         => addonify_wishlist_get_option( 'popup_modal_icon_color' ),
 			),
-			'popup_modal_text_color'           => array(
+			'popup_modal_text_color'              => array(
 				'type'          => 'color',
 				'label'         => __( 'Text Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
 				'className'     => '',
 				'value'         => addonify_wishlist_get_option( 'popup_modal_text_color' ),
 			),
-			'popup_modal_btn_text_color'       => array(
+			'popup_modal_btn_text_color'          => array(
 				'type'          => 'color',
 				'label'         => __( 'Buttons Label Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
 				'className'     => '',
 				'value'         => addonify_wishlist_get_option( 'popup_modal_btn_text_color' ),
 			),
-			'popup_modal_btn_text_color_hover' => array(
+			'popup_modal_btn_text_color_hover'    => array(
 				'type'          => 'color',
 				'label'         => __( 'Buttons On Hover Label Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
 				'className'     => '',
 				'value'         => addonify_wishlist_get_option( 'popup_modal_btn_text_color_hover' ),
 			),
-			'popup_modal_btn_bg_color'         => array(
+			'popup_modal_btn_bg_color'            => array(
 				'type'          => 'color',
 				'label'         => __( 'Buttons Background Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
 				'className'     => '',
 				'value'         => addonify_wishlist_get_option( 'popup_modal_btn_bg_color' ),
 			),
-			'popup_modal_btn_bg_color_hover'   => array(
+			'popup_modal_btn_bg_color_hover'      => array(
 				'type'          => 'color',
 				'label'         => __( 'Buttons On Hover Background Color', 'addonify-wishlist' ),
 				'isAlphaPicker' => true,
