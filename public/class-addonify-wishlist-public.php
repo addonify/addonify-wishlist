@@ -228,6 +228,8 @@ class Addonify_Wishlist_Public {
 
 		wp_enqueue_script( 'perfect-scrollbar', plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/perfect-scrollbar.min.js', null, $this->version, true );
 
+		wp_enqueue_script( $this->plugin_name . '-global', plugin_dir_url( __FILE__ ) . 'assets/build/js/addonify-wishlist-global-public.min.js', null, $this->version, true );
+
 		$login_url = ( get_option( 'woocommerce_myaccount_page_id' ) ) ? get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) : wp_login_url();
 
 		if ( ! is_user_logged_in() ) {

@@ -38,7 +38,7 @@ const scriptpath = {
 
     script_dist: "./public/assets/build/js/",
 }
-const output_js_file_name = "addonify-wishlist-public.js";
+const output_js_file_name = "addonify-wishlist-global-public.js";
 
 var conditional__script__path = {
     conditional__script__src: [

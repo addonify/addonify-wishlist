@@ -19,7 +19,7 @@
     z-index: var(--adfy_wishlist_sidebar_zindex);
     background-color: var(--adfy_wishlist_sidebar_modal_bg_color);
     @include large_drop_shadow();
-    @include transation_delay();
+    @include transition_delay();
     @include visibility_visible();
     @include breakpoint(mobile) {
 
@@ -353,7 +353,7 @@
             border-radius: 30px;
             box-shadow: none;
             text-decoration: none;
-            @include transation_delay();
+            @include transition_delay();
 
             .icon {
 
@@ -439,7 +439,7 @@
     background: transparent;
     background-color: var(--adfy_wishlist_sidebar_modal_toggle_btn_bg_color);
     z-index: var(--adfy_wishlist_sidebar_trigger_button_zindex);
-    @include transation_delay();
+    @include transition_delay();
 
     .button-icon,
     .button-label {
@@ -493,7 +493,7 @@
     opacity: 0;
     visibility: hidden;
     background-color: var(--adfy_wishlist_sidebar_modal_overlay_bg_color);
-    @include transation_delay();
+    @include transition_delay();
 }
 
 /* -------------------------------------------------------------------------- 
