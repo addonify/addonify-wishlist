@@ -557,7 +557,7 @@
                 function () {
                     $('#addonify-wishlist-undo-deleted-product').html('');
                 },
-                parseInt(addonifyWishlistJSObject.undoNoticeTimeout) * 1000000
+                parseInt(addonifyWishlistJSObject.undoNoticeTimeout) * 1000
             )
         }
 
