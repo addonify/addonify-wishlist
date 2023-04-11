@@ -27,12 +27,13 @@
 
     .addonify-wishlist-modal-body {
 
+        position: relative;
         @include flex();
         flex-direction: column;
         justify-content: center;
         gap: 20px;
-        width: 350px;
-        min-height: 350px;
+        width: 400px;
+        min-height: 400px;
         text-align: center;
         padding: 30px;
         margin: calc(( 100vh - 300px ) / 2 ) auto 0;
@@ -44,6 +45,37 @@
 
             width: 85vw;
             padding: 20px;
+        }
+
+        .adfy-model-close {
+
+            position: absolute;
+            top: 15px;
+            left: auto;
+            right: 15px;
+            z-index: 1;
+
+            #addonify-wishlist-close-modal-btn {
+
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--adfy_wishlist_popup_modal_close_btn_color);
+
+                svg {
+
+                    display: inline-flex;
+                    line-height: 1;
+                    width: 14px;
+                    height: 14px;
+                    fill: currentColor;
+                }
+
+                &:hover {
+
+                    color: var(--adfy_wishlist_popup_model_close_btn_icon_color_hover);
+                }
+            }
         }
 
         .adfy-wishlist-icon-entry {
