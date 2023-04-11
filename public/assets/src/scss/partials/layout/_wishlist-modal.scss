@@ -22,7 +22,7 @@
     bottom: 0;
     right: 0;
     @include visibility_hidden();
-    @include transation_delay();
+    @include transition_delay();
     background-color: var(--adfy_wishlist_popup_modal_overlay_bg_color);
 
     .addonify-wishlist-modal-body {
@@ -91,7 +91,7 @@
                 border-radius: 3px;
                 color: var(--adfy_wishlist_popup_modal_btn_text_color);
                 background-color: var(--adfy_wishlist_popup_modal_btn_bg_color);
-                @include transation_delay();
+                @include transition_delay();
 
                 &:hover {
 

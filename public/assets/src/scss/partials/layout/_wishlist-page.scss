@@ -122,7 +122,7 @@
         bottom: 0;
         z-index: 100;
         background-color: rgba(255, 255, 255, 1);
-        @include transation_delay();
+        @include transition_delay();
 
         svg {
 

@@ -80,12 +80,12 @@
 	Mixin: Animations & transation
   -------------------------------------------------------------------------- */
 
-@mixin transation_delay () {
+@mixin transition_delay () {
 
     transition: all 0.5s ease;
 }
 
-@mixin transation_delay_none () {
+@mixin transition_delay_none () {
 
     transition: none;
 }
@@ -93,7 +93,7 @@
 @mixin scale () {
 
     transform: scale(1.1);
-    @include transation_delay();
+    @include transition_delay();
 }
 
 
@@ -129,7 +129,7 @@
 	left: 0;
 	right: 0;
 	background:rgba(0, 0, 0, 0.8);
-	@include transation_delay();
+	@include transition_delay();
 }
 
 

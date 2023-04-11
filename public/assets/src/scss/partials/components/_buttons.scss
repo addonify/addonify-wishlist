@@ -15,7 +15,7 @@ p.adfy-wishlist-btn .button,
     border-style: none;
     border-width: 0;
     border-color: transparent;
-    @include transation_delay();
+    @include transition_delay();
 
     &:focus,
     &:hover {
@@ -119,7 +119,7 @@ p.adfy-wishlist-btn .button,
     color: var(--adfy_wishlist_wishlist_btn_text_color);
     background: transparent;
     background-color: var(--adfy_wishlist_wishlist_btn_bg_color);
-    @include transation_delay();
+    @include transition_delay();
 
     .icon {
 
