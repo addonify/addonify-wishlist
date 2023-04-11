@@ -60,7 +60,7 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                color: var(--adfy_wishlist_popup_modal_close_btn_color);
+                color: var(--adfy_wishlist_popup_modal_close_btn_icon_color);
 
                 svg {
 
@@ -73,7 +73,7 @@
 
                 &:hover {
 
-                    color: var(--adfy_wishlist_popup_model_close_btn_icon_color_hover);
+                    color: var(--adfy_wishlist_popup_modal_close_btn_icon_color_hover);
                 }
             }
         }
