@@ -1034,14 +1034,6 @@ class Addonify_Wishlist_Public_Deprecated {
 				)
 			);
 		}
-
-		// show close button in any case.
-		echo wp_kses_post(
-			apply_filters(
-				'addonify_wishlist_modal_close_btn',
-				'<button type="button" class="adfy-wishlist-btn addonify-wishlist-close-btn" id="addonify-wishlist-close-modal-btn">' . __( 'Close', 'addonify-wishlist' ) . '</button>'
-			)
-		);
 	}
 
 	/**
@@ -1255,6 +1247,8 @@ class Addonify_Wishlist_Public_Deprecated {
 			'--adfy_wishlist_popup_modal_overlay_bg_color' => addonify_wishlist_get_option( 'popup_modal_overlay_bg_color' ),
 			'--adfy_wishlist_popup_modal_bg_color'         => addonify_wishlist_get_option( 'popup_modal_bg_color' ),
 			'--adfy_wishlist_border_color'                 => addonify_wishlist_get_option( 'sidebar_modal_general_border_color' ),
+			'--adfy_wishlist_popup_model_close_btn_icon_color' => addonify_wishlist_get_option( 'popup_close_btn_icon_color' ),
+			'--adfy_wishlist_popup_model_close_btn_icon_color_hover' => addonify_wishlist_get_option( 'popup_close_btn_icon_color_on_hover' ),
 			'--adfy_wishlist_popup_modal_icon_color'       => addonify_wishlist_get_option( 'popup_modal_icon_color' ),
 			'--adfy_wishlist_popup_modal_text_color'       => addonify_wishlist_get_option( 'popup_modal_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color'   => addonify_wishlist_get_option( 'popup_modal_btn_text_color' ),
