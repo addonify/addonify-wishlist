@@ -6,7 +6,7 @@
 
     position: relative;
     min-height: 150px;
-    margin: 0 0 40px 0;
+    margin-bottom: 40px;
 
     #addonify-wishlist-table {
 
@@ -133,6 +133,19 @@
             height: 32px;
             animation: AddonifyWishlistSpin 0.8s infinite ease-in-out;
         }
+    }
+
+    /**
+    *
+    * Empty wishlist
+    * 
+    */
+
+    #addonify-wishlist-empty {
+
+        @include flex();
+        align-items: center;
+        gap: 5px;
     }
 }
 
