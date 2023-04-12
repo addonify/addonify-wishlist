@@ -383,7 +383,8 @@ class Addonify_Wishlist_Admin {
 							</p>
 							<div class="action-buttons">
 								<a target="_blank" href="<?php echo esc_html( 'https://wordpress.org/plugins/addonify-floating-cart/#reviews' ); ?>" class="button button-primary">
-								<?php esc_html_e( 'Okay, You got it!', 'addonify-wishlist' ); ?>
+									<?php esc_html_e( 'Okay, You got it!', 'addonify-wishlist' ); ?>
+									<i class="dashicons dashicons-smiley"></i>
 								</a>
 								<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-already-did', true, admin_url() ) ); ?>" class="button button-secondary">
 									<?php esc_html_e( 'I already did', 'addonify-wishlist' ); ?>

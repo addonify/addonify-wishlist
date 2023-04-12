@@ -53,6 +53,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 7px;
 }
 
 .addonify-wishlist-wp-notice .action-buttons {
