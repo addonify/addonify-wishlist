@@ -291,8 +291,8 @@ class Addonify_Wishlist_Admin {
 					global $addonify_wishlist;
 					if ( $addonify_wishlist->check_wishlist_table_exists() ) {
 						?>
-						<div class="notice notice-success is-dismissible" id="addonify-wishlist-upgrade-notice">
-							<p>
+						<div class="addonify-wishlist-wp-notice notice notice-success is-dismissible" id="addonify-wishlist-upgrade-notice">
+							<p class="notice-description">
 								<?php esc_html_e( 'Addonify Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
 							</p>
 							<a class="button button-primary" href="<?php echo esc_url( admin_url() ); ?>">
@@ -302,9 +302,11 @@ class Addonify_Wishlist_Admin {
 						<?php
 					} else {
 						?>
-						<div class="notice notice-error" id="addonify-wishlist-upgrade-notice">
-							<h3><?php esc_html_e( 'Addonify Wishlist database could not updated!!', 'addonify-wishlist' ); ?></h3>
-							<p>
+						<div class="addonify-wishlist-wp-notice notice notice-error" id="addonify-wishlist-upgrade-notice">
+							<h3 class="notice-heading"
+								<?php esc_html_e( 'Addonify Wishlist database could not updated!!', 'addonify-wishlist' ); ?>
+							</h3>
+							<p class="notice-description"
 								<?php esc_html_e( 'There had been an error while updating Addonify Wishlist database. Please, try again. If the issue persists please contact plugin support.', 'addonify-wishlist' ); ?>
 							</p>
 							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
@@ -328,11 +330,11 @@ class Addonify_Wishlist_Admin {
 				'admin_notices',
 				function () {
 					?>
-					<div class="notice notice-info" id="addonify-wishlist-upgrade-notice">
-						<h3>
+					<div class="addonify-wishlist-wp-notice notice notice-info" id="addonify-wishlist-upgrade-notice">
+						<h3 class="notice-heading"
 							<?php esc_html_e( 'Addonify Wishlist database update required!', 'addonify-wishlist' ); ?>
 						</h3>
-						<p>
+						<p class="notice-description"
 							<?php esc_html_e( 'Update your database to keep the plugin running smoothly. The database update process takes a few moments, so please be patient.', 'addonify-wishlist' ); ?>
 						</p>
 						<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
@@ -372,22 +374,25 @@ class Addonify_Wishlist_Admin {
 					'admin_notices',
 					function () {
 						?>
-						<div class="notice notice-info" id="addonify-wishlist-upgrade-notice">
-							<h3>
+						<div class="addonify-wishlist-wp-notice notice notice-info" id="addonify-wishlist-review-notice">
+							<h3 class="notice-heading">
 								<?php esc_html_e( 'Thank you for choosing Addonify WooCommerce Wishlist!', 'addonify-wishlist' ); ?>
 							</h3>
-							<p>
+							<p class="notice-description">
 								<?php esc_html_e( 'We hope you are enjoying the plugin. If you have a few minutes to spare, please consider leaving a review. We would deeply appreciate it and be grateful to you. It would encourage and help us improve our plugin and make it better.', 'addonify-wishlist' ); ?>
 							</p>
-							<a target="_blank" href="<?php echo esc_html( 'https://wordpress.org/plugins/addonify-floating-cart/#reviews' ); ?>" class="button button-primary">
-								<?php esc_html_e( 'Okay, You got it!', 'addonify-wishlist' ); ?>
-							</a>
-							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-already-did', true, admin_url() ) ); ?>" class="button button-primary">
-								<?php esc_html_e( 'I already did', 'addonify-wishlist' ); ?>
-							</a>
-							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-maybe-later', true, admin_url() ) ); ?>" class="button button-primary">
-								<?php esc_html_e( 'Maybe later', 'addonify-wishlist' ); ?>
-							</a>
+							<div class="action-buttons">
+								<a target="_blank" href="<?php echo esc_html( 'https://wordpress.org/plugins/addonify-floating-cart/#reviews' ); ?>" class="button button-primary">
+									<?php esc_html_e( 'Okay, You got it!', 'addonify-wishlist' ); ?>
+									<i class="dashicons dashicons-smiley"></i>
+								</a>
+								<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-already-did', true, admin_url() ) ); ?>" class="button button-secondary">
+									<?php esc_html_e( 'I already did', 'addonify-wishlist' ); ?>
+								</a>
+								<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-maybe-later', true, admin_url() ) ); ?>" class="button button-secondary">
+									<?php esc_html_e( 'Maybe later', 'addonify-wishlist' ); ?>
+								</a>
+							</div>
 						</div>
 						<?php
 					}
