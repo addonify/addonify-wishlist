@@ -136,7 +136,7 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 					'undo_notice_timeout'       => array(
 						'type'        => 'number',
 						'design'      => 'arrow', // Arrow & plus-minus.
-						'min'         => 1,
+						'min'         => 0,
 						'max'         => 30,
 						'step'        => 1,
 						'precision'   => 0, // Eg. 1.00, 2.00, 3.00.

@@ -122,7 +122,6 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-addonify-wishlist-admin.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/settings.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/settings-v2.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/helpers.php';

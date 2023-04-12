@@ -31,7 +31,8 @@
                 } else {
                     addonifyShowPopupModal(
                         addonifyWishlistJSObject.popupAlreadyInWishlistText,
-                        addToWishlistButton.data('product_name')
+                        addToWishlistButton.data('product_name'),
+                        'success'
                     );
                 }
             } else {
@@ -553,12 +554,14 @@
                     <a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="` + product_id + `" data-wishlist_id="` + wishlist_id + `"> ` + undo_text + ` </a>
                 </p>`;
             $('#addonify-wishlist-undo-deleted-product').html(undo_div);
-            undoTimeout = setTimeout(
-                function () {
-                    $('#addonify-wishlist-undo-deleted-product').html('');
-                },
-                parseInt(addonifyWishlistJSObject.undoNoticeTimeout) * 1000
-            )
+            if ( parseInt(addonifyWishlistJSObject.undoNoticeTimeout) > 0 ) {
+                undoTimeout = setTimeout(
+                    function () {
+                        $('#addonify-wishlist-undo-deleted-product').html('');
+                    },
+                    parseInt(addonifyWishlistJSObject.undoNoticeTimeout) * 1000
+                )
+            }
         }
 
         // Display intial state wishlist button label and icon.
