@@ -379,6 +379,27 @@
         }
     }
 
+    /**
+    *
+    * Notice
+    * 
+    */
+
+    #addonify-wishlist-undo-deleted-product  {
+
+        #addonify-wishlist-undo-deleted-product-text {
+
+            display: block;
+            padding: 15px 20px;
+            font-size: calc( var(--adfy_wishlist_product_removed_notice_font_size) - 1px );
+
+            #addonify-wishlist-undo-deleted-product-link {
+
+                padding: 4px 10px;
+            }
+        }
+    }
+
     .notice {
 
         @include grid();

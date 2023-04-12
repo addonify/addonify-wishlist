@@ -60,7 +60,7 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                color: var(--adfy_wishlist_popup_modal_close_btn_color);
+                color: var(--adfy_wishlist_popup_modal_close_btn_icon_color);
 
                 svg {
 
@@ -73,7 +73,7 @@
 
                 &:hover {
 
-                    color: var(--adfy_wishlist_popup_model_close_btn_icon_color_hover);
+                    color: var(--adfy_wishlist_popup_modal_close_btn_icon_color_hover);
                 }
             }
         }
@@ -103,9 +103,9 @@
 
         .addonify-wishlist-modal-btns {
 
-            @include grid();
-            grid-template-columns: repeat(1, 1fr);
-            row-gap: 20px;
+            @include flex();
+            gap: 20px;
+            flex-direction: column;
 
             .adfy-wishlist-btn-link,
             p.addonify-wishlist-add-to-cart .button {
@@ -113,14 +113,14 @@
                 @include flex();
                 align-items: center;
                 justify-content: center;
-                font-size: 15px;
+                font-size: 16px;
                 line-height: 1;
                 font-weight: normal;
                 width: 100%;
                 margin: 0;
-                padding: 15px;
+                padding: 18px 20px;
                 height: auto;
-                border-radius: 3px;
+                border-radius: 30px;
                 color: var(--adfy_wishlist_popup_modal_btn_text_color);
                 background-color: var(--adfy_wishlist_popup_modal_btn_bg_color);
                 @include transition_delay();
@@ -158,7 +158,12 @@
     @include visibility_visible();
 }
 
-// Loading state.
+/**
+*
+* Loading state.
+*
+*/
+
 
 #addonify-wishlist-modal-wrapper.loading {
 
@@ -190,7 +195,11 @@
     }
 }
 
-// Required Login.
+/**
+*
+* Require login
+*
+*/
 
 #addonify-wishlist-modal-wrapper.require-login {
 

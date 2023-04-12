@@ -142,7 +142,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-page-toolbar">
 				<?php if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) : ?>
-					<button type="button" id="addonify-wishlist__clear-all" class="button"><?php echo esc_html( addonify_wishlist_get_option( 'clear_wishlist_label' ) ); ?></button>
+					<button type="button" id="addonify-wishlist__clear-all" class="button adfy-wishlist-btn"><?php echo esc_html( addonify_wishlist_get_option( 'clear_wishlist_label' ) ); ?></button>
 				<?php endif ?>
 			</div>		
 		</form>

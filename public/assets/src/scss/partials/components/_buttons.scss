@@ -25,27 +25,27 @@ p.adfy-wishlist-btn .button,
         border-width: 0;
         border-color: transparent;
     }
-}
 
-.adfy-wishlist-clear-button-style {
+    &.adfy-wishlist-clear-button-style {
 
-    padding: 0;
-    margin: 0;
-    color:#444444;
-    border: none;
-    cursor: pointer;
-    box-shadow: none;
-    border-color: none;
-    text-decoration: none;
-    background-color: transparent;
-
-    &:hover {
-
+        padding: 0;
+        margin: 0;
         color:#444444;
         border: none;
+        cursor: pointer;
         box-shadow: none;
+        border-color: none;
         text-decoration: none;
         background-color: transparent;
+
+        &:hover {
+
+            color:#444444;
+            border: none;
+            box-shadow: none;
+            text-decoration: none;
+            background-color: transparent;
+        }
     }
 }
 
@@ -110,6 +110,7 @@ p.adfy-wishlist-btn .button,
 	#. Add to Wishlist button
   -------------------------------------------------------------------------- */
 
+.adfy-wishlist-btn,
 .addonify-add-to-wishlist-btn,
 .addonify-wishlist-add-to-cart .button,
 .addonify-wishlist-add-to-cart .added_to_cart,

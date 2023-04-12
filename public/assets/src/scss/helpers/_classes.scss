@@ -45,27 +45,35 @@
 
   #addonify-wishlist-undo-deleted-product-text {
 
+	@include flex();
+	align-items: center;
+	gap: 30px;
+	justify-content: space-between;
 	position: relative;
 	color: var(--adfy_wishlist_product_removed_notice_text_color);
-    padding: 10px 15px;
+    padding: 15px 20px;
     margin-bottom: 30px;
+	font-size: var(--adfy_wishlist_product_removed_notice_font_size);
+	font-weight: normal;
     overflow: hidden;
-    font-size: var(--adfy_wishlist_product_removed_notice_font_size);
-    font-weight: normal;
-    line-height: 1.6;
 	border-radius: 3px;
 	background-color: var(--adfy_wishlist_product_removed_notice_bg_color);
+
+	@include breakpoint(ipad) {
+
+		gap: 10px;
+	}
 
     #addonify-wishlist-undo-deleted-product-link {
 
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		font-size: var(--adfy_wishlist_product_removed_notice_undo_btn_font_size);
-    	font-weight: normal;
-		line-height: 1;
-		padding: 4px 10px;
+		padding: 7px 10px;
 		margin: 0 0 0 3px;
+		font-size: calc( var(--adfy_wishlist_product_removed_notice_font_size) - 1px );
+		line-height: 1;
+		font-weight: normal;
 		text-decoration: none;
 		cursor: pointer;
 		border-radius: 30px;
