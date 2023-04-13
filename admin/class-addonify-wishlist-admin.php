@@ -293,7 +293,7 @@ class Addonify_Wishlist_Admin {
 						?>
 						<div class="addonify-wishlist-wp-notice notice notice-success is-dismissible" id="addonify-wishlist-upgrade-notice">
 							<p class="notice-description">
-								<?php esc_html_e( 'Addonify Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
+								<?php esc_html_e( 'The Addonify WooCommerce Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
 							</p>
 							<a class="button button-primary" href="<?php echo esc_url( admin_url() ); ?>">
 								<?php esc_html_e( 'Thanks!', 'addonify-wishlist' ); ?>
@@ -303,11 +303,11 @@ class Addonify_Wishlist_Admin {
 					} else {
 						?>
 						<div class="addonify-wishlist-wp-notice notice notice-error" id="addonify-wishlist-upgrade-notice">
-							<h3 class="notice-heading"
-								<?php esc_html_e( 'Addonify Wishlist database could not updated!!', 'addonify-wishlist' ); ?>
+							<h3 class="notice-heading">
+								<?php esc_html_e( 'The Addonify WooCommerce Wishlist database could not be updated!', 'addonify-wishlist' ); ?>
 							</h3>
-							<p class="notice-description"
-								<?php esc_html_e( 'There had been an error while updating Addonify Wishlist database. Please, try again. If the issue persists please contact plugin support.', 'addonify-wishlist' ); ?>
+							<p class="notice-description">
+								<?php esc_html_e( 'An error occurred while updating the Addonify WooCommerce Wishlist database. Please try again, and if the issue persists, contact the plugin support team for assistance.', 'addonify-wishlist' ); ?>
 							</p>
 							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
 								<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
@@ -331,11 +331,11 @@ class Addonify_Wishlist_Admin {
 				function () {
 					?>
 					<div class="addonify-wishlist-wp-notice notice notice-info" id="addonify-wishlist-upgrade-notice">
-						<h3 class="notice-heading"
-							<?php esc_html_e( 'Addonify Wishlist database update required!', 'addonify-wishlist' ); ?>
+						<h3 class="notice-heading">
+							<?php esc_html_e( 'Addonify WooCommerce Wishlist database update required!', 'addonify-wishlist' ); ?>
 						</h3>
-						<p class="notice-description"
-							<?php esc_html_e( 'Update your database to keep the plugin running smoothly. The database update process takes a few moments, so please be patient.', 'addonify-wishlist' ); ?>
+						<p class="notice-description">
+							<?php esc_html_e( 'Please update your database to ensure the smooth operation of the plugin. The database update process may take a few moments, so we kindly ask for your patience.', 'addonify-wishlist' ); ?>
 						</p>
 						<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
 							<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
