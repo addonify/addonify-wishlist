@@ -322,12 +322,6 @@
                 function (response) {
                     if (response.success) {
                         addonifyEmptyWishlistText(0);
-                        addonifyShowPopupModal(
-                            response.message,
-                            '',
-                            'success',
-                            false
-                        );
                         $('#addonify-wishlist__clear-all').hide();
                         $(document).trigger('addonify_wishlist_emptied')
                     } else {

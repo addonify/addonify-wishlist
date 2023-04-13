@@ -93,15 +93,7 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 				'title'        => __( 'Style Options', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
-					'enable_styles_from_plugin' => array(
-						'label'       => __( 'Enable Styles from Plugin', 'addonify-wishlist' ),
-						'description' => __( 'If disabled, addonify wishlist plugin styles from options will not be applied.', 'addonify-wishlist' ),
-						'type'        => 'switch',
-						'className'   => '',
-						'badge'       => 'Required',
-						'value'       => addonify_wishlist_get_option( 'enable_styles_from_plugin' ),
-					),
-					'custom_css'                => array(
+					'custom_css' => array(
 						'type'           => 'textarea',
 						'className'      => 'custom-css-box fullwidth',
 						'inputClassName' => 'custom-css-textarea',

@@ -224,12 +224,6 @@
                 $(document).on( 'click', '#addonify-wishlist__clear-all', function() {
                     setProductids([]);
                     addonifyEmptyWishlistText(getProductids().length);
-                    addonifyShowPopupModal(
-                        emptiedWishlistText,
-                        '',
-                        'success',
-                        false
-                    );
                     $('#addonify-wishlist__clear-all').hide();
                     $(document).trigger('addonify_wishlist_emptied')
                 })

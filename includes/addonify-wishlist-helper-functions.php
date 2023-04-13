@@ -68,7 +68,7 @@ if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 
 if ( ! function_exists( 'addonify_wishlist_is_product_in_this_wishlist' ) ) {
 	/**
-	 * Check if product is in wishlist.
+	 * Check if product is in mentioned wishlist.
 	 *
 	 * @since 1.0.0
 	 * @param int $wishlist_id wishlist ID.

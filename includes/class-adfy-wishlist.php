@@ -126,8 +126,8 @@ class Adfy_Wishlist {
 	/**
 	 * Save product in wishlist.
 	 *
-	 * @param int $product_id  Wishlist ID.
-	 * @param int $wishlist_id Product ID.
+	 * @param int $product_id  Product ID.
+	 * @param int $wishlist_id Wishlist ID (Optional) (If not provided, default wishlist id is used. Useful when multi wishlist option is disabled).
 	 * @return boolean True if saved, false otherwise.
 	 */
 	public function add_to_wishlist( $product_id, $wishlist_id = false ) {
@@ -167,7 +167,7 @@ class Adfy_Wishlist {
 	 * Remove product from the wishlist if product is already in the wishlist.
 	 *
 	 * @param int $product_id Product ID.
-	 * @param int $parent_wishlist_id Wishlist ID.
+	 * @param int $parent_wishlist_id Wishlist ID (Optional) (If not provided, default wishlist id is used. Useful when multi wishlist option is disabled).
 	 * @return boolean true if removed successfully otherwise false.
 	 */
 	public function remove_from_wishlist( $product_id, $parent_wishlist_id = false ) {
@@ -231,7 +231,7 @@ class Adfy_Wishlist {
 	}
 
 	/**
-	 * Check if product is in wishlist.
+	 * Check if product is in mentioned wishlist.
 	 *
 	 * @param int $wishlist_id wishlist ID.
 	 * @param int $product_id Product ID.
