@@ -13,5 +13,5 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <div class="notice notice-error is-dismissible">
-	<p><?php esc_html_e( 'Addonify Wishlist is enabled but not effective. It requires WooCommerce in order to work.', 'addonify-wishlist' ); ?></p>
+	<p><?php echo wp_kses_post( __( '<b>Addonify WooCommerce Wishlist</b>  plugin is enabled but not functional. <b>WooCommerce</b> is required for it to work properly.', 'addonify-wishlist' ) ); ?></p>
 </div>
