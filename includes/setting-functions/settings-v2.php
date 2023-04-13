@@ -82,7 +82,6 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'save_for_later_btn_position'              => 'after_product_name',
 				'save_for_later_btn_label'                 => __( 'Save for Later', 'addonify-wishlist' ),
 
-				'enable_styles_from_plugin'                => true,
 				'wishlist_btn_text_color'                  => '#333333',
 				'wishlist_btn_icon_color'                  => '#333333',
 				'wishlist_btn_text_color_hover'            => '#96588a',
