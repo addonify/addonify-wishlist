@@ -25,7 +25,7 @@
     @include transition_delay();
     background-color: var(--adfy_wishlist_popup_modal_overlay_bg_color);
 
-    .addonify-wishlist-modal-body {
+    .addonify-wishlist-modal {
 
         position: relative;
         @include flex();
@@ -78,74 +78,77 @@
             }
         }
 
-        .adfy-wishlist-icon-entry {
+        .addonify-wishlist-modal-body {
 
-            .adfy-wishlist-icon {
+            .adfy-wishlist-icon-entry {
 
-                @include flex();
-                align-items: center;
-                justify-content: center;
-                font-size: 42px;
-                color: var(--adfy_wishlist_popup_modal_icon_color);
-                animation: AddonifyWishlistPulse 0.8s infinite linear;
-            }
-        }
+                .adfy-wishlist-icon {
 
-        #addonify-wishlist-modal-response {
-
-            .response-text {
-
-                margin: 0;
-                padding: 0;
-                color: var(--adfy_wishlist_popup_modal_text_color);
-            }
-        }
-
-        .addonify-wishlist-modal-btns {
-
-            @include flex();
-            gap: 20px;
-            flex-direction: column;
-
-            .adfy-wishlist-btn-link,
-            p.addonify-wishlist-add-to-cart .button {
-
-                @include flex();
-                align-items: center;
-                justify-content: center;
-                font-size: 16px;
-                line-height: 1;
-                font-weight: normal;
-                width: 100%;
-                margin: 0;
-                padding: 18px 20px;
-                height: auto;
-                border-radius: 30px;
-                color: var(--adfy_wishlist_popup_modal_btn_text_color);
-                background-color: var(--adfy_wishlist_popup_modal_btn_bg_color);
-                @include transition_delay();
-
-                &:hover {
-
-                    color: var(--adfy_wishlist_popup_modal_btn_text_color_hover);
-                    background-color: var(--adfy_wishlist_popup_modal_btn_bg_color_hover);
+                    @include flex();
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 42px;
+                    color: var(--adfy_wishlist_popup_modal_icon_color);
+                    animation: AddonifyWishlistPulse 0.8s infinite linear;
                 }
             }
 
-            .adfy-wishlist-btn-link,
-            p.addonify-wishlist-add-to-cart .button {
+            #addonify-wishlist-modal-response {
 
-                text-decoration: none;
+                .response-text {
 
-                &:hover {
+                    margin: 0;
+                    padding: 0;
+                    color: var(--adfy_wishlist_popup_modal_text_color);
+                }
+            }
 
-                    text-decoration: none;
+            .addonify-wishlist-modal-btns {
+
+                @include flex();
+                gap: 20px;
+                flex-direction: column;
+
+                .adfy-wishlist-btn-link,
+                p.addonify-wishlist-add-to-cart .button {
+
+                    @include flex();
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 16px;
+                    line-height: 1;
+                    font-weight: normal;
+                    width: 100%;
+                    margin: 0;
+                    padding: 18px 20px;
+                    height: auto;
+                    border-radius: 30px;
+                    color: var(--adfy_wishlist_popup_modal_btn_text_color);
+                    background-color: var(--adfy_wishlist_popup_modal_btn_bg_color);
+                    @include transition_delay();
+
+                    &:hover {
+
+                        color: var(--adfy_wishlist_popup_modal_btn_text_color_hover);
+                        background-color: var(--adfy_wishlist_popup_modal_btn_bg_color_hover);
+                    }
                 }
 
-                &:focus {
+                .adfy-wishlist-btn-link,
+                p.addonify-wishlist-add-to-cart .button {
 
-                    outline: none;
                     text-decoration: none;
+
+                    &:hover {
+
+                        text-decoration: none;
+                    }
+
+                    &:focus {
+
+                        outline: none;
+                        text-decoration: none;
+                    }
                 }
             }
         }
@@ -164,10 +167,9 @@
 *
 */
 
-
 #addonify-wishlist-modal-wrapper.loading {
 
-    .addonify-wishlist-modal-body {
+    .addonify-wishlist-modal {
 
         position: relative;
         @include flex();
