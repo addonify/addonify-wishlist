@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php do_action( 'addonify_wishlist_after_popup_opening_tag' ); ?>
 
-	<div class="addonify-wishlist-modal-body">
+	<div class="addonify-wishlist-modal">
 		<div class="adfy-model-close">
 			<button type="button" id="addonify-wishlist-close-modal-btn" class="adfy-wishlist-btn adfy-wishlist-clear-button-style">
 				<svg x="0px" y="0px" viewBox="0 0 511.991 511.991">
@@ -25,13 +25,15 @@ defined( 'ABSPATH' ) || exit;
 				</g></svg>
 			</button>
 		</div>
-		<div class="adfy-wishlist-icon-entry">
-			<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three"></i>
-			<i class="adfy-wishlist-icon adfy-status-error flash"></i>
-		</div>
-		<div id="addonify-wishlist-modal-response"></div>
-		<div class="addonify-wishlist-modal-btns">
-			<?php do_action( 'addonify_wishlist_popup_action_btns' ); ?>
+		<div class="addonify-wishlist-modal-body">
+			<div class="adfy-wishlist-icon-entry">
+				<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three"></i>
+				<i class="adfy-wishlist-icon adfy-status-error flash"></i>
+			</div>
+			<div id="addonify-wishlist-modal-response"></div>
+			<div class="addonify-wishlist-modal-btns">
+				<?php do_action( 'addonify_wishlist_popup_action_btns' ); ?>
+			</div>
 		</div>
 	</div>
 
