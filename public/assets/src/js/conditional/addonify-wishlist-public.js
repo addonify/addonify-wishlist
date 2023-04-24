@@ -18,27 +18,29 @@
             addonifyShowPopupModal(addonifyWishlistJSObject.loginMessage, '', 'error');
         });
 
-        /**
-         * Check if product is already in the cart.
-         * If not call ajax function to add the product into the cart.
-         */
-        $body.on('click', '.addonify-wishlist-ajax-add-to-wishlist', function (e) {
-            e.preventDefault();
-            let addToWishlistButton = $(this);
-            if (addToWishlistButton.hasClass('added-to-wishlist')) {
-                if (addonifyWishlistJSObject.removeAlreadyAddedProductFromWishlist) {
-                    addonifyRemoveFromWishlist(addToWishlistButton)
+        if ( ! addonifyWishlistJSObject.proExists ) {
+            /**
+             * Check if product is already in the cart.
+             * If not call ajax function to add the product into the cart.
+             */
+            $body.on('click', '.addonify-wishlist-ajax-add-to-wishlist', function (e) {
+                e.preventDefault();
+                let addToWishlistButton = $(this);
+                if (addToWishlistButton.hasClass('added-to-wishlist')) {
+                    if (addonifyWishlistJSObject.removeAlreadyAddedProductFromWishlist) {
+                        addonifyRemoveFromWishlist(addToWishlistButton)
+                    } else {
+                        addonifyShowPopupModal(
+                            addonifyWishlistJSObject.popupAlreadyInWishlistText,
+                            addToWishlistButton.data('product_name'),
+                            'success'
+                        );
+                    }
                 } else {
-                    addonifyShowPopupModal(
-                        addonifyWishlistJSObject.popupAlreadyInWishlistText,
-                        addToWishlistButton.data('product_name'),
-                        'success'
-                    );
+                    addonifyAddToWishlist(addToWishlistButton);
                 }
-            } else {
-                addonifyAddToWishlist(addToWishlistButton);
-            }
-        })
+            })
+        }
 
         // Close popup modal.
         $body.on('click', '#addonify-wishlist-close-modal-btn', function () {

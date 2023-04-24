@@ -62,7 +62,6 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'sidebar_btn_position_offset'              => -40,
 				'sidebar_show_icon'                        => true,
 				'sidebar_btn_icon'                         => 'heart-style-one',
-				'ajaxify_remove_from_wishlist_button'      => true,
 				'view_wishlist_page_button_label'          => __( 'View All Wishlist Items', 'addonify-wishlist' ),
 				'empty_wishlist_label'                     => __( 'Empty wishlist.', 'addonify-wishlist' ),
 				'clear_wishlist_label'                     => __( 'Clear Wishlist!', 'addonify-wishlist' ),

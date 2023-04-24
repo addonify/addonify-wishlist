@@ -280,6 +280,11 @@ class Addonify_Wishlist_Public {
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/build/js/conditional/addonify-wishlist-public.min.js', array( 'jquery' ), $this->version, true );
 		}
 
+		$pro_exists = false;
+		if ( class_exists( 'Addonify_Wishlist_Pro' ) ) {
+			$pro_exists = true;
+		}
+
 		wp_localize_script(
 			$this->plugin_name,
 			'addonifyWishlistJSObject',
@@ -319,6 +324,7 @@ class Addonify_Wishlist_Public {
 				'pageLink'                              => @get_page_link( get_post( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ),//phpcs:ignore
 				'pageLinkLabel'                         => addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ),
 				'showPageLinkLabel'                     => (bool) addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ),
+				'proExists'                             => $pro_exists,
 			)
 		);
 
@@ -1114,34 +1120,16 @@ class Addonify_Wishlist_Public {
 			<td class="remove">
 				<?php
 				$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' addonify-wishlist-ajax-remove-from-wishlist ';
-				if ( (int) addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ) === 1 ) {
-					?>
-					<button 
-						class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_html( $remove_class ); ?> addonify-wishlist-table-button" 
-						name="addonify_wishlist_remove"
-						data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-						value="<?php echo esc_attr( $product_id ); ?>"
-						<?php echo esc_attr( $wishlist_attr ); ?>
-					>
-						<i class="adfy-wishlist-icon trash-2"></i>
-					</button>
-					<?php
-				} else {
-					$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' adfy-wishlist-remove-btn ';
-					?>
-					<button 
-						type="submit"
-						class="adfy-wishlist-btn <?php echo esc_html( $remove_class ); ?> addonify-wishlist-icon"
-						name="addonify-remove-from-wishlist"
-						data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-						value="<?php echo esc_attr( $product_id ); ?>"
-						<?php echo esc_attr( $wishlist_attr ); ?>
-					>
-						<i class="adfy-wishlist-icon trash-2"></i>
-					</button>
-					<?php
-				}
 				?>
+				<button
+					class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_html( $remove_class ); ?> addonify-wishlist-table-button" 
+					name="addonify_wishlist_remove"
+					data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
+					value="<?php echo esc_attr( $product_id ); ?>"
+					<?php echo esc_attr( $wishlist_attr ); ?>
+				>
+					<i class="adfy-wishlist-icon trash-2"></i>
+				</button>
 			</td>
 			<td class="image">
 				<?php
