@@ -138,6 +138,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Added: Option to manually generate wishlist page.
 - Added: Save For Later button for cart items in cart page with it's settings.
 - Added: Feedback notice in dashboard page.
+- Removed: Option for enabling/disabling ajaxifying remove from wishlist.
 
 = 1.1.3 - 03 March, 2023 =
 

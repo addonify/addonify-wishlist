@@ -456,35 +456,17 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 					</div>
 					<div class="adfy-wishlist-col remove-item-column">
 						<?php
-						if ( (int) addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ) === 1 ) {
-							$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist ' : ' adfy-wishlist-remove-btn addonify-wishlist-ajax-remove-from-wishlist ';
-							?>
-							<button
-								class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon <?php echo esc_attr( $remove_from_wishlist_class ); ?> addonify-wishlist-sidebar-button"
-								name="addonify_wishlist_remove"
-								data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-								value="<?php echo esc_attr( $product->get_id() ); ?>"
-								<?php echo esc_attr( $wishlist_attr ); ?>
-							>
-								<i class="adfy-wishlist-icon trash-2"></i>
-							</button>
-							<?php
-						} else {
-							$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist ' : ' adfy-wishlist-remove-btn ';
-							?>
-							<button 
-								type="submit"
-								class="adfy-wishlist-btn <?php echo esc_attr( $remove_from_wishlist_class ); ?> addonify-wishlist-icon"
-								name="addonify-remove-from-wishlist"
-								data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-								value="<?php echo esc_attr( $product->get_id() ); ?>"
-								<?php echo esc_attr( $wishlist_attr ); ?>
-							>
-								<i class="adfy-wishlist-icon trash-2"></i>
-							</button>
-							<?php
-						}
+						$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist ' : ' adfy-wishlist-remove-btn addonify-wishlist-ajax-remove-from-wishlist ';
 						?>
+						<button
+							class="adfy-wishlist-btn adfy-wishlist-remove-btn addonify-wishlist-icon <?php echo esc_attr( $remove_from_wishlist_class ); ?> addonify-wishlist-sidebar-button"
+							name="addonify_wishlist_remove"
+							data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
+							value="<?php echo esc_attr( $product->get_id() ); ?>"
+							<?php echo esc_attr( $wishlist_attr ); ?>
+						>
+							<i class="adfy-wishlist-icon trash-2"></i>
+						</button>
 					</div>
 				</div>
 			</div>

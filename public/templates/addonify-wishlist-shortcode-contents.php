@@ -63,34 +63,16 @@ if ( function_exists( 'wc_print_notices' ) ) {
 							<td class="remove">
 								<?php
 								$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' addonify-wishlist-ajax-remove-from-wishlist ';
-								if ( (int) addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ) === 1 ) {
-									?>
-									<button 
-										class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_html( $remove_class ); ?> addonify-wishlist-table-button" 
-										name="addonify_wishlist_remove"
-										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-										value="<?php echo esc_attr( $product_id ); ?>"
-										<?php echo esc_attr( $wishlist_attr ); ?>
-									>
-										<i class="adfy-wishlist-icon trash-2"></i>
-									</button>
-									<?php
-								} else {
-									$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' adfy-wishlist-remove-btn ';
-									?>
-									<button 
-										type="submit"
-										class="adfy-wishlist-btn <?php echo esc_html( $remove_class ); ?> addonify-wishlist-icon"
-										name="addonify-remove-from-wishlist"
-										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-										value="<?php echo esc_attr( $product_id ); ?>"
-										<?php echo esc_attr( $wishlist_attr ); ?>
-									>
-										<i class="adfy-wishlist-icon trash-2"></i>
-									</button>
-									<?php
-								}
 								?>
+								<button 
+									class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_html( $remove_class ); ?> addonify-wishlist-table-button" 
+									name="addonify_wishlist_remove"
+									data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
+									value="<?php echo esc_attr( $product_id ); ?>"
+									<?php echo esc_attr( $wishlist_attr ); ?>
+								>
+									<i class="adfy-wishlist-icon trash-2"></i>
+								</button>
 							</td>
 							<td class="image">
 								<?php
