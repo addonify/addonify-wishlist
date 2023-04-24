@@ -80,6 +80,10 @@
 
         .addonify-wishlist-modal-body {
 
+            @include flex();
+            flex-direction: column;
+            gap: 20px;
+
             .adfy-wishlist-icon-entry {
 
                 .adfy-wishlist-icon {
@@ -87,7 +91,7 @@
                     @include flex();
                     align-items: center;
                     justify-content: center;
-                    font-size: 42px;
+                    font-size: 62px;
                     color: var(--adfy_wishlist_popup_modal_icon_color);
                     animation: AddonifyWishlistPulse 0.8s infinite linear;
                 }
