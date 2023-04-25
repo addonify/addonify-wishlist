@@ -82,7 +82,7 @@ class Addonify_Wishlist_Admin {
 			* @since 2.0.0
 			*/
 
-			wp_enqueue_style( "{$this->plugin_name}-google-fonts", 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap', array(), false, 'all' );
+			wp_enqueue_style( "{$this->plugin_name}-google-fonts", 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap', array(), null, 'all' );
 		}
 
 		// Load global admin styles.
