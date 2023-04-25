@@ -74,6 +74,15 @@ class Addonify_Wishlist_Admin {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
 			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'app/fonts/icon.css', array(), $this->version, 'all' );
+
+			/**
+			*
+			* Load Google fonts inter & manrope in addonify settings page.
+			* 
+			* @since 2.0.0
+			*/
+
+			wp_enqueue_style( "{$this->plugin_name}-google-fonts", 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap', array(), false, 'all' );
 		}
 
 		// Load global admin styles.
@@ -86,48 +95,10 @@ class Addonify_Wishlist_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
 
-		wp_register_script(
-			"{$this->plugin_name}-manifest",
-			plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js',
-			null,
-			$this->version,
-			true
-		);
-
-		wp_register_script(
-			"{$this->plugin_name}-vendor",
-			plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js',
-			array( "{$this->plugin_name}-manifest" ),
-			$this->version,
-			true
-		);
-
-		wp_register_script(
-			"{$this->plugin_name}-main",
-			plugin_dir_url( __FILE__ ) . 'assets/js/main.js',
-			array( "{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ),
-			$this->version,
-			true
-		);
-
-		// load scripts in plugin page only.
-		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
-
-			wp_localize_script(
-				"{$this->plugin_name}-main",
-				'ADDONIFY_WISHLIST_LOCOLIZER',
-				array(
-					'admin_url'      => admin_url( '/' ),
-					'ajax_url'       => admin_url( 'admin-ajax.php' ),
-					'site_url'       => site_url( '/' ),
-					'rest_namespace' => 'addonify_wishlist_options_api',
-					'version_number' => $this->version,
-				)
-			);
-		}
-	}
+	//public function enqueue_scripts() {
+		
+	//}
 
 	/**
 	 * Admin initial functions.

@@ -10,6 +10,13 @@
 use Kucrut\Vite;
 
 
+/**
+*
+* Enqueue admin scripts if the current page is addonify wishlist page.
+* 
+* @since 2.0.0
+*/
+
 if ( isset( $_GET['page'] ) && 'addonify_wishlist' === $_GET['page'] ) { //phpcs:ignore
 	$handle = 'addonify-wishlist-admin';
 	add_action(
