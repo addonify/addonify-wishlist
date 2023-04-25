@@ -498,9 +498,13 @@ class Addonify_Wishlist_Public {
 		if ( is_archive() || is_shop() ) {
 			return;
 		}
-		echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
+		if ( addonify_wishlist_get_option( 'btn_position_on_single' ) === 'before_add_to_cart_form' || addonify_wishlist_get_option( 'btn_position_on_single' ) === 'after_add_to_cart_form' ) {
+			echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
+		}
 		$this->render_add_to_wishlist_button();
-		echo '</div>';
+		if ( addonify_wishlist_get_option( 'btn_position_on_single' ) === 'before_add_to_cart_form' || addonify_wishlist_get_option( 'btn_position_on_single' ) === 'adter_add_to_cart_form' ) {
+			echo '</div>';
+		}
 	}
 
 	/**
