@@ -104,7 +104,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 					),
 					'sidebar_modal_overlay_bg_color'       => array(
 						'type'          => 'color',
-						'label'         => __( 'Sidebr overlay background color', 'addonify-wishlist' ),
+						'label'         => __( 'Sidebar overlay background color', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'sidebar_modal_bg_color' ),
