@@ -4,7 +4,7 @@
  *
  * @link       https://creamcode.org/user-data-processing/
  * @since      1.0.0
- * @author     CreamCode <contact@creamcode.org>
+ * @author     CreamCode
  * @package    Udp_Agent
  */
 
@@ -133,6 +133,11 @@ class Udp_Agent {
 	 * @return string
 	 */
 	public function get_settings_field_val( $data ) {
+		if ( 1 === (int) $data ) {
+			return 'yes';
+		} else {
+			return 'no';
+		}
 
 		return ( 'yes' === sanitize_text_field( $data ) ) ? 'yes' : 'no';
 	}
@@ -320,7 +325,6 @@ class Udp_Agent {
 	 * @param string $log Message to be logged.
 	 */
 	private function write_log( $log ) {
-
 		if ( true === WP_DEBUG && true === WP_DEBUG_LOG ) {
 			if ( is_array( $log ) || is_object( $log ) ) {
 				error_log( print_r( $log, true ) ); //phpcs:ignore
