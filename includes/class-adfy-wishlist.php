@@ -95,6 +95,7 @@ class Adfy_Wishlist {
 						$wishlist_data[ $row->id ] = array(
 							'name'       => $row->wishlist_name,
 							'visibility' => $row->wishlist_visibility,
+							'created_at' => $row->created_at,
 						);
 					} else {
 						if ( array_key_exists( $row->parent_wishlist_id, $wishlist_data ) ) {
