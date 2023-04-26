@@ -29,6 +29,15 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		 */
 		protected $rest_namespace = 'addonify_wishlist_options_api';
 
+		/**
+		 * The new namespace of the Rest API.
+		 *
+		 * @since    1.0.7
+		 * @access   protected
+		 * @var      string    $rest_namespace.
+		 */
+		protected $rest_namespace_v2 = 'addonify_wishlist_options_api/v2';
+
 
 		/**
 		 * Register new REST API endpoints.
@@ -49,7 +58,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		 */
 		public function register_rest_endpoints() {
 
-			register_rest_route(
+			register_rest_route( // Get options.
 				$this->rest_namespace,
 				'/get_options',
 				array(
@@ -59,8 +68,18 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
-				$this->rest_namespace,
+			register_rest_route( // Get options version 2.
+				$this->rest_namespace_v2,
+				'/get_options',
+				array(
+					'methods'             => 'GET',
+					'callback'            => array( $this, 'rest_handler_get_settings_fields_v2' ),
+					'permission_callback' => array( $this, 'permission_callback' ),
+				)
+			);
+
+			register_rest_route( // Update options.
+				$this->rest_namespace_v2,
 				'/update_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -69,8 +88,8 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
-				$this->rest_namespace,
+			register_rest_route( // Reset options.
+				$this->rest_namespace_v2,
 				'/reset_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
@@ -79,8 +98,8 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
-				$this->rest_namespace,
+			register_rest_route( // Export options.
+				$this->rest_namespace_v2,
 				'/export_options',
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
@@ -89,12 +108,22 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				)
 			);
 
-			register_rest_route(
-				$this->rest_namespace,
+			register_rest_route( // Import options.
+				$this->rest_namespace_v2,
 				'/import_options',
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'rest_handler_import_options' ),
+					'permission_callback' => array( $this, 'permission_callback' ),
+				)
+			);
+
+			register_rest_route( // Import options.
+				$this->rest_namespace_v2,
+				'/create_wishlist_page',
+				array(
+					'methods'             => \WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'rest_handler_create_wishlist_page' ),
 					'permission_callback' => array( $this, 'permission_callback' ),
 				)
 			);
@@ -109,6 +138,17 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		public function rest_handler_get_settings_fields() {
 
 			return addonify_wishlist_get_settings_fields();
+		}
+
+		/**
+		 * Callback function to get all settings options values.
+		 *
+		 * @since    2.0.0
+		 * @return array
+		 */
+		public function rest_handler_get_settings_fields_v2() {
+
+			return addonify_wishlist_v_2_get_settings_fields();
 		}
 
 
@@ -134,7 +174,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				return $return_data;
 			}
 
-			if ( addonify_wishlist_update_settings( $params['settings_values'] ) === true ) {
+			if ( addonify_wishlist_v_2_update_settings( $params['settings_values'] ) === true ) {
 
 				$return_data['success'] = true;
 				$return_data['message'] = __( 'Settings saved successfully', 'addonify-wishlist' );
@@ -153,7 +193,7 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		public function rest_handler_reset_options( $request ) {
 			global $wpdb;
 
-			$option_keys = array_keys( addonify_wishlist_settings_defaults() );
+			$option_keys = array_keys( addonify_wishlist_v_2_settings_fields() );
 
 			$where  = '';
 			$first  = true;
@@ -169,9 +209,14 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				}
 			}
 
-			$query = 'DELETE FROM ' . $wpdb->options . ' WHERE ' . $where;
-
-			if ( $wpdb->query( $wpdb->prepare( $query, $values ) ) ) { //phpcs:ignore
+			$query  = 'DELETE FROM ' . $wpdb->options . ' WHERE ' . $where;
+			$result = $wpdb->query( $wpdb->prepare( $query, $values ) ); //phpcs:ignore
+			if ( $result ) {
+				$return_data = array(
+					'success' => true,
+					'message' => esc_html__( 'Options reset success.', 'addonify-wishlist' ),
+				);
+			} elseif ( 0 === $result ) {
 				$return_data = array(
 					'success' => true,
 					'message' => esc_html__( 'Options reset success.', 'addonify-wishlist' ),
@@ -180,6 +225,39 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 				$return_data = array(
 					'success' => false,
 					'message' => esc_html__( 'Error! Options reset unsuccessful.', 'addonify-wishlist' ),
+				);
+			}
+
+			return rest_ensure_response( $return_data );
+		}
+
+		/**
+		 * REST handler function for creating wishlist page.
+		 */
+		public function rest_handler_create_wishlist_page() {
+
+			// Create page object.
+			$new_page = array(
+				'post_title'   => __( 'Wishlist', 'addonify-wishlist' ),
+				'post_content' => '[addonify_wishlist]',
+				'post_status'  => 'publish',
+				'post_author'  => get_current_user_id(),
+				'post_type'    => 'page',
+			);
+
+			// Insert the post into the database.
+			$page_id = wp_insert_post( $new_page );
+
+			if ( ! ( $page_id instanceof WP_Error || 0 === $page_id ) ) {
+				update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $page_id );
+				$return_data = array(
+					'success' => true,
+					'message' => esc_html__( 'Wishlist page generate success.', 'addonify-wishlist' ),
+				);
+			} else {
+				$return_data = array(
+					'success' => false,
+					'message' => esc_html__( 'Error! Wishlist page generate unsuccessful.', 'addonify-wishlist' ),
 				);
 			}
 

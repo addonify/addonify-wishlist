@@ -1,0 +1,61 @@
+#addonify-wishlist-app {
+
+    display: block;
+    position: relative;
+    margin: 0 0 0 -20px;
+    padding: 0;
+    min-height: 100vh; // Let the footer stay at the bottom of the page.
+    box-sizing: border-box;
+    @include better_font_rendering();
+
+    * {
+
+        box-sizing: border-box;
+        @include better_font_rendering();
+    }
+
+    /**
+    *
+    * App Container. 
+    * Everything after header & before footer.
+    * 
+    * @since: 2.0.0
+    */
+
+    #addonify-container {
+
+        display: block;
+        position: relative;
+        margin: 160px 0;
+    }
+
+    /**
+    *
+    * App Divider.
+    * Divides route links, main option container & sidebar.
+    *
+    * @since: 2.0.0
+    */
+
+    #app-divider {
+
+        @include grid();
+        grid-template-columns: 250px auto 300px;
+        column-gap: 0;
+        margin: 0 auto;
+        max-width: 1600px;
+        padding-left: 40px;
+        padding-right: 40px;
+
+        /**
+        *
+        * Case where we are fetching routes links and options.
+        */
+        
+        &[data_loading="true"] {
+
+            column-gap: 40px;
+            grid-template-columns: auto 300px;
+        }
+    }
+}

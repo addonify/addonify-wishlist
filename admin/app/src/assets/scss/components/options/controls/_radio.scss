@@ -1,0 +1,27 @@
+
+/* -------------------------------------------------------------------------- 
+	Radio control.
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-app {
+
+    .adfy-option {
+
+        .el-radio-group {
+
+            @include flex();
+            gap: 20px;
+            
+            .el-radio {
+
+                margin: 0;
+                align-items: center;
+
+                .adfy-wishlist-icon {
+                    
+                    font-size: 14px;
+                }
+            }
+		}
+    }
+}

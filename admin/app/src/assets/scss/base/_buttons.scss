@@ -1,0 +1,147 @@
+
+/* -------------------------------------------------------------------------- 
+	Button
+  -------------------------------------------------------------------------- */
+
+.adfy-button,
+a.adfy-button {
+
+    display: inline-flex;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--addonify_base_font_family);
+    font-weight: normal;
+    font-size: var(--addonify_button_font_size);
+    fill: var(--addonify_button_text_color);
+    color: var(--addonify_button_text_color);
+    line-height: var(--addonify_button_line_height);
+    padding: 15px 25px;
+    border-width: var(--addonify_button_border_width);
+    border-style: var(--addonify_button_border_style);
+    border-color: var(--addonify_button_border_color);
+    background-color: var(--addonify_button_background_color);
+    border-radius: var(--addonify_buttons_border_radius);
+    cursor: pointer;
+    text-decoration: none;
+    @include transition_delay();
+
+    .icon {
+
+        display: inline-flex;
+        line-height: 1;
+        padding: 0;
+        margin: 0;
+
+        svg {
+
+            display: inline-flex;
+            line-height: 1;
+        }
+    }
+
+    &.danger {
+
+        background-color: rgb(255, 19, 19);
+    }
+
+    &:hover {
+
+        fill: var(--addonify_button_hover_text_color);
+        color: var(--addonify_button_hover_text_color);
+        border-color: var(--addonify_button_hover_border_color);
+        background-color: var(--addonify_button_hover_background_color);
+        text-decoration: none;
+    }
+
+    &[data_loading="true"] {
+
+        cursor: not-allowed;
+        gap: 5px;
+        
+        .icon {
+
+            display: inline-flex;
+            line-height: 1;
+            animation: addonifySpinner 0.8s linear infinite;
+        }
+    }
+}
+
+.adfy-button:disabled,
+a.adfy-button:disabled {
+
+    cursor: not-allowed;
+    color: #ababab;
+    fill: #ababab;
+    background-color: #c5c5c5;
+}
+
+.adfy-button .loading-icon {
+
+	display: none;
+}
+
+.adfy-button .loading-icon svg {
+
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    color: white;
+    animation: spinner 1s linear infinite;
+}
+
+.adfy-button[loading="true"] {
+
+    display: inline-flex;
+    gap: 10px;
+    cursor: not-allowed;
+}
+
+.adfy-button[loading="true"] .loading-icon {
+
+    display: inline-flex;
+}
+
+.adfy-button.fake-button,
+a.adfy-button.fake-button {
+
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    fill: var(--addonify_text_button_color);
+    color: var(--addonify_text_button_color);
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+
+        fill: var(--addonify_text_button_hover_color);
+        color: var(--addonify_text_button_hover_color);
+        border: none;
+        text-decoration: none;
+        background-color: transparent;
+    }
+
+    &:focus {
+
+        text-decoration: none;
+        outline: none;
+        background-color: transparent;
+    }
+}
+
+/* -------------------------------------------------------------------------- 
+	Element plus button
+  -------------------------------------------------------------------------- */
+
+[class*="page_addonify_wishlist"] {
+
+    .el-button {
+
+        font-family: var(--addonify_base_font_family);
+        font-weight: normal;
+        @include transition_delay();
+    }
+}

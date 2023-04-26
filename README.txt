@@ -2,9 +2,10 @@
 
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
-Requires at least: 5.6
-Tested up to: 6.1.1
-Stable tag: 1.1.3
+Requires at least: 5.9
+Tested up to: 6.2
+Stable tag: 2.0.0
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,10 +129,31 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 2.0.0 - 26 April, 2023 =
+
+- Added: Wishlist database table creation on plugin activate.
+- Added: Option to generate wishlist page in tools tab.
+- Added: `Save For Later` button for cart items in cart page.
+- Added: Notice in the admin dashboard to get feedback from user.
+- Update: Redesign of plugin setting page.
+- Update: User's wishlist data migration for the compatibility with older version of the plugin.
+- Update: Different JS files are loaded for logged in and guest users.
+- Update: Product removal notice will not hide automatically, if value for the option, `Undo notice timeout (in seconds)`, is set to 0.
+- Removed: Option `Ajaxify Remove from Wishlist Action`.
+- Removed: Option `Save Wishlist Cookie for [x] days`.
+- Removed: Option `Enable Styles from Plugin`.
+
 = 1.1.3 - 03 March, 2023 =
 
-- Updated: UDP agent version.
-- Updated: POT file. 
+- Updated : UDP updated.
+- Added : Shortcode for 'add-to-wishist' button.
+- Updated: Undo remove from wishlist action. Add undo notice timeout time option, action text, and undo link label.
+- Updated: For 0 value of the setting, Save Wishlist Cookie for [x] days, wishlist data remains forever.
+- Added: Option for icon position on Add to Wishlist button.
+- Added: Text option for empty wishlist in wishlist sidebar and wishlist page.
+- Removed: Footer notification for removed product in wishlist sidebar.
+- Added: Spinner when performing undo removed item.
+- Added: Stock status in each product in wishlist sidebar.
 
 = 1.1.2 - 22 February , 2023 =
 

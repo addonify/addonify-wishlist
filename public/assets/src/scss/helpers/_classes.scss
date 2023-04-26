@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-	#. Hide/show
+	Hide/show
   -------------------------------------------------------------------------- */
 
 .adfy-wishlist-hide {
@@ -13,7 +13,7 @@
 }
 
 /* --------------------------------------------------------------------------
-	#. Visibility
+	Visibility
   -------------------------------------------------------------------------- */
 
 .adfy-wishlist-visibility-hidden {
@@ -27,11 +27,66 @@
 }
 
 /* --------------------------------------------------------------------------
-	#. Spinner
+	Spinner
   -------------------------------------------------------------------------- */
 
-// Used in sidebar.
 .adfy-wishlist-spinner {
 
-    position: relative;
+    position: relative; // Used in sidebar.
+}
+
+/* --------------------------------------------------------------------------
+	Notices
+  -------------------------------------------------------------------------- */
+
+#addonify-wishlist-undo-deleted-product {
+
+   position: relative;
+
+  #addonify-wishlist-undo-deleted-product-text {
+
+	@include flex();
+	align-items: center;
+	gap: 30px;
+	justify-content: space-between;
+	position: relative;
+	color: var(--adfy_wishlist_product_removed_notice_text_color);
+    padding: 15px 20px;
+    margin-bottom: 30px;
+	font-size: var(--adfy_wishlist_product_removed_notice_font_size);
+	font-weight: normal;
+    overflow: hidden;
+	border-radius: 3px;
+	background-color: var(--adfy_wishlist_product_removed_notice_bg_color);
+
+	@include breakpoint(ipad) {
+
+		gap: 10px;
+	}
+
+    #addonify-wishlist-undo-deleted-product-link {
+
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 7px 10px;
+		margin: 0 0 0 3px;
+		font-size: calc( var(--adfy_wishlist_product_removed_notice_font_size) - 1px );
+		line-height: 1;
+		font-weight: normal;
+		text-decoration: none;
+		cursor: pointer;
+		border-radius: 30px;
+		color: var(--adfy_wishlist_product_removed_notice_undo_btn_text_color);
+		background-color: var(--adfy_wishlist_product_removed_notice_undo_btn_bg_color);
+		@include transition_delay();
+
+		&:hover {
+
+			color: var(--adfy_wishlist_product_removed_notice_undo_btn_hover_text_color);
+			background-color: var(--adfy_wishlist_product_removed_notice_undo_btn_hover_bg_color);
+			text-decoration: none;
+		}
+    }
+  }
 }

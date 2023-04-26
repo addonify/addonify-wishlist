@@ -14,15 +14,12 @@ if ( ! function_exists( 'addonify_wishlist_is_woocommerce_active' ) ) {
 	/**
 	 * Check if woocommerce is active.
 	 *
-	 * @return boolean If woocommerce is active.
+	 * @return bool true if woocommerce is active, false otherwise.
 	 */
 	function addonify_wishlist_is_woocommerce_active() {
-
 		if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ) {
-
 			return true;
 		}
-
 		return false;
 	}
 }
@@ -36,23 +33,8 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 	 * @return array $wishlist_items Array of wishlist items.
 	 */
 	function addonify_wishlist_get_wishlist_items() {
-
-		$wishlist_items = array();
-
-		if ( is_user_logged_in() ) {
-			$current_user_id      = get_current_user_id();
-			$user_meta_data       = get_user_meta( $current_user_id, 'addonify-wishlist', true );
-			$total_wishlist_items = ( empty( $user_meta_data ) || '' === $user_meta_data ) ? array() : json_decode( $user_meta_data, true );
-			if (
-				is_array( $total_wishlist_items ) &&
-				array_key_exists( get_bloginfo( 'url' ), $total_wishlist_items ) &&
-				isset( $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist'] ) &&
-				isset( $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['products'] )
-				) {
-				$wishlist_items = $total_wishlist_items[ get_bloginfo( 'url' ) ]['default_wishlist']['products'];
-			}
-		}
-		return $wishlist_items;
+		global $adfy_wishlist;
+		return $adfy_wishlist->get_wishlist_items();
 	}
 }
 
@@ -65,11 +47,8 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_items_count' ) ) {
 	 * @return int Count of items.
 	 */
 	function addonify_wishlist_get_wishlist_items_count() {
-		$items = addonify_wishlist_get_wishlist_items();
-		if ( is_countable( $items ) ) {
-			return count( $items );
-		}
-		return 0;
+		global $adfy_wishlist;
+		return $adfy_wishlist->get_wishlist_items_count();
 	}
 }
 
@@ -82,17 +61,23 @@ if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 	 * @return boolean True if product is in wishlist, false otherwise.
 	 */
 	function addonify_wishlist_is_product_in_wishlist( $product_id ) {
+		global $adfy_wishlist;
+		return $adfy_wishlist->is_product_in_wishlist( $product_id );
+	}
+}
 
-		$wishlist_items = addonify_wishlist_get_wishlist_items();
-
-		if (
-			is_array( $wishlist_items ) &&
-			count( $wishlist_items ) > 0
-		) {
-			return in_array( $product_id, $wishlist_items );
-		}
-
-		return false;
+if ( ! function_exists( 'addonify_wishlist_is_product_in_this_wishlist' ) ) {
+	/**
+	 * Check if product is in mentioned wishlist.
+	 *
+	 * @since 1.0.0
+	 * @param int $wishlist_id wishlist ID.
+	 * @param int $product_id Product ID.
+	 * @return boolean True if product is in wishlist, false otherwise.
+	 */
+	function addonify_wishlist_is_product_in_this_wishlist( $wishlist_id, $product_id ) {
+		global $adfy_wishlist;
+		return $adfy_wishlist->is_product_in_this_wishlist( $wishlist_id, $product_id );
 	}
 }
 
@@ -104,7 +89,7 @@ if ( ! function_exists( 'addonify_wishlist_get_button_label' ) ) {
 	 *
 	 * @since 1.0.0
 	 * @param boolean $in_wishlist If the item is in wishlist.
-	 * @return string .
+	 * @return string
 	 */
 	function addonify_wishlist_get_button_label( $in_wishlist = false ) {
 

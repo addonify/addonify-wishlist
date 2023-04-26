@@ -1,0 +1,59 @@
+/* -------------------------------------------------------------------------- 
+	Forms
+  -------------------------------------------------------------------------- */
+
+[class*="page_addonify_wishlist"] {
+
+    input[type=date], 
+    input[type=datetime-local], 
+    input[type=datetime], 
+    input[type=email], 
+    input[type=month], 
+    input[type=number], 
+    input[type=password], 
+    input[type=search], 
+    input[type=tel], 
+    input[type=text], 
+    input[type=time], 
+    input[type=url], 
+    input[type=week] {
+
+        font-family: var(--addonify_base_font_family);
+        padding: 0;
+        margin: 0;
+        line-height: var(--el-input-inner-height);
+        --el-input-inner-height: calc(var(--el-input-height, 32px) - 2px);
+        min-height: auto;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        background-color: transparent;
+        color: var(--el-input-text-color,var(--el-text-color-regular));
+
+        &:focus {
+
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    input.readonly, 
+    input[readonly], 
+    textarea.readonly, 
+    textarea[readonly] {
+
+        -el-input-inner-height: calc(var(--el-input-height, 40px) - 2px);
+        background-color: transparent;
+    }
+
+    .el-textarea__inner {
+        
+        display: block;
+        width: 100%;
+        font-family: monospace;
+        min-height: 200px;
+        padding: 15px;
+    }
+}
+

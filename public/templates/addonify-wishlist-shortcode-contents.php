@@ -18,6 +18,11 @@ if ( function_exists( 'wc_print_notices' ) ) {
 ?>
 
 <div id="addonify-wishlist-page-container">
+
+	<div id="addonify-wishlist-undo-deleted-product">
+	</div>
+	<div id="addonify-wishlist-empty">
+	</div>
 	<?php do_action( 'addonify_wishlist_before_wishlist_form' ); ?>
 	<?php
 	if (
@@ -42,6 +47,15 @@ if ( function_exists( 'wc_print_notices' ) ) {
 				<tbody>
 					<?php
 					foreach ( $wishlist_product_ids as $product_id ) {
+						$wishlist_attr = '';
+						if ( is_user_logged_in() ) {
+							global $addonify_wishlist;
+
+							$parent_wishlist_id = $addonify_wishlist->get_wishlist_id_from_product_id( $product_id );
+							if ( $parent_wishlist_id ) {
+								$wishlist_attr = 'data-wishlist_id=' . $parent_wishlist_id;
+							}
+						}
 
 						$product = wc_get_product( $product_id );
 						?>
@@ -49,32 +63,16 @@ if ( function_exists( 'wc_print_notices' ) ) {
 							<td class="remove">
 								<?php
 								$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' addonify-wishlist-ajax-remove-from-wishlist ';
-								if ( (int) addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ) === 1 ) {
-									?>
-									<button 
-										class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_html( $remove_class ); ?> addonify-wishlist-table-button" 
-										name="addonify_wishlist_remove"
-										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-										value="<?php echo esc_attr( $product_id ); ?>"
-									>
-										<i class="adfy-wishlist-icon trash-2"></i>
-									</button>
-									<?php
-								} else {
-									$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' adfy-wishlist-remove-btn ';
-									?>
-									<button 
-										type="submit"
-										class="adfy-wishlist-btn <?php echo esc_html( $remove_class ); ?> addonify-wishlist-icon"
-										name="addonify-remove-from-wishlist"
-										data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-										value="<?php echo esc_attr( $product_id ); ?>"
-									>
-										<i class="adfy-wishlist-icon trash-2"></i>
-									</button>
-									<?php
-								}
 								?>
+								<button 
+									class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_html( $remove_class ); ?> addonify-wishlist-table-button" 
+									name="addonify_wishlist_remove"
+									data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
+									value="<?php echo esc_attr( $product_id ); ?>"
+									<?php echo esc_attr( $wishlist_attr ); ?>
+								>
+									<i class="adfy-wishlist-icon trash-2"></i>
+								</button>
 							</td>
 							<td class="image">
 								<?php
@@ -126,13 +124,17 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-page-toolbar">
 				<?php if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) : ?>
-					<button type="button" id="addonify-wishlist__clear-all" class="button">Clear Wishlist</button>
+					<button type="button" id="addonify-wishlist__clear-all" class="button adfy-wishlist-btn"><?php echo esc_html( addonify_wishlist_get_option( 'clear_wishlist_label' ) ); ?></button>
 				<?php endif ?>
 			</div>		
 		</form>
 		<?php
 	} else {
-		echo esc_html__( 'Your wishlist is empty.', 'addonify-wishlist' );
+		echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
+		if ( addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ) ) {
+			$page_link = @get_page_link( get_post( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ); // phpcs:ignore
+			echo "<a href='" . esc_url( $page_link ) . "'>" . esc_html( addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ) ) . '</a>';
+		}
 	}
 	?>
 	<?php do_action( 'addonify_wishlist_after_wishlist_form' ); ?>

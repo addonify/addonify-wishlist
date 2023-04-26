@@ -33,6 +33,66 @@ if ( ! function_exists( 'addonify_wishlist_get_pages' ) ) {
 	}
 }
 
+if ( ! function_exists( 'addonify_wishlist_get_shop_page_id' ) ) {
+	/**
+	 * Get the shop page id if exists.
+	 *
+	 * @since 2.0.0
+	 * @return string|int
+	 */
+	function addonify_wishlist_get_shop_page_id() {
+
+		$page = addonify_wishlist_get_page_by_title( 'Shop' );
+		if ( $page && '' !== $page ) {
+			return $page->ID;
+		}
+		return '';
+	}
+}
+
+if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_id' ) ) {
+	/**
+	 * Get the wishlist page id if exists.
+	 *
+	 * @since 2.0.0
+	 * @return string|int
+	 */
+	function addonify_wishlist_get_wishlist_page_id() {
+
+		$page = addonify_wishlist_get_page_by_title( 'Wishlist' );
+		if ( $page && '' !== $page ) {
+			return $page->ID;
+		}
+		return '';
+	}
+}
+
+if ( ! function_exists( 'addonify_wishlist_get_page_by_title' ) ) {
+	/**
+	 * Get page by title.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $title Title.
+	 * @return object|false Page object if found, false otherwise.
+	 */
+	function addonify_wishlist_get_page_by_title( $title ) {
+
+		$pages = get_pages();
+
+		if ( ! empty( $pages ) ) {
+
+			foreach ( $pages as $page ) {
+
+				if ( $page->post_title === $title ) {
+					return $page;
+				}
+			}
+		}
+
+		return false;
+	}
+}
 
 if ( ! function_exists( 'addonify_wishlist_get_sidebar_icons' ) ) {
 	/**

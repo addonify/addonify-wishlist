@@ -1,0 +1,99 @@
+/* -------------------------------------------------------------------------- 
+	Loading
+-------------------------------------------------------------------------- */
+
+#adfy-loading {
+
+    position: relative;
+
+    .pulse {
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 30px;
+        height: 30px;
+    
+        &:before {
+
+            content: '';
+            position: relative;
+            display: block;
+            width: 300%;
+            height: 300%;
+            box-sizing: border-box;
+            margin-left: -100%;
+            margin-top: -100%;
+            border-radius: 100%;
+            background-color: #C5C5C5;
+            animation: addonifyPulseRing 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    
+        &:after {
+
+            content: '';
+            position: absolute;
+            left: 0; 
+            top: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background-color: white;
+            box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.01);
+            animation: addonifyPulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
+        }
+    }
+}
+
+/* -------------------------------------------------------------------------- 
+	Section title
+-------------------------------------------------------------------------- */
+
+.option-box-section-title {
+
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+/* -------------------------------------------------------------------------- 
+	Skelation
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-app {
+
+    .el-skeleton.is-animated {
+
+        .el-skeleton__item {
+
+            background: linear-gradient(90deg, #dbdbdb 25%, #ebebeb 37%, #d7d7d7 63%);
+            background-size: 400% 100%;
+        }
+    }
+}
+
+/* -------------------------------------------------------------------------- 
+	#. Element message & tooltip
+  -------------------------------------------------------------------------- */
+
+[class*="page_addonify_wishlist"] {
+
+    .el-message {
+
+        z-index: 100000000000000 !important;
+    }
+
+    .tooltip {
+
+        color: #EEE;
+        font-family: var(--addonify_system_font_family);
+        font-size: 14px;
+        line-height: 1.4;
+        font-weight: normal;
+        max-width: 400px;
+        padding: 10px 15px;
+        border-radius: 3px;
+    }
+}

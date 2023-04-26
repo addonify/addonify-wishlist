@@ -17,8 +17,19 @@ if (
 	count( $wishlist_product_ids ) > 0
 ) {
 	foreach ( $wishlist_product_ids as $product_id ) {
+		$wishlist_attr = '';
+		if ( is_user_logged_in() ) {
+			global $addonify_wishlist;
 
-		$product = wc_get_product( $product_id );
+			$parent_wishlist_id = $addonify_wishlist->get_wishlist_id_from_product_id( $product_id );
+			if ( $parent_wishlist_id ) {
+				$wishlist_attr = 'data-wishlist_id=' . $parent_wishlist_id;
+			}
+		}
+
+		$product      = wc_get_product( $product_id );
+		$in_stock     = 'In stock';
+		$out_of_stock = 'Out of stock';
 		?>
 		<li class="addonify-wishlist-sidebar-item" data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>" data-product_name="<?php echo esc_attr( $product->get_name() ); ?>">
 			<div class="adfy-wishlist-row">
@@ -43,6 +54,11 @@ if (
 						</a>
 					</div>
 					<div class="adfy-wishlist-woo-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
+					<div class="adfy-wishlist-woo-stock">
+						<span class="stock-label <?php echo wp_kses_post( $product->is_in_stock() ? 'in-stock' : 'out-of-stock' ); ?>">
+							<?php echo wp_kses_post( $product->is_in_stock() ? $in_stock : $out_of_stock ); ?>
+						</span>
+					</div>
 				</div>
 			</div>
 
@@ -55,33 +71,17 @@ if (
 					</div>
 					<div class="adfy-wishlist-col remove-item-column">
 						<?php
-						if ( (int) addonify_wishlist_get_option( 'ajaxify_remove_from_wishlist_button' ) === 1 ) {
-							$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist ' : ' adfy-wishlist-remove-btn addonify-wishlist-ajax-remove-from-wishlist ';
-							?>
-							<button
-								class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_attr( $remove_from_wishlist_class ); ?> addonify-wishlist-sidebar-button"
-								name="addonify_wishlist_remove" 
-								data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-								value="<?php echo esc_attr( $product->get_id() ); ?>"
-							>
-								<i class="adfy-wishlist-icon trash-2"></i>
-							</button>
-							<?php
-						} else {
-							$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist ' : ' adfy-wishlist-remove-btn ';
-							?>
-							<button 
-								type="submit"
-								class="adfy-wishlist-btn <?php echo esc_attr( $remove_from_wishlist_class ); ?> addonify-wishlist-icon"
-								name="addonify-remove-from-wishlist"
-								data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
-								value="<?php echo esc_attr( $product->get_id() ); ?>"
-							>
-								<i class="adfy-wishlist-icon trash-2"></i>
-							</button>
-							<?php
-						}
+						$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist ' : ' adfy-wishlist-remove-btn addonify-wishlist-ajax-remove-from-wishlist ';
 						?>
+						<button
+							class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_attr( $remove_from_wishlist_class ); ?> addonify-wishlist-sidebar-button"
+							name="addonify_wishlist_remove" 
+							data-product_name="<?php echo wp_kses_post( $product->get_title() ); ?>"
+							value="<?php echo esc_attr( $product->get_id() ); ?>"
+							<?php echo esc_attr( $wishlist_attr ); ?>
+						>
+							<i class="adfy-wishlist-icon trash-2"></i>
+						</button>
 					</div>
 				</div>
 			</div>

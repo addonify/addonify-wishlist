@@ -19,7 +19,7 @@
     z-index: var(--adfy_wishlist_sidebar_zindex);
     background-color: var(--adfy_wishlist_sidebar_modal_bg_color);
     @include large_drop_shadow();
-    @include transation_delay();
+    @include transition_delay();
     @include visibility_visible();
     @include breakpoint(mobile) {
 
@@ -171,6 +171,24 @@
                                     color: var(--adfy_wishlist_sidebar_modal_product_sale_price_color);
                                     background: transparent;
                                     background-color: transparent;
+                                }
+                            }
+
+                            .adfy-wishlist-woo-stock {
+
+                                display: block;
+                                margin-top: 2px;
+                                font-weight: normal;
+                                font-size: 14px;
+
+                                .in-stock {
+
+                                    color: var(--adfy_wishlist_sidebar_modal_in_stock_text_color);
+                                }
+
+                                .out-of-stock {
+
+                                    color: var(--adfy_wishlist_sidebar_modal_out_of_stock_text_color);
                                 }
                             }
                         }
@@ -335,7 +353,7 @@
             border-radius: 30px;
             box-shadow: none;
             text-decoration: none;
-            @include transation_delay();
+            @include transition_delay();
 
             .icon {
 
@@ -357,6 +375,27 @@
                 text-decoration: none;
                 background: transparent;
                 background-color: var(--adfy_wishlist_sidebar_modal_view_wishlist_btn_bg_color_hover);
+            }
+        }
+    }
+
+    /**
+    *
+    * Notice
+    * 
+    */
+
+    #addonify-wishlist-undo-deleted-product  {
+
+        #addonify-wishlist-undo-deleted-product-text {
+
+            display: block;
+            padding: 15px 20px;
+            font-size: calc( var(--adfy_wishlist_product_removed_notice_font_size) - 1px );
+
+            #addonify-wishlist-undo-deleted-product-link {
+
+                padding: 4px 10px;
             }
         }
     }
@@ -421,7 +460,7 @@
     background: transparent;
     background-color: var(--adfy_wishlist_sidebar_modal_toggle_btn_bg_color);
     z-index: var(--adfy_wishlist_sidebar_trigger_button_zindex);
-    @include transation_delay();
+    @include transition_delay();
 
     .button-icon,
     .button-label {
@@ -475,7 +514,7 @@
     opacity: 0;
     visibility: hidden;
     background-color: var(--adfy_wishlist_sidebar_modal_overlay_bg_color);
-    @include transation_delay();
+    @include transition_delay();
 }
 
 /* -------------------------------------------------------------------------- 

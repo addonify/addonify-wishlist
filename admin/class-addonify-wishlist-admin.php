@@ -59,7 +59,7 @@ class Addonify_Wishlist_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -71,12 +71,22 @@ class Addonify_Wishlist_Admin {
 	public function enqueue_styles() {
 
 		// load styles in this plugin page only.
-		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
-			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'assets/fonts/icon.css', array(), $this->version, 'all' );
+			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'app/fonts/icon.css', array(), $this->version, 'all' );
 
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'assets/css/admin.css', array(), $this->version, 'all' );
+			/**
+			*
+			* Load Google fonts inter & manrope in addonify settings page.
+			* 
+			* @since 2.0.0
+			*/
+
+			wp_enqueue_style( "{$this->plugin_name}-google-fonts", 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap', array(), null, 'all' );
 		}
+
+		// Load global admin styles.
+		wp_enqueue_style( "{$this->plugin_name}-global-admin", plugin_dir_url( __FILE__ ) . 'resources/global.css', array(), $this->version, 'all' );
 	}
 
 
@@ -85,51 +95,20 @@ class Addonify_Wishlist_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
 
-		wp_register_script( 
-			"{$this->plugin_name}-manifest", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/manifest.js', 
-			null, 
-			$this->version, 
-			true 
-		);
+	//public function enqueue_scripts() {
+		
+	//}
 
-		wp_register_script( 
-			"{$this->plugin_name}-vendor", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/vendor.js', 
-			array(  "{$this->plugin_name}-manifest" ), 
-			$this->version, 
-			true 
-		);
+	/**
+	 * Admin initial functions.
+	 */
+	public function admin_init() {
+		$this->maybe_create_table();
 
-		wp_register_script( 
-			"{$this->plugin_name}-main", 
-			plugin_dir_url( __FILE__ ) . 'assets/js/main.js', 
-			array("{$this->plugin_name}-vendor", 'lodash', 'wp-i18n', 'wp-api-fetch' ), 
-			$this->version, 
-			true 
-		);
+		$this->maybe_show_table_created_message();
 
-		// load scripts in plugin page only.
-		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) {
-
-			wp_enqueue_script( "{$this->plugin_name}-manifest" );
-
-			wp_enqueue_script( "{$this->plugin_name}-vendor" );
-
-			wp_enqueue_script( "{$this->plugin_name}-main" );
-
-			wp_localize_script( "{$this->plugin_name}-main", 'ADDONIFY_WISHLIST_LOCOLIZER', array(
-				'admin_url'  						=> admin_url( '/' ),
-				'ajax_url'   						=> admin_url( 'admin-ajax.php' ),
-				'site_url'   						=> site_url( '/' ),
-				'rest_namespace' 					=> 'addonify_wishlist_options_api',
-				'version_number' 					=> $this->version,
-			) );
-		}
-
-		wp_set_script_translations( "{$this->plugin_name}-main", $this->plugin_name );
+		$this->maybe_update_user_review_status();
 	}
 
 
@@ -151,36 +130,35 @@ class Addonify_Wishlist_Admin {
 
 		if ( ! $parent_menu_slug ) {
 
-			add_menu_page( 
-				'Addonify Settings', 
-				'Addonify', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				'dashicons-superhero', 
-				70 
+			add_menu_page(
+				'Addonify Settings',
+				'Addonify',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				'dashicons-superhero',
+				70
 			);
 
-			add_submenu_page( 
-				$this->settings_page_slug, 
-				'Wishlist Settings', 
-				'Wishlist', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				1 
+			add_submenu_page(
+				$this->settings_page_slug,
+				'Wishlist Settings',
+				'Wishlist',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				1
 			);
 
 		} else {
-			
-			add_submenu_page( 
-				$parent_menu_slug, 
-				'Wishlist Settings', 
-				'Wishlist', 
-				'manage_options', 
-				$this->settings_page_slug, 
-				array( $this, 'get_settings_screen_contents' ), 
-				1 
+			add_submenu_page(
+				$parent_menu_slug,
+				'Wishlist Settings',
+				'Wishlist',
+				'manage_options',
+				$this->settings_page_slug,
+				array( $this, 'get_settings_screen_contents' ),
+				1
 			);
 		}
 	}
@@ -213,7 +191,7 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function get_settings_screen_contents() {
 		?>
-		<div id="___adfy-wishlist-app___"></div>
+		<div id="addonify-wishlist-app"></div>
 		<?php
 	}
 
@@ -250,14 +228,148 @@ class Addonify_Wishlist_Admin {
 
 		$wishlist_page_id = addonify_wishlist_get_option( 'wishlist_page' ) ? (int) addonify_wishlist_get_option( 'wishlist_page' ) : '';
 
-		if ( 
-			get_post_type( $post->ID ) == 'page' && 
-			$post->ID == $wishlist_page_id 
+		if (
+			get_post_type( $post->ID ) === 'page' &&
+			(int) $post->ID === (int) $wishlist_page_id
 		) {
 			$states[] = __( 'Addonify Wishlist Page', 'addonify-wishlist' );
 		}
 
 		return $states;
+	}
+
+	/**
+	 * Create wishlist table if it does not exists.
+	 */
+	public function maybe_create_table() {
+		if ( isset( $_GET['addonify-Wishlist-Install-Table'] ) ) { // phpcs:ignore
+			global $addonify_wishlist;
+			$addonify_wishlist->create_table();
+			$addonify_wishlist->migrate_wishlist_data();
+			wp_safe_redirect( esc_html( add_query_arg( 'addonify-wishlist-table-installed', true, admin_url() ) ) );
+			exit;
+		}
+	}
+
+	/**
+	 * Show table created message after table created.
+	 */
+	public function maybe_show_table_created_message() {
+		add_action(
+			'admin_notices',
+			function () {
+				if ( isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
+					global $addonify_wishlist;
+					if ( $addonify_wishlist->check_wishlist_table_exists() ) {
+						?>
+						<div class="addonify-wishlist-wp-notice notice notice-success is-dismissible" id="addonify-wishlist-upgrade-notice">
+							<p class="notice-description">
+								<?php esc_html_e( 'The Addonify WooCommerce Wishlist database update has been completed. Thank you for updating to the latest version!', 'addonify-wishlist' ); ?>
+							</p>
+							<a class="button button-primary" href="<?php echo esc_url( admin_url() ); ?>">
+								<?php esc_html_e( 'Thanks!', 'addonify-wishlist' ); ?>
+							</a>
+						</div>
+						<?php
+					} else {
+						?>
+						<div class="addonify-wishlist-wp-notice notice notice-error" id="addonify-wishlist-upgrade-notice">
+							<h3 class="notice-heading">
+								<?php esc_html_e( 'The Addonify WooCommerce Wishlist database could not be updated!', 'addonify-wishlist' ); ?>
+							</h3>
+							<p class="notice-description">
+								<?php esc_html_e( 'An error occurred while updating the Addonify WooCommerce Wishlist database. Please try again, and if the issue persists, contact the plugin support team for assistance.', 'addonify-wishlist' ); ?>
+							</p>
+							<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
+								<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
+							</a>
+						</div>
+						<?php
+					}
+				}
+			}
+		);
+	}
+
+	/**
+	 * Show insert table notice on admin dashboard if not exists.
+	 */
+	public function maybe_show_insert_table_notice() {
+		global $addonify_wishlist;
+		if ( ! $addonify_wishlist->check_wishlist_table_exists() && ! isset( $_GET['addonify-wishlist-table-installed'] ) ) { // phpcs:ignore
+			add_action(
+				'admin_notices',
+				function () {
+					?>
+					<div class="addonify-wishlist-wp-notice notice notice-info" id="addonify-wishlist-upgrade-notice">
+						<h3 class="notice-heading">
+							<?php esc_html_e( 'Addonify WooCommerce Wishlist database update required!', 'addonify-wishlist' ); ?>
+						</h3>
+						<p class="notice-description">
+							<?php esc_html_e( 'Please update your database to ensure the smooth operation of the plugin. The database update process may take a few moments, so we kindly ask for your patience.', 'addonify-wishlist' ); ?>
+						</p>
+						<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-Install-Table', true, admin_url() ) ); ?>" class="button button-primary">
+							<?php esc_html_e( 'Update database', 'addonify-wishlist' ); ?>
+						</a>
+					</div>
+					<?php
+				}
+			);
+		}
+	}
+
+	/**
+	 * Review notice update on user choice.
+	 */
+	public function maybe_update_user_review_status() {
+		if ( isset( $_GET['addonify-Wishlist-review-notice-already-did'] ) ) { //phpcs:ignore
+			update_option( 'addonify_wishlist_plugin_review_status', 'reviewed' );
+			wp_safe_redirect( esc_url( admin_url() ) );
+		}
+		if ( isset( $_GET['addonify-Wishlist-review-notice-maybe-later'] ) ) { //phpcs:ignore
+			set_transient( 'addonify_wishlist_ask_for_review_transient', '1', 3 * DAY_IN_SECONDS );
+			wp_safe_redirect( esc_url( admin_url() ) );
+		}
+	}
+
+	/**
+	 * Show add a review admin notice.
+	 *
+	 * @since 2.0.0
+	 */
+	public function show_add_a_review_notice() {
+		add_action(
+			'load-index.php',
+			function () {
+				add_action(
+					'admin_notices',
+					function () {
+						?>
+						<div class="addonify-wishlist-wp-notice notice notice-info" id="addonify-wishlist-review-notice">
+							<h3 class="notice-heading">
+								<?php esc_html_e( 'Thank you for choosing Addonify WooCommerce Wishlist!', 'addonify-wishlist' ); ?>
+							</h3>
+							<p class="notice-description">
+								<?php esc_html_e( 'We hope you are enjoying the plugin. If you have a few minutes to spare, please consider leaving a review. We would deeply appreciate it and be grateful to you. It would encourage and help us improve our plugin and make it better.', 'addonify-wishlist' ); ?>
+							</p>
+							<div class="action-buttons">
+								<a target="_blank" href="<?php echo esc_html( 'https://wordpress.org/plugins/addonify-floating-cart/#reviews' ); ?>" class="button button-primary">
+									<?php esc_html_e( 'Okay, You got it!', 'addonify-wishlist' ); ?>
+									<i class="dashicons dashicons-smiley"></i>
+								</a>
+								<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-already-did', true, admin_url() ) ); ?>" class="button button-secondary">
+									<?php esc_html_e( 'I already did', 'addonify-wishlist' ); ?>
+								</a>
+								<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-maybe-later', true, admin_url() ) ); ?>" class="button button-secondary">
+									<?php esc_html_e( 'Maybe later', 'addonify-wishlist' ); ?>
+								</a>
+							</div>
+						</div>
+						<?php
+					}
+				);
+			}
+		);
 	}
 
 }

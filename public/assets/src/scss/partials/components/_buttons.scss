@@ -15,7 +15,7 @@ p.adfy-wishlist-btn .button,
     border-style: none;
     border-width: 0;
     border-color: transparent;
-    @include transation_delay();
+    @include transition_delay();
 
     &:focus,
     &:hover {
@@ -25,27 +25,27 @@ p.adfy-wishlist-btn .button,
         border-width: 0;
         border-color: transparent;
     }
-}
 
-.adfy-wishlist-clear-button-style {
+    &.adfy-wishlist-clear-button-style {
 
-    padding: 0;
-    margin: 0;
-    color:#444444;
-    border: none;
-    cursor: pointer;
-    box-shadow: none;
-    border-color: none;
-    text-decoration: none;
-    background-color: transparent;
-
-    &:hover {
-
+        padding: 0;
+        margin: 0;
         color:#444444;
         border: none;
+        cursor: pointer;
         box-shadow: none;
+        border-color: none;
         text-decoration: none;
         background-color: transparent;
+
+        &:hover {
+
+            color:#444444;
+            border: none;
+            box-shadow: none;
+            text-decoration: none;
+            background-color: transparent;
+        }
     }
 }
 
@@ -54,12 +54,16 @@ p.adfy-wishlist-btn .button,
 *
 * Clear shortcode button style.
 * Used on WooCommerce add to cart shortcode.
+*
 * @since: 1.1.1
 */
 
 .adfy-wishlist-clear-shortcode-button-style.woocommerce.product {
 
-    display: block;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     position: relative;
     margin: 0;
     padding: 0;
@@ -109,17 +113,21 @@ p.adfy-wishlist-btn .button,
 /* -------------------------------------------------------------------------- 
 	#. Add to Wishlist button
   -------------------------------------------------------------------------- */
-
+  
+.adfy-wishlist-btn,
 .addonify-add-to-wishlist-btn,
 .addonify-wishlist-add-to-cart .button,
 .addonify-wishlist-add-to-cart .added_to_cart,
-.woocommerce ul.products li.product .addonify-add-to-wishlist-btn, 
-.woocommerce-page ul.products li.product .addonify-add-to-wishlist-btn {
+.woocommerce .shop_table .addonify-add-to-wishlist-btn,
+.woocommerce ul.products li.product button.addonify-add-to-wishlist-btn, 
+.woocommerce-page ul.products li.product button.addonify-add-to-wishlist-btn,
+.woocommerce-page .product .summary button.addonify-add-to-wishlist-btn,
+#addonify-wishlist-page-form .adfy-wishlist-btn .button {
 
     color: var(--adfy_wishlist_wishlist_btn_text_color);
     background: transparent;
     background-color: var(--adfy_wishlist_wishlist_btn_bg_color);
-    @include transation_delay();
+    @include transition_delay();
 
     .icon {
 
