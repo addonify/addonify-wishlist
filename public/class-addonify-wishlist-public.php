@@ -811,7 +811,11 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_shortcode_contents() {
 		ob_start();
-		do_action( 'addonify_wishlist_render_shortcode_content' );
+		if ( class_exists( 'Addonify_Wishlist_Pro' ) ) {
+			do_action( 'addonify_wishlist_pro_render_view_wishlists_template', array() );
+		} else {
+			do_action( 'addonify_wishlist_render_shortcode_content' );
+		}
 		return ob_get_clean();
 	}
 
