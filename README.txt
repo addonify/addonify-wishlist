@@ -129,16 +129,19 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 2.0.0 - 26 April, 2023 = 
+= 2.0.0 - 26 April, 2023 =
 
-- Added: Add Wishlist table on plugin activate.
-- Added: Migrate data from earlier version on both activation and manually migrate from admin notice.
-- Removed: Cookie lifetime (time till user wishlist data persists).
-- Update: Optionally load js file when user logged in and for guest users.
-- Added: Option to manually generate wishlist page.
-- Added: Save For Later button for cart items in cart page with it's settings.
-- Added: Feedback notice in dashboard page.
-- Removed: Option for enabling/disabling ajaxifying remove from wishlist.
+- Added: Wishlist database table creation on plugin activate.
+- Added: Option to generate wishlist page in tools tab.
+- Added: `Save For Later` button for cart items in cart page.
+- Added: Notice in the admin dashboard to get feedback from user.
+- Update: Redesign of plugin setting page.
+- Update: User's wishlist data migration for the compatibility with older version of the plugin.
+- Update: Different JS files are loaded for logged in and guest users.
+- Update: Product removal notice will not hide automatically, if value for the option, `Undo notice timeout (in seconds)`, is set to 0.
+- Removed: Option `Ajaxify Remove from Wishlist Action`.
+- Removed: Option `Save Wishlist Cookie for [x] days`.
+- Removed: Option `Enable Styles from Plugin`.
 
 = 1.1.3 - 03 March, 2023 =
 
