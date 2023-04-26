@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -120,14 +120,22 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Screenshots ==
 
-1. Addonify wishlist setting page on admin dashboard.
-2. Addonify wishlist design setting page on admin dashboard.
-3. Added to wishlist message modal box.
-4. Addonify wishlist sidebar drawer.
-5. Add to wishlist button in product single page.
-6. Addonify wishlist page using shortcode.
+1. Addonify wishlist setting page on admin dashboard - 1
+2. Addonify wishlist setting page on admin dashboard - 2
+3. Addonify wishlist setting page on admin dashboard - 3
+4. Added to wishlist modal popup.
+5. Add to wishlist button in product catalog.
+6. Addonify wishlist canvas sidebar.
+7. Addonify wishlist page table.
+8. Add to wishist button in product single page.
+9. Save for later (Add to wishlist) button in cart page.
 
 == Changelog ==
+
+= 2.0.1 - ? =
+
+- Tweak: Wishlist's page table add to cart button display to inline #315
+- Updated: Screenshots for WordPress.org.
 
 = 2.0.0 - 26 April, 2023 =
 
