@@ -13,11 +13,10 @@
         margin-top: 5px;
         height: auto;
         padding: 10px 20px;
-        border-radius: 4px;
 
         &.adfy-wishlist-hide {
 
-            display: none;
+            display: none !important;
         }
     }
 }
