@@ -79,7 +79,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 					'sidebar_modal_view_wishlist_btn_bg_color' => array(
 						'type'          => 'color',
 						'className'     => '',
-						'label'         => __( 'Wishlist page button link label background color', 'addonify-wishlist' ),
+						'label'         => __( 'Wishlist page button link background color', 'addonify-wishlist' ),
 						'description'   => __( 'Set the color for label for the button that links to the wishlist page.', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'dependent'     => array( 'enable_wishlist', 'show_sidebar' ),
@@ -88,7 +88,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 					'sidebar_modal_view_wishlist_btn_bg_color_hover' => array(
 						'type'          => 'color',
 						'className'     => '',
-						'label'         => __( 'Wishlist page button link label background color on hover', 'addonify-wishlist' ),
+						'label'         => __( 'Wishlist page button link background color on hover', 'addonify-wishlist' ),
 						'description'   => __( 'Set the color for label on hover for the button that links to the wishlist page.', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'dependent'     => array( 'enable_wishlist', 'show_sidebar' ),
