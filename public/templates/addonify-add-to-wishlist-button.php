@@ -24,10 +24,14 @@ if ( $display_icon ) {
 }
 
 $wishlist = '';
+$button_label_preserved = '';
 if ( isset( $parent_wishlist_id ) ) {
 	$wishlist = 'data-wishlist_id=' . $parent_wishlist_id;
 } else {
 	$parent_wishlist_id = '';
+}
+if ( $preserve_button_label ) {
+	$button_label_preserved = 'data-wishlist_label=' . $preserve_button_label;
 }
 
 if ( true === $require_login ) {
@@ -38,6 +42,7 @@ if ( true === $require_login ) {
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>"
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 			data-product_name="<?php echo esc_attr( $product_name ); ?>"
+			<?php echo esc_attr( $button_label_preserved ); ?>
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</a>
@@ -48,6 +53,7 @@ if ( true === $require_login ) {
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 			data-product_name="<?php echo esc_attr( $product_name ); ?>"
+			<?php echo esc_attr( $button_label_preserved ); ?>
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</button>
@@ -67,6 +73,7 @@ if ( true === $require_login ) {
 				data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 				data-product_name="<?php echo esc_attr( $product_name ); ?>"
 				<?php echo esc_attr( $wishlist ); ?>
+				<?php echo esc_attr( $button_label_preserved ); ?>
 			>
 				<?php echo wp_kses_post( $label ); ?>
 			</a>
@@ -79,6 +86,7 @@ if ( true === $require_login ) {
 				data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 				data-product_name="<?php echo esc_attr( $product_name ); ?>"
 				<?php echo esc_attr( $wishlist ); ?>
+				<?php echo esc_attr( $button_label_preserved ); ?>
 			>
 				<?php echo wp_kses_post( $label ); ?>
 			</a>
@@ -90,6 +98,7 @@ if ( true === $require_login ) {
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 			data-product_name="<?php echo esc_attr( $product_name ); ?>"
+			<?php echo esc_attr( $button_label_preserved ); ?>
 		>
 			<?php echo wp_kses_post( $label ); ?>
 		</button>
