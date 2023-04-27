@@ -265,76 +265,6 @@
             },
             onAddToCart: function() {
 
-                // Ajax call to add product into cart.
-                $body.on('click', '.addonify-wishlist-ajax-add-to-cart', function (event) {
-        
-                    event.preventDefault();
-        
-                    let thisButton = $(this);
-        
-                    let ajaxData = {
-                        action: 'addonify_add_to_cart_from_wishlist',
-                        productId: thisButton.val(),
-                        nonce: nonce
-                    }
-        
-                    let parentProductRow = '';
-        
-                    if (thisButton.hasClass('addonify-wishlist-sidebar-button')) {
-                        parentProductRow = $('div#addonify-wishlist-sticky-sidebar-container').find('li[data-product_row="addonify-wishlist-sidebar-product-row-' + thisButton.val() + '"]');
-                    }
-        
-                    if (thisButton.hasClass('addonify-wishlist-table-button')) {
-                        parentProductRow = $('#addonify-wishlist-table').find('tr[data-product_row="addonify-wishlist-table-product-row-' + thisButton.val() + '"]');
-                    }
-        
-                    if (parentProductRow) {
-                        parentProductRow.addClass('loading');
-                    }
-        
-                    $.post(
-                        ajax_url,
-                        ajaxData,
-                        function (response) {
-                            if (response.success) {
-        
-                                // Triggering custom event when product is added to cart. 
-                                // 'addonify_added_to_cart' custom event can be used to perform desired actions.
-                                $(document).trigger('addonify_added_to_cart', [
-                                    {
-                                        productID      : thisButton.data('product_id'),
-                                    }
-                                ]);
-                                if (thisButton.hasClass('addonify-wishlist-table-button')) {
-                                    addonifyShowPopupModal('{product_name} added to cart', thisButton.data('product_name'), 'success')
-                                }
-        
-                                if (removeFromWishlistAfterAddedToCart === '1' && parentProductRow) {
-        
-                                    parentProductRow.remove();
-        
-                                    addonifyInitialWishlistButton(thisButton.val());
-                                    if ( isLoggedIn ) {
-                                        addonifyEmptyWishlistText(response.wishlist_count);
-                                    } else {
-                                        let product_ids = getProductids();
-                                        if ( product_ids.indexOf(parseInt(thisButton.val())) > -1 ) {
-                                            product_ids.splice(product_ids.indexOf(parseInt(thisButton.val())), 1)
-                                            setProductids(product_ids)
-                                        }
-                                        addonifyEmptyWishlistText(product_ids.length);
-                                    }
-                                }
-                            }
-                        },
-                        "json"
-                    );
-        
-                    if (parentProductRow) {
-                        parentProductRow.removeClass('loading');
-                    }
-                });
-
                 // when added_to_cart is triggered
                 $(document).on('added_to_cart', function (event, fragments, cart_hash, addToCartButton) {
                     let product_id = (addToCartButton.data('product_id'));
@@ -362,6 +292,10 @@
                     }
                     if (addToCartButton.parent().hasClass('addonify-wishlist-table-button')) {
                         addonifyShowPopupModal('{product_name} added to cart', parentProductRow.data('product_name'), false, false)
+                    }
+                    if ( getProductids().length <= 0 ) {
+                        $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
+                        $('#addonify-wishlist__clear-all').hide();
                     }
                 })
             },

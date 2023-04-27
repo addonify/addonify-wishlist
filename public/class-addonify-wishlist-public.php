@@ -130,6 +130,14 @@ class Addonify_Wishlist_Public {
 				add_filter( 'woocommerce_cart_item_subtotal', array( $this, 'render_add_to_wishlist_button_in_cart_page_items_after_subtotal' ), 11, 3 );
 			}
 		}
+
+		add_filter(
+			'woocommerce_add_to_cart_fragments',
+			function ( $arr ) {
+				$arr['addonify_wishlist_count'] = addonify_wishlist_get_wishlist_items_count();
+				return $arr;
+			}
+		);
 	}
 
 	/**
@@ -812,7 +820,11 @@ class Addonify_Wishlist_Public {
 	public function get_shortcode_contents() {
 		ob_start();
 		if ( class_exists( 'Addonify_Wishlist_Pro' ) ) {
-			do_action( 'addonify_wishlist_pro_render_view_wishlists_template', array() );
+			if ( array_key_exists( 'adddonify-wishlist', $_GET ) ) {
+				do_action( 'addonify_wishlist_pro_render_view_single_template', array( 'wishlist_id' => $_GET['adddonify-wishlist'] ) );
+			} else {
+				do_action( 'addonify_wishlist_pro_render_view_wishlists_template', array() );
+			}
 		} else {
 			do_action( 'addonify_wishlist_render_shortcode_content' );
 		}
