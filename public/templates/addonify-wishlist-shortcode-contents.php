@@ -22,6 +22,20 @@ if ( function_exists( 'wc_print_notices' ) ) {
 	<div id="addonify-wishlist-undo-deleted-product">
 	</div>
 	<div id="addonify-wishlist-empty">
+		<?php
+		if (
+			is_array( $wishlist_product_ids ) &&
+			count( $wishlist_product_ids ) <= 0
+		) {
+			if ( addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ) ) {
+				$page_link = @get_page_link( get_post( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ); // phpcs:ignore
+				echo '<p id="addonify-empty-wishlist-para">';
+				echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
+				echo "<a href='" . esc_url( $page_link ) . "'>" . esc_html( addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ) ) . '</a>';
+				echo '</p>';
+			}
+		}
+		?>
 	</div>
 	<?php do_action( 'addonify_wishlist_before_wishlist_form' ); ?>
 	<?php
@@ -129,12 +143,6 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			</div>		
 		</form>
 		<?php
-	} else {
-		echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
-		if ( addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ) ) {
-			$page_link = @get_page_link( get_post( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ); // phpcs:ignore
-			echo "<a href='" . esc_url( $page_link ) . "'>" . esc_html( addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ) ) . '</a>';
-		}
 	}
 	?>
 	<?php do_action( 'addonify_wishlist_after_wishlist_form' ); ?>
