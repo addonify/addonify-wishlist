@@ -103,6 +103,7 @@ const source__files__folders__to__compress = {
         '!./.editorconfig',
         '!./vite.config.js',
         '!./tsconfig.json',
+        '!./tsconfig.node.json',
         '!./postcss.config.cjs'
     ],
 

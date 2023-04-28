@@ -1,4 +1,4 @@
-=== Addonify WooCommerce Wishlist ===
+=== Addonify - WooCommerce Wishlist ===
 
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
