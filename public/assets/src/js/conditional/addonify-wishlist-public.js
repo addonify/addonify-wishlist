@@ -159,7 +159,7 @@
                     parentProductRow.remove();
                 }
 
-                addonifyInitialWishlistButton(addToCartButton);
+                addonifyInitialWishlistButton(product_id);
                 addonifyEmptyWishlistText(parentProductSiblings);
                 // Triggering custom event when product is added to wishlist. 
                 // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
@@ -244,6 +244,12 @@
                             );
                         }
 
+                        // if undo message exists for given product, remove message
+                        let undo_message = $('#addonify-wishlist-undo-deleted-product-link[data-product_id="' + addToWishlistButton.data('product_id') + '"]')
+                        if ( undo_message ) {
+                            undo_message.parent('#addonify-wishlist-undo-deleted-product-text').remove();
+                        }
+
                         if (response.wishlist_count > 0) {
                             $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
                             $('#addonify-wishlist__clear-all').show();
@@ -325,7 +331,7 @@
                             $('#addonify-wishlist__clear-all').hide();
                         }
 
-                        addonifyInitialWishlistButton(thisButton);
+                        addonifyInitialWishlistButton(product_id);
 
                         addonifyEmptyWishlistText(response.wishlist_count);
 
@@ -423,20 +429,23 @@
         }
 
         // Display intial state wishlist button label and icon.
-        function addonifyInitialWishlistButton(wishlistButton) {
+        function addonifyInitialWishlistButton(product_id) {
+            let productBtns = $('[data-product_id="' + product_id + '"].addonify-add-to-wishlist-btn')
             let label = addonifyWishlistJSObject.initialAddToWishlistButtonLabel
-            if ( wishlistButton.data('wishlist_label') ) {
-                label = wishlistButton.data('wishlist_label')
-            }
+            productBtns.each(function(_, val) {
+                if ( $(val).attr('data-wishlist_label') ) {
+                    label = $(val).attr('data-wishlist_label')
+                }
 
-            // Update button label and icon of custom add to wishlist button.
-            if (wishlistButton && !wishlistButton.hasClass('addonify-custom-wishlist-btn')) {
-                wishlistButton.removeClass('added-to-wishlist');
-                // Update button label.
-                wishlistButton.find('span.addonify-wishlist-btn-label').text(label);
-                // Update button icon.
-                wishlistButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-style-one').addClass('heart-o-style-one');
-            }
+                // Update button label and icon of custom add to wishlist button.
+                if ($(val) && !$(val).hasClass('addonify-custom-wishlist-btn')) {
+                    $(val).removeClass('added-to-wishlist');
+                    // Update button label.
+                    $(val).find('span.addonify-wishlist-btn-label').text(label);
+                    // Update button icon.
+                    $(val).find('i.icon.adfy-wishlist-icon').removeClass('heart-style-one').addClass('heart-o-style-one');
+                }
+            })
 
             if ($('.woocommerce-notices-wrapper')) {
                 $('.woocommerce-notices-wrapper').remove();
