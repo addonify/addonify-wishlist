@@ -257,6 +257,11 @@
                     if (p_tag.length === 1) {
                         p_tag.remove();
                     }
+                    if (product_ids.length <= 0) {
+                        console.log('here')
+                        $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
+                        $('#addonify-wishlist__clear-all').hide();
+                    }
 
                     addonifyEmptyWishlistText(product_ids.length);
                     addonifyUndoRemoveFromWishlist( $(this).data('product_name'), id_to_remove );
@@ -444,7 +449,6 @@
             // Triggering custom event when product is added to wishlist. 
             // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
             $(document).trigger('addonify_removed_from_wishlist', [{ productID: id_to_remove, wishlistCount : product_ids.length }]);
-
             if (product_ids.length <= 0) {
                 $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
                 $('#addonify-wishlist__clear-all').hide();
