@@ -245,7 +245,7 @@
                         }
 
                         // if undo message exists for given product, remove message
-                        let undo_message = $('#addonify-wishlist-undo-deleted-product-link[data-product_id="' + addToWishlistButton.data('product_id') + '"]')
+                        let undo_message = $('#addonify-wishlist-undo-deleted-product-link')
                         if ( undo_message ) {
                             undo_message.parent('#addonify-wishlist-undo-deleted-product-text').remove();
                         }
