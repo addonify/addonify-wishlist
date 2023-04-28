@@ -162,6 +162,7 @@
 .addonify-wishlist-modal-is-open #addonify-wishlist-modal-wrapper {
 
     z-index: var(--adfy_wishlist_popup_modal_zindex);
+    backdrop-filter: blur( 5px );
     @include visibility_visible();
 }
 

@@ -1,13 +1,13 @@
 {
   "admin/app/src/main.css": {
-    "file": "assets/main-30250822.css",
+    "file": "assets/main-0de5136e.css",
     "src": "admin/app/src/main.css"
   },
   "admin/app/src/main.js": {
     "css": [
-      "assets/main-30250822.css"
+      "assets/main-0de5136e.css"
     ],
-    "file": "assets/main-65a90316.js",
+    "file": "assets/main-89a37430.js",
     "isEntry": true,
     "src": "admin/app/src/main.js"
   }
