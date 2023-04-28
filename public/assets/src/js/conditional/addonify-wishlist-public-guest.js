@@ -361,7 +361,7 @@
                 );
 
                 // if undo message exists for given product, remove message
-                let undo_message = $('#addonify-wishlist-undo-deleted-product-link[data-product_id="' + id + '"]')
+                let undo_message = $('#addonify-wishlist-undo-deleted-product-link')
                 if ( undo_message ) {
                     undo_message.parent('#addonify-wishlist-undo-deleted-product-text').remove();
                 }
@@ -485,12 +485,14 @@
                     <a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="` + product_id + `" data-wishlist_id="` + wishlist_id + `"> ` + undo_text + ` </a>
                 </p>`;
             $('#addonify-wishlist-undo-deleted-product').html(undo_div);
-            undoTimeout = setTimeout(
-                function() {
-                    $('#addonify-wishlist-undo-deleted-product').html('');
-                },
-                parseInt(undoNoticeTimeout) * 1000
-            )
+            if ( parseInt(undoNoticeTimeout) > 0 ) {
+                undoTimeout = setTimeout(
+                    function() {
+                        $('#addonify-wishlist-undo-deleted-product').html('');
+                    },
+                    parseInt(undoNoticeTimeout) * 1000
+                )
+            }
         }
 
 
