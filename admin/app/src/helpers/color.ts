@@ -12,6 +12,10 @@ export const rgbaToHex = (color: string): string => {
 	 * If 'color' is not hex and not rgba, return it immediately.
 	 */
 
+	if (typeof color === null || typeof color === "object") {
+		return "NaN";
+	}
+
 	if (color.substring(0, 1) !== "#" && color.substring(0, 4) !== "rgba") {
 		return "NaN";
 	}

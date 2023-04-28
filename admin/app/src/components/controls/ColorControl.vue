@@ -10,7 +10,7 @@ import { rgbaToHex } from "@helpers/color";
 const props = defineProps({
 	modelValue: {
 		type: String,
-		required: true,
+		required: false, // Fix: issue #321
 	},
 	size: {
 		type: String,
@@ -61,6 +61,7 @@ const colorChangedHandler = (color: any) => {
 
 //watchEffect(() => {
 //	console.log(value.value);
+//	console.log(typeof value.value);
 //});
 </script>
 <template>
