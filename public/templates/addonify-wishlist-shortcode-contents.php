@@ -28,7 +28,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			count( $wishlist_product_ids ) <= 0
 		) {
 			if ( addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ) ) {
-				$page_link = @get_page_link( get_post( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ) ); // phpcs:ignore
+				$page_link = get_permalink( addonify_wishlist_get_option( 'empty_wishlist_navigation_link' ) ); // phpcs:ignore
 				echo '<p id="addonify-empty-wishlist-para">';
 				echo esc_html( addonify_wishlist_get_option( 'empty_wishlist_label' ) );
 				echo "<a href='" . esc_url( $page_link ) . "'>" . esc_html( addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ) ) . '</a>';
