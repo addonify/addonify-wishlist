@@ -348,7 +348,7 @@
                     ajax_url,
                     {
                         action: addToWishlistActionSideBar,
-                        id: addToWishlistButton.data('product_id'),
+                        id: id,
                         nonce: nonce
                     },
                     function (response) {
@@ -359,6 +359,12 @@
                         }
                     }
                 );
+
+                // if undo message exists for given product, remove message
+                let undo_message = $('#addonify-wishlist-undo-deleted-product-link[data-product_id="' + id + '"]')
+                if ( undo_message ) {
+                    undo_message.parent('#addonify-wishlist-undo-deleted-product-text').remove();
+                }
 
                 // update button 
                 addToWishlistButton.addClass('added-to-wishlist');
