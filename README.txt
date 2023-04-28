@@ -136,6 +136,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 - Tweak: Wishlist's page table add to cart button display to inline #315
 - Updated: Screenshots for WordPress.org.
+- Fix: TypeError cannot read properties of null (reading 'substring') - Color picker #321
 
 = 2.0.0 - 26 April, 2023 =
 
