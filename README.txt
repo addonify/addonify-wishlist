@@ -46,6 +46,7 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Display wishlist items in sidebar drawer for quick navigation.
 - Custom label & icon for sidebar drawer trigger button.
 - Custom time duration option to save the wishlist cookie.
+- Save for later button on WooCommerce cart table.
 - Shortcode that can use used anywhere to display the wishlist.
 - Require login before a user can add products to wishlist.
 - Remove item from wishlist immediately after it has been added to cart.
