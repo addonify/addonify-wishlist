@@ -820,8 +820,8 @@ class Addonify_Wishlist_Public {
 	public function get_shortcode_contents() {
 		ob_start();
 		if ( class_exists( 'Addonify_Wishlist_Pro' ) ) {
-			if ( array_key_exists( 'adddonify-wishlist', $_GET ) ) {
-				do_action( 'addonify_wishlist_pro_render_view_single_template', array( 'wishlist_id' => $_GET['adddonify-wishlist'] ) );
+			if ( array_key_exists( 'adddonify-wishlist', $_GET ) ) { //phpcs:ignore
+				do_action( 'addonify_wishlist_pro_render_view_single_template', array( 'wishlist_id' => $_GET['adddonify-wishlist'] ) ); //phpcs:ignore
 			} else {
 				do_action( 'addonify_wishlist_pro_render_view_wishlists_template', array() );
 			}
