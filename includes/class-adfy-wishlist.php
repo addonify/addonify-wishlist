@@ -125,6 +125,25 @@ class Adfy_Wishlist {
 	}
 
 	/**
+	 * Create new wishlist.
+	 *
+	 * @param int $wishlist_name Wishlist name.
+	 * @param int $wishlist_visibility Wishlist visibility.
+	 *
+	 * @return int|false Returns wishlist row id on success, 0 on already exists, false otherwise.
+	 */
+	public function create_wishlist( $wishlist_name, $wishlist_visibility = false ) {
+		global $addonify_wishlist;
+		$wishlists = $this->get_wishlist_items();
+		foreach( $wishlists as $wishlist ) {
+			if ( $wishlist['name'] === $wishlist_name ) {
+				return 0;
+			}
+		}
+		return $addonify_wishlist->seed_wishlist_table( $wishlist_name, $wishlist_visibility );
+	}
+
+	/**
 	 * Save product in wishlist.
 	 *
 	 * @param int $product_id  Product ID.

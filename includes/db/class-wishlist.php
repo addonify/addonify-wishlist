@@ -136,6 +136,8 @@ class Wishlist {
 	 *
 	 * @param int $wishlist_name Wishlist name.
 	 * @param int $wishlist_visibility Wishlist visibility.
+	 *
+	 * @return int|false Returns wishlist row id on success, false otherwise.
 	 */
 	public function seed_wishlist_table( $wishlist_name = false, $wishlist_visibility = false ) {
 		$insert_data = array(
