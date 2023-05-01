@@ -144,6 +144,18 @@ class Adfy_Wishlist {
 	}
 
 	/**
+	 * Change wishlist visibility.
+	 */
+	public function change_wishlist_visibility( $wishlist_id, $wishlist_visibility ) {
+		global $addonify_wishlist;
+		$wishlists = $this->get_wishlist_items();
+		if ( ! array_key_exists( $wishlist_id, $wishlists ) ) {
+			return 0;
+		}
+		return $addonify_wishlist->update_row( array( 'wishlist_visibility' => $wishlist_visibility ), array( 'id' => $wishlist_id ));
+	}
+
+	/**
 	 * Save product in wishlist.
 	 *
 	 * @param int $product_id  Product ID.
