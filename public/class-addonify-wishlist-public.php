@@ -323,7 +323,7 @@ class Addonify_Wishlist_Public {
 				'thisSiteUrl'                           => get_bloginfo( 'url' ),
 				'checkoutPageURL'                       => wc_get_checkout_url(),
 				'afterAddToWishlistAction'              => addonify_wishlist_get_option( 'after_add_to_wishlist_action' ),
-				'wishlistPageURL'                       => esc_url( get_permalink( addonify_wishlist_get_page_by_title( 'Wishlist' ) ) ),
+				'wishlistPageURL'                       => addonify_wishlist_get_wishlist_page_url(),
 				'requireLogin'                          => (bool) addonify_wishlist_get_option( 'require_login' ),
 				'loginURL'                              => $login_url,
 				/* Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag. */
@@ -820,8 +820,8 @@ class Addonify_Wishlist_Public {
 	public function get_shortcode_contents() {
 		ob_start();
 		if ( class_exists( 'Addonify_Wishlist_Pro' ) ) {
-			if ( array_key_exists( 'adddonify-wishlist', $_GET ) ) { //phpcs:ignore
-				do_action( 'addonify_wishlist_pro_render_view_single_template', array( 'wishlist_id' => $_GET['adddonify-wishlist'] ) ); //phpcs:ignore
+			if ( array_key_exists( 'addonify-wishlist', $_GET ) ) { //phpcs:ignore
+				do_action( 'addonify_wishlist_pro_render_view_single_template', array( 'wishlist_id' => $_GET['addonify-wishlist'] ) ); //phpcs:ignore
 			} else {
 				do_action( 'addonify_wishlist_pro_render_view_wishlists_template', array() );
 			}
