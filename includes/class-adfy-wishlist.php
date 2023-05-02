@@ -196,6 +196,25 @@ class Adfy_Wishlist {
 	}
 
 	/**
+	 * Move to another wishlist.
+	 *
+	 * @return int|false Returns 0 if wishlist doesnot exists, positive integer on success, false otherwise.
+	 */
+	public function move_to_another_wishlist( $product_id, $wishlist_id ) {
+		global $addonify_wishlist;
+		$wishlists = $this->get_wishlist_items();
+		error_log( $wishlist_id );
+		error_log( json_encode( $wishlists ) );
+		if ( ! array_key_exists( (int) $wishlist_id, $wishlists ) ) {
+			return 0;
+		}
+		if ( ! array_key_exists( 'product_ids', $wishlists[ $wishlist_id ] ) || ( array_key_exists( 'product_ids', $wishlists[ $wishlist_id ] ) && ! array_search( $product_id, $wishlists[ $wishlist_id ]['product_ids'] ) ) ) {
+			return $addonify_wishlist->update_row( array( 'parent_wishlist_id' => $wishlist_id ), array( 'product_id' => $product_id ) );
+		}
+		return false;
+	}
+
+	/**
 	 * Remove product from the wishlist if product is already in the wishlist.
 	 *
 	 * @param int $product_id Product ID.
