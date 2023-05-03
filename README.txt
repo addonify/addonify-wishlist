@@ -137,6 +137,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 - Tweak: Wishlist's page table add to cart button display to inline #315
 - Updated: Screenshots for WordPress.org.
+- Tweak: Removed Google fonts source for "Inter" & "Manrope". Fonts are now saved locally.
 - Fix: TypeError cannot read properties of null (reading 'substring') - Color picker #321
 - Dev: Element plus library to 2.3.4.
 
