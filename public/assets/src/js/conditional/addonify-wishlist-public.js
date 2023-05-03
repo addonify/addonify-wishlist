@@ -172,6 +172,7 @@
                 $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
                 $('#addonify-wishlist__clear-all').hide();
             }
+            $('#addonify-wishlist-undo-deleted-product').html('');
         })
 
         $(document).on('click', '#addonify-wishlist__clear-all', function () {
