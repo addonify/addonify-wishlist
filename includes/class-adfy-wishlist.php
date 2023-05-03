@@ -135,7 +135,7 @@ class Adfy_Wishlist {
 	public function create_wishlist( $wishlist_name, $wishlist_visibility = false ) {
 		global $addonify_wishlist;
 		$wishlists = $this->get_wishlist_items();
-		foreach( $wishlists as $wishlist ) {
+		foreach ( $wishlists as $wishlist ) {
 			if ( $wishlist['name'] === $wishlist_name ) {
 				return 0;
 			}
@@ -145,6 +145,11 @@ class Adfy_Wishlist {
 
 	/**
 	 * Change wishlist visibility.
+	 *
+	 * @param int    $wishlist_id Wishlist ID.
+	 * @param string $wishlist_visibility Wishlist Visibility.
+	 *
+	 * @return 0 or false on update error, positive integer otherwise.
 	 */
 	public function change_wishlist_visibility( $wishlist_id, $wishlist_visibility ) {
 		global $addonify_wishlist;
@@ -152,7 +157,7 @@ class Adfy_Wishlist {
 		if ( ! array_key_exists( $wishlist_id, $wishlists ) ) {
 			return 0;
 		}
-		return $addonify_wishlist->update_row( array( 'wishlist_visibility' => $wishlist_visibility ), array( 'id' => $wishlist_id ));
+		return $addonify_wishlist->update_row( array( 'wishlist_visibility' => $wishlist_visibility ), array( 'id' => $wishlist_id ) );
 	}
 
 	/**
@@ -196,6 +201,29 @@ class Adfy_Wishlist {
 	}
 
 	/**
+	 * Move to another wishlist.
+	 *
+	 * @param int $product_id  Product ID.
+	 * @param int $wishlist_id Wishlist ID.
+	 *
+	 * @return int|false Returns 0 if wishlist doesnot exists, positive integer on success, false otherwise.
+	 */
+	public function move_to_another_wishlist( $product_id, $wishlist_id ) {
+		global $addonify_wishlist;
+		$wishlists = $this->get_wishlist_items();
+		if ( ! array_key_exists( (int) $wishlist_id, $wishlists ) ) {
+			return 0;
+		}
+		if (
+			! array_key_exists( 'product_ids', $wishlists[ $wishlist_id ] ) ||
+			( array_key_exists( 'product_ids', $wishlists[ $wishlist_id ] ) && ! array_search( $product_id, $wishlists[ $wishlist_id ]['product_ids'] ) ) //phpcs:ignore
+		) {
+			return $addonify_wishlist->update_row( array( 'parent_wishlist_id' => $wishlist_id ), array( 'product_id' => $product_id ) );
+		}
+		return false;
+	}
+
+	/**
 	 * Remove product from the wishlist if product is already in the wishlist.
 	 *
 	 * @param int $product_id Product ID.
@@ -233,6 +261,34 @@ class Adfy_Wishlist {
 					$this->wishlist_items_count = $this->get_wishlist_count();
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Remove product from the wishlist if product is already in the wishlist.
+	 *
+	 * @param array $product_ids Product ID.
+	 * @param int   $wishlist_id Wishlist ID.
+	 * @return boolean true if removed successfully otherwise false.
+	 */
+	public function bulk_remove_products_from_wishlist( $product_ids, $wishlist_id = false ) {
+		if ( array_key_exists( $wishlist_id, $this->wishlist_items ) ) {
+			if ( array_key_exists( 'product_ids', $this->wishlist_items[ $wishlist_id ] ) ) {
+				global $wpdb;
+				global $addonify_wishlist;
+				$ids      = implode( ',', $product_ids );
+				$user_id  = get_current_user_id();
+				$site_url = get_bloginfo( 'url' );
+				$wpdb->query( "DELETE FROM {$addonify_wishlist->get_table_name()} WHERE parent_wishlist_id={$wishlist_id} AND user_id={$user_id} AND site_url='{$site_url}' AND product_id IN($ids)" ); //phpcs:ignore
+				foreach ( $product_ids as $product_id ) {
+					if ( isset( $this->wishlist_items[ $wishlist_id ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $wishlist_id ]['product_ids'], true ) ] ) ) {
+						unset( $this->wishlist_items[ $wishlist_id ]['product_ids'][ array_search( (int) $product_id, $this->wishlist_items[ $wishlist_id ]['product_ids'], true ) ] );
+					}
+				}
+				$this->wishlist_items_count = $this->get_wishlist_count();
+				return true;
 			}
 		}
 		return false;
