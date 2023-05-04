@@ -17,48 +17,50 @@ class Adfy_Wishlist {
 	/**
 	 * Wishlist database class.
 	 *
-	 * @access private
+	 * @access protected
 	 * @var object $wishlist
 	 */
-	private $wishlist;
+	protected $wishlist;
 
 	/**
 	 * Wishlist values in array.
 	 *
-	 * @access private
+	 * @access protected
 	 * @var array $wishlist_items
 	 */
-	private $wishlist_items;
+	protected $wishlist_items;
 
 	/**
 	 * Wishlist count.
 	 *
-	 * @access private
+	 * @access protected
 	 * @var int $wishlist_items_count
 	 */
-	private $wishlist_items_count;
+	protected $wishlist_items_count;
 
 	/**
 	 * Default Public wishlist.
 	 *
-	 * @access private
+	 * @access protected
 	 * @var string $default_wishlist
 	 */
-	private $default_wishlist = 'Default Wishlist';
+	protected $default_wishlist = 'Default Wishlist';
 
 	/**
 	 * Stores this Object instance.
 	 *
-	 * @access private
+	 * @access protected
 	 * @var array
 	 */
-	private static $instance;
+	protected static $instance;
 
 	/**
 	 * Class constructor.
 	 */
-	private function __construct() {
+	protected function __construct() {
 		global $addonify_wishlist;
+
+		$this->maybe_generate_share_key();
 
 		$this->wishlist = $addonify_wishlist;
 
@@ -84,7 +86,7 @@ class Adfy_Wishlist {
 	 *
 	 * @return array
 	 */
-	private function get_wishlist() {
+	protected function get_wishlist() {
 		if ( is_user_logged_in() ) {
 			global $addonify_wishlist;
 			$user_id       = get_current_user_id();
@@ -95,6 +97,7 @@ class Adfy_Wishlist {
 						$wishlist_data[ $row->id ] = array(
 							'name'       => $row->wishlist_name,
 							'visibility' => $row->wishlist_visibility,
+							'share_key'  => $row->share_key,
 							'created_at' => $row->created_at,
 						);
 					} else {
@@ -114,7 +117,7 @@ class Adfy_Wishlist {
 	 *
 	 * @return int
 	 */
-	private function get_wishlist_count() {
+	protected function get_wishlist_count() {
 		$count = 0;
 		foreach ( $this->wishlist_items as $item ) {
 			if ( array_key_exists( 'product_ids', $item ) && is_array( $item['product_ids'] ) ) {
@@ -347,7 +350,7 @@ class Adfy_Wishlist {
 	 *
 	 * @return int
 	 */
-	private function get_default_wishlist_id() {
+	protected function get_default_wishlist_id() {
 		foreach ( $this->wishlist_items as $index => $item ) {
 			if ( $item['name'] === $this->default_wishlist ) {
 				return $index;
@@ -393,6 +396,14 @@ class Adfy_Wishlist {
 		);
 
 		return $addonify_wishlist->delete_where( $delete_where );
+	}
+
+	/**
+	 * Generate share key if null.
+	 */
+	public function maybe_generate_share_key() {
+		global $wpdb;
+		$wpdb->query( "SELECT `id` FROM {$table_name} WHERE `wishlist_name` IS NOT NULL AND `share_key` IS NULL " );
 	}
 
 }

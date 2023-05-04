@@ -118,3 +118,25 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_url' ) ) {
 		}
 	}
 }
+if ( ! function_exists( 'addonify_wishlist_reverse_num' ) ) {
+
+	/**
+	 * Get number reversed.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $num Any number.
+	 *
+	 * @return int Number reversed.
+	 */
+	function addonify_wishlist_reverse_num( $num ) {
+		$num    = absint( $num );
+		$revnum = 0;
+		while ( $num > 1 ) {
+			$rem    = $num % 10;
+			$revnum = ( $revnum * 10 ) + $rem;
+			$num    = ( $num / 10 );
+		}
+		return $revnum;
+	}
+}
