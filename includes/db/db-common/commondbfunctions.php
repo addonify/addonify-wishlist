@@ -171,7 +171,7 @@ trait CommonDBFunctions {
 	 *
 	 * @since 1.0.0
 	 * @param int $id Row ID.
-	 * @return int|boolean Number of rows updated if data updated successfully, else false.
+	 * @return int|boolean Number of rows deleted if data deleted successfully, else false.
 	 */
 	public static function delete_row( $id ) {
 
