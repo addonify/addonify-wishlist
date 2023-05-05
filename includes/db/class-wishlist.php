@@ -145,6 +145,7 @@ class Wishlist {
 			'site_url'            => get_bloginfo( 'url' ),
 			'wishlist_name'       => $wishlist_name ? $wishlist_name : 'Default Wishlist',
 			'wishlist_visibility' => $wishlist_visibility ? $wishlist_visibility : 'public',
+			'share_key'           => addonify_wishlist_reverse_num( time() ),
 		);
 
 		return $this->insert_row( $insert_data );
