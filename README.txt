@@ -70,6 +70,14 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Option to choose wishlist buttons icons.
 - Custom CSS. 
 
+#### 🔧 TOOLS
+
+- Generate wishlist page: This tool will generate a wishlist page with a shortcode that can be used to display the wishlist table in any page.
+- Reset all settings: This tool will reset all the plugin settings to default.
+- Export all settings: This tool will export all the plugin settings in a JSON file.
+- Import all settings: This tool will import all the plugin settings from a JSON file.
+- Remove data on plugin uninstallation: This tool will remove all the plugin data from the database on plugin uninstallation.
+
 
 #### 🔐 GDPR COMPLIANT
 
