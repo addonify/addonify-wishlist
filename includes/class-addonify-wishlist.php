@@ -186,7 +186,6 @@ class Addonify_Wishlist {
 		$plugin_admin = new Addonify_Wishlist_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		//$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		/**
 		 * Maybe create table when plugin updates.
@@ -303,6 +302,7 @@ class Addonify_Wishlist {
 	 * @param array  $options Options.
 	 */
 	public function check_for_table( $upgrader_object, $options ) {
+
 		$current_plugin_path_name = plugin_basename( ADDONIFY_WISHLIST_PLUGIN_FILE );
 
 		if ( 'update' === $options['action'] && 'plugin' === $options['type'] ) {

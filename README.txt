@@ -141,7 +141,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 2.0.1 - ? =
+= 2.0.1 - 15 May, 2023 =
 
 - Tweak: Wishlist's page table add to cart button display to inline #315
 - Updated: Screenshots for WordPress.org.

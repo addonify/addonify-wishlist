@@ -23,7 +23,7 @@ if ( $display_icon ) {
 	}
 }
 
-$wishlist = '';
+$wishlist               = '';
 $button_label_preserved = '';
 if ( isset( $parent_wishlist_id ) ) {
 	$wishlist = 'data-wishlist_id=' . $parent_wishlist_id;
