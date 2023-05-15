@@ -136,6 +136,8 @@ class Wishlist {
 	 *
 	 * @param int $wishlist_name Wishlist name.
 	 * @param int $wishlist_visibility Wishlist visibility.
+	 *
+	 * @return int|false Returns wishlist row id on success, false otherwise.
 	 */
 	public function seed_wishlist_table( $wishlist_name = false, $wishlist_visibility = false ) {
 		$insert_data = array(
@@ -143,6 +145,7 @@ class Wishlist {
 			'site_url'            => get_bloginfo( 'url' ),
 			'wishlist_name'       => $wishlist_name ? $wishlist_name : 'Default Wishlist',
 			'wishlist_visibility' => $wishlist_visibility ? $wishlist_visibility : 'public',
+			'share_key'           => addonify_wishlist_reverse_num( time() ),
 		);
 
 		return $this->insert_row( $insert_data );

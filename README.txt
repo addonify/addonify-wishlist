@@ -1,10 +1,10 @@
-=== Addonify WooCommerce Wishlist ===
+=== Addonify - WooCommerce Wishlist ===
 
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -46,6 +46,7 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Display wishlist items in sidebar drawer for quick navigation.
 - Custom label & icon for sidebar drawer trigger button.
 - Custom time duration option to save the wishlist cookie.
+- Save for later button on WooCommerce cart table.
 - Shortcode that can use used anywhere to display the wishlist.
 - Require login before a user can add products to wishlist.
 - Remove item from wishlist immediately after it has been added to cart.
@@ -68,6 +69,14 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Color options for off-canvas sidebar wishlist drawer.
 - Option to choose wishlist buttons icons.
 - Custom CSS. 
+
+#### 🔧 TOOLS
+
+- Generate wishlist page: This tool will generate a wishlist page with a shortcode that can be used to display the wishlist table in any page.
+- Reset all settings: This tool will reset all the plugin settings to default.
+- Export all settings: This tool will export all the plugin settings in a JSON file.
+- Import all settings: This tool will import all the plugin settings from a JSON file.
+- Remove data on plugin uninstallation: This tool will remove all the plugin data from the database on plugin uninstallation.
 
 
 #### 🔐 GDPR COMPLIANT
@@ -120,14 +129,25 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Screenshots ==
 
-1. Addonify wishlist setting page on admin dashboard.
-2. Addonify wishlist design setting page on admin dashboard.
-3. Added to wishlist message modal box.
-4. Addonify wishlist sidebar drawer.
-5. Add to wishlist button in product single page.
-6. Addonify wishlist page using shortcode.
+1. Addonify wishlist setting page on admin dashboard - 1
+2. Addonify wishlist setting page on admin dashboard - 2
+3. Addonify wishlist setting page on admin dashboard - 3
+4. Added to wishlist modal popup.
+5. Add to wishlist button in product catalog.
+6. Addonify wishlist canvas sidebar.
+7. Addonify wishlist page table.
+8. Add to wishist button in product single page.
+9. Save for later (Add to wishlist) button in cart page.
 
 == Changelog ==
+
+= 2.0.1 - 15 May, 2023 =
+
+- Tweak: Wishlist's page table add to cart button display to inline #315
+- Updated: Screenshots for WordPress.org.
+- Tweak: Removed Google fonts source for "Inter" & "Manrope". Fonts are now saved locally.
+- Fix: TypeError cannot read properties of null (reading 'substring') - Color picker #321
+- Dev: Element plus library to 2.3.4.
 
 = 2.0.0 - 26 April, 2023 =
 
