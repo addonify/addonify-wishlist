@@ -37,7 +37,7 @@ if ( $preserve_button_label ) {
 if ( true === $require_login ) {
 	if ( $login_url ) {
 		?>
-		<a 
+		<a
 			href="<?php echo esc_url( $login_url ); ?>" 
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>"
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
@@ -67,7 +67,7 @@ if ( true === $require_login ) {
 	) {
 		if ( ! $in_wishlist ) {
 			?>
-			<a 
+			<a
 				href="?addonify-add-to-wishlist=<?php echo esc_attr( $product_id ); ?>"
 				class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 				data-product_id="<?php echo esc_attr( $product_id ); ?>" 
@@ -80,7 +80,7 @@ if ( true === $require_login ) {
 			<?php
 		} else {
 			?>
-			<a 
+			<a
 				href="?addonify-remove-from-wishlist=<?php echo esc_attr( $product_id ); ?>&wishlist=<?php echo esc_attr( $parent_wishlist_id ); ?>"
 				class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 				data-product_id="<?php echo esc_attr( $product_id ); ?>" 
@@ -94,7 +94,7 @@ if ( true === $require_login ) {
 		}
 	} else {
 		?>
-		<button 
+		<button
 			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
 			data-product_id="<?php echo esc_attr( $product_id ); ?>" 
 			data-product_name="<?php echo esc_attr( $product_name ); ?>"

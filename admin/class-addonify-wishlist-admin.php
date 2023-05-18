@@ -93,16 +93,6 @@ class Addonify_Wishlist_Admin {
 
 
 	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-
-	//public function enqueue_scripts() {
-		
-	//}
-
-	/**
 	 * Admin initial functions.
 	 */
 	public function admin_init() {

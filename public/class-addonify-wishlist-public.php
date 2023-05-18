@@ -106,9 +106,33 @@ class Addonify_Wishlist_Public {
 			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 5 );
 		}
 
-		add_action( 'wp', array( $this, 'position_add_to_wishlist_button_single_page' ) );
-
 		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_item_from_wishlist' ) );
+
+		// Displaying add to wishlist button in product single before cart form.
+		add_action(
+			'woocommerce_before_add_to_cart_form',
+			array( $this, 'render_add_to_wishlist_button_before_single_cart_form' )
+		);
+		// Displaying add to wishlist button in product single after cart form.
+		add_action(
+			'woocommerce_after_add_to_cart_form',
+			array( $this, 'render_add_to_wishlist_button_after_single_cart_form' )
+		);
+		// Displaying add to wishlist button in product single after cart quantity field.
+		add_action(
+			'woocommerce_after_add_to_cart_quantity',
+			array( $this, 'render_add_to_wishlist_button_after_single_add_to_cart_quantity' )
+		);
+		// Displaying add to wishlist button in product single before add to cart button.
+		add_action(
+			'woocommerce_before_add_to_cart_button',
+			array( $this, 'render_add_to_wishlist_button_before_single_add_to_cart_button' )
+		);
+		// Displaying add to wishlist button in product single after add to cart button.
+		add_action(
+			'woocommerce_after_add_to_cart_button',
+			array( $this, 'render_add_to_wishlist_button_after_single_add_to_cart_button' )
+		);
 
 		add_action( 'wp', array( $this, 'init_actions' ) );
 
@@ -138,33 +162,6 @@ class Addonify_Wishlist_Public {
 				return $arr;
 			}
 		);
-	}
-
-	/**
-	 * Position add to wishlist button on single page.
-	 */
-	public function position_add_to_wishlist_button_single_page() {
-
-		switch ( addonify_wishlist_get_option( 'btn_position_on_single' ) ) {
-			case 'before_add_to_cart_form':
-				add_action( 'woocommerce_before_add_to_cart_form', array( $this, 'render_add_to_wishlist_button_single' ) );
-				break;
-			case 'before_add_to_cart_button':
-				if (
-					'simple' === wc_get_product()->get_type() ||
-					'variable' === wc_get_product()->get_type()
-				) {
-					add_action( 'woocommerce_after_add_to_cart_quantity', array( $this, 'render_add_to_wishlist_button_single' ) );
-				} else {
-					add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'render_add_to_wishlist_button_single' ) );
-				}
-				break;
-			case 'after_add_to_cart_button':
-				add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'render_add_to_wishlist_button_single' ) );
-				break;
-			default:
-				add_action( 'woocommerce_after_add_to_cart_form', array( $this, 'render_add_to_wishlist_button_single' ) );
-		}
 	}
 
 	/**
@@ -551,30 +548,92 @@ class Addonify_Wishlist_Public {
 	}
 
 	/**
-	 * Render add to wishlist button in product single.
+	 * Render add to wishlist button in product single before cart form.
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.2
 	 */
-	public function render_add_to_wishlist_button_single() {
+	public function render_add_to_wishlist_button_before_single_cart_form() {
 
-		if ( is_archive() || is_shop() ) {
-			return;
-		}
+		$add_to_wishlist_button_position = addonify_wishlist_get_option( 'btn_position_on_single' );
 
-		if (
-			addonify_wishlist_get_option( 'btn_position_on_single' ) === 'before_add_to_cart_form' ||
-			addonify_wishlist_get_option( 'btn_position_on_single' ) === 'after_add_to_cart_form'
-		) {
+		if ( 'before_add_to_cart_form' === $add_to_wishlist_button_position ) {
 			echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
+			$this->render_add_to_wishlist_button();
+			echo '</div>';
 		}
+	}
 
-		$this->render_add_to_wishlist_button();
+	/**
+	 * Render add to wishlist button in product single after cart form.
+	 *
+	 * @since 2.0.2
+	 */
+	public function render_add_to_wishlist_button_after_single_cart_form() {
+
+		$add_to_wishlist_button_position = addonify_wishlist_get_option( 'btn_position_on_single' );
+
+		if ( 'after_add_to_cart_form' === $add_to_wishlist_button_position ) {
+			echo '<div class="addonify-add-to-wishlist-btn-wrapper">';
+			$this->render_add_to_wishlist_button();
+			echo '</div>';
+		}
+	}
+
+	/**
+	 * Render add to wishlist button in product single before add to cart button.
+	 *
+	 * @since 2.0.2
+	 */
+	public function render_add_to_wishlist_button_before_single_add_to_cart_button() {
+
+		global $product;
+
+		$add_to_wishlist_button_position = addonify_wishlist_get_option( 'btn_position_on_single' );
 
 		if (
-			addonify_wishlist_get_option( 'btn_position_on_single' ) === 'before_add_to_cart_form' ||
-			addonify_wishlist_get_option( 'btn_position_on_single' ) === 'after_add_to_cart_form'
+			(
+				'simple' !== $product->get_type() &&
+				'variable' !== $product->get_type()
+			) &&
+			'before_add_to_cart_button' === $add_to_wishlist_button_position
 		) {
-			echo '</div>';
+			$this->render_add_to_wishlist_button();
+		}
+	}
+
+	/**
+	 * Render add to wishlist button in product single before cart quantity.
+	 *
+	 * @since 2.0.2
+	 */
+	public function render_add_to_wishlist_button_after_single_add_to_cart_quantity() {
+
+		global $product;
+
+		$add_to_wishlist_button_position = addonify_wishlist_get_option( 'btn_position_on_single' );
+
+		if (
+			(
+				'simple' === $product->get_type() ||
+				'variable' === $product->get_type()
+			) &&
+			'before_add_to_cart_button' === $add_to_wishlist_button_position
+		) {
+			$this->render_add_to_wishlist_button();
+		}
+	}
+
+	/**
+	 * Render add to wishlist button in product single after add to cart button.
+	 *
+	 * @since 2.0.2
+	 */
+	public function render_add_to_wishlist_button_after_single_add_to_cart_button() {
+
+		$add_to_wishlist_button_position = addonify_wishlist_get_option( 'btn_position_on_single' );
+
+		if ( 'after_add_to_cart_button' === $add_to_wishlist_button_position ) {
+			$this->render_add_to_wishlist_button();
 		}
 	}
 
