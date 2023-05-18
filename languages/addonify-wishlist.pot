@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-05-18T07:05:20+00:00\n"
+"POT-Creation-Date: 2023-05-18T10:51:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: addonify-wishlist\n"
@@ -34,60 +34,60 @@ msgstr ""
 msgid "https://www.addonify.com"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:181
+#: admin/class-addonify-wishlist-admin.php:171
 msgid "Settings"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:237
+#: admin/class-addonify-wishlist-admin.php:227
 msgid "Addonify Wishlist Page"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:269
+#: admin/class-addonify-wishlist-admin.php:259
 msgid "The Addonify WooCommerce Wishlist database update has been completed. Thank you for updating to the latest version!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:272
+#: admin/class-addonify-wishlist-admin.php:262
 msgid "Thanks!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:280
+#: admin/class-addonify-wishlist-admin.php:270
 msgid "The Addonify WooCommerce Wishlist database could not be updated!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:283
+#: admin/class-addonify-wishlist-admin.php:273
 msgid "An error occurred while updating the Addonify WooCommerce Wishlist database. Please try again, and if the issue persists, contact the plugin support team for assistance."
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:286
-#: admin/class-addonify-wishlist-admin.php:314
+#: admin/class-addonify-wishlist-admin.php:276
+#: admin/class-addonify-wishlist-admin.php:304
 msgid "Update database"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:308
+#: admin/class-addonify-wishlist-admin.php:298
 msgid "Addonify WooCommerce Wishlist database update required!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:311
+#: admin/class-addonify-wishlist-admin.php:301
 msgid "Please update your database to ensure the smooth operation of the plugin. The database update process may take a few moments, so we kindly ask for your patience."
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:352
+#: admin/class-addonify-wishlist-admin.php:342
 msgid "Thank you for choosing Addonify WooCommerce Wishlist!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:355
+#: admin/class-addonify-wishlist-admin.php:345
 msgid "We hope you are enjoying the plugin. If you have a few minutes to spare, please consider leaving a review. We would deeply appreciate it and be grateful to you. It would encourage and help us improve our plugin and make it better."
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:359
+#: admin/class-addonify-wishlist-admin.php:349
 msgid "Okay, You got it!"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:363
+#: admin/class-addonify-wishlist-admin.php:353
 msgid "I already did"
 msgstr ""
 
-#: admin/class-addonify-wishlist-admin.php:366
+#: admin/class-addonify-wishlist-admin.php:356
 msgid "Maybe later"
 msgstr ""
 
@@ -824,7 +824,7 @@ msgstr ""
 
 #: includes/setting-functions/settings-v2.php:47
 #: public/class-addonify-wishlist-public-deprecated.php:1102
-#: public/class-addonify-wishlist-public.php:1112
+#: public/class-addonify-wishlist-public.php:1171
 msgid "Login"
 msgstr ""
 
@@ -1032,47 +1032,47 @@ msgstr ""
 
 #. Translators: %1$s = An 'a' tag opening tag, %2$s = closing 'a' tag.
 #: public/class-addonify-wishlist-public-deprecated.php:374
-#: public/class-addonify-wishlist-public.php:384
+#: public/class-addonify-wishlist-public.php:381
 msgid "Login required. Please %1$s click here %2$s to login."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:406
 #: public/class-addonify-wishlist-public-deprecated.php:440
-#: public/class-addonify-wishlist-public.php:446
+#: public/class-addonify-wishlist-public.php:443
 msgid "Invalid security token."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:497
 #: public/class-addonify-wishlist-public-deprecated.php:508
-#: public/class-addonify-wishlist-public.php:509
-#: public/class-addonify-wishlist-public.php:520
+#: public/class-addonify-wishlist-public.php:506
+#: public/class-addonify-wishlist-public.php:517
 msgid "View Wishlist"
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:632
 #: public/class-addonify-wishlist-public-deprecated.php:694
-#: public/class-addonify-wishlist-public.php:617
-#: public/class-addonify-wishlist-public.php:679
+#: public/class-addonify-wishlist-public.php:676
+#: public/class-addonify-wishlist-public.php:738
 msgid "Missing or invalid secutiry token."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:645
 #: public/class-addonify-wishlist-public-deprecated.php:709
-#: public/class-addonify-wishlist-public.php:630
-#: public/class-addonify-wishlist-public.php:694
+#: public/class-addonify-wishlist-public.php:689
+#: public/class-addonify-wishlist-public.php:753
 msgid "Missing product id."
 msgstr ""
 
 #: public/class-addonify-wishlist-public-deprecated.php:846
-#: public/class-addonify-wishlist-public.php:841
+#: public/class-addonify-wishlist-public.php:900
 msgid "Error emptying wishlist."
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:993
+#: public/class-addonify-wishlist-public.php:1052
 msgid "Id required"
 msgstr ""
 
-#: public/class-addonify-wishlist-public.php:1004
+#: public/class-addonify-wishlist-public.php:1063
 msgid "Product does not exists."
 msgstr ""
 
