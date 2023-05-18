@@ -73,7 +73,11 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 						$product = wc_get_product( $product_id );
 						?>
-						<tr class="addonify-wishlist-table-product-row" data-product_row="addonify-wishlist-table-product-row-<?php echo esc_attr( $product_id ); ?>" data-product_name="<?php echo esc_attr( $product->get_name() ); ?>">
+						<tr
+							class="addonify-wishlist-table-product-row"
+							data-product_row="addonify-wishlist-table-product-row-<?php echo esc_attr( $product_id ); ?>"
+							data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
+						>
 							<td class="remove">
 								<?php
 								$remove_class = isset( $guest ) ? ' addonify-wishlist-table-remove-from-wishlist ' : ' addonify-wishlist-ajax-remove-from-wishlist ';
@@ -110,17 +114,9 @@ if ( function_exists( 'wc_print_notices' ) ) {
 							</td>
 							<td class="stock">
 								<?php
-								if ( $product->get_stock_status() ) {
-									switch ( $product->get_stock_status() ) {
-										case 'instock':
-											echo esc_html__( 'In Stock', 'addonify-wishlist' );
-											break;
-										case 'outofstock':
-											echo esc_html__( 'Out of Stock', 'addonify-wishlist' );
-											break;
-										default:
-											break;
-									}
+								$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
+								if ( $product_avaibility ) {
+									echo esc_html( $product_avaibility['avaibility'] );
 								}
 								?>
 							</td>
@@ -137,9 +133,13 @@ if ( function_exists( 'wc_print_notices' ) ) {
 			</table>
 			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-page-toolbar">
-				<?php if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) : ?>
+				<?php
+				if ( addonify_wishlist_get_option( 'show_wishlist_emptying_button' ) ) {
+					?>
 					<button type="button" id="addonify-wishlist__clear-all" class="button adfy-wishlist-btn"><?php echo esc_html( addonify_wishlist_get_option( 'clear_wishlist_label' ) ); ?></button>
-				<?php endif ?>
+					<?php
+				}
+				?>
 			</div>		
 		</form>
 		<?php

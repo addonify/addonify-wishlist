@@ -27,9 +27,8 @@ if (
 			}
 		}
 
-		$product      = wc_get_product( $product_id );
-		$in_stock     = 'In stock';
-		$out_of_stock = 'Out of stock';
+		$product            = wc_get_product( $product_id );
+		$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
 		?>
 		<li class="addonify-wishlist-sidebar-item" data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>" data-product_name="<?php echo esc_attr( $product->get_name() ); ?>">
 			<div class="adfy-wishlist-row">
@@ -54,11 +53,17 @@ if (
 						</a>
 					</div>
 					<div class="adfy-wishlist-woo-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
-					<div class="adfy-wishlist-woo-stock">
-						<span class="stock-label <?php echo wp_kses_post( $product->is_in_stock() ? 'in-stock' : 'out-of-stock' ); ?>">
-							<?php echo wp_kses_post( $product->is_in_stock() ? $in_stock : $out_of_stock ); ?>
-						</span>
-					</div>
+					<?php
+					if ( $product_avaibility ) {
+						?>
+						<div class="adfy-wishlist-woo-stock">
+							<span class="stock-label <?php echo esc_attr( $product_avaibility['class'] ); ?>">
+								<?php echo esc_html( $product_avaibility['avaibility'] ); ?>
+							</span>
+						</div>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 

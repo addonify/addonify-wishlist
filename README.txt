@@ -3,8 +3,8 @@
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
-Tested up to: 6.2
-Stable tag: 2.0.1
+Tested up to: 6.2.1
+Stable tag: 2.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,14 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 9. Save for later (Add to wishlist) button in cart page.
 
 == Changelog ==
+
+= 2.0.2 - 18 May, 2023 =
+
+- Removed: Added to cart popup modal displayed when product is added to cart in wishlist page.
+- Tweak: Popup modal now closes when clicked on modal overlay.
+- Fix: Issue of product stock status not getting displaying in wishlist sidebar when a product is added into the wishlist. [GitHub Issue #344](https://github.com/addonify/addonify-wishlist/issues/344)
+- Fix: Unclosed HTML element caused by improperly defined attribute `data-wishlist_id` of add to wishlist button. [GitHub Issue #348](https://github.com/addonify/addonify-wishlist/issues/348)
+- Fix: PHP Fatal error:  Uncaught Error: Call to a member function get_type() on bool in /addonify-wishlist/public/class-addonify-wishlist-public.php
 
 = 2.0.1 - 15 May, 2023 =
 

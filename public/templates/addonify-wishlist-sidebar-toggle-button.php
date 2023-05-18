@@ -14,11 +14,15 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <button id="addonify-wishlist-show-sidebar-btn" class="adfy-wishlist-clear-button-style <?php echo esc_attr( $css_classes ); ?>">
-	<?php if ( $show_icon ) : ?>
+	<?php
+	if ( $show_icon ) {
+		?>
 		<span class="button-icon">
 			<i class="adfy-wishlist-icon <?php echo esc_attr( $icon ); ?>"></i>
 		</span>
-	<?php endif; ?>
+		<?php
+	}
+	?>
 	<span class="button-label"><?php echo esc_html( $label ); ?></span>
 </button>
 

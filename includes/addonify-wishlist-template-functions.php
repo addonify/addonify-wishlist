@@ -409,8 +409,10 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 	 */
 	function addonify_wishlist_render_sidebar_product( $product_id, $guest = false ) {
 
-		$product       = wc_get_product( $product_id );
-		$wishlist_attr = '';
+		$product            = wc_get_product( $product_id );
+		$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
+		$wishlist_attr      = '';
+
 		if ( is_user_logged_in() ) {
 			global $addonify_wishlist;
 
@@ -422,7 +424,11 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 
 		ob_start();
 		?>
-		<li class="addonify-wishlist-sidebar-item" data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>" data-product_name="<?php echo esc_attr( $product->get_name() ); ?>">
+		<li
+			class="addonify-wishlist-sidebar-item"
+			data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product_id ); ?>"
+			data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
+		>
 			<div class="adfy-wishlist-row">
 				<div class="adfy-wishlist-col image-column">
 					<div class="adfy-wishlist-woo-image">
@@ -445,6 +451,17 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_product' ) ) {
 						</a>
 					</div>
 					<div class="adfy-wishlist-woo-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
+					<?php
+					if ( $product_avaibility ) {
+						?>
+						<div class="adfy-wishlist-woo-stock">
+							<span class="stock-label <?php echo esc_attr( $product_avaibility['class'] ); ?>">
+								<?php echo esc_html( $product_avaibility['avaibility'] ); ?>
+							</span>
+						</div>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 
