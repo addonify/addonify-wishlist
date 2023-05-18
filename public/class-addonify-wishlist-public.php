@@ -572,7 +572,7 @@ class Addonify_Wishlist_Public {
 
 		if (
 			addonify_wishlist_get_option( 'btn_position_on_single' ) === 'before_add_to_cart_form' ||
-			addonify_wishlist_get_option( 'btn_position_on_single' ) === 'adter_add_to_cart_form'
+			addonify_wishlist_get_option( 'btn_position_on_single' ) === 'after_add_to_cart_form'
 		) {
 			echo '</div>';
 		}

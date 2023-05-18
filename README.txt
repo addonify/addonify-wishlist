@@ -146,6 +146,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Removed: Added to cart popup modal displayed when product is added to cart in wishlist page.
 - Tweak: Popup modal now closes when clicked on modal overlay.
 - Fix: Issue of product stock status not getting displaying in wishlist sidebar when a product is added into the wishlist. [GitHub Issue #344](https://github.com/addonify/addonify-wishlist/issues/344)
+- Fix: Unclosed HTML element caused by improperly defined attribute `data-wishlist_id` of add to wishlist button. [GitHub Issue #348](https://github.com/addonify/addonify-wishlist/issues/348)
 
 = 2.0.1 - 15 May, 2023 =
 
