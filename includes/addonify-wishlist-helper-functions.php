@@ -118,8 +118,9 @@ if ( ! function_exists( 'addonify_wishlist_get_wishlist_page_url' ) ) {
 		}
 	}
 }
-if ( ! function_exists( 'addonify_wishlist_reverse_num' ) ) {
 
+
+if ( ! function_exists( 'addonify_wishlist_reverse_num' ) ) {
 	/**
 	 * Get number reversed.
 	 *
@@ -138,5 +139,46 @@ if ( ! function_exists( 'addonify_wishlist_reverse_num' ) ) {
 			$num    = ( $num / 10 );
 		}
 		return $revnum;
+	}
+}
+
+
+if ( ! function_exists( 'addonify_wishlist_get_product_avaibility' ) ) {
+	/**
+	 * Get product's avaibility.
+	 *
+	 * @since 2.0.2
+	 *
+	 * @param object $product Product.
+	 * @return array $product_avaibility Array containing avaibility class and label.
+	 */
+	function addonify_wishlist_get_product_avaibility( $product ) {
+
+		if ( ! $product ) {
+			return false;
+		}
+
+		$product_status     = $product->get_stock_status();
+		$product_avaibility = array();
+
+		switch ( $product_status ) {
+			case 'instock':
+				$product_avaibility['class']      = 'in-stock';
+				$product_avaibility['avaibility'] = apply_filters(
+					'addonify_wishlist_product_in_stock_label',
+					esc_html__( 'In stock', 'addonify-wishlist' )
+				);
+				break;
+			case 'outofstock':
+				$product_avaibility['class']      = 'out-of-stock';
+				$product_avaibility['avaibility'] = apply_filters(
+					'addonify_wishlist_product_out_of_stock_label',
+					esc_html__( 'Out of stock', 'addonify-wishlist' )
+				);
+				break;
+			default:
+		}
+
+		return $product_avaibility;
 	}
 }

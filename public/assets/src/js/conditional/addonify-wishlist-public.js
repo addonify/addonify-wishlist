@@ -43,7 +43,7 @@
         }
 
         // Close popup modal.
-        $body.on('click', '#addonify-wishlist-close-modal-btn', function () {
+        $body.on('click', '#addonify-wishlist-close-modal-btn, #addonify-wishlist-modal-wrapper', function () {
             $body.removeClass('addonify-wishlist-modal-is-open');
         })
 
@@ -165,9 +165,7 @@
                 // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
                 $(document).trigger('addonify_removed_from_wishlist', [{ productID: product_id, wishlist_count: fragments.addonify_wishlist_count }]);
             }
-            if (addToCartButton.parent().hasClass('addonify-wishlist-table-button')) {
-                addonifyShowPopupModal('{product_name} added to cart', parentProductRow.data('product_name'), false, false)
-            }
+
             if ( fragments.addonify_wishlist_count <= 0 ) {
                 $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
                 $('#addonify-wishlist__clear-all').hide();
