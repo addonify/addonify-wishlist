@@ -355,7 +355,7 @@ class Addonify_Wishlist_Admin {
 								<?php esc_html_e( 'We hope you are enjoying the plugin. If you have a few minutes to spare, please consider leaving a review. We would deeply appreciate it and be grateful to you. It would encourage and help us improve our plugin and make it better.', 'addonify-wishlist' ); ?>
 							</p>
 							<div class="action-buttons">
-								<a target="_blank" href="<?php echo esc_html( 'https://wordpress.org/plugins/addonify-floating-cart/#reviews' ); ?>" class="button button-primary">
+								<a target="_blank" href="<?php echo esc_html( 'https://wordpress.org/plugins/addonify-wishlist/#reviews' ); ?>" class="button button-primary">
 									<?php esc_html_e( 'Okay, You got it!', 'addonify-wishlist' ); ?>
 									<i class="dashicons dashicons-smiley"></i>
 								</a>
