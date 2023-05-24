@@ -8,7 +8,7 @@ const { __ } = wp.i18n;
 			<h3 class="hero-title">
 				{{
 					__(
-						"Loving addonify wishlist? Help us make a better software",
+						"Do you have a problem? Help is only a mouse click away!",
 						"addonify-wishlist"
 					)
 				}}
@@ -17,10 +17,10 @@ const { __ } = wp.i18n;
 		<div class="action">
 			<a
 				class="adfy-button review-link"
-				href="https://wordpress.org/support/plugin/addonify-wishlist/reviews/#new-post"
+				href="https://wordpress.org/support/plugin/addonify-wishlist/"
 				target="_blank"
 			>
-				{{ __("Drop a review", "addonify-wishlist") }}
+				{{ __("Get Help", "addonify-wishlist") }}
 				<Icon name="comment" size="18px" />
 			</a>
 		</div>
