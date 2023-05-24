@@ -5,18 +5,29 @@ import JumboBoxContainer from "@layouts/JumboBoxContainer.vue";
 import Sidebar from "@layouts/Sidebar.vue";
 import RouteLinks from "@layouts/RouteLinks.vue";
 import Loading from "@components/core/Loading.vue";
-//import Hero from "@components/partials/Hero.vue";
+import Hero from "@components/partials/Hero.vue";
 import { useSettingsStore } from "@stores/settings";
 import { advertiseUpsell } from "@helpers/global";
 
 const store = useSettingsStore();
 
 onMounted(() => {
-	store.fetchSettings();
+	/**
+	 *
+	 * Check state of options in memory.
+	 * If we have state in memory, we can use it.
+	 * If not, we need to fetch it from the server.
+	 *
+	 * @since: 2.0.3
+	 */
+
+	if (!store.haveSettingsStateInMemory) {
+		store.fetchSettings();
+	}
 });
 </script>
 <template>
-	<!--<Hero />-->
+	<Hero />
 	<section
 		id="app-divider"
 		class="app-divider"

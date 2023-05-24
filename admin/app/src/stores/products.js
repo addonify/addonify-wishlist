@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ElMessage } from "element-plus";
 import { useSettingsStore } from "@stores/settings";
 import { recommendedProductsList } from "@helpers/endpoint";
+import { commonHeader } from "@helpers/api";
 
 /**
  *
@@ -200,6 +201,7 @@ export const useProductStore = defineStore({
 
 					method: "GET",
 					path: `/wp/v2/plugins`,
+					headers: commonHeader,
 				});
 
 				//console.log(res);
@@ -291,7 +293,7 @@ export const useProductStore = defineStore({
 
 					method: "POST",
 					path: "/wp/v2/plugins",
-
+					headers: commonHeader,
 					data: {
 						slug: slug,
 						status: "active",
@@ -361,6 +363,7 @@ export const useProductStore = defineStore({
 
 					method: "POST",
 					path: `/wp/v2/plugins/${slug}`,
+					headers: commonHeader,
 					data: {
 						status: "active",
 						plugin: `${slug}/${slug}`,

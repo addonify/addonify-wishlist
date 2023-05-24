@@ -11,7 +11,18 @@ const { __ } = wp.i18n;
 const store = useSettingsStore();
 
 onMounted(() => {
-	store.fetchSettings(); // For the route links.
+	/**
+	 *
+	 * Check state of options in memory.
+	 * If we have state in memory, we can use it.
+	 * If not, we need to fetch it from the server.
+	 *
+	 * @since: 2.0.3
+	 */
+
+	if (!store.haveSettingsStateInMemory) {
+		store.fetchSettings();
+	}
 });
 </script>
 <template>
