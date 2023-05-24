@@ -10,7 +10,7 @@
  * Plugin Name:       Addonify - WooCommerce Wishlist
  * Plugin URI:        https://wordpress.org/plugins/addonify-wishlist
  * Description:       Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wishlist functionality to your e-commerce shop.
- * Version:           2.0.2
+ * Version:           2.0.3
  * Requires at least: 5.9
  * Requires PHP:      7.4
  * Author:            Addonify
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ADDONIFY_WISHLIST_VERSION', '2.0.2' );
+define( 'ADDONIFY_WISHLIST_VERSION', '2.0.3' );
 define( 'ADDONIFY_WISHLIST_DB_INITIALS', 'addonify_wishlist_' );
 define( 'ADDONIFY_WISHLIST_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'ADDONIFY_WISHLIST_PLUGIN_FILE', __FILE__ );
