@@ -3,6 +3,7 @@ import { ElMessage } from "element-plus"; // @ts-ignore
 import { apiEndpoint } from "@helpers/endpoint"; // @ts-ignore
 import { jsonFileName } from "@helpers/global"; // @ts-ignore
 import { commonHeader } from "@helpers/api"; // @ts-ignore
+import { getCurrentDateTime } from "@helpers/functions"; // @ts-ignore
 
 /**
  *
@@ -348,12 +349,11 @@ export const useSettingsStore = defineStore({
 					this.status.message = res.message; // Get the message.
 
 					if (res.success === true) {
-						let date = new Date().getTime();
 						let link = document.createElement("a");
 						link.href = res.url;
 						link.setAttribute(
 							"download",
-							`${jsonFileName}-all-settings-${date}.json`
+							`${jsonFileName}-all-settings-${getCurrentDateTime}.json`
 						);
 						document.body.appendChild(link);
 						link.click();
