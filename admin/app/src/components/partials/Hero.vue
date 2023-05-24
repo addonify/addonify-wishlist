@@ -21,7 +21,7 @@ const { __ } = wp.i18n;
 				target="_blank"
 			>
 				{{ __("Get Help", "addonify-wishlist") }}
-				<Icon name="comment" size="18px" />
+				<Icon name="question" size="20px" />
 			</a>
 		</div>
 	</section>
