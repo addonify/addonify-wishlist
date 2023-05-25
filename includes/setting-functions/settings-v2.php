@@ -22,6 +22,8 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_
 
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/wishlist-sidebar.php';
 
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'setting-functions/fields_v2/wishlist-notice.php';
+
 
 if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 	/**
@@ -69,6 +71,11 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'undo_action_prelabel_text'                => __( '{product_name} has been removed.', 'addonify-wishlist' ),
 				'undo_action_label'                        => __( 'Undo?', 'addonify-wishlist' ),
 				'undo_notice_timeout'                      => 5,
+				'product_added_to_cart_notice_text'        => esc_html__( '{product_name} has been added to cart.', 'addonify-wishlist' ),
+				'notice_background_color'                  => '',
+				'notice_text_color'                        => '',
+				'notice_link_color'                        => '',
+				'notice_link_color_hover'                  => '',
 				'icon_position'                            => 'left',
 				'show_empty_wishlist_navigation_link'      => true,
 				'empty_wishlist_navigation_link'           => addonify_wishlist_get_shop_page_id(),
@@ -264,6 +271,8 @@ function addonify_wishlist_v_2_add_fields_to_settings_fields( $settings_fields )
 
 	$settings_fields = array_merge( $settings_fields, apply_filters( 'addonify_wishlist_wishlist_sidebar_v_2_options', array() ) );
 
+	$settings_fields = array_merge( $settings_fields, apply_filters( 'addonify_wishlist_notice_options', array() ) );
+
 	return $settings_fields;
 }
 add_filter( 'addonify_wishlist_v_2_settings_fields', 'addonify_wishlist_v_2_add_fields_to_settings_fields' );
@@ -336,6 +345,11 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 						'title'    => __( 'Wishlist Sidebar', 'addonify-wishlist' ),
 						'icon'     => "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path d='M21,2H3C1.346,2,0,3.346,0,5V22H24V5c0-1.654-1.346-3-3-3ZM2,5c0-.552,.449-1,1-1H13V20H2V5Zm20,15h-7V4h6c.551,0,1,.448,1,1v15Zm-5-10h3v2h-3v-2Zm0,4h3v2h-3v-2Zm0-8h3v2h-3v-2Z'/></svg>",
 						'sections' => apply_filters( 'addonify_wishlist_wishlist_sidebar_v_2_options', array() ),
+					),
+					'wishlist_notice'  => array(
+						'title'    => __( 'Wishlist Notice', 'addonify-wishlist' ),
+						'icon'     => "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path d='M21,2H3C1.346,2,0,3.346,0,5V22H24V5c0-1.654-1.346-3-3-3ZM2,5c0-.552,.449-1,1-1H13V20H2V5Zm20,15h-7V4h6c.551,0,1,.448,1,1v15Zm-5-10h3v2h-3v-2Zm0,4h3v2h-3v-2Zm0-8h3v2h-3v-2Z'/></svg>",
+						'sections' => apply_filters( 'addonify_wishlist_notice_options', array() ),
 					),
 					'tools'            => array(
 						'title'    => __( 'Tools', 'addonify-wishlist' ),
