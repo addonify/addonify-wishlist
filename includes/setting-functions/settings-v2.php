@@ -87,6 +87,8 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'enable_save_for_later'                    => false,
 				'save_for_later_btn_position'              => 'after_product_name',
 				'save_for_later_btn_label'                 => __( 'Save for Later', 'addonify-wishlist' ),
+				'product_in_stock_label'                   => __( 'In stock', 'addonify-wishlist' ),
+				'product_out_of_stock_label'               => __( 'Out of stock', 'addonify-wishlist' ),
 
 				'wishlist_btn_text_color'                  => '',
 				'wishlist_btn_icon_color'                  => '',
