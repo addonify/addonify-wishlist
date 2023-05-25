@@ -136,15 +136,32 @@
 
     /**
     *
+    * Notice
+    * 
+    */ 
+
+    #addonify-wishlist-notice  {
+
+        display: block;
+
+        > p {
+
+            @include flex();
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+    }
+
+    /**
+    *
     * Empty wishlist
     * 
     */
 
     #addonify-wishlist-empty {
 
-        @include flex();
-        align-items: center;
-        gap: 5px;
+        display: block;
     }
 }
 
