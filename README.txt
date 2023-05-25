@@ -141,9 +141,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 2.0.3 - 24 May, 2023 =
+= 2.0.3 - 25 May, 2023 =
 
 - Tweak: How reactive state on plugin setting's page is managed (vue js).
+- Fix: Add to wishlist button dynamic CSS. #361
 
 = 2.0.2 - 18 May, 2023 =
 
