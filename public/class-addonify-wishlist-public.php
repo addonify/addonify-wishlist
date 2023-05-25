@@ -1450,10 +1450,13 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_sidebar_modal_notification_bg_color' => addonify_wishlist_get_option( 'sidebar_modal_notification_bg_color' ),
 			'--adfy_wishlist_sidebar_modal_in_stock_text_color' => addonify_wishlist_get_option( 'sidebar_modal_in_stock_text_color' ),
 			'--adfy_wishlist_sidebar_modal_out_of_stock_text_color' => addonify_wishlist_get_option( 'sidebar_modal_out_of_stock_text_color' ),
-			'--adfy_wishlist_notice_background_color'      => addonify_wishlist_get_option( 'notice_background_color' ),
-			'--adfy_wishlist_notice_text_color'            => addonify_wishlist_get_option( 'notice_text_color' ),
-			'--adfy_wishlist_notice_link_color'            => addonify_wishlist_get_option( 'notice_link_color' ),
-			'--adfy_wishlist_notice_link_color_hover'      => addonify_wishlist_get_option( 'notice_link_color_hover' ),
+			'--adfy_wishlist_product_removed_notice_bg_color' => addonify_wishlist_get_option( 'notice_background_color' ),
+			'--adfy_wishlist_product_removed_notice_bg_color' => addonify_wishlist_get_option( 'notice_background_color' ),
+			'--adfy_wishlist_product_removed_notice_text_color' => addonify_wishlist_get_option( 'notice_text_color' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_text_color' => addonify_wishlist_get_option( 'undo_button_label_color' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_hover_text_color' => addonify_wishlist_get_option( 'undo_button_label_color_hover' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_bg_color' => addonify_wishlist_get_option( 'undo_button_background_color' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_hover_bg_color' => addonify_wishlist_get_option( 'undo_button_background_color_hover' ),
 		);
 
 		$css = ':root {';

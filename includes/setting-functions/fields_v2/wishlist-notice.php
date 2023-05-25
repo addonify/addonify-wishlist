@@ -25,7 +25,7 @@ if ( ! function_exists( 'addonify_wishlist_notice_options' ) ) {
 						'type'        => 'number',
 						'design'      => 'arrow', // Arrow & plus-minus.
 						'min'         => 0,
-						'max'         => 30,
+						'max'         => 300,
 						'step'        => 1,
 						'precision'   => 0, // Eg. 1.00, 2.00, 3.00.
 						'className'   => '',
@@ -90,19 +90,33 @@ if ( ! function_exists( 'addonify_wishlist_notice_options' ) ) {
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'notice_text_color' ),
 					),
-					'notice_link_color'       => array(
+					'undo_button_label_color'       => array(
 						'type'          => 'color',
-						'label'         => __( 'Link color', 'addonify-wishlist' ),
+						'label'         => __( 'Undo button label color', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'className'     => '',
-						'value'         => addonify_wishlist_get_option( 'notice_link_color' ),
+						'value'         => addonify_wishlist_get_option( 'undo_button_label_color' ),
 					),
-					'notice_link_color_hover' => array(
+					'undo_button_label_color_hover'       => array(
 						'type'          => 'color',
-						'label'         => __( 'On hover link color', 'addonify-wishlist' ),
+						'label'         => __( 'Undo button label color on hover', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'className'     => '',
-						'value'         => addonify_wishlist_get_option( 'notice_link_color_hover' ),
+						'value'         => addonify_wishlist_get_option( 'undo_button_label_color_hover' ),
+					),
+					'undo_button_background_color'       => array(
+						'type'          => 'color',
+						'label'         => __( 'Undo button background color', 'addonify-wishlist' ),
+						'isAlphaPicker' => true,
+						'className'     => '',
+						'value'         => addonify_wishlist_get_option( 'undo_button_background_color' ),
+					),
+					'undo_button_background_color_hover'       => array(
+						'type'          => 'color',
+						'label'         => __( 'Undo button background color on hover', 'addonify-wishlist' ),
+						'isAlphaPicker' => true,
+						'className'     => '',
+						'value'         => addonify_wishlist_get_option( 'undo_button_background_color_hover' ),
 					),
 				),
 			),

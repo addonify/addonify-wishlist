@@ -74,8 +74,10 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'product_added_to_cart_notice_text'        => esc_html__( '{product_name} has been added to cart.', 'addonify-wishlist' ),
 				'notice_background_color'                  => '',
 				'notice_text_color'                        => '',
-				'notice_link_color'                        => '',
-				'notice_link_color_hover'                  => '',
+				'undo_button_label_color'                  => '',
+				'undo_button_label_color_hover'	   		   => '', 
+				'undo_button_background_color'	   		   => '', 
+				'undo_button_background_color_hover'	   => '', 
 				'icon_position'                            => 'left',
 				'show_empty_wishlist_navigation_link'      => true,
 				'empty_wishlist_navigation_link'           => addonify_wishlist_get_shop_page_id(),
@@ -348,7 +350,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_get_settings_fields' ) ) {
 					),
 					'wishlist_notice'  => array(
 						'title'    => __( 'Wishlist Notice', 'addonify-wishlist' ),
-						'icon'     => "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path d='M21,2H3C1.346,2,0,3.346,0,5V22H24V5c0-1.654-1.346-3-3-3ZM2,5c0-.552,.449-1,1-1H13V20H2V5Zm20,15h-7V4h6c.551,0,1,.448,1,1v15Zm-5-10h3v2h-3v-2Zm0,4h3v2h-3v-2Zm0-8h3v2h-3v-2Z'/></svg>",
+						'icon'     => "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path d='m19,4h-1.101c-.465-2.279-2.485-4-4.899-4H5C2.243,0,0,2.243,0,5v12.854c0,.794.435,1.52,1.134,1.894.318.171.667.255,1.015.255.416,0,.831-.121,1.19-.36l2.95-1.967c.691,1.935,2.541,3.324,4.711,3.324h5.697l3.964,2.643c.36.24.774.361,1.19.361.348,0,.696-.085,1.015-.256.7-.374,1.134-1.1,1.134-1.894v-12.854c0-2.757-2.243-5-5-5ZM2.23,17.979c-.019.012-.075.048-.152.007-.079-.042-.079-.109-.079-.131V5c0-1.654,1.346-3,3-3h8c1.654,0,3,1.346,3,3v7c0,1.654-1.346,3-3,3h-6c-.327,0-.541.159-.565.175l-4.205,2.804Zm19.77,3.876c0,.021,0,.089-.079.131-.079.041-.133.005-.151-.007l-4.215-2.811c-.164-.109-.357-.168-.555-.168h-6c-1.304,0-2.415-.836-2.828-2h4.828c2.757,0,5-2.243,5-5v-6h1c1.654,0,3,1.346,3,3v12.854Z'/></svg>",
 						'sections' => apply_filters( 'addonify_wishlist_notice_options', array() ),
 					),
 					'tools'            => array(

@@ -39,17 +39,14 @@
 	Notices
   -------------------------------------------------------------------------- */
 
-#addonify-wishlist-undo-deleted-product {
+#addonify-wishlist-notice {
 
    position: relative;
 
-  #addonify-wishlist-undo-deleted-product-text {
+ > p {
 
-	@include flex();
-	align-items: center;
-	gap: 30px;
-	justify-content: space-between;
 	position: relative;
+	display: block;
 	color: var(--adfy_wishlist_product_removed_notice_text_color);
     padding: 15px 20px;
     margin-bottom: 30px;
@@ -58,11 +55,6 @@
     overflow: hidden;
 	border-radius: 3px;
 	background-color: var(--adfy_wishlist_product_removed_notice_bg_color);
-
-	@include breakpoint(ipad) {
-
-		gap: 10px;
-	}
 
     #addonify-wishlist-undo-deleted-product-link {
 
@@ -89,4 +81,14 @@
 		}
     }
   }
+}
+
+#addonify-wishlist-empty {
+
+	#addonify-empty-wishlist-para {
+
+		@include flex();
+		align-items: center;
+		gap: 5px;
+	}
 }
