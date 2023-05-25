@@ -96,6 +96,26 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 					),
 				),
 			),
+			'product_options' => array(
+				'title'        => __( 'Product Options', 'addonify-wishlist' ),
+				'type'         => 'sub_section',
+				'sub_sections' => array(
+					'product_in_stock_label'     => array(
+						'type'      => 'text',
+						'className' => '',
+						'label'     => __( 'Product in stock label', 'addonify-wishlist' ),
+						'dependent' => array( 'enable_wishlist' ),
+						'value'     => addonify_wishlist_get_option( 'product_in_stock_label' ),
+					),
+					'product_out_of_stock_label' => array(
+						'type'      => 'text',
+						'className' => '',
+						'label'     => __( 'Product out of stock label', 'addonify-wishlist' ),
+						'dependent' => array( 'enable_wishlist' ),
+						'value'     => addonify_wishlist_get_option( 'product_out_of_stock_label' ),
+					),
+				),
+			),
 		);
 	}
 }

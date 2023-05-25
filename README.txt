@@ -147,6 +147,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Fix: Add to wishlist button dynamic CSS. #361
 - Added: Color options for wishlist notice.
 - Added: Added to cart notice and related option to match the option `Remove product from wishlist after added to cart`.
+- Added: Label options for product stock status.
 - Fix: Notice displays for the guest users.
 
 = 2.0.2 - 18 May, 2023 =
