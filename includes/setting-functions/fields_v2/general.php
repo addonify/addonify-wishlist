@@ -17,7 +17,7 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 	 */
 	function addonify_wishlist_general_v_2_options() {
 		return array(
-			'general_options'             => array(
+			'general_options' => array(
 				'title'        => __( 'General Options', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
@@ -80,7 +80,7 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 					),
 				),
 			),
-			'style_options'               => array(
+			'style_options'   => array(
 				'title'        => __( 'Style Options', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
@@ -93,41 +93,6 @@ if ( ! function_exists( 'addonify_wishlist_general_v_2_options' ) ) {
 						'placeholder'    => '#app { color: blue; }',
 						'width'          => 'full',
 						'value'          => addonify_wishlist_get_option( 'custom_css' ),
-					),
-				),
-			),
-			'product_removal_undo_notice' => array(
-				'title'        => __( 'Product Removal Undo Notice Options', 'addonify-wishlist' ),
-				'type'         => 'sub_section',
-				'sub_sections' => array(
-					'undo_action_prelabel_text' => array(
-						'type'        => 'text',
-						'className'   => '',
-						'label'       => __( 'Text before Undo link', 'addonify-wishlist' ),
-						'description' => __( 'Set the text to be displayed before undo link. Use, placeholder {product_name} to display name of the product being removed from the wishlist.', 'addonify-wishlist' ),
-						'dependent'   => array( 'enable_wishlist' ),
-						'value'       => addonify_wishlist_get_option( 'undo_action_prelabel_text' ),
-					),
-					'undo_action_label'         => array(
-						'type'        => 'text',
-						'className'   => '',
-						'label'       => __( 'Undo link label', 'addonify-wishlist' ),
-						'description' => __( 'Set the label for undo link.', 'addonify-wishlist' ),
-						'dependent'   => array( 'enable_wishlist' ),
-						'value'       => addonify_wishlist_get_option( 'undo_action_label' ),
-					),
-					'undo_notice_timeout'       => array(
-						'type'        => 'number',
-						'design'      => 'arrow', // Arrow & plus-minus.
-						'min'         => 0,
-						'max'         => 30,
-						'step'        => 1,
-						'precision'   => 0, // Eg. 1.00, 2.00, 3.00.
-						'className'   => '',
-						'label'       => __( 'Undo notice timeout (in seconds)', 'addonify-wishlist' ),
-						'dependent'   => array( 'enable_wishlist' ),
-						'description' => __( 'Specify the duration for which the undo notice should be visible', 'addonify-wsihlist' ),
-						'value'       => addonify_wishlist_get_option( 'undo_notice_timeout' ),
 					),
 				),
 			),

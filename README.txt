@@ -145,6 +145,9 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 - Tweak: How reactive state on plugin setting's page is managed (vue js).
 - Fix: Add to wishlist button dynamic CSS. #361
+- Added: Color options for wishlist notice.
+- Added: Added to cart notice and related option to match the option `Remove product from wishlist after added to cart`.
+- Fix: Notice displays for the guest users.
 
 = 2.0.2 - 18 May, 2023 =
 
