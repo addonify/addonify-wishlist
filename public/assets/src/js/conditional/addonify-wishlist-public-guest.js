@@ -104,6 +104,9 @@
                 }
 
                 $(document).on('addonify_removed_from_wishlist', function (event, data) {
+
+                    $('.adfy-wishlist-btn[data-product_id="' + data.productID + '"]').removeClass('added-to-wishlist');
+
                     if (data.action === 'added-to-cart') {
                         adfyWishlistAddedtoCartNotice(data.productName);
                     }
@@ -326,7 +329,8 @@
                         $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
                         $('#addonify-wishlist__clear-all').hide();
                     }
-                    $('#addonify-wishlist-undo-deleted-product').html('');
+
+                    $('.adfy-wishlist-btn[data-product_id="' + product_id + '"]').removeClass('added-to-wishlist');
                 })
             },
             onSideBarAndPopup: function () {
@@ -470,8 +474,6 @@
                 product_ids.splice(product_ids.indexOf(id_to_remove), 1);
                 setProductids(product_ids);
             }
-
-            $('.addonify-add-to-wishlist-btn').removeClass('added-to-wishlist');
 
             // Triggering custom event when product is added to wishlist. 
             // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.

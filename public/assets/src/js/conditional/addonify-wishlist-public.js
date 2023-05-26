@@ -148,6 +148,8 @@
             let product_id = addToCartButton.data('product_id');
             let product_name = addToCartButton.data('product_name');
 
+            $('.adfy-wishlist-btn[data-product_id="' + product_id + '"]').removeClass('added-to-wishlist');
+
             let parentProductRow = '';
             let parentProductSiblings = 0;
 
@@ -212,6 +214,8 @@
         });
 
         $(document).on('addonify_removed_from_wishlist', function(event, data) {
+
+            $('.adfy-wishlist-btn[data-product_id="' + data.productID + '"]').removeClass('added-to-wishlist');
 
             let parentProductRow = '';
 
@@ -368,8 +372,6 @@
                 function (response) {
                     // console.log(response);
                     if (response.success) {
-
-                        $('button[data-product_id="' + product_id + '"]').removeClass('added-to-wishlist');
 
                         // Triggering custom event when product is added to wishlist. 
                         // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
