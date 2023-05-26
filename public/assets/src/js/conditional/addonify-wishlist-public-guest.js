@@ -52,8 +52,8 @@
                         if (!product_button.hasClass('addonify-custom-wishlist-btn')) {
                             product_button.find('span').html(addedToWishlistButtonLabel);
                             product_button.find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
-                            product_button.addClass('added-to-wishlist');
                         }
+                        product_button.addClass('added-to-wishlist');
                     });
 
                     $('.addonify_wishlist-cart-item-add-to-wishlist').each(function () {
