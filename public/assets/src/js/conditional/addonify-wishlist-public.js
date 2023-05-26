@@ -370,7 +370,6 @@
                 addonifyWishlistJSObject.ajax_url,
                 ajaxData,
                 function (response) {
-                    // console.log(response);
                     if (response.success) {
 
                         // Triggering custom event when product is added to wishlist. 

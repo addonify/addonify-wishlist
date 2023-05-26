@@ -280,7 +280,6 @@
                         p_tag.remove();
                     }
                     if (product_ids.length <= 0) {
-                        console.log('here')
                         $('#addonify-wishlist-show-sidebar-btn').addClass('hidden');
                         $('#addonify-wishlist__clear-all').hide();
                     }
