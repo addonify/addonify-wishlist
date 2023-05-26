@@ -162,6 +162,13 @@ class Addonify_Wishlist_Public {
 				return $arr;
 			}
 		);
+
+		add_filter(
+			'woocommerce_loop_add_to_cart_args',
+			array( $this, 'add_to_cart_args' ),
+			15,
+			2
+		);
 	}
 
 	/**
@@ -367,6 +374,7 @@ class Addonify_Wishlist_Public {
 				'undoActionPrelabelText'                => addonify_wishlist_get_option( 'undo_action_prelabel_text' ),
 				'undoActionLabel'                       => addonify_wishlist_get_option( 'undo_action_label' ),
 				'undoNoticeTimeout'                     => addonify_wishlist_get_option( 'undo_notice_timeout' ),
+				'addedtoCartNoticeText'                 => addonify_wishlist_get_option( 'product_added_to_cart_notice_text' ),
 				'isLoggedIn'                            => is_user_logged_in(),
 				'addedToWishlistButtonLabel'            => addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' ),
 				'addonify_get_wishlist_table'           => 'addonify_get_wishlist_table',
@@ -384,6 +392,7 @@ class Addonify_Wishlist_Public {
 				'pageLinkLabel'                         => addonify_wishlist_get_option( 'empty_wishlist_navigation_link_label' ),
 				'showPageLinkLabel'                     => (bool) addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' ),
 				'proExists'                             => class_exists( 'Addonify_Wishlist_Pro' ),
+				'removeProductAfterAddedtoCart'         => addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ),
 			)
 		);
 	}
@@ -535,6 +544,21 @@ class Addonify_Wishlist_Public {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Functions to add product name data attribute in add to cart button.
+	 *
+	 * @since    2.0.3
+	 *
+	 * @param array $args Arguments.
+	 * @param array $product Product object.
+	 */
+	public function add_to_cart_args( $args, $product ) {
+
+		$args['attributes']['data-product_name'] = $product->get_title();
+
+		return $args;
 	}
 
 	/**
@@ -1422,10 +1446,15 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_sidebar_modal_view_wishlist_btn_label_color_hover' => addonify_wishlist_get_option( 'sidebar_modal_view_wishlist_btn_label_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_view_wishlist_btn_bg_color' => addonify_wishlist_get_option( 'sidebar_modal_view_wishlist_btn_bg_color' ),
 			'--adfy_wishlist_sidebar_modal_view_wishlist_btn_bg_color_hover' => addonify_wishlist_get_option( 'sidebar_modal_view_wishlist_btn_bg_color_hover' ),
-			'--adfy_wishlist_sidebar_modal_notification_text_color' => addonify_wishlist_get_option( 'sidebar_modal_notification_text_color' ),
-			'--adfy_wishlist_sidebar_modal_notification_bg_color' => addonify_wishlist_get_option( 'sidebar_modal_notification_bg_color' ),
 			'--adfy_wishlist_sidebar_modal_in_stock_text_color' => addonify_wishlist_get_option( 'sidebar_modal_in_stock_text_color' ),
 			'--adfy_wishlist_sidebar_modal_out_of_stock_text_color' => addonify_wishlist_get_option( 'sidebar_modal_out_of_stock_text_color' ),
+			'--adfy_wishlist_product_removed_notice_bg_color' => addonify_wishlist_get_option( 'notice_background_color' ),
+			'--adfy_wishlist_product_removed_notice_bg_color' => addonify_wishlist_get_option( 'notice_background_color' ),
+			'--adfy_wishlist_product_removed_notice_text_color' => addonify_wishlist_get_option( 'notice_text_color' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_text_color' => addonify_wishlist_get_option( 'undo_button_label_color' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_hover_text_color' => addonify_wishlist_get_option( 'undo_button_label_color_hover' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_bg_color' => addonify_wishlist_get_option( 'undo_button_background_color' ),
+			'--adfy_wishlist_product_removed_notice_undo_btn_hover_bg_color' => addonify_wishlist_get_option( 'undo_button_background_color_hover' ),
 		);
 
 		$css = ':root {';

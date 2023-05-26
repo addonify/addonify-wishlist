@@ -25,8 +25,8 @@ defined( 'ABSPATH' ) || exit;
 				</svg>
 			</button>
 		</div>
-		<div id="addonify-wishlist-undo-deleted-product">
-		</div>
+
+		<div id="addonify-wishlist-notice" class="addonify-wishlist-notice"></div>
 
 		<form action="" method="POST" id="addonify-wishlist-sidebar-form">
 			<?php do_action( 'addonify_wishlist_before_wishlist_form_table' ); ?>

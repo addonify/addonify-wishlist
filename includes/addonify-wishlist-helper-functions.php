@@ -166,14 +166,14 @@ if ( ! function_exists( 'addonify_wishlist_get_product_avaibility' ) ) {
 				$product_avaibility['class']      = 'in-stock';
 				$product_avaibility['avaibility'] = apply_filters(
 					'addonify_wishlist_product_in_stock_label',
-					esc_html__( 'In stock', 'addonify-wishlist' )
+					addonify_wishlist_get_option( 'product_in_stock_label' )
 				);
 				break;
 			case 'outofstock':
 				$product_avaibility['class']      = 'out-of-stock';
 				$product_avaibility['avaibility'] = apply_filters(
 					'addonify_wishlist_product_out_of_stock_label',
-					esc_html__( 'Out of stock', 'addonify-wishlist' )
+					addonify_wishlist_get_option( 'product_out_of_stock_label' )
 				);
 				break;
 			default:

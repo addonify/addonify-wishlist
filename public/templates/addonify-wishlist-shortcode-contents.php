@@ -19,8 +19,8 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 <div id="addonify-wishlist-page-container">
 
-	<div id="addonify-wishlist-undo-deleted-product">
-	</div>
+	<div id="addonify-wishlist-notice" class="addonify-wishlist-notice"></div>
+
 	<div id="addonify-wishlist-empty">
 		<?php
 		if (

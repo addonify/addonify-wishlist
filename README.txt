@@ -3,8 +3,8 @@
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
-Tested up to: 6.2.1
-Stable tag: 2.0.2
+Tested up to: 6.2.2
+Stable tag: 2.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,15 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 9. Save for later (Add to wishlist) button in cart page.
 
 == Changelog ==
+
+= 2.0.3 - 26 May, 2023 =
+
+- Added: Color options for wishlist notice.
+- Added: Added to cart notice and related option to match the option `Remove product from wishlist after added to cart`.
+- Added: Label options for product stock status.
+- Tweak: How reactive state on plugin setting's page is managed (vue js).
+- Fix: Add to wishlist button dynamic CSS. #361
+- Fix: Notice displays for the guest users.
 
 = 2.0.2 - 18 May, 2023 =
 

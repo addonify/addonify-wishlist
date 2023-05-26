@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { ElMessage } from "element-plus"; // @ts-ignore
 import { apiEndpoint } from "@helpers/endpoint"; // @ts-ignore
 import { jsonFileName } from "@helpers/global"; // @ts-ignore
+import { commonHeader } from "@helpers/api"; // @ts-ignore
+import { getCurrentDateTime } from "@helpers/functions"; // @ts-ignore
 
 /**
  *
@@ -22,7 +24,7 @@ const { __ } = wp.i18n;
  * @since 2.0.0
  */
 
-let oldSettings: any = {};
+let oldSettings: any = [];
 
 /**
  *
@@ -70,6 +72,19 @@ export const useSettingsStore = defineStore({
 		 */
 		haveChanges: (state: any): boolean =>
 			!isEqual(state.settings, oldSettings) ? true : false,
+
+		/**
+		 *
+		 * Check if we do have state of settings in the memory.
+		 * If we do have, then return true.
+		 *
+		 * @param {Object} state
+		 * @returns {boolean} true/false
+		 * @since 2.0.3
+		 */
+
+		haveSettingsStateInMemory: (state: any): boolean =>
+			Object.keys(state.settings).length === 0 ? false : true,
 	},
 
 	actions: {
@@ -95,6 +110,7 @@ export const useSettingsStore = defineStore({
 			apiFetch({
 				path: apiEndpoint + "/get_options",
 				method: "GET",
+				headers: commonHeader,
 			})
 				.then((res: any) => {
 					/**
@@ -151,6 +167,7 @@ export const useSettingsStore = defineStore({
 			apiFetch({
 				path: `${apiEndpoint}/${endpoint}`,
 				method: "POST",
+				headers: commonHeader,
 			})
 				.then((res: any) => {
 					/**
@@ -234,6 +251,7 @@ export const useSettingsStore = defineStore({
 			apiFetch({
 				path: apiEndpoint + "/update_options",
 				method: "POST",
+				headers: commonHeader,
 				data: {
 					settings_values: payload,
 				},
@@ -255,12 +273,21 @@ export const useSettingsStore = defineStore({
 							offset: 50,
 							duration: 3000,
 						});
+
+						let tempOptionsState = cloneDeep(this.settings);
+						this.settings = {};
+						this.settings = cloneDeep(tempOptionsState);
+						oldSettings = cloneDeep(this.settings);
 					} else {
 						ElMessage.error({
 							message: res.message,
 							offset: 50,
 							duration: 10000,
 						});
+
+						setTimeout(() => {
+							window.location.reload();
+						}, 2000);
 					}
 				})
 				.catch((err: any) => {
@@ -276,9 +303,13 @@ export const useSettingsStore = defineStore({
 						offset: 50,
 						duration: 10000,
 					});
+
+					let tempOptionsState = cloneDeep(oldSettings);
+					this.settings = {};
+					this.settings = cloneDeep(tempOptionsState);
 				})
 				.finally(() => {
-					this.fetchSettings();
+					//this.fetchSettings();
 					this.status.isSaving = false;
 				});
 		},
@@ -306,6 +337,7 @@ export const useSettingsStore = defineStore({
 			apiFetch({
 				path: apiEndpoint + "/export_options",
 				method: "GET",
+				headers: commonHeader,
 			})
 				.then((res: any) => {
 					/**
@@ -317,12 +349,11 @@ export const useSettingsStore = defineStore({
 					this.status.message = res.message; // Get the message.
 
 					if (res.success === true) {
-						let date = new Date().getTime();
 						let link = document.createElement("a");
 						link.href = res.url;
 						link.setAttribute(
 							"download",
-							`${jsonFileName}-all-settings-${date}.json`
+							`${jsonFileName}-all-settings-${getCurrentDateTime}.json`
 						);
 						document.body.appendChild(link);
 						link.click();
@@ -380,6 +411,7 @@ export const useSettingsStore = defineStore({
 			apiFetch({
 				path: apiEndpoint + "/import_options",
 				method: "POST",
+				headers: commonHeader,
 				body: payload,
 			})
 				.then((res: any) => {
@@ -396,6 +428,10 @@ export const useSettingsStore = defineStore({
 							offset: 50,
 							duration: 3000,
 						});
+
+						setTimeout(() => {
+							window.location.reload();
+						}, 2000);
 					} else {
 						ElMessage.error({
 							message: this.status.message,
@@ -420,7 +456,7 @@ export const useSettingsStore = defineStore({
 					});
 				})
 				.finally(() => {
-					this.fetchSettings();
+					//this.fetchSettings();
 					this.status.isImporting = false;
 				});
 		},
