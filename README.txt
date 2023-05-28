@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
 Tested up to: 6.2.2
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -140,6 +140,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 9. Save for later (Add to wishlist) button in cart page.
 
 == Changelog ==
+
+= 2.0.4 - 28 May, 2023 =
+
+- Fix: PHP warnings. [GitHub Issue #374](https://github.com/addonify/addonify-wishlist/issues/374)
 
 = 2.0.3 - 26 May, 2023 =
 
