@@ -305,7 +305,11 @@ class Addonify_Wishlist {
 
 		$current_plugin_path_name = plugin_basename( ADDONIFY_WISHLIST_PLUGIN_FILE );
 
-		if ( 'update' === $options['action'] && 'plugin' === $options['type'] ) {
+		if (
+			( isset( $options['action'] ) && 'update' === $options['action'] ) &&
+			( isset( $options['type'] ) && 'plugin' === $options['type'] ) &&
+			isset( $options['plugins'] )
+		) {
 			foreach ( $options['plugins'] as $each_plugin ) {
 				if ( $each_plugin === $current_plugin_path_name ) {
 					global $addonify_wishlist;
