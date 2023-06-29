@@ -4,7 +4,7 @@ Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
 Tested up to: 6.2.2
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -45,7 +45,6 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Sticky off-canvas sidebar drawer to show the wishlist.
 - Display wishlist items in sidebar drawer for quick navigation.
 - Custom label & icon for sidebar drawer trigger button.
-- Custom time duration option to save the wishlist cookie.
 - Save for later button on WooCommerce cart table.
 - Shortcode that can use used anywhere to display the wishlist.
 - Require login before a user can add products to wishlist.
@@ -140,6 +139,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 9. Save for later (Add to wishlist) button in cart page.
 
 == Changelog ==
+
+= 2.0.5 - 29 June, 2023 =
+
+- Fix: Invalid JSON body passed while importing options.
 
 = 2.0.4 - 28 May, 2023 =
 
