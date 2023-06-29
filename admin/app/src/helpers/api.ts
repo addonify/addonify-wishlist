@@ -8,5 +8,4 @@
 export const commonHeader = {
 	charset: "utf-8",
 	"cache-control": "no-cache",
-	"content-type": "application/json",
 };
