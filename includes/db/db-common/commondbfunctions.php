@@ -107,31 +107,58 @@ trait CommonDBFunctions {
 	/**
 	 * Get Rows with provided field name and value
 	 *
-	 * @param mixed  $field Field Name.
-	 * @param string $value Field Value.
+	 * @param array  $fields Fields to be compared.
 	 * @param string $order_by Order Results.
+	 * @param int    $limit Limit value.
+	 * @param int    $offset Offset value.
 	 * @return object
 	 */
-	public static function get_rows( $field, $value = '', $order_by = 'DESC' ) {
+	public static function get_rows( $fields, $order_by = 'DESC', $limit = false, $offset = 0 ) {
 
 		global $wpdb;
 
 		$table_name = self::get_table_name();
 		$where      = '';
 		$limit_     = '';
-		$orderby    = '';
-		if ( is_array( $field ) ) {
-			$offset = isset( $field['offset'] ) ? $field['offset'] : 0;
-			$limit  = isset( $field['limit'] ) ? $field['limit'] : 50;
-			$limit_ = " limit {$offset}, {$limit} ";
-		} else {
-			$where = " WHERE {$field} = '{$value}' ";
-		}
-		if ( in_array( strtolower( $order_by ), array( 'asc', 'desc' ), true ) ) {
-			$orderby = ' ORDER BY id ' . strtoupper( $order_by );
+		$order_by_  = '';
+
+		if ( is_array( $fields ) ) {
+
+			$fields_count = count( $fields );
+
+			$where = ' WHERE ';
+
+			$counter = 1;
+
+			foreach ( $fields as $field_id => $field_value ) {
+
+				if ( $field_value === NULL ) {
+					$where .= "{$field_id} IS NULL";
+				} else {
+					$where .= "{$field_id} = '{$field_value}' ";
+				}
+
+				if ( $counter < $fields_count ) {
+					$where .= ' AND ';
+				}
+
+				$counter++;
+			}
+
+			if ( in_array( strtolower( $order_by ), array( 'asc', 'desc' ), true ) ) {
+				$order_by_ = ' ORDER BY id ' . strtoupper( $order_by );
+			}
+
+			if ( $limit ) {
+				$limit_ = " LIMIT {$offset}, {$limit}";
+			}
 		}
 
-		return $wpdb->get_results( "SELECT * FROM {$table_name} {$where} {$orderby} {$limit_}" ); //phpcs:ignore
+		if ( ! empty( $limit_ ) ) {
+			return $wpdb->get_results( "SELECT * FROM {$table_name} {$where} {$order_by_} {$limit_}" ); //phpcs:ignore
+		}
+
+		return $wpdb->get_results( "SELECT * FROM {$table_name} {$where} {$order_by_}" ); //phpcs:ignore
 	}
 
 	/**

@@ -20,3 +20,5 @@ add_action( 'addonify_wishlist_render_shortcode_content', 'addonify_wishlist_ren
 
 add_action( 'addonify_wishlist_popup_action_btns', 'addonify_wishlist_render_popup_wishlist_link_button' );
 add_action( 'addonify_wishlist_popup_action_btns', 'addonify_wishlist_render_popup_login_link_button' );
+
+add_action( 'addonify_wishlist_already_in_wishlist_modal_content', 'addonify_wishlist_render_already_in_wishlist_modal_content' );

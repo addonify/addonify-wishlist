@@ -108,6 +108,10 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 			'login_url'             => '',
 			'require_login'         => false,
 			'display_popup_notice'  => false,
+			'data_attrs'            => array(
+				'product_id'   => $product->get_id(),
+				'product_name' => $product->get_title(),
+			),
 		);
 
 		if ( $classes ) {
@@ -150,7 +154,10 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 
 			$add_to_wishlist_button_args['button_classes'][] = 'added-to-wishlist';
 
-			$add_to_wishlist_button_args['button_label'] = addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' );
+			$add_to_wishlist_button_args['button_label'] = apply_filters(
+				'addonify_wishlist_already_in_wishlist_label',
+				addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' )
+			);
 
 			$add_to_wishlist_button_args['icon'] = 'heart-style-one';
 
@@ -560,3 +567,21 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_login_link_button' ) ) {
 	}
 }
 
+
+
+if ( ! function_exists( 'addonify_wishlist_render_already_in_wishlist_modal_content' ) ) {
+
+	function addonify_wishlist_render_already_in_wishlist_modal_content() {
+		?>
+		<div class="adfy-wishlist-icon-entry">
+			<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three"></i>
+		</div>
+		<div id="addonify-wishlist-modal-response">
+			<p class="response-text"><?php echo esc_html( addonify_wishlist_get_option( 'product_already_in_wishlist_text' ) ); ?></p>
+		</div>
+		<div class="addonify-wishlist-modal-btns">
+			<?php do_action( 'addonify_wishlist_popup_action_btns' ); ?>
+		</div>
+		<?php
+	}
+}

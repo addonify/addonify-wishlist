@@ -340,7 +340,7 @@
                 });
 
                 // Close popup modal.
-                $body.on('click', '#addonify-wishlist-close-modal-btn, #addonify-wishlist-modal-wrapper', function () {
+                $body.on('click', '#addonify-wishlist-close-modal-btn, #addonify-wishlist-modal-overlay', function () {
                     $body.removeClass('addonify-wishlist-modal-is-open');
                 })
 

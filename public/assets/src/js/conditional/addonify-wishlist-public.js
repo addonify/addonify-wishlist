@@ -30,11 +30,11 @@
                     if (addonifyWishlistJSObject.removeAlreadyAddedProductFromWishlist === '1') {
                         addonifyRemoveFromWishlist(addToWishlistButton)
                     } else {
-                        addonifyShowPopupModal(
-                            addonifyWishlistJSObject.popupAlreadyInWishlistText,
-                            addToWishlistButton.data('product_name'),
-                            'success'
-                        );
+                        let alreadyInWishlistModalTemplate = addonifyWishlistJSObject.popupAlreadyInWishlistText;
+                        alreadyInWishlistModalTemplate = alreadyInWishlistModalTemplate.includes('{product_name}') ? alreadyInWishlistModalTemplate.replace('{product_name}', addToWishlistButton.data('product_name')) : alreadyInWishlistModalTemplate;
+                        
+                        $('.addonify-wishlist-modal-body').html(alreadyInWishlistModalTemplate);
+                        $body.addClass('addonify-wishlist-modal-is-open');
                     }
                 } else {
                     addonifyAddToWishlist(addToWishlistButton);
@@ -43,7 +43,7 @@
         }
 
         // Close popup modal.
-        $body.on('click', '#addonify-wishlist-close-modal-btn, #addonify-wishlist-modal-wrapper', function () {
+        $body.on('click', '#addonify-wishlist-close-modal-btn, #addonify-wishlist-modal-overlay', function () {
             $body.removeClass('addonify-wishlist-modal-is-open');
         })
 

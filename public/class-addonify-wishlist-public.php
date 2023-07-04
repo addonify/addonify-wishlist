@@ -366,7 +366,7 @@ class Addonify_Wishlist_Public {
 				'addedToWishlistText'                   => addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' ),
 				'initialAddToWishlistButtonLabel'       => addonify_wishlist_get_option( 'btn_label' ),
 				'popupAddedToWishlistText'              => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
-				'popupAlreadyInWishlistText'            => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
+				'popupAlreadyInWishlistText'            => $this->already_in_wishlist_template(),
 				'emptyWishlistText'                     => addonify_wishlist_get_option( 'empty_wishlist_label' ),
 				'sidebarEmptyWishlistText'              => addonify_wishlist_get_option( 'sidebar_empty_wishlist_label' ),
 				'removedFromWishlistText'               => addonify_wishlist_get_option( 'product_removed_from_wishlist_text' ),
@@ -1397,6 +1397,12 @@ class Addonify_Wishlist_Public {
 				$adfy_wishlist->remove_from_wishlist( sanitize_text_field( wp_unslash( $_REQUEST['add-to-cart'] ) ) ); //phpcs:ignore
 			}
 		}
+	}
+
+	public function already_in_wishlist_template() {
+		ob_start();
+		do_action( 'addonify_wishlist_already_in_wishlist_modal_content' );
+		return ob_get_clean();
 	}
 
 	/**

@@ -12,7 +12,7 @@
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
 ?>
-
+<div id="addonify-wishlist-modal-overlay"></div>
 <div id="addonify-wishlist-modal-wrapper" class="<?php echo esc_attr( $css_classes ); ?>" data_model-width="default">
 
 	<?php do_action( 'addonify_wishlist_after_popup_opening_tag' ); ?>
