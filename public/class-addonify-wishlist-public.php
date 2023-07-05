@@ -1399,6 +1399,11 @@ class Addonify_Wishlist_Public {
 		}
 	}
 
+	/**
+	 * Gets template for already in wishlist modal content.
+	 *
+	 * @since 2.0.6
+	 */
 	public function already_in_wishlist_template() {
 		ob_start();
 		do_action( 'addonify_wishlist_already_in_wishlist_modal_content' );
