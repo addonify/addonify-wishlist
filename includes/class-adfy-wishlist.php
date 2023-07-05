@@ -138,27 +138,34 @@ class Adfy_Wishlist {
 
 		$return_boolean = false;
 
-		do_action( 'addonify_wishlist_before_adding_to_wishlist' );
-
 		if ( is_user_logged_in() ) {
 			if ( array_key_exists( (int) $wishlist_id, $this->wishlist_items ) ) {
-				$save['user_id']            = get_current_user_id();
-				$save['site_url']           = get_bloginfo( 'url' );
+
+				$current_user_id = get_current_user_id();
+				$site_url        = get_site_url();
+
+				$save = array();
+
+				$save['user_id']            = $current_user_id;
+				$save['site_url']           = $site_url;
 				$save['parent_wishlist_id'] = $wishlist_id;
 				$save['product_id']         = (int) $product_id;
 
+				do_action( 'addonify_wishlist_before_adding_to_wishlist', $save );
+
 				$insert_id = $this->wishlist->insert_row( $save );
 				if ( $insert_id ) {
+
 					$this->wishlist_items[ $wishlist_id ]['product_ids'][] = (int) $product_id;
 
 					$return_boolean = true;
 				}
+
+				do_action( 'addonify_wishlist_after_adding_to_wishlist', $save );
 			}
 		}
 
 		$this->wishlist_items_count = $this->get_wishlist_count();
-
-		do_action( 'addonify_wishlist_after_adding_to_wishlist' );
 
 		return $return_boolean;
 	}
