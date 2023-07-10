@@ -176,6 +176,8 @@
 
          #addonify-wishlist-table {
 
+            border: none;
+
             thead {
 
                 display: none;
@@ -191,12 +193,13 @@
                     margin-bottom: 30px;
                     padding: 20px 20px 20px 90px;
                     border: 1px solid #EEEEEE;
-                    border-radius: 5px;
+                    border-radius: 10px;
 
                     td {
 
                         padding: 10px 0;
                         border: none;
+                        line-height: 1.4;
                         border-bottom: 1px dotted #EEEEEE;
 
                         &:last-child {
@@ -268,5 +271,11 @@
                 }
             }
         }
+    }
+
+    // Toolbar
+    #addonify-wishlist-page-container #addonify-wishlist-page-toolbar {
+
+        justify-content: center;
     }
 }
