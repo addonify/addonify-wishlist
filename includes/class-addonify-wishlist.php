@@ -247,8 +247,6 @@ class Addonify_Wishlist {
 		} else {
 			$plugin_public = new Addonify_Wishlist_Public_Deprecated( $this->get_plugin_name(), $this->get_version() );
 		}
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'public_init' );
 	}
 
 	/**

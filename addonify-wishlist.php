@@ -74,9 +74,10 @@ require_once plugin_dir_path( __FILE__ ) . 'admin/app.php';
  */
 function run_addonify_wishlist() {
 
-	$plugin = new Addonify_Wishlist();
-	$plugin->run();
+	if ( class_exists( 'WooCommerce' ) ) {
 
+		$plugin = new Addonify_Wishlist();
+		$plugin->run();
+	}
 }
-
-run_addonify_wishlist();
+add_action( 'plugins_loaded', 'run_addonify_wishlist' );

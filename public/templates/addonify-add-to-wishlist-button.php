@@ -23,13 +23,7 @@ if ( $display_icon ) {
 	}
 }
 
-$wishlist               = '';
 $button_label_preserved = '';
-if ( isset( $parent_wishlist_id ) ) {
-	$wishlist = 'data-wishlist_id="' . $parent_wishlist_id . '"';
-} else {
-	$parent_wishlist_id = '';
-}
 if ( $preserve_button_label ) {
 	$button_label_preserved = 'data-wishlist_label="' . esc_html( $preserve_button_label ) . '"';
 }
@@ -41,70 +35,11 @@ if ( $data_attrs ) {
 		$data_attributes .= 'data-' . $data_attrs_id . '="' . $data_attrs_value . '" ';
 	}
 }
-
-if ( true === $require_login ) {
-	if ( $login_url ) {
-		?>
-		<a
-			href="<?php echo esc_url( $login_url ); ?>" 
-			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>"
-			<?php echo $data_attributes; // phpcs:ignore ?>
-			<?php echo $button_label_preserved; //phpcs:ignore ?>
-		>
-			<?php echo wp_kses_post( $label ); ?>
-		</a>
-		<?php
-	} else {
-		?>
-		<button
-			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
-			<?php echo $data_attributes; // phpcs:ignore ?>
-			<?php echo $button_label_preserved; //phpcs:ignore ?>
-		>
-			<?php echo wp_kses_post( $label ); ?>
-		</button>
-		<?php
-	}
-} else {
-
-	if (
-		( addonify_wishlist_get_option( 'after_add_to_wishlist_action' ) === 'redirect_to_wishlist_page' ) &&
-		is_user_logged_in()
-	) {
-		if ( ! $in_wishlist ) {
-			?>
-			<a
-				href="?addonify-add-to-wishlist=<?php echo esc_attr( $product_id ); ?>"
-				class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
-				<?php echo $data_attributes; // phpcs:ignore ?>
-				<?php echo esc_attr( $wishlist ); ?>
-				<?php echo $button_label_preserved; //phpcs:ignore ?>
-			>
-				<?php echo wp_kses_post( $label ); ?>
-			</a>
-			<?php
-		} else {
-			?>
-			<a
-				href="?addonify-remove-from-wishlist=<?php echo esc_attr( $product_id ); ?>&wishlist=<?php echo esc_attr( $parent_wishlist_id ); ?>"
-				class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
-				<?php echo $data_attributes; // phpcs:ignore ?>
-				<?php echo esc_attr( $wishlist ); ?>
-				<?php echo $button_label_preserved; //phpcs:ignore ?>
-			>
-				<?php echo wp_kses_post( $label ); ?>
-			</a>
-			<?php
-		}
-	} else {
-		?>
-		<button
-			class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
-			<?php echo $data_attributes; // phpcs:ignore ?>
-			<?php echo $button_label_preserved; //phpcs:ignore ?>
-		>
-			<?php echo wp_kses_post( $label ); ?>
-		</button>
-		<?php
-	}
-}
+?>
+<button
+	class="<?php echo esc_attr( implode( ' ', $button_classes ) ); ?>" 
+	<?php echo $data_attributes; // phpcs:ignore ?>
+	<?php echo $button_label_preserved; //phpcs:ignore ?>
+>
+	<?php echo wp_kses_post( $label ); ?>
+</button>
