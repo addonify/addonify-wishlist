@@ -140,6 +140,7 @@ class Wishlist {
 	 * @return int|false Returns wishlist row id on success, false otherwise.
 	 */
 	public function seed_wishlist_table( $wishlist_name = false, $wishlist_visibility = false ) {
+
 		$insert_data = array(
 			'user_id'             => get_current_user_id(),
 			'site_url'            => get_bloginfo( 'url' ),
@@ -148,7 +149,12 @@ class Wishlist {
 			'share_key'           => addonify_wishlist_reverse_num( time() ),
 		);
 
-		return $this->insert_row( $insert_data );
+		$wishlist_id = $this->insert_row( $insert_data );
+
+		// Set default wishlist in the user meta.
+		addonify_wishlist_set_user_default_wishlist_in_meta( get_current_user_id(), $wishlist_id );
+
+		return $wishlist_id;
 	}
 
 	/**

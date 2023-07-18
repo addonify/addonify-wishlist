@@ -10,7 +10,6 @@
  */
 
 if ( ! function_exists( 'addonify_wishlist_is_woocommerce_active' ) ) {
-
 	/**
 	 * Check if woocommerce is active.
 	 *
@@ -25,61 +24,161 @@ if ( ! function_exists( 'addonify_wishlist_is_woocommerce_active' ) ) {
 }
 
 
+if ( ! function_exists( 'addonify_wishlist_get_user_default_wishlist' ) ) {
+	/**
+	 * Gets user's default wishlist ID.
+	 *
+	 * @since  2.0.6
+	 */
+	function addonify_wishlist_get_user_default_wishlist() {
+
+		global $adfy_wishlist;
+
+		return $adfy_wishlist->get_default_wishlist_id();
+	}
+}
+
+
+if ( ! function_exists( 'addonify_wishlist_get_user_wishlists_data' ) ) {
+	/**
+	 * Get user's wishlists data.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $user_id User id.
+	 * @return array Wishlists data.
+	 */
+	function addonify_wishlist_get_user_wishlists_data( $user_id = 0 ) {
+
+		if ( ! $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		global $adfy_wishlist;
+
+		return $adfy_wishlist->get_user_wishlists_data( $user_id );
+	}
+}
+
+
 if ( ! function_exists( 'addonify_wishlist_get_wishlist_items' ) ) {
 	/**
 	 * Get the items in the wishlist.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param int $wishlist_id Wishlist ID.
 	 * @return array $wishlist_items Array of wishlist items.
 	 */
-	function addonify_wishlist_get_wishlist_items() {
+	function addonify_wishlist_get_wishlist_items( $wishlist_id = 0 ) {
+
 		global $adfy_wishlist;
-		return $adfy_wishlist->get_wishlist_items();
+
+		return $adfy_wishlist->get_wishlist_items( $wishlist_id );
 	}
 }
 
-if ( ! function_exists( 'addonify_wishlist_get_wishlist_items_count' ) ) {
 
+if ( ! function_exists( 'addonify_wishlist_get_wishlist_items_count' ) ) {
 	/**
 	 * Get the count of items in the wishlist.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param int $wishlist_id Wishlist id.
 	 * @return int Count of items.
 	 */
-	function addonify_wishlist_get_wishlist_items_count() {
-		global $adfy_wishlist;
-		return $adfy_wishlist->get_wishlist_items_count();
+	function addonify_wishlist_get_wishlist_items_count( $wishlist_id = 0 ) {
+
+		$wishlist_items = addonify_wishlist_get_wishlist_items( $wishlist_id );
+
+		return ( is_array( $wishlist_items ) ) ? count( $wishlist_items ) : 0;
 	}
 }
+
 
 if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 	/**
 	 * Check if product is in wishlist.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param int $product_id Product ID.
+	 * @param int $wishlist_id Wishlist ID.
 	 * @return boolean True if product is in wishlist, false otherwise.
 	 */
-	function addonify_wishlist_is_product_in_wishlist( $product_id ) {
-		global $adfy_wishlist;
-		return $adfy_wishlist->is_product_in_wishlist( $product_id );
+	function addonify_wishlist_is_product_in_wishlist( $product_id, $wishlist_id = 0 ) {
+
+		$wishlist_items = addonify_wishlist_get_wishlist_items( $wishlist_id );
+
+		return ( is_array( $wishlist_items ) && in_array( (int) $product_id, $wishlist_items, true ) ) ? true : false;
 	}
 }
 
-if ( ! function_exists( 'addonify_wishlist_is_product_in_this_wishlist' ) ) {
+
+if ( ! function_exists( 'addonify_wishlist_add_product_to_wishlist' ) ) {
 	/**
-	 * Check if product is in mentioned wishlist.
+	 * Adds a product into wishlist.
 	 *
-	 * @since 1.0.0
-	 * @param int $wishlist_id wishlist ID.
+	 * @since 2.0.6
+	 *
 	 * @param int $product_id Product ID.
-	 * @return boolean True if product is in wishlist, false otherwise.
+	 * @param int $wishlist_id Wishlist ID.
+	 * @return boolean True if product is added into the wishlist, false otherwise.
 	 */
-	function addonify_wishlist_is_product_in_this_wishlist( $wishlist_id, $product_id ) {
+	function addonify_wishlist_add_product_to_wishlist( $product_id, $wishlist_id = 0 ) {
+
+		if ( ! $product_id || ! is_int( $product_id ) ) {
+			return false;
+		}
+
 		global $adfy_wishlist;
-		return $adfy_wishlist->is_product_in_this_wishlist( $wishlist_id, $product_id );
+
+		return $adfy_wishlist->add_to_wishlist( $product_id, $wishlist_id );
 	}
 }
+
+
+if ( ! function_exists( 'addonify_wishlist_remove_product_from_wishlist' ) ) {
+	/**
+	 * Removes a product from wishlist.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param int $product_id Product ID.
+	 * @param int $wishlist_id Wishlist ID.
+	 * @return boolean True if product is removed from the wishlist, false otherwise.
+	 */
+	function addonify_wishlist_remove_product_from_wishlist( $product_id, $wishlist_id = 0 ) {
+
+		if ( ! $product_id || ! is_int( $product_id ) ) {
+			return false;
+		}
+
+		global $adfy_wishlist;
+
+		return $adfy_wishlist->remove_from_wishlist( $product_id, $wishlist_id );
+	}
+}
+
+
+if ( ! function_exists( 'addonify_wishlist_empty_wishlist' ) ) {
+	/**
+	 * Removes a product from wishlist.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param int $wishlist_id Wishlist ID.
+	 * @return boolean True if wishlist is emptied, false otherwise.
+	 */
+	function addonify_wishlist_empty_wishlist( $wishlist_id = 0 ) {
+
+		global $adfy_wishlist;
+
+		return $adfy_wishlist->empty_wishlist( $wishlist_id );
+	}
+}
+
 
 if ( ! function_exists( 'addonify_wishlist_get_button_label' ) ) {
 
@@ -131,6 +230,7 @@ if ( ! function_exists( 'addonify_wishlist_reverse_num' ) ) {
 	 * @return int Number reversed.
 	 */
 	function addonify_wishlist_reverse_num( $num ) {
+
 		$num    = absint( $num );
 		$revnum = 0;
 		while ( $num > 1 ) {
@@ -180,5 +280,175 @@ if ( ! function_exists( 'addonify_wishlist_get_product_avaibility' ) ) {
 		}
 
 		return $product_avaibility;
+	}
+}
+
+
+
+if ( ! function_exists( 'addonify_wishlist_get_user_default_wishlist_from_meta' ) ) {
+	/**
+	 * Gets user's default wishlist from the user meta.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param int $user_id User ID.
+	 * @return int|boolean Wishlist ID if found. Else false.
+	 */
+	function addonify_wishlist_get_user_default_wishlist_from_meta( $user_id = 0 ) {
+
+		if ( ! $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		if ( ! is_multisite() ) {
+			return get_user_meta( $user_id, 'addonify_wishlist_default_wishlist', true );
+		} else {
+			$site_url = get_site_url();
+
+			$user_wishlist_meta = wp_unslash( get_user_meta( $user_id, 'addonify_wishlist_default_wishlist', true ) );
+			$user_wishlist_meta = json_decode( $user_wishlist_meta, true );
+
+			if ( isset( $user_wishlist_meta[ $site_url ] ) && ! empty( $user_wishlist_meta[ $site_url ] ) ) {
+				return $user_wishlist_meta[ $site_url ];
+			}
+		}
+
+		return false;
+	}
+}
+
+
+if ( ! function_exists( 'addonify_wishlist_set_user_default_wishlist_in_meta' ) ) {
+	/**
+	 * Sets user's default wishlist in the user meta.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param int $user_id User ID.
+	 * @param int $wishlist_id Wishlist ID.
+	 */
+	function addonify_wishlist_set_user_default_wishlist_in_meta( $user_id = 0, $wishlist_id = 0 ) {
+
+		if ( ! $wishlist_id ) {
+			return;
+		}
+
+		if ( ! $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		$site_url = get_site_url();
+
+		if ( ! is_multisite() ) {
+
+			$user_default_wishlist = get_user_meta( $user_id, 'addonify_wishlist_default_wishlist', true );
+
+			if ( ! $user_default_wishlist ) {
+				update_user_meta( $user_id, 'addonify_wishlist_default_wishlist', $wishlist_id );
+			}
+		} else {
+
+			$user_default_wishlist = wp_unslash( get_user_meta( $user_id, 'addonify_wishlist_default_wishlist', true ) );
+
+			if ( ! $user_default_wishlist ) {
+				$default_wishlists = array(
+					$site_url => $wishlist_id,
+				);
+
+				update_user_meta( $user_id, 'addonify_wishlist_default_wishlist', wp_json_encode( $default_wishlists ) );
+			} else {
+
+				$user_default_wishlist = json_decode( $user_default_wishlist, true );
+
+				if ( ! isset( $user_default_wishlist[ $site_url ] ) ) {
+					$user_default_wishlist[ $site_url ] = $wishlist_id;
+				}
+
+				update_user_meta( $user_id, 'addonify_wishlist_default_wishlist', wp_json_encode( $user_default_wishlist ) );
+			}
+		}
+	}
+}
+
+
+if ( ! function_exists( 'addonify_wishlist_update_user_default_wishlist_in_meta' ) ) {
+	/**
+	 * Gets user's default wishlist from the user meta.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param int $user_id User ID.
+	 * @param int $wishlist_id Wishlist ID.
+	 * @return boolean true if updated successfully. Else false.
+	 */
+	function addonify_wishlist_update_user_default_wishlist_in_meta( $user_id = 0, $wishlist_id = 0 ) {
+
+		if ( ! $wishlist_id ) {
+			return false;
+		}
+
+		if ( ! $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		if ( ! is_multisite() ) {
+			return update_user_meta( $user_id, 'addonify_wishlist_default_wishlist', $wishlist_id );
+		} else {
+			$site_url = get_site_url();
+
+			$user_wishlist_meta = wp_unslash( get_user_meta( $user_id, 'addonify_wishlist_default_wishlist', true ) );
+			$user_wishlist_meta = json_decode( $user_wishlist_meta, true );
+
+			$user_wishlist_meta[ $site_url ] = $wishlist_id;
+
+			return update_user_meta( $user_id, 'addonify_wishlist_default_default', wp_json_encode( $user_wishlist_meta ) );
+		}
+
+		return false;
+	}
+}
+
+
+
+if ( ! function_exists( 'addonify_wishlist_prepare_wishlist_loop_products_data' ) ) {
+	/**
+	 * Prepare and return array of products data in the wishlist.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param array $wishlist_product_ids Array of product ids.
+	 * @return array $products_data Array of products data.
+	 */
+	function addonify_wishlist_prepare_wishlist_loop_products_data( $wishlist_product_ids ) {
+
+		$products_data = array();
+
+		if ( is_array( $wishlist_product_ids ) ) {
+			foreach ( $wishlist_product_ids as $product_id ) {
+				$product = wc_get_product( $product_id );
+
+				if ( $product ) {
+					$product_data = array(
+						'name'       => $product->get_name(),
+						'permalink'  => $product->get_permalink(),
+						'image'      => $product->get_image( 'woocommerce_thumbnail' ),
+						'price'      => $product->get_price_html(),
+						'data_attrs' => array(
+							'product_id'   => $product->get_id(),
+							'product_name' => $product->get_name(),
+						),
+					);
+
+					$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
+					if ( $product_avaibility ) {
+						$product_data['stock_status'] = $product_avaibility;
+					}
+
+					$products_data[ $product->get_id() ] = $product_data;
+				}
+			}
+		}
+
+		return $products_data;
 	}
 }
