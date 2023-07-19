@@ -6,8 +6,6 @@
 
         let body = $('body'),
             undoNoticeEle = $('#addonify-wishlist-notice'),
-            wishlistSidebarContainerEle = $('#addonify-wishlist-sticky-sidebar-container'),
-            wishlistPageContainerEle = $('#addonify-wishlist-page-container'),
             undoTimeout;
 
         let plugin_name = 'addonify-wishlist';
@@ -44,8 +42,6 @@
             ifNotLoginAction,
             loginURL,
         } = addonifyWishlistJSObject;
-
-        console.log(addonifyWishlistJSObject);
 
         let AddonifyWishlistPublicGuest = {
 
@@ -143,7 +139,9 @@
                         if (wishlistButtons.length > 0) {
                             wishlistButtons.each(function () {
                                 let currentButton = $(this);
-                                currentButton.addClass('added-to-wishlist');
+                                if (!currentButton.hasClass('added-to-wishlist')) {
+                                    currentButton.addClass('added-to-wishlist');
+                                }
                                 // Update button label and icon of custom add to wishlist button.
                                 if (!currentButton.hasClass('addonify-custom-wishlist-btn') && currentButton.hasClass('addonify-add-to-wishlist-btn')) {
                                     // Update button label.
@@ -167,6 +165,9 @@
                         if (wishlistButtons.length > 0) {
                             wishlistButtons.each(function () {
                                 let currentButton = $(this);
+                                if (currentButton.hasClass('added-to-wishlist')) {
+                                    currentButton.removeClass('added-to-wishlist');
+                                }
                                 // Update button label and icon of custom add to wishlist button.
                                 if (!currentButton.hasClass('addonify-custom-wishlist-btn') && currentButton.hasClass('addonify-add-to-wishlist-btn')) {
                                     // Update button label.
@@ -212,7 +213,7 @@
                 $(document).on('added_to_cart', function (event, fragments, cart_hash, addToCartButton) {
 
                     if (removeFromWishlistAfterAddedToCart === '1') {
-                        addonifyLocalRemoveFromWishlist( addToCartButton );
+                        addonifyLocalRemoveFromWishlist( addToCartButton, 'added-to-cart' );
                     }
                 });
             },
@@ -310,61 +311,47 @@
          */
         function addonifyLoadWishlistContent() {
 
-            let contentSource = $('#addonify-wishlist-page-container').length > 0 ? 'wishlist-table' : '';
+            addonifyWishlistDisplayLoader();
 
-            if (contentSource === '') {
-                if ($('#addonify-wishlist-sticky-sidebar-container').length > 0) {
-                    contentSource = 'wishlist-sidebar';
-                }
-            }
+            let productIds = getProductids();
 
-            // actions on wishlist page.
-            if (contentSource !== '') {
+            $.post(
+                ajax_url,
+                {
+                    action: initialWishlistContentGetAction,
+                    product_ids: JSON.stringify(productIds),
+                    nonce: nonce
+                },
+                function (response) {
+                    if (response.success) {
+                        if (response.hasOwnProperty('tableContent')) {
+                            $('#addonify-wishlist-page-items-wrapper').html(response.tableContent);
+                        }
+                        if (response.hasOwnProperty('sidebarContent')) {
+                            $('#addonify-wishlist-sidebar-items-wrapper').html(response.sidebarContent);
 
-                addonifyWishlistDisplayLoader();
-
-                let productIds = getProductids();
-
-                $.post(
-                    ajax_url,
-                    {
-                        action: initialWishlistContentGetAction,
-                        product_ids: JSON.stringify(productIds),
-                        nonce: nonce,
-                        source: contentSource
-                    },
-                    function (response) {
-                        console.log(response);
-                        if (response.success) {
-                            if (contentSource === 'wishlist-table' && response.hasOwnProperty('tableContent')) {
-                                $('#addonify-wishlist-page-items-wrapper').html(response.tableContent);
+                            if (productIds.length > 0) {
+                                $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
                             }
-                            if (contentSource === 'wishlist-sidebar' && response.hasOwnProperty('sidebarContent')) {
-                                $('#addonify-wishlist-sidebar-items-wrapper').html(response.sidebarContent);
-
-                                if (productIds.length > 0) {
-                                    $('#addonify-wishlist-show-sidebar-btn').removeClass('hidden');
-                                }
-                            }
-                        } else {
-                            if (response.hasOwnProperty('error')) {
-                                if (response.error === 'e1') {
-                                    console.log(response.message);
-                                }
+                        }
+                    } else {
+                        if (response.hasOwnProperty('error')) {
+                            if (response.error === 'e1') {
+                                console.log(response.message);
                             }
                         }
                     }
-                ).always(function () {
-                    addonifyWishlistHideLoader();
-                });
-            }
+                }
+            ).always(function () {
+                addonifyWishlistHideLoader();
+            });
         }
 
         /**
          * Function to remove product from wishlist locally.
          * @param {Object} thisButton Jquery object of the button clicked
          */
-        function addonifyLocalRemoveFromWishlist(thisButton) {
+        function addonifyLocalRemoveFromWishlist(thisButton, added_to_cart = '') {
 
             // Triggering custom event when product is being removed from wishlist. 
             // 'addonify_removing_from_wishlist' custom event can be used to perform desired actions.
@@ -388,11 +375,10 @@
                             nonce: nonce
                         },
                         function (response) {
-                            console.log(response);
                             if (response.success) {
                                 response.itemsCount = productIds.length;
                                 // Updates wishlist sidebar and page content.
-                                addonifyWishlistUpdateWishlistSidebarPageContent(response, 'removed_from_wishlist');
+                                addonifyWishlistUpdateWishlistSidebarPageContent(response, 'removed_from_wishlist', added_to_cart);
                             } else {
                                 if (response.hasOwnProperty('error')) {
                                     if (response.error === 'e1') {
@@ -584,7 +570,7 @@
          * @param {Object} data Response data.
          * @param {string} action Action causing the update.
          */
-        function addonifyWishlistUpdateWishlistSidebarPageContent(data, action) {
+        function addonifyWishlistUpdateWishlistSidebarPageContent(data, action, added_to_cart = '') {
 
             // Toggles the wishlist sidebar toggle button.
             if (data.itemsCount > 0) {
@@ -602,7 +588,7 @@
             }
 
             // Sets product removal undo notice.
-            if (action === 'removed_from_wishlist') {
+            if (action === 'removed_from_wishlist' && added_to_cart === '') {
                 if (data.hasOwnProperty('undoContent') && $('#addonify-wishlist-notice')) {
                     $('#addonify-wishlist-notice').html(data.undoContent);
                     $(document).trigger('addonify_wishlist_undo_notice_set');
@@ -639,12 +625,12 @@
          * Function to display loader in wishlist sidebar and page.
          */
         function addonifyWishlistDisplayLoader() {
-            if (wishlistSidebarContainerEle) {
-                wishlistSidebarContainerEle.append(loader);
+            if ($('#addonify-wishlist-sticky-sidebar-container').length > 0) {
+                $('#addonify-wishlist-sticky-sidebar-container').append(loader);
             }
 
-            if (wishlistPageContainerEle) {
-                wishlistPageContainerEle.append(loader);
+            if ($('#addonify-wishlist-page-container').length > 0) {
+                $('#addonify-wishlist-page-container').append(loader);
             }
         }
 
