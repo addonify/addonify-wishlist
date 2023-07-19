@@ -262,6 +262,10 @@ if ( ! function_exists( 'addonify_wishlist_render_wishlist_content' ) ) {
 if ( ! function_exists( 'addonify_wishlist_render_wishlist_page_loop' ) ) {
 	/**
 	 * Render wishlist content.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param array $wishlist_product_ids Product IDs in the wishlist.
 	 */
 	function addonify_wishlist_render_wishlist_page_loop( $wishlist_product_ids = array() ) {
 
@@ -627,7 +631,11 @@ if ( ! function_exists( 'addonify_wishlist_render_popup_login_link_button' ) ) {
 
 
 if ( ! function_exists( 'addonify_wishlist_render_empty_wishlist_content_template' ) ) {
-
+	/**
+	 * Renders HTML template for displaying text when wishlist is empty.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_render_empty_wishlist_content_template() {
 
 		$template  = '<p id="addonify-empty-wishlist-para">';
@@ -652,7 +660,11 @@ if ( ! function_exists( 'addonify_wishlist_render_empty_wishlist_content_templat
 
 
 if ( ! function_exists( 'addonify_wishlist_modal_close_button_template' ) ) {
-
+	/**
+	 * Renders HTML template for displaying modal close button.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_modal_close_button_template() {
 
 		$close_button = '<button type="button" id="addonify-wishlist-close-modal-btn" class="adfy-wishlist-btn adfy-wishlist-clear-button-style"><svg x="0px" y="0px" viewBox="0 0 511.991 511.991"><g><path d="M286.161,255.867L505.745,36.283c8.185-8.474,7.951-21.98-0.523-30.165c-8.267-7.985-21.375-7.985-29.642,0   L255.995,225.702L36.411,6.118c-8.475-8.185-21.98-7.95-30.165,0.524c-7.985,8.267-7.985,21.374,0,29.641L225.83,255.867   L6.246,475.451c-8.328,8.331-8.328,21.835,0,30.165l0,0c8.331,8.328,21.835,8.328,30.165,0l219.584-219.584l219.584,219.584   c8.331,8.328,21.835,8.328,30.165,0l0,0c8.328-8.331,8.328-21.835,0-30.165L286.161,255.867z"/></g></svg></button>';
@@ -667,7 +679,11 @@ if ( ! function_exists( 'addonify_wishlist_modal_close_button_template' ) ) {
 
 
 if ( ! function_exists( 'addonify_wishlist_added_to_wishlist_modal_template' ) ) {
-
+	/**
+	 * Renders HTML template for displaying product added to wishlist modal.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_added_to_wishlist_modal_template() {
 
 		addonify_wishlist_get_template(
@@ -682,7 +698,11 @@ if ( ! function_exists( 'addonify_wishlist_added_to_wishlist_modal_template' ) )
 
 
 if ( ! function_exists( 'addonify_wishlist_already_in_wishlist_modal_template' ) ) {
-
+	/**
+	 * Renders HTML template for displaying product already in wishlist modal.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_already_in_wishlist_modal_template() {
 
 		addonify_wishlist_get_template(
@@ -697,7 +717,11 @@ if ( ! function_exists( 'addonify_wishlist_already_in_wishlist_modal_template' )
 
 
 if ( ! function_exists( 'addonify_wishlist_login_required_modal_template' ) ) {
-
+	/**
+	 * Renders HTML template for displaying login required modal.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_login_required_modal_template() {
 
 		addonify_wishlist_get_template(
@@ -712,7 +736,11 @@ if ( ! function_exists( 'addonify_wishlist_login_required_modal_template' ) ) {
 
 
 if ( ! function_exists( 'addonify_wishlist_error_adding_to_wishlist_modal_template' ) ) {
-
+	/**
+	 * Renders HTML template for displaying error modal when adding product to wishlist.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_error_adding_to_wishlist_modal_template() {
 
 		addonify_wishlist_get_template(
@@ -727,7 +755,11 @@ if ( ! function_exists( 'addonify_wishlist_error_adding_to_wishlist_modal_templa
 
 
 if ( ! function_exists( 'addonify_wishlist_error_removing_from_wishlist_modal_template' ) ) {
-
+	/**
+	 * Renders HTML template for displaying error modal when removing product from wishlist.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_error_removing_from_wishlist_modal_template() {
 
 		addonify_wishlist_get_template(
@@ -742,8 +774,14 @@ if ( ! function_exists( 'addonify_wishlist_error_removing_from_wishlist_modal_te
 
 
 if ( ! function_exists( 'addonify_wishlist_product_removal_undo_notice_template' ) ) {
-
-	function addonify_wishlist_product_removal_undo_notice_template( $product, $source ) {
+	/**
+	 * Renders HTML template for product removal and undo notice.
+	 *
+	 * @since 2.0.6
+	 *
+	 * @param object $product WC_Product.
+	 */
+	function addonify_wishlist_product_removal_undo_notice_template( $product ) {
 
 		$product_removal_text = addonify_wishlist_get_option( 'undo_action_prelabel_text' );
 		$undo_text            = addonify_wishlist_get_option( 'undo_action_label' );
@@ -755,7 +793,7 @@ if ( ! function_exists( 'addonify_wishlist_product_removal_undo_notice_template'
 		}
 
 		if ( ! empty( $undo_text ) ) {
-			$template .= '<a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="' . esc_attr( $product->get_id() ) . '" data-source="' . esc_attr( $source ) . '" data-product_name="' . $product->get_name() . '">' . esc_html( $undo_text ) . '</a>';
+			$template .= '<a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="' . esc_attr( $product->get_id() ) . '" data-product_name="' . $product->get_name() . '">' . esc_html( $undo_text ) . '</a>';
 		}
 
 		$template .= '</p>';
@@ -768,7 +806,11 @@ if ( ! function_exists( 'addonify_wishlist_product_removal_undo_notice_template'
 
 
 if ( ! function_exists( 'addonify_wishlist_loader_template' ) ) {
-
+	/**
+	 * Renders HTML template for loader/spinner in wishlist sidebar and table.
+	 *
+	 * @since 2.0.6
+	 */
 	function addonify_wishlist_loader_template() {
 		?>
 		<div id="addonify-wishlist_spinner">
