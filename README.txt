@@ -143,7 +143,8 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 = 2.0.6 - ? July, 2023 =
 
 - Updated: Action hooks `addonify_wishlist_before_adding_to_wishlist` and `addonify_wishlist_after_adding_to_wishlist`. Array argument is passed in both action hooks.
-
+- Fixed: Color picker cursor issue (Vue JS).
+- Tweak: Changed DIR for Inter & Manrope fonts files. Now, Using NPM package to install Inter & Manrope fonts.
 
 = 2.0.5 - 29 June, 2023 =
 

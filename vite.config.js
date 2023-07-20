@@ -28,4 +28,7 @@ export default create_config("admin/app/src/main.js", "admin/app/dist", {
 			"@helpers": resolve(__dirname, "./admin/app/src/helpers"),
 		},
 	},
+	build: {
+		sourcemap: false, // Disable sourcemap in build.
+	}
 });
