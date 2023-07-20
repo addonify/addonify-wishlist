@@ -74,17 +74,6 @@ class Addonify_Wishlist_Admin {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == $this->settings_page_slug ) { // phpcs:ignore
 
 			wp_enqueue_style( "{$this->plugin_name}-icon", plugin_dir_url( __FILE__ ) . 'app/fonts/addonify-wishlist/icon.css', array(), $this->version, 'all' );
-
-			/**
-			*
-			* Load Inter & Manrope font locally.
-			* 
-			* @since 2.0.1
-			*/
-
-			wp_enqueue_style( "{$this->plugin_name}-inter", plugin_dir_url( __FILE__ ) . 'app/fonts/inter/inter.css', array(), $this->version, 'all' );
-
-			wp_enqueue_style( "{$this->plugin_name}-manrope", plugin_dir_url( __FILE__ ) . 'app/fonts/manrope/manrope.css', array(), $this->version, 'all' );
 		}
 
 		// Load global admin styles.
