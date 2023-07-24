@@ -10,7 +10,7 @@
  */
 
 ?>
-<div id="addonify-wishlist-modal-wrapper" class="require-login" data_model-width="default">
+<div id="addonify-wishlist-modal-wrapper" class="info-modal require-login" data_model-width="default">
 
 	<?php do_action( 'addonify_wishlist_after_popup_opening_tag' ); ?>
 

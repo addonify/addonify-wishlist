@@ -1,6 +1,6 @@
 <?php
 /**
- * Modal template for displaying already in wishlist message.
+ * Modal template for displaying wishlist message.
  *
  * @link       https://www.addonify.com
  * @since      1.0.0
@@ -10,7 +10,7 @@
  */
 
 ?>
-<div id="addonify-wishlist-modal-wrapper" class="success-modal" data_model-width="default">
+<div id="addonify-wishlist-modal-wrapper" class="" data_model-width="default">
 
 	<?php do_action( 'addonify_wishlist_after_popup_opening_tag' ); ?>
 
@@ -20,14 +20,16 @@
 		</div>
 		<div class="addonify-wishlist-modal-body">
 			<div class="adfy-wishlist-icon-entry">
-				<?php echo apply_filters( 'addonify_wishlist_already_in_wishlist_modal_icon', '<i class="adfy-wishlist-icon adfy-status-success heart-style-one"></i>' ); // phpcs:ignore ?>
+				<?php echo $icon; // phpcs:ignore ?>
 			</div>
 			<div id="addonify-wishlist-modal-response">
-				<p class="response-text"><?php echo esc_html( addonify_wishlist_get_option( 'product_already_in_wishlist_text' ) ); ?></p>
+				<p class="response-text"><?php echo wp_kses_post( $message ); // phpcs:ignore ?></p>
 			</div>
-			<div class="addonify-wishlist-modal-btns">
-				<?php do_action( 'addonify_wishlist_modal_wishlist_link' ); ?>
-			</div>
+			<?php
+			if ( $button_content ) {
+				echo wp_kses_post( $button_content ); // phpcs:ignore
+			}
+			?>
 		</div>
 	</div>
 

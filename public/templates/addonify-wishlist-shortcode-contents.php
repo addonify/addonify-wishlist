@@ -16,10 +16,11 @@ defined( 'ABSPATH' ) || exit;
 <div id="addonify-wishlist-page-container">
 
 	<div id="addonify-wishlist-notice" class="addonify-wishlist-notice"></div>
+
 	<div id="addonify-wishlist-page-items-wrapper">
 		<?php
 		if ( is_user_logged_in() ) {
-			do_action( 'addonify_wishlist_render_wishlist_page_loop', $products_data );
+			do_action( 'addonify_wishlist_render_wishlist_page_loop', $wishlist_product_ids );
 		} else {
 			if ( addonify_wishlist_get_option( 'require_login' ) === '1' ) {
 				?>

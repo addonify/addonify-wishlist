@@ -452,3 +452,45 @@ if ( ! function_exists( 'addonify_wishlist_prepare_wishlist_loop_products_data' 
 		return $products_data;
 	}
 }
+
+
+
+if ( ! function_exists( 'addonify_wishlist_get_error_ajax_response' ) ) {
+
+	function addonify_wishlist_get_error_ajax_response( $error ) {
+
+		$response = array(
+			'success' => false,
+		);
+
+		switch ( $error ) {
+			case 'invalid-nonce':
+				$response['message']      = esc_html__( 'Invalid security token.', 'addonify-wishlist' );
+				$response['modalContent'] = addonify_wishlist_get_ajax_modal_content(
+					array(
+						'message' => esc_html__( 'Invalid security token.', 'addonify-wishlist' ),
+					)
+				);
+				break;
+			case 'invalid-product-id':
+				$response['message']      = esc_html__( 'Invalid product id.', 'addonify-wishlist' );
+				$response['modalContent'] = addonify_wishlist_get_ajax_modal_content(
+					array(
+						'message' => esc_html__( 'Invalid product id.', 'addonify-wishlist' ),
+					)
+				);
+				break;
+			case 'invalid-product':
+				$response['message']      = esc_html__( 'Invalid product.', 'addonify-wishlist' );
+				$response['modalContent'] = addonify_wishlist_get_ajax_modal_content(
+					array(
+						'message' => esc_html__( 'Invalid product.', 'addonify-wishlist' ),
+					)
+				);
+				break;
+			default:
+		}
+
+		return apply_filters( 'addonify_wishlist_error_ajax_response', $response, $error );
+	}
+}

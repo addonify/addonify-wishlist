@@ -287,10 +287,7 @@ class Addonify_Wishlist_Public {
 				'addedToWishlistText'                   => addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' ),
 				'initialAddToWishlistButtonLabel'       => addonify_wishlist_get_option( 'btn_label' ),
 				'loader'                                => $this->get_loader(),
-				'addedToWishlistModal'                  => $this->added_to_wishlist_modal(),
 				'alreadyInWishlistModal'                => $this->already_in_wishlist_modal(),
-				'errorAddingToWishlistModal'            => $this->error_adding_to_wishlist_modal(),
-				'errorRemovingFromWishlistModal'        => $this->error_removing_from_wishlist_modal(),
 			)
 		);
 
@@ -362,6 +359,11 @@ class Addonify_Wishlist_Public {
 			$script_object['loginRequiredModal']              = $this->login_required_modal();
 			$script_object['ifNotLoginAction']                = addonify_wishlist_get_option( 'if_not_login_action' );
 			$script_object['loginURL']                        = $login_url;
+			$script_object['addedToWishlistModal']            = $this->added_to_wishlist_modal();
+			$script_object['alreadyInWishlistModal']          = $this->already_in_wishlist_modal();
+			$script_object['errorAddingToWishlistModal']      = $this->error_adding_to_wishlist_modal();
+			$script_object['errorRemovingFromWishlistModal']  = $this->error_removing_from_wishlist_modal();
+			$script_object['removedFromWishlistModal']        = $this->removed_from_wishlist_modal();
 		} else {
 			wp_enqueue_script(
 				$this->plugin_name,
@@ -552,7 +554,6 @@ class Addonify_Wishlist_Public {
 	 * Callback function to handle ajax request to remove product from the cart.
 	 *
 	 * @since 1.0.0
-	 * @return array mixed.
 	 */
 	public function ajax_remove_from_wishlist_handler() {
 
@@ -562,35 +563,52 @@ class Addonify_Wishlist_Public {
 			! $nonce ||
 			! wp_verify_nonce( $nonce, $this->plugin_name )
 		) {
-			wp_send_json(
-				array(
-					'success' => false,
-					'error'   => 'e1',
-					'message' => esc_html__( 'Invalid security token.', 'addonify-wishlist' ),
-				)
-			);
+			wp_send_json( addonify_wishlist_get_error_ajax_response( 'invalid-nonce' ) );
 		}
 
 		$product_id = isset( $_POST['product_id'] ) ? absint( wp_unslash( $_POST['product_id'] ) ) : 0;
 
 		if ( ! $product_id ) {
-			wp_send_json(
-				array(
-					'success' => false,
-					'error'   => 'e1',
-					'message' => esc_html__( 'Invalid product id.', 'addonify-wishlist' ),
-				)
-			);
+			wp_send_json( addonify_wishlist_get_error_ajax_response( 'invalid-product-id' ) );
 		}
 
 		$product = wc_get_product( $product_id );
 
 		if ( ! $product ) {
+			wp_send_json( addonify_wishlist_get_error_ajax_response( 'invalid-product' ) );
+		}
+
+		$button_source = isset( $_POST['source'] ) ? sanitize_text_field( wp_unslash( $_POST['source'] ) ) : '';
+
+		if ( ! addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
+
+			$response_data = array(
+				'success'     => false,
+				'productName' => $product->get_name(),
+			);
+
+			if ( 'add-to-wishlist' === $button_source ) {
+				$response_data['modalContent'] = addonify_wishlist_get_ajax_modal_content(
+					array(
+						'message' => sprintf(
+							/* translators: %1$s Product name */
+							esc_html__( '%1$s does not exist in the wishlist.', 'addonify-wishlist' ),
+							$product->get_name()
+						),
+					)
+				);
+			} else {
+				$response_data['message'] = sprintf(
+					/* translators: %1$s Product name */
+					esc_html__( '%1$s does not exist in the wishlist.', 'addonify-wishlist' ),
+					$product->get_name()
+				);
+			}
+
 			wp_send_json(
-				array(
-					'success' => false,
-					'error'   => 'e1',
-					'message' => esc_html__( 'Invalid product.', 'addonify-wishlist' ),
+				apply_filters(
+					'addonify_wishlist_ajax_remove_from_wishlist_error_response',
+					$response_data
 				)
 			);
 		}
@@ -605,30 +623,64 @@ class Addonify_Wishlist_Public {
 				'productName' => $product->get_name(),
 			);
 
+			if ( 'add-to-wishlist' === $button_source ) {
+				$response_data['modalContent'] = addonify_wishlist_get_ajax_modal_content(
+					array(
+						'icon'    => apply_filters(
+							'addonify_wishlist_success_modal_icon',
+							'<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three"></i>'
+						),
+						'message' => sprintf(
+							/* translators: %1$s Product name */
+							esc_html__( '%1$s has been removed from wishlist.', 'addonify-wishlist' ),
+							$product->get_name()
+						),
+					)
+				);
+			}
+
 			if ( addonify_wishlist_get_option( 'show_sidebar' ) === '1' ) {
 				$response_data['sidebarContent'] = $this->get_wishlist_sidebar_loop_content();
 			}
 
 			$response_data['tableContent'] = $this->get_wishlist_page_loop_content();
 
-			return wp_send_json(
+			wp_send_json(
 				apply_filters(
 					'addonify_wishlist_ajax_remove_from_wishlist_success_response',
 					$response_data
 				)
 			);
-		}
+		} else {
 
-		return wp_send_json(
-			apply_filters(
-				'addonify_wishlist_ajax_remove_from_wishlist_error_response',
-				array(
-					'success'     => false,
-					'message'     => esc_html( addonify_wishlist_get_option( 'could_not_remove_from_wishlist_error_description' ) ), //phpcs:ignore
-					'productName' => $product->get_name(),
+			$could_not_be_removed_from_wishlist_text = addonify_wishlist_get_option( 'could_not_remove_from_wishlist_error_description' );
+
+			if ( str_contains( $could_not_be_removed_from_wishlist_text, '{product_name}' ) ) {
+				$could_not_be_removed_from_wishlist_text = str_replace( '{product_name}', $product->get_name(), $could_not_be_removed_from_wishlist_text );
+			}
+
+			$response_data = array(
+				'success'     => false,
+				'productName' => $product->get_name(),
+			);
+
+			if ( 'add-to-wishlist' === $button_source ) {
+				$response_data['modalContent'] = addonify_wishlist_get_ajax_modal_content(
+					array(
+						'message' => $could_not_be_removed_from_wishlist_text,
+					)
+				);
+			} else {
+				$response_data['message'] = $could_not_be_removed_from_wishlist_text;
+			}
+
+			wp_send_json(
+				apply_filters(
+					'addonify_wishlist_ajax_remove_from_wishlist_error_response',
+					$response_data
 				)
-			)
-		);
+			);
+		}
 	}
 
 
@@ -645,37 +697,19 @@ class Addonify_Wishlist_Public {
 			! $nonce ||
 			! wp_verify_nonce( $nonce, $this->plugin_name )
 		) {
-			wp_send_json(
-				array(
-					'success' => false,
-					'error'   => 'e1',
-					'message' => esc_html__( 'Invalid security token.', 'addonify-wishlist' ),
-				)
-			);
+			wp_send_json( addonify_wishlist_get_error_ajax_response( 'invalid-nonce' ) );
 		}
 
 		$product_id = isset( $_POST['product_id'] ) ? absint( wp_unslash( $_POST['product_id'] ) ) : 0;
 
 		if ( ! $product_id ) {
-			wp_send_json(
-				array(
-					'success' => false,
-					'error'   => 'e1',
-					'message' => esc_html__( 'Invalid product id.', 'addonify-wishlist' ),
-				)
-			);
+			wp_send_json( addonify_wishlist_get_error_ajax_response( 'invalid-product-id' ) );
 		}
 
 		$product = wc_get_product( $product_id );
 
 		if ( ! $product ) {
-			wp_send_json(
-				array(
-					'success' => false,
-					'error'   => 'e1',
-					'message' => esc_html__( 'Invalid product.', 'addonify-wishlist' ),
-				)
-			);
+			wp_send_json( addonify_wishlist_get_error_ajax_response( 'invalid-product' ) );
 		}
 
 		// Check if product is already in the wishlist.
@@ -690,10 +724,19 @@ class Addonify_Wishlist_Public {
 			$ajax_add_to_wishlist_return = apply_filters(
 				'addonify_wishlist_ajax_add_to_wishlist_success_response',
 				array(
-					'success'     => false,
-					'error'       => 'e2',
-					'message'     => esc_html( $already_in_wishlist_text ),
-					'productName' => $product->get_name(),
+					'success'      => false,
+					'message'      => esc_html( $already_in_wishlist_text ),
+					'productName'  => $product->get_name(),
+					'modalContent' => addonify_wishlist_get_ajax_modal_content(
+						array(
+							'icon'           => apply_filters(
+								'addonify_wishlist_already_in_wishlist_modal_icon',
+								'<i class="adfy-wishlist-icon adfy-status-success heart-style-one"></i>'
+							),
+							'message'        => $already_in_wishlist_text,
+							'button_content' => addonify_wishlist_get_modal_button_content( 'wishlist-link' ),
+						)
+					),
 				)
 			);
 
@@ -710,10 +753,20 @@ class Addonify_Wishlist_Public {
 			}
 
 			$response_data = array(
-				'success'     => true,
-				'productName' => $product->get_name(),
-				'itemsCount'  => addonify_wishlist_get_wishlist_items_count(),
-				'message'     => esc_html( $added_to_wishlist_text ),
+				'success'      => true,
+				'productName'  => $product->get_name(),
+				'itemsCount'   => addonify_wishlist_get_wishlist_items_count(),
+				'message'      => esc_html( $added_to_wishlist_text ),
+				'modalContent' => addonify_wishlist_get_ajax_modal_content(
+					array(
+						'icon'           => apply_filters(
+							'addonify_wishlist_added_to_wishlist_modal_icon',
+							'<i class="adfy-wishlist-icon adfy-status-success heart-style-one"></i>'
+						),
+						'message'        => $added_to_wishlist_text,
+						'button_content' => addonify_wishlist_get_modal_button_content( 'wishlist-link' ),
+					)
+				),
 			);
 
 			if ( addonify_wishlist_get_option( 'show_sidebar' ) === '1' ) {
@@ -726,6 +779,8 @@ class Addonify_Wishlist_Public {
 				'addonify_wishlist_ajax_add_to_wishlist_success_response',
 				$response_data
 			);
+
+			wp_send_json( $ajax_add_to_wishlist_return );
 		} else {
 
 			$error_adding_to_wishlist_text = addonify_wishlist_get_option( 'could_not_add_to_wishlist_error_description' );
@@ -736,14 +791,19 @@ class Addonify_Wishlist_Public {
 			$ajax_add_to_wishlist_return = apply_filters(
 				'addonify_wishlist_ajax_add_to_wishlist_error_response',
 				array(
-					'success'     => false,
-					'message'     => esc_html( $error_adding_to_wishlist_text ),
-					'productName' => $product->get_name(),
+					'success'      => false,
+					'message'      => esc_html( $error_adding_to_wishlist_text ),
+					'productName'  => $product->get_name(),
+					'modalContent' => addonify_wishlist_get_ajax_modal_content(
+						array(
+							'message' => $error_adding_to_wishlist_text,
+						)
+					),
 				)
 			);
-		}
 
-		wp_send_json( $ajax_add_to_wishlist_return );
+			wp_send_json( $ajax_add_to_wishlist_return );
+		}
 	}
 
 
@@ -759,32 +819,42 @@ class Addonify_Wishlist_Public {
 			! $nonce ||
 			! wp_verify_nonce( $nonce, $this->plugin_name )
 		) {
-			wp_send_json_error( 'Invalid security token.' );
+			wp_send_json( addonify_wishlist_get_error_ajax_response( 'invalid-nonce' ) );
 		}
 
 		if ( addonify_wishlist_empty_wishlist() ) {
 			wp_send_json(
 				apply_filters(
-					'ajax_empty_wishlist_return',
+					'addonify_wishlist_ajax_empty_wishlist_success_response',
 					array(
-						'success'        => true,
-						'message'        => addonify_wishlist_get_option( 'wishlist_emptied_text' ), //phpcs:ignore
-						'wishlist_count' => 0,
-						'tableContent'   => $this->get_wishlist_page_loop_content(),
+						'success'      => true,
+						'tableContent' => $this->get_wishlist_page_loop_content(),
+						'modalContent' => addonify_wishlist_get_ajax_modal_content(
+							array(
+								'icon'    => apply_filters(
+									'addonify_wishlist_success_modal_icon',
+									'<i class="adfy-wishlist-icon adfy-status-success check"></i>'
+								),
+								'message' => addonify_wishlist_get_option( 'wishlist_emptied_text' ),
+							)
+						),
 					)
 				)
 			);
 		} else {
 			wp_send_json(
 				apply_filters(
-					'ajax_empty_wishlist_error_return',
+					'addonify_wishlist_ajax_empty_wishlist_error_response',
 					array(
-						'success' => false,
-						'message' => esc_html__( "Error emptying wishlist!", 'addonify-wishlist' ), //phpcs:ignore
+						'success'      => false,
+						'modalContent' => addonify_wishlist_get_ajax_modal_content(
+							array(
+								'message' => esc_html__( 'Error emptying the wishlist!', 'addonify-wishlist' ),
+							)
+						),
 					)
 				)
 			);
-
 		}
 	}
 
@@ -1298,6 +1368,18 @@ class Addonify_Wishlist_Public {
 
 
 	/**
+	 * Returns the HTML of login required modal.
+	 *
+	 * @since 2.0.6
+	 */
+	public function login_required_modal() {
+		ob_start();
+		do_action( 'addonify_wishlist_render_login_required_modal' );
+		return ob_get_clean();
+	}
+
+
+	/**
 	 * Returns the HTML of error modal when adding a product to wishlist.
 	 *
 	 * @since 2.0.6
@@ -1322,13 +1404,13 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Returns the HTML of login required modal.
+	 * Returns the HTML of modal when a product is removed from wishlist.
 	 *
 	 * @since 2.0.6
 	 */
-	public function login_required_modal() {
+	public function removed_from_wishlist_modal() {
 		ob_start();
-		do_action( 'addonify_wishlist_render_login_required_modal' );
+		do_action( 'addonify_wishlist_render_removed_from_wishlist_modal' );
 		return ob_get_clean();
 	}
 
@@ -1340,12 +1422,8 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_wishlist_sidebar_loop_content() {
 
-		$wishlist_items = addonify_wishlist_get_wishlist_items();
-
-		$products_data = addonify_wishlist_prepare_wishlist_loop_products_data( $wishlist_items );
-
 		ob_start();
-		do_action( 'addonify_wishlist_render_sidebar_loop', $products_data );
+		do_action( 'addonify_wishlist_render_sidebar_loop' );
 		return ob_get_clean();
 	}
 
@@ -1354,13 +1432,11 @@ class Addonify_Wishlist_Public {
 	 * Returns the HTML content of wishlist items in the wishlist page.
 	 *
 	 * @since 2.0.6
-	 *
-	 * @param array $wishlist_items IDs of items in the wishlist.
 	 */
-	public function get_wishlist_page_loop_content( $wishlist_items = array() ) {
+	public function get_wishlist_page_loop_content() {
 
 		ob_start();
-		do_action( 'addonify_wishlist_render_wishlist_page_loop', $wishlist_items );
+		do_action( 'addonify_wishlist_render_wishlist_page_loop' );
 		return ob_get_clean();
 	}
 

@@ -10,7 +10,7 @@
  */
 
 ?>
-<div id="addonify-wishlist-modal-wrapper" class="" data_model-width="default">
+<div id="addonify-wishlist-modal-wrapper" class="success-modal" data_model-width="default">
 
 	<?php do_action( 'addonify_wishlist_after_popup_opening_tag' ); ?>
 
@@ -20,7 +20,7 @@
 		</div>
 		<div class="addonify-wishlist-modal-body">
 			<div class="adfy-wishlist-icon-entry">
-				<?php echo apply_filters( 'addonify_wishlist_added_to_wishlist_modal_icon', '<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three"></i>' ); // phpcs:ignore ?>
+				<?php echo apply_filters( 'addonify_wishlist_added_to_wishlist_modal_icon', '<i class="adfy-wishlist-icon adfy-status-success heart-style-one"></i>' ); // phpcs:ignore ?>
 			</div>
 			<div id="addonify-wishlist-modal-response">
 				<p class="response-text"><?php echo esc_html( addonify_wishlist_get_option( 'product_added_to_wishlist_text' ) ); ?></p>
