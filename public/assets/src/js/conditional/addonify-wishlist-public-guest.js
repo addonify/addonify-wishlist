@@ -36,6 +36,7 @@
             alreadyInWishlistModal,
             errorAddingToWishlistModal,
             errorRemovingFromWishlistModal,
+            removedFromWishlistModal,
 
             isLoginRequired,
             loginRequiredModal,
@@ -389,6 +390,10 @@
                         }
                     );
 
+                    if (thisButton.hasClass('addonify-wishlist-ajax-add-to-wishlist')) {
+                        addonifyWishlistDisplayModal(removedFromWishlistModal, thisButton.data('product_name'));
+                    }
+
                     // Triggering custom event when product is added to wishlist. 
                     // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
                     $(document).trigger('addonify_removed_from_wishlist', [
@@ -397,6 +402,8 @@
                             itemsCount: productIds.length,
                         }
                     ]);
+
+                    
                 } else {
                     // Displays error removing from wishlist modal.
                     addonifyWishlistDisplayModal(errorRemovingFromWishlistModal, thisButton.data('product_name'));

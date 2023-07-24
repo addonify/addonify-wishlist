@@ -30,3 +30,4 @@ add_action( 'addonify_wishlist_render_already_in_wishlist_modal', 'addonify_wish
 add_action( 'addonify_wishlist_render_login_required_modal', 'addonify_wishlist_login_required_modal_template' );
 add_action( 'addonify_wishlist_render_error_adding_to_wishlist_modal', 'addonify_wishlist_error_adding_to_wishlist_modal_template' );
 add_action( 'addonify_wishlist_render_error_removing_from_wishlist_modal', 'addonify_wishlist_error_removing_from_wishlist_modal_template' );
+add_action( 'addonify_wishlist_render_removed_from_wishlist_modal', 'addonify_wishlist_removed_from_wishlist_modal_template' );

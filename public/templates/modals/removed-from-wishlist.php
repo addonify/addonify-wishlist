@@ -1,6 +1,6 @@
 <?php
 /**
- * Modal template for displaying already in wishlist message.
+ * Modal template for displaying removed from wishlist message.
  *
  * @link       https://www.addonify.com
  * @since      1.0.0
@@ -20,13 +20,10 @@
 		</div>
 		<div class="addonify-wishlist-modal-body">
 			<div class="adfy-wishlist-icon-entry">
-				<?php echo apply_filters( 'addonify_wishlist_already_in_wishlist_modal_icon', '<i class="adfy-wishlist-icon adfy-status-success heart-style-one"></i>' ); // phpcs:ignore ?>
+				<?php echo apply_filters( 'addonify_wishlist_added_to_wishlist_modal_icon', '<i class="adfy-wishlist-icon adfy-status-success heart-o-style-three"></i>' ); // phpcs:ignore ?>
 			</div>
 			<div id="addonify-wishlist-modal-response">
-				<p class="response-text"><?php echo esc_html( addonify_wishlist_get_option( 'product_already_in_wishlist_text' ) ); ?></p>
-			</div>
-			<div class="addonify-wishlist-modal-btns">
-				<?php do_action( 'addonify_wishlist_modal_wishlist_link' ); ?>
+				<p class="response-text"><?php echo esc_html__( '{product_name} has been removed from wishlist.', 'addonify-wishlist' ); ?></p>
 			</div>
 		</div>
 	</div>
