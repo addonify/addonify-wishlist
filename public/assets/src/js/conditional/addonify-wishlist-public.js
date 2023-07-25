@@ -22,7 +22,11 @@
             undoNoticeTimeout,
             loader,
             alreadyInWishlistModal,
+            saveForLaterButtonLabel,
+            savedForLaterButtonLabel,
         } = addonifyWishlistJSObject;
+
+        console.log(saveForLaterButtonLabel);
 
         let addonifyWishlist = {
             init: function() {
@@ -183,10 +187,18 @@
                                     // Update button label and icon of custom add to wishlist button.
                                     if (!currentButton.hasClass('addonify-custom-wishlist-btn') && currentButton.hasClass('addonify-add-to-wishlist-btn')) {
                                         
-                                        // Update button label.
-                                        currentButton.find('span.addonify-wishlist-btn-label').text(addedToWishlistText);
                                         // Update button icon.
                                         currentButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-o-style-one').addClass('heart-style-one');
+
+                                        // Update button label.
+                                        if (currentButton.hasClass('addonify-wishlist-save-for-later')){
+                                            console.log(savedForLaterButtonLabel);
+                                            // If button is save for later button.
+                                            currentButton.find('span.addonify-wishlist-btn-label').text(savedForLaterButtonLabel);
+                                        } else {
+                                            // If button is not save for later button.
+                                            currentButton.find('span.addonify-wishlist-btn-label').text(addedToWishlistText);
+                                        }
                                     }
                                 });
                             }
@@ -210,10 +222,18 @@
                                 }
                                 // Update button label and icon of custom add to wishlist button.
                                 if (!currentButton.hasClass('addonify-custom-wishlist-btn') && currentButton.hasClass('addonify-add-to-wishlist-btn')) {
-                                    // Update button label.
-                                    currentButton.find('span.addonify-wishlist-btn-label').text(initialAddToWishlistButtonLabel);
                                     // Update button icon.
                                     currentButton.find('i.icon.adfy-wishlist-icon').addClass('heart-o-style-one').removeClass('heart-style-one');
+
+                                    // Update button label.
+                                    if (currentButton.hasClass('addonify-wishlist-save-for-later')) {
+                                        console.log(currentButton);
+                                        // If button is save for later button.
+                                        currentButton.find('span.addonify-wishlist-btn-label').text(saveForLaterButtonLabel);
+                                    } else {
+                                        // If button is not save for later button.
+                                        currentButton.find('span.addonify-wishlist-btn-label').text(initialAddToWishlistButtonLabel);
+                                    }
                                 }
                             });
                         }
@@ -244,14 +264,18 @@
                     addonifyWishlistUpdateWishlistSidebarPageContent(fragments);
 
                     if (removeFromWishlistAfterAddedToCart === '1') {
-                        // Triggering custom event when product is added to wishlist. 
-                        // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
-                        $(document).trigger('addonify_removed_from_wishlist', [
-                            {
-                                productID: addToCartButton.data('product_id'),
-                                itemsCount: fragments.itemsCount,
-                            }
-                        ]);
+                        let addToWishlistButtonSibling = addToCartButton.parent().find('.addonify-wishlist-ajax-add-to-wishlist');
+                        if (addToWishlistButtonSibling.hasClass('added-to-wishlist')) {
+                            // Triggering custom event when product is added to wishlist. 
+                            // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
+                            $(document).trigger('addonify_removed_from_wishlist', [
+                                {
+                                    productID: addToCartButton.data('product_id'),
+                                    itemsCount: fragments.itemsCount,
+                                }
+                            ]);
+                        }
+                        
                     }
                 });
             }

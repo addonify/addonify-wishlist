@@ -167,7 +167,7 @@ if ( ! function_exists( 'addonify_wishlist_render_add_to_wishlist_button' ) ) {
 
 			$add_to_wishlist_button_args['button_classes'][] = 'added-to-wishlist';
 
-			$add_to_wishlist_button_args['button_label'] = apply_filters(
+			$add_to_wishlist_button_args['button_label'] = ( $button_label ) ? $button_label : apply_filters(
 				'addonify_wishlist_already_in_wishlist_label',
 				addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' )
 			);
