@@ -42,6 +42,8 @@
             loginRequiredModal,
             ifNotLoginAction,
             loginURL,
+            saveForLaterButtonLabel,
+            savedForLaterButtonLabel,
         } = addonifyWishlistJSObject;
 
         let AddonifyWishlistPublicGuest = {
@@ -55,8 +57,17 @@
                     wishlist_products.forEach(function (value, _) {
                         let product_button = $('.adfy-wishlist-btn[data-product_id="' + value + '"]');
                         if (!product_button.hasClass('addonify-custom-wishlist-btn')) {
-                            product_button.find('span').html(addedToWishlistButtonLabel);
+                            
                             product_button.find('i').addClass('heart-style-one').removeClass('heart-o-style-one');
+
+                            // Update button label.
+                            if (product_button.hasClass('addonify-wishlist-save-for-later')) {
+                                // If button is save for later button.
+                                product_button.find('span.addonify-wishlist-btn-label').text(savedForLaterButtonLabel);
+                            } else {
+                                // If button is not save for later button.
+                                product_button.find('span.addonify-wishlist-btn-label').text(addedToWishlistText);
+                            }
                         }
                         product_button.addClass('added-to-wishlist');
                     });
@@ -145,10 +156,17 @@
                                 }
                                 // Update button label and icon of custom add to wishlist button.
                                 if (!currentButton.hasClass('addonify-custom-wishlist-btn') && currentButton.hasClass('addonify-add-to-wishlist-btn')) {
-                                    // Update button label.
-                                    currentButton.find('span.addonify-wishlist-btn-label').text(addedToWishlistText);
                                     // Update button icon.
                                     currentButton.find('i.icon.adfy-wishlist-icon').removeClass('heart-o-style-one').addClass('heart-style-one');
+
+                                    // Update button label.
+                                    if (currentButton.hasClass('addonify-wishlist-save-for-later')) {
+                                        // If button is save for later button.
+                                        currentButton.find('span.addonify-wishlist-btn-label').text(savedForLaterButtonLabel);
+                                    } else {
+                                        // If button is not save for later button.
+                                        currentButton.find('span.addonify-wishlist-btn-label').text(addedToWishlistText);
+                                    }
                                 }
                             });
                         }
@@ -171,10 +189,17 @@
                                 }
                                 // Update button label and icon of custom add to wishlist button.
                                 if (!currentButton.hasClass('addonify-custom-wishlist-btn') && currentButton.hasClass('addonify-add-to-wishlist-btn')) {
-                                    // Update button label.
-                                    currentButton.find('span.addonify-wishlist-btn-label').text(initialAddToWishlistButtonLabel);
                                     // Update button icon.
                                     currentButton.find('i.icon.adfy-wishlist-icon').addClass('heart-o-style-one').removeClass('heart-style-one');
+
+                                    // Update button label.
+                                    if (currentButton.hasClass('addonify-wishlist-save-for-later')) {
+                                        // If button is save for later button.
+                                        currentButton.find('span.addonify-wishlist-btn-label').text(saveForLaterButtonLabel);
+                                    } else {
+                                        // If button is not save for later button.
+                                        currentButton.find('span.addonify-wishlist-btn-label').text(initialAddToWishlistButtonLabel);
+                                    }
                                 }
                             });
                         }
@@ -214,7 +239,12 @@
                 $(document).on('added_to_cart', function (event, fragments, cart_hash, addToCartButton) {
 
                     if (removeFromWishlistAfterAddedToCart === '1') {
-                        addonifyLocalRemoveFromWishlist( addToCartButton, 'added-to-cart' );
+                        let addToWishlistButtonSibling = addToCartButton.parent().find('.addonify-wishlist-ajax-add-to-wishlist');
+                        console.log(addToWishlistButtonSibling);
+                        if(addToWishlistButtonSibling.hasClass('added-to-wishlist')){
+                            addonifyLocalRemoveFromWishlist( addToWishlistButtonSibling, 'added-to-cart' );
+                        }
+                        
                     }
                 });
             },
@@ -409,7 +439,6 @@
                     addonifyWishlistDisplayModal(errorRemovingFromWishlistModal, thisButton.data('product_name'));
                 }
             } else {
-                console.log('Hello');
                 // Displays error removing from wishlist modal.
                 addonifyWishlistDisplayModal(errorRemovingFromWishlistModal, thisButton.data('product_name'));
             }

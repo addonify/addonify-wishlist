@@ -104,7 +104,7 @@ class Addonify_Wishlist_Public {
 			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'render_add_to_wishlist_button' ), 5 );
 		}
 
-		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_item_from_wishlist' ) );
+		add_action( 'woocommerce_add_to_cart', array( $this, 'remove_item_from_wishlist' ), 10, 2 );
 
 		// Displaying add to wishlist button in product single before cart form.
 		add_action(
@@ -290,6 +290,11 @@ class Addonify_Wishlist_Public {
 				'alreadyInWishlistModal'                => $this->already_in_wishlist_modal(),
 			)
 		);
+
+		if ( addonify_wishlist_get_option( 'enable_save_for_later' ) === '1' ) {
+			$script_object['saveForLaterButtonLabel']  = addonify_wishlist_get_option( 'save_for_later_btn_label' );
+			$script_object['savedForLaterButtonLabel'] = addonify_wishlist_get_option( 'save_for_later_btn_label_after_added_to_wishlist' );
+		}
 
 		if ( ! is_user_logged_in() ) {
 
@@ -952,19 +957,17 @@ class Addonify_Wishlist_Public {
 			return;
 		}
 
-		$class = 'adfy-wishlist-btn addonify_wishlist-cart-item-add-to-wishlist';
-
-		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
-			$class .= ' adfy-wishlist-hide';
-		} elseif ( ! is_user_logged_in() ) {
-			$class .= ' adfy-wishlist-hide';
-		}
+		$class = 'adfy-wishlist-btn addonify_wishlist-cart-item-add-to-wishlist addonify-wishlist-save-for-later';
 
 		$attrs = array(
 			'id'    => $product_id,
 			'class' => $class,
 			'label' => addonify_wishlist_get_option( 'save_for_later_btn_label' ),
 		);
+
+		if ( addonify_wishlist_is_product_in_wishlist( $product_id ) ) {
+			$attrs['label'] = addonify_wishlist_get_option( 'save_for_later_btn_label_after_added_to_wishlist' );
+		}
 
 		return '<div class="addonify_wishlist-save-for-later">' . $this->get_wishlist_button_shortcode( $attrs ) . '</div>';
 	}
@@ -1325,20 +1328,17 @@ class Addonify_Wishlist_Public {
 	 * Removes product from wishlist when product is added into the cart.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $cart_item_key Cart item key.
+	 * @param int    $product_id Product id.
 	 */
-	public function remove_item_from_wishlist() {
+	public function remove_item_from_wishlist( $cart_item_key, $product_id ) {
 
 		if (
 			is_user_logged_in() &&
 			addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ) === '1'
 		) {
-			// remove if exists.
-			if ( isset( $_REQUEST['product_id'] ) ) { //phpcs:ignore
-				addonify_wishlist_remove_product_from_wishlist( absint( wp_unslash( $_REQUEST['product_id'] ) ) ); //phpcs:ignore
-			}
-			if ( isset( $_REQUEST['add-to-cart'] ) ) { //phpcs:ignore
-				addonify_wishlist_remove_product_from_wishlist( absint( wp_unslash( $_REQUEST['add-to-cart'] ) ) ); //phpcs:ignore
-			}
+			addonify_wishlist_remove_product_from_wishlist( $product_id );
 		}
 	}
 

@@ -101,6 +101,15 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'save_for_later_btn_label' ),
 					),
+					'save_for_later_btn_label_after_added_to_wishlist' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Button label after added to wishlist', 'addonify-wishlist' ),
+						'description' => __( 'Set the label for "Save for Later" button after the product is added to wishlist.', 'addonify-wishlist' ),
+						'placeholder' => __( 'Saved for later', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'save_for_later_btn_label_after_added_to_wishlist' ),
+					),
 					'save_for_later_btn_position' => array(
 						'type'        => 'select',
 						'className'   => '',
