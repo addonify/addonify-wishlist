@@ -266,28 +266,7 @@ if ( ! function_exists( 'addonify_wishlist_render_wishlist_page_loop' ) ) {
 	 */
 	function addonify_wishlist_render_wishlist_page_loop( $wishlist_product_ids = array() ) {
 
-		$guest = false;
-
-		if ( is_user_logged_in() ) {
-
-			if ( empty( $wishlist_product_ids ) ) {
-
-				global $addonify_wishlist;
-				if ( $addonify_wishlist->check_wishlist_table_exists() ) {
-					$wishlist_items = addonify_wishlist_get_wishlist_items();
-					if ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) {
-						$wishlist_product_ids = addonify_wishlist_get_wishlist_items();
-					}
-				} else {
-					$wishlist_items = addonify_wishlist_get_wishlist_items();
-					if ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) {
-						$wishlist_product_ids = addonify_wishlist_get_wishlist_items();
-					}
-				}
-			}
-		} else {
-			$guest = true;
-		}
+		$guest = is_user_logged_in();
 
 		$products_data = addonify_wishlist_prepare_wishlist_loop_products_data( $wishlist_product_ids );
 
@@ -395,7 +374,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar' ) ) {
 					'wishlist_url'                    => ( addonify_wishlist_get_option( 'wishlist_page' ) ) ? get_permalink( addonify_wishlist_get_option( 'wishlist_page' ) ) : '',
 					'alignment'                       => 'addonify-align-' . addonify_wishlist_get_option( 'sidebar_position' ),
 					'view_wishlist_page_button_label' => addonify_wishlist_get_option( 'view_wishlist_page_button_label' ),
-					'product_ids'                     => $product_ids,
+					'product_ids'                     => addonify_wishlist_get_default_wishlist_items_for_loop(),
 				)
 			)
 		);
@@ -410,28 +389,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_loop' ) ) {
 	 */
 	function addonify_wishlist_render_sidebar_loop( $wishlist_product_ids = array() ) {
 
-		$guest = false;
-
-		if ( is_user_logged_in() ) {
-
-			if ( empty( $wishlist_product_ids ) ) {
-
-				global $addonify_wishlist;
-				if ( $addonify_wishlist->check_wishlist_table_exists() ) {
-					$wishlist_items = addonify_wishlist_get_wishlist_items();
-					if ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) {
-						$wishlist_product_ids = addonify_wishlist_get_wishlist_items();
-					}
-				} else {
-					$wishlist_items = addonify_wishlist_get_wishlist_items();
-					if ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) {
-						$wishlist_product_ids = addonify_wishlist_get_wishlist_items();
-					}
-				}
-			}
-		} else {
-			$guest = true;
-		}
+		$guest = is_user_logged_in();
 
 		$products_data = addonify_wishlist_prepare_wishlist_loop_products_data( $wishlist_product_ids );
 
