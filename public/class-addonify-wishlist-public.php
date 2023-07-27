@@ -1422,8 +1422,10 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_wishlist_sidebar_loop_content() {
 
+		$wishlist_product_ids = addonify_wishlist_get_default_wishlist_items_for_loop();
+
 		ob_start();
-		do_action( 'addonify_wishlist_render_sidebar_loop' );
+		do_action( 'addonify_wishlist_render_sidebar_loop', $wishlist_product_ids );
 		return ob_get_clean();
 	}
 
@@ -1435,8 +1437,10 @@ class Addonify_Wishlist_Public {
 	 */
 	public function get_wishlist_page_loop_content() {
 
+		$wishlist_product_ids = addonify_wishlist_get_default_wishlist_items_for_loop();
+
 		ob_start();
-		do_action( 'addonify_wishlist_render_wishlist_page_loop' );
+		do_action( 'addonify_wishlist_render_wishlist_page_loop', $wishlist_product_ids );
 		return ob_get_clean();
 	}
 

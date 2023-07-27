@@ -494,3 +494,30 @@ if ( ! function_exists( 'addonify_wishlist_get_error_ajax_response' ) ) {
 		return apply_filters( 'addonify_wishlist_error_ajax_response', $response, $error );
 	}
 }
+
+
+if ( ! function_exists( 'addonify_wishlist_get_default_wishlist_items_for_loop' ) ) {
+
+	function addonify_wishlist_get_default_wishlist_items_for_loop() {
+
+		$wishlist_items = array();
+
+		if ( is_user_logged_in() ) {
+
+			global $addonify_wishlist;
+			if ( $addonify_wishlist->check_wishlist_table_exists() ) {
+				$wishlist_items = addonify_wishlist_get_wishlist_items();
+				if ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) {
+					$wishlist_product_ids = addonify_wishlist_get_wishlist_items();
+				}
+			} else {
+				$wishlist_items = addonify_wishlist_get_wishlist_items();
+				if ( is_array( $wishlist_items ) && count( $wishlist_items ) > 0 ) {
+					$wishlist_product_ids = addonify_wishlist_get_wishlist_items();
+				}
+			}
+		}
+
+		return apply_filters( 'addonify_wishlist_default_wishlist_items_for_loop', $wishlist_items );
+	}
+}

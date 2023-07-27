@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 	<?php do_action( 'addonify_wishlist_after_sidebar_opening_tag' ); ?>
 	<div class="addonify-wishlist-ssc-body">
 		<div class="addonify-wishlist-scs-header">
-			<h3 class="adfy-wishlist-sidebar-title">
+			<h3 id="addonify-wishlist-title" class="adfy-wishlist-sidebar-title">
 				<?php echo esc_html( $title ); ?>
 			</h3>
 			<?php do_action( 'addonify_wishlist_after_sidebar_title' ); ?>
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 	if ( $view_wishlist_page_button_label ) {
 		?>
 		<div class="addonify-wishlist-ssc-footer">
-			<a href="<?php echo esc_url( $wishlist_url ); ?>" class="addonify-wishlist-goto-wishlist-btn">
+			<a id="addonify-wishlist-wishlist-page-link" href="<?php echo esc_url( $wishlist_url ); ?>" class="addonify-wishlist-goto-wishlist-btn">
 				<?php echo esc_html( $view_wishlist_page_button_label ); ?>
 				<span class="icon">
 					<svg viewBox="0 0 64 64" xml:space="preserve">

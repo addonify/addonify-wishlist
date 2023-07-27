@@ -64,7 +64,7 @@ if (
 						</div>
 						<div class="adfy-wishlist-col remove-item-column">
 							<?php
-							$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist ' : ' adfy-wishlist-remove-btn addonify-wishlist-ajax-remove-from-wishlist ';
+							$remove_from_wishlist_class = $guest ? ' addonify-wishlist-remove-from-wishlist addonify-wishlist-ajax-remove-from-wishlist' : ' adfy-wishlist-remove-btn addonify-wishlist-ajax-remove-from-wishlist ';
 							?>
 							<button
 								class="adfy-wishlist-btn addonify-wishlist-icon <?php echo esc_attr( $remove_from_wishlist_class ); ?> addonify-wishlist-sidebar-button"
