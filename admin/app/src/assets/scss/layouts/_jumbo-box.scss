@@ -37,9 +37,15 @@
 
                 .x-heading {
 
+                    display: block;
+                    position: relative;
                     font-size: 17px;
+                    font-weight: 600;
+                    letter-spacing: -0.10px;
                     margin: 0;
+                    padding: 0;
                     color: var(--addonify_base_text_color);
+                    @include heading_gradient();
                 }
 
                 .adfy-button {

@@ -5,7 +5,6 @@ import Recommended from "@layouts/Recommended.vue";
 import Sidebar from "@layouts/Sidebar.vue";
 import RouteLinks from "@layouts/RouteLinks.vue";
 import Loading from "@components/core/Loading.vue";
-//import Hero from "@components/partials/Hero.vue";
 import Form from "@components/core/Form.vue";
 import JumboBoxTitle from "@layouts/JumboBoxTitle.vue";
 import { useProductStore } from "@stores/products";
@@ -74,7 +73,6 @@ onMounted(() => {
 	 *
 	 * @since: 2.0.0
 	 */
-
 	if (typeof proStore.allAddons === "object") {
 		if (Object.keys(proStore.allAddons).length === 0) {
 			proStore.fetchProductList();
@@ -85,7 +83,6 @@ onMounted(() => {
 });
 </script>
 <template>
-	<!--<Hero />-->
 	<section
 		id="app-divider"
 		class="app-divider"

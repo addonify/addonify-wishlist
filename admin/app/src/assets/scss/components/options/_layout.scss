@@ -45,7 +45,7 @@
                     cursor: help;
                     fill: var(--addonify_tooltip_icon_color);
                     color: var(--addonify_tooltip_icon_color);
-                    @include transition_delay();
+                    @include transition();
                 }
             }
         }
@@ -80,15 +80,15 @@
                 display: block;
                 width: 100%;
                 justify-content: flex-start;
-                padding: 40px;
-                border: 1px solid #D9D9D9;
+                padding: 30px;
+                border: 1px solid var(--addonify_border_color);
                 border-radius: 10px;
 
                 &::before {
 
                     background: white;
-                    border-left: 1px solid #D9D9D9;
-                    border-top: 1px solid #D9D9D9;
+                    border-left: 1px solid var(--addonify_border_color);
+                    border-top: 1px solid var(--addonify_border_color);
                     content: "";
                     display: inline-flex;
                     height: 16px;

@@ -4,17 +4,9 @@
  *
  * @since 2.0.0
  */
-
-export interface TypeRecommdendedProducts {
+export interface RecommdendedProducts {
 	name: string;
 	description: string;
 	thumbnail: string;
 	status: string;
 }
-
-/**
- *
- * Define type for addons.
- *
- * @since 2.0.0
- */

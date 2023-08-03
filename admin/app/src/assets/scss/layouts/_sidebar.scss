@@ -5,6 +5,9 @@
 #app-sidebar {
 
     position: relative;
+    @include flex();
+    flex-direction: column;
+    gap: 40px;
 
     /**
     *

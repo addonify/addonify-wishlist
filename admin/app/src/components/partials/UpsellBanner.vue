@@ -20,12 +20,18 @@ onMounted(() => {
 	 * Wait for 10 seconds before checking for sale.
 	 * Let other API finish their job first.
 	 *
+	 * @since 1.0.0
 	 */
-	setTimeout(() => {
-		if (typeof store.data === "object") {
+	let sale = null;
+	const delay = 10000; // 10 seconds.
+
+	if (typeof store.data === "object") {
+		clearTimeout(sale);
+		sale = setTimeout(() => {
 			Object.keys(store.data).length === 0 ? store.checkSale() : null;
-		}
-	}, 10000);
+			clearTimeout(sale);
+		}, delay);
+	}
 });
 
 /**
@@ -59,7 +65,7 @@ onUnmounted(() => {
 				<h3 class="upsell-heading">
 					{{
 						__(
-							"Get Addonify Wishlist premium version.",
+							"Get addonify wishlist premium version",
 							"addonify-wishlist"
 						)
 					}}

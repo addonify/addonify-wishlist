@@ -3,6 +3,8 @@ import { ref } from "vue";
 import UpsellArrow from "@components/core/UpsellArrow.vue";
 import UpsellBanner from "@components/partials/UpsellBanner.vue";
 import QuickLinks from "@components/partials/QuickLinks.vue";
+import Hero from "@components/partials/Hero.vue";
+
 import { advertiseUpsell } from "@helpers/global";
 </script>
 <template>
@@ -11,8 +13,7 @@ import { advertiseUpsell } from "@helpers/global";
 			<UpsellArrow />
 			<UpsellBanner />
 		</template>
-		<template v-else>
-			<QuickLinks />
-		</template>
+		<QuickLinks />
+		<Hero />
 	</aside>
 </template>

@@ -6,10 +6,9 @@ import { computed } from "vue";
  * Define props that we will use in this component.
  * @since: 2.0.0
  */
-
 const props = defineProps({
 	modelValue: {
-		type: [Array, String, Number, Object],
+		type: String,
 		required: true,
 	},
 	choices: {

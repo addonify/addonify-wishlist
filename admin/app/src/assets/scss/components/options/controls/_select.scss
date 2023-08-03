@@ -1,0 +1,23 @@
+
+/* -------------------------------------------------------------------------- 
+	Select control.
+-------------------------------------------------------------------------- */
+
+#addonify-wishlist-app {
+
+    --input-width: 300px;
+
+    .adfy-option {
+
+        .el-select {
+
+            .el-input {
+
+                .el-input__wrapper {
+
+                    min-width: calc( var(--input-width) - 50px );
+                }
+            }
+        }
+    }
+}
