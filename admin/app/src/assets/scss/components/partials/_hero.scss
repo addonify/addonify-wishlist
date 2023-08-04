@@ -61,13 +61,18 @@
                 fill: var(--addonify_primary_color);
                 color: var(--addonify_primary_color);
                 background-color: white;
+                box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
 
-                &:hover {
+                &:is(:hover, :focus) {
 
-                    color: white;
                     fill: white;
-                    border-color: white;
-                    background-color: transparent;
+                    color: white;
+					background-color: var(--addonify_secondary_color);
+                }
+
+                &:is(:focus) {
+
+                    outline: none;
                 }
             }
         }

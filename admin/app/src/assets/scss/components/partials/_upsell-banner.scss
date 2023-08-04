@@ -4,6 +4,8 @@
 
 #upsell-banner {
 
+	--badge-size: 60px;
+
 	position: relative;
 	padding: 30px;
 	background-color: var(--addonify_primary_color);
@@ -29,14 +31,26 @@
 		left: auto;
 		right: -30px;
 		top: -30px;
-		height: 60px;
-		width: 60px;
+		height: var(--badge-size);
+		width: var(--badge-size);
 		color: white;
 		border-radius: 100%;
 		animation: addonifyPulseDot 2s infinite;
 		background-color: red;
 		background: linear-gradient(to right, #ff416c, #ff4b2b);
 		@include transition(0.8s);
+
+		&::before {
+
+			content: "";
+			position: absolute;
+			height: calc( var(--badge-size) + 8px );
+			width: calc( var(--badge-size) + 8px );
+			border-style: dotted;
+			border-width: 2px;
+			border-color: #FF9D9D;
+			border-radius: 100%;
+		}
 
 		&.has-caption {
 
@@ -120,12 +134,19 @@
 				color: var(--addonify_primary_color);
 				background-color: white;
 				border-radius: 40px;
+				box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
 
-				&:hover {
+				&:is(:hover, :focus) {
 
-					color: white;
+                    fill: white;
+                    color: white;
 					background-color: var(--addonify_secondary_color);
-				}
+                }
+
+                &:is(:focus) {
+
+                    outline: none;
+                }
 			}
 		}
 	}

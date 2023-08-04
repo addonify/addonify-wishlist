@@ -9,11 +9,14 @@ import { advertiseUpsell } from "@helpers/global";
 </script>
 <template>
 	<aside id="app-sidebar">
+		<slot name="top" />
 		<template v-if="advertiseUpsell">
 			<UpsellArrow />
 			<UpsellBanner />
 		</template>
+		<slot name="middle" />
 		<QuickLinks />
 		<Hero />
+		<slot name="bottom" />
 	</aside>
 </template>
