@@ -26,6 +26,7 @@ export default create_config("admin/app/src/main.js", "admin/app/dist", {
 			"@views": resolve(__dirname, "./admin/app/src/views"),
 			"@utilities": resolve(__dirname, "./admin/app/src/utilities"),
 			"@helpers": resolve(__dirname, "./admin/app/src/helpers"),
+			"@types": resolve(__dirname, "./admin/app/src/types"),
 		},
 	},
 	build: {

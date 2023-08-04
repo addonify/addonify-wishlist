@@ -1,0 +1,230 @@
+/**
+*
+* Button: 'color' buttons.
+*
+*/
+.button {
+
+    --default: #2A2A2A;
+    --info: #0F61CD;
+    --success: #00A000;
+    --warning: #D9A300;
+    --danger: #B31D2C;
+    --monochrome: #FFFFFF;
+    --disabled: #A0A0A0;
+
+    --width: max-content;
+    --height: auto;
+
+    --radius: 5px;
+    --border-width: 2px;
+    --border-style: solid;
+    --border-color: transparent;
+
+    $button_classes: ("button", "loading");
+
+    $button_colors: (
+        "info": var(--info), 
+        "success": var(--success),
+        "warning": var(--warning), 
+        "danger": var(--danger),
+        "monochrome": var(--monochrome),
+        "disabled": var(--disabled),
+    );
+
+    $button_size: ("small", "large");
+    $button_layout: ("outline", "no-button");
+
+    @mixin hover-props() {
+
+        text-decoration: none;
+    }
+
+    @mixin focus-props() {
+
+        outline: none;
+    }
+
+    @mixin radius( $radius: var(--radius) ) {
+
+        border-radius: $radius;
+    }
+
+    @mixin animate( $name: spin, $duration: 0.8s, $function: linear, $iteration: infinite ) {
+
+        animation: $name $duration $function $iteration;
+    }
+
+    /**
+    *
+    * Default styles.
+    *
+    */
+    @each $name in $button_classes {
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: var(--width);
+        height: var(--height);
+        cursor: pointer;
+        font-family: var(--addonify_base_font_family);
+        font-weight: normal;
+        font-size: var(--addonify_button_font_size);
+        line-height: var(--addonify_button_line_height);
+        @include radius();
+        
+        svg {
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            width: 18px;
+            height: 18px;
+        }
+
+        @if $name == 'loading' {
+
+            svg {
+
+                @include animate();
+            }
+        }
+    }
+
+    /**
+    *
+    * Color button.
+    *
+    */
+    @each $key, $color in $button_colors {
+
+        &.#{$key} {
+
+            fill: $color;
+            color: $color;
+            
+            @if $key == 'monochrome' {
+
+                border-color: $color;
+                background-color: $color;
+            }
+            
+            @else if $key == 'disabled' {
+
+                fill: $color;
+                color: $color;
+                border-color: $color;
+                background-color: lighten($color, 60%);
+                crusor: not-allowed;
+            } 
+            
+            @else {
+
+                border-color: $color;
+                background-color: lighten($color, 60%);
+            }
+
+            &:is(:hover, :focus) {
+
+                @if $key == 'monochrome' {
+
+                    fill: $color;
+                    color: $color;
+                    border-color: $color;
+                    background-color: transparent;
+
+                } @else {
+
+                    fill: darken($color, 10%);
+                    color: darken($color, 10%);
+                    border-color: darken($color, 10%);
+                    background-color: lighten($color, 50%);
+                }
+            }
+        }
+    }
+
+    /**
+    *
+    * Button size.
+    *
+    */
+    @each $size in $button_size {
+
+        &.#{$size} {
+
+            @if $size == 'small' {
+
+                padding: 10px;
+            } 
+            
+            @else if $size == 'large' {
+
+                padding: 30px 80px;
+            }
+
+            @else {
+
+                padding: 15px 25px;
+            }
+        }
+    }
+
+    /**
+    *
+    * Button layout.
+    *
+    */
+    @each $layout in $button_layout {
+
+        &.#{$layout} {
+
+            @if $layout == 'outline' {
+
+                @each $key, $color in $button_colors {
+
+                    &.#{$key} {
+
+                        fill: $color;
+                        color: $color;
+                        border-color: $color;
+                        background-color: transparent;
+
+                        &:is(:hover, :focus) {
+
+                            fill: darken($color, 10%);
+                            color: darken($color, 10%);
+                            border-color: darken($color, 10%);
+                            background-color: lighten($color, 50%);
+                        }
+                    }
+                }
+            }
+
+            @if $layout == 'no-button' {
+                
+                @each $key, $color in $button_colors {
+
+                    &.#{$key} {
+
+                        fill: $color;
+                        color: $color;
+                        border-color: transparent;
+                        background-color: transparent;
+
+                        &:is(:hover, :focus) {
+
+                            fill: darken($color, 10%);
+                            color: darken($color, 10%);
+                            border-color: transparent;
+                            background-color: transparent;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

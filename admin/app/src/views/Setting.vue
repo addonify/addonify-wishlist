@@ -5,11 +5,12 @@ import JumboBoxContainer from "@layouts/JumboBoxContainer.vue";
 import Sidebar from "@layouts/Sidebar.vue";
 import RouteLinks from "@layouts/RouteLinks.vue";
 import Loading from "@components/core/Loading.vue";
-import Hero from "@components/partials/Hero.vue";
 import { useSettingsStore } from "@stores/settings";
+import { useProductStore } from "@stores/products";
 import { advertiseUpsell } from "@helpers/global";
 
 const store = useSettingsStore();
+const proStore = useProductStore();
 
 onMounted(() => {
 	/**
@@ -24,10 +25,39 @@ onMounted(() => {
 	if (!store.haveSettingsStateInMemory) {
 		store.fetchSettings();
 	}
+
+	/**
+	 *
+	 * Fetch the recommded & installed addons in background.
+	 * Doing this we can avoid the loading when user navigate to the recommended products page.
+	 * Wait till 20 seconds.
+	 *
+	 * @since: 2.0.6
+	 */
+	let operation = null;
+	const delay = 20000; // 20 seconds.
+
+	if (typeof proStore.allAddons === "object") {
+		if (Object.keys(proStore.allAddons).length === 0) {
+			// set a timeout to fetch the product list.
+			operation = setTimeout(() => {
+				if (typeof proStore.allAddons === "object") {
+					if (Object.keys(proStore.allAddons).length === 0) {
+						proStore.fetchProductList().then((res) => {
+							if (res.status === 200) {
+								proStore.fetchInstalledAddons();
+							}
+						});
+					}
+				}
+
+				clearTimeout(operation);
+			}, delay);
+		}
+	}
 });
 </script>
 <template>
-	<Hero />
 	<section
 		id="app-divider"
 		class="app-divider"

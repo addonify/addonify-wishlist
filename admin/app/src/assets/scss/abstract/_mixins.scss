@@ -9,6 +9,7 @@
 }
 
 @function make_rem($pxValue) {
+
     @return #{stripUnit($pxValue) / stripUnit($html-font-size)}rem;
 }
 
@@ -46,9 +47,9 @@
 	Mixin: Transitions
   -------------------------------------------------------------------------- */
 
-@mixin transition_delay($delay: 0.5s) {
+@mixin transition($delay: 0.5s, $property: all, $timing: ease) {
 
-    transition: all $delay ease;
+    transition: $property $delay $timing;
 }
 
 /* -------------------------------------------------------------------------- 
@@ -59,12 +60,36 @@
 
     opacity: 0;
     visibility: hidden;
+	backface-visibility: hidden;
 }
 
 @mixin visibility_visible () {
 
     opacity: 1;
     visibility: visible;
+	backface-visibility: visible;
+}
+
+/* -------------------------------------------------------------------------- 
+	Mixin: Gradient
+  -------------------------------------------------------------------------- */
+
+@mixin background-clip() {
+
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-webkit-text-fill-color: transparent; 
+	-moz-text-fill-color: transparent;
+}
+
+@mixin heading_gradient( $color: 'purple') {
+
+	@if $color == 'purple' {
+
+		background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59); 
+	}
+
+	@include background-clip();
 }
 
 /* -------------------------------------------------------------------------- 
@@ -77,7 +102,7 @@
 }
 
 /* -------------------------------------------------------------------------- 
-	Mixin: WooCommerce product columns.
+	Mixin: grid columns
   -------------------------------------------------------------------------- */
 
 @mixin grid_columns($columns) {
@@ -131,7 +156,7 @@
 
 @mixin clearfix() {
 
-  &::before,
+	&::before,
 	&::after {
 
 		content: "";

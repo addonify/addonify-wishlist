@@ -27,4 +27,4 @@ export const currentVersion = addonify_wishlist_localizer.version_number;
  * @since 2.0.0
  */
 
-export const advertiseUpsell: boolean = false;
+export const advertiseUpsell: boolean = true;

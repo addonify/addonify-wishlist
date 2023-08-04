@@ -25,7 +25,7 @@ a.adfy-button {
     border-radius: var(--addonify_buttons_border_radius);
     cursor: pointer;
     text-decoration: none;
-    @include transition_delay();
+    @include transition();
 
     .icon {
 
@@ -142,6 +142,6 @@ a.adfy-button.fake-button {
 
         font-family: var(--addonify_base_font_family);
         font-weight: normal;
-        @include transition_delay();
+        @include transition();
     }
 }

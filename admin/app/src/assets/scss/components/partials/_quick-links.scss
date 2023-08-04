@@ -18,6 +18,7 @@
             margin: 0;
             padding: 0 0 10px 0;
             font-size: 17px;
+            font-weight: 600;
             border-bottom: 1px solid var(--addonify_option_box_solid_border_color);
         }
     }
@@ -70,7 +71,7 @@
                     font-weight: normal;
                     text-decoration: none;
                     //color: var(--addonify_base_link_color);
-                    @include transition_delay();
+                    @include transition();
 
                     .icon {
 
