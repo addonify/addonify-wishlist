@@ -1,10 +1,10 @@
-{
-	"compilerOptions": {
-		"composite": true,
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"allowSyntheticDefaultImports": true,
-		"allowJs": true
-	},
-	"include": ["vite.config.js"]
-}
+//{
+//	"compilerOptions": {
+//		"composite": true,
+//		"module": "ESNext",
+//		"moduleResolution": "Node",
+//		"allowSyntheticDefaultImports": true,
+//		"allowJs": true
+//	},
+//	"include": ["vite.config.js"]
+//}
