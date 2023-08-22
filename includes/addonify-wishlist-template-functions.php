@@ -742,35 +742,21 @@ if ( ! function_exists( 'addonify_wishlist_removed_from_wishlist_modal_template'
 }
 
 
-if ( ! function_exists( 'addonify_wishlist_product_removal_undo_notice_template' ) ) {
+if ( ! function_exists( 'addonify_wishlist_error_modal_template' ) ) {
 	/**
-	 * Renders HTML template for product removal and undo notice.
+	 * Renders HTML template for displaying error modal when removing product from wishlist.
 	 *
 	 * @since 2.0.6
-	 *
-	 * @param object $product WC_Product.
 	 */
-	function addonify_wishlist_product_removal_undo_notice_template( $product ) {
-
-		$product_removal_text = addonify_wishlist_get_option( 'undo_action_prelabel_text' );
-		$undo_text            = addonify_wishlist_get_option( 'undo_action_label' );
-
-		$template = '<p>';
-
-		if ( ! empty( $product_removal_text ) ) {
-			$template .= str_contains( $product_removal_text, '{product_name}' ) ? esc_html( str_replace( '{product_name}', $product->get_name(), $product_removal_text ) ) : esc_html( $product_removal_text );
-		}
-
-		if ( ! empty( $undo_text ) ) {
-			$template .= '<a href="#" id="addonify-wishlist-undo-deleted-product-link" data-product_id="' . esc_attr( $product->get_id() ) . '" data-product_name="' . $product->get_name() . '">' . esc_html( $undo_text ) . '</a>';
-		}
-
-		$template .= '</p>';
-
-		echo wp_kses_post( $template );
+	function addonify_wishlist_error_modal_template() {
+		addonify_wishlist_get_template(
+			'modals/error.php',
+			apply_filters(
+				'addonify_wishlist_error_modal_template_args',
+				array()
+			)
+		);
 	}
-
-	add_action( 'addonify_wishlist_render_product_removal_undo_notice', 'addonify_wishlist_product_removal_undo_notice_template', 10, 2 );
 }
 
 
@@ -851,4 +837,166 @@ if ( ! function_exists( 'addonify_wishlist_get_modal_button_content' ) ) {
 		<?php
 		return ob_get_clean();
 	}
+}
+
+
+
+
+if ( ! function_exists( 'addonify_wishlist_sidebar_product_row_template' ) ) {
+
+	function addonify_wishlist_sidebar_product_row_template( $product ) {
+		?>
+		<li
+			id="adfy-wishlist-sidebar-product-row-<?php echo esc_attr( $product->get_id() ); ?>"
+			class="addonify-wishlist-sidebar-item"
+			data-product_row="addonify-wishlist-sidebar-product-row-<?php echo esc_attr( $product->get_id() ); ?>"
+			data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
+		>
+			<div class="adfy-wishlist-row">
+				<div class="adfy-wishlist-col image-column">
+					<div class="adfy-wishlist-woo-image">
+						<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
+							<?php echo wp_kses_post( $product->get_image( 'woocommerce_thumbnail' ) ); ?>
+						</a>
+					</div>
+				</div>
+				<div class="adfy-wishlist-col title-price-column">
+					<div class="adfy-wishlist-woo-title">
+						<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
+							<?php echo wp_kses_post( $product->get_name() ); ?>
+						</a>
+					</div>
+					<div class="adfy-wishlist-woo-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></div>
+					<?php
+					$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
+					if (
+						isset( $product_avaibility['stock_status']['class'] ) &&
+						isset( $product_avaibility['stock_status']['avaibility'] )
+					) {
+						?>
+						<div class="adfy-wishlist-woo-stock">
+							<span class="stock-label <?php echo esc_attr( $product_avaibility['stock_status']['class'] ); ?>">
+								<?php echo esc_html( $product_avaibility['stock_status']['avaibility'] ); ?>
+							</span>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+			</div>
+
+			<div class="adfy-wishlist-woo-action">
+				<div class="adfy-wishlist-row">
+					<div class="adfy-wishlist-col cart-column">
+						<?php
+						echo do_shortcode( '[add_to_cart id=' . $product->get_id() . ' show_price=false style="" class="adfy-wishlist-clear-shortcode-button-style adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-sidebar-button"]' );
+						?>
+					</div>
+					<div class="adfy-wishlist-col remove-item-column">
+						<button
+							class="adfy-wishlist-btn addonify-wishlist-icon addonify-wishlist-ajax-remove-from-wishlist addonify-wishlist-sidebar-button"
+							name="addonify_wishlist_remove"
+							data-product_id="<?php echo esc_attr( $product->get_id() ); ?>"
+							data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
+							data-source="wishlist-sidebar"
+						>
+							<i class="adfy-wishlist-icon trash-2"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</li>
+		<?php
+	}
+
+	add_action( 'addonify_wishlist_render_sidebar_product_row', 'addonify_wishlist_sidebar_product_row_template' );
+}
+
+if ( ! function_exists( 'addonify_wishlist_table_product_row_template' ) ) {
+
+	function addonify_wishlist_table_product_row_template( $product ) {
+		?>
+		<tr
+			id="adfy-wishlist-table-product-row-<?php echo esc_attr( $product->get_id() ); ?>"
+			class="addonify-wishlist-table-product-row"
+			data-product_row="addonify-wishlist-table-product-row-<?php echo esc_attr( $product->get_id() ); ?>"
+			data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
+		>
+			<td class="remove">
+				<button 
+					class="adfy-wishlist-btn addonify-wishlist-icon addonify-wishlist-ajax-remove-from-wishlist addonify-wishlist-table-button"
+					name="addonify_wishlist_remove"
+					data-product_id="<?php echo esc_attr( $product->get_id() ); ?>"
+					data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
+					data-source="wishlist-table"
+				>
+					<i class="adfy-wishlist-icon trash-2"></i>
+				</button>
+			</td>
+			<td class="image">
+				<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
+					<?php echo wp_kses_post( $product->get_image( 'woocommerce_thumbnail' ) ); ?>
+				</a>
+			</td>
+			<td class="name">
+				<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
+					<?php echo wp_kses_post( $product->get_name() ); ?>
+				</a>
+			</td>
+			<td class="price">
+				<?php echo wp_kses_post( $product->get_price_html() ); ?>
+			</td>
+			<td class="stock">
+				<?php
+				$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
+				if (
+					isset( $product_avaibility['stock_status']['class'] ) &&
+					isset( $product_avaibility['stock_status']['avaibility'] )
+				) {
+					?>
+					<span class="stock-label <?php echo esc_attr( $product_avaibility['stock_status']['class'] ); ?>">
+						<?php echo esc_html( $product_avaibility['stock_status']['avaibility'] ); ?>
+					</span>
+					<?php
+				}
+				?>
+			</td>
+			<td class="actions">
+				<?php
+				echo do_shortcode( '[add_to_cart id=' . $product->get_id() . ' show_price=false style="" class="adfy-wishlist-clear-shortcode-button-style adfy-wishlist-btn addonify-wishlist-add-to-cart addonify-wishlist-table-button"]' );
+				?>
+			</td>
+		</tr>
+		<?php
+	}
+
+	add_action( 'addonify_wishlist_render_table_product_row', 'addonify_wishlist_table_product_row_template' );
+}
+
+
+
+if ( ! function_exists( 'addonify_wishlist_product_removal_undo_notice_template' ) ) {
+	
+	function addonify_wishlist_product_removal_undo_notice_template() {
+		?>
+		<p>
+			<?php echo esc_html( addonify_wishlist_get_option( 'undo_action_prelabel_text' ) ); ?>
+			<?php
+			if ( ! empty( addonify_wishlist_get_option( 'undo_action_label' ) ) ) {
+				?>
+				<a
+					href="#"
+					id="addonify-wishlist-undo-deleted-product-link"
+				><?php echo esc_html( addonify_wishlist_get_option( 'undo_action_label' ) ); ?></a>
+				<?php
+			}
+			?>
+		</p>
+		<?php
+	}
+
+	add_action(
+		'addonify_wishlist_render_product_removal_undo_notice',
+		'addonify_wishlist_product_removal_undo_notice_template'
+	);
 }

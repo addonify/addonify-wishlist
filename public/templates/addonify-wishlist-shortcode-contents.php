@@ -31,6 +31,8 @@ defined( 'ABSPATH' ) || exit;
 					<?php do_action( 'addonify_wishlist_modal_login_link' ); ?>
 				</div>
 				<?php
+			} else {
+				do_action( 'addonify_wishlist_render_wishlist_page_loop', $wishlist_product_ids );
 			}
 		}
 		?>
