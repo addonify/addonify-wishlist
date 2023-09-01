@@ -57,6 +57,15 @@ class Addonify_Wishlist {
 	protected $version;
 
 	/**
+	 * True if wishlist table exists. Else false.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    True if wishlist table exists. Else false.
+	 */
+	protected $wishlist_table_exists;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -103,7 +112,14 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/db/class-wishlist.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-adfy-wishlist.php';
+		global $addonify_wishlist;
+
+		$this->wishlist_table_exists = $addonify_wishlist->check_wishlist_table_exists();
+
+		if ( $this->wishlist_table_exists ) {
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-adfy-wishlist.php';
+		}
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -132,8 +148,7 @@ class Addonify_Wishlist {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-hooks.php';
 
-		global $addonify_wishlist;
-		if ( $addonify_wishlist->check_wishlist_table_exists() ) {
+		if ( $this->wishlist_table_exists ) {
 
 			/**
 			 * The class responsible for defining all actions that occur in the public-facing
@@ -142,8 +157,6 @@ class Addonify_Wishlist {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public.php';
 
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/guest-ajax-callbacks.php';
-
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/ajax-callbacks.php';
 
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
 		} else {
@@ -187,7 +200,7 @@ class Addonify_Wishlist {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Addonify_Wishlist_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Addonify_Wishlist_Admin( $this->get_plugin_name(), $this->get_version(), $this->wishlist_table_exists );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 
@@ -245,9 +258,11 @@ class Addonify_Wishlist {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		global $addonify_wishlist;
-		if ( $addonify_wishlist->check_wishlist_table_exists() ) {
-			$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
+
+		if ( $this->wishlist_table_exists ) {
+			$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version(), $this->wishlist_table_exists );
+
+			$this->loader->add_action( 'init', $plugin_public, 'public_init' );
 		} else {
 			$plugin_public = new Addonify_Wishlist_Public_Deprecated( $this->get_plugin_name(), $this->get_version() );
 		}

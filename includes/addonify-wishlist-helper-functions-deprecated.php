@@ -156,7 +156,7 @@ if ( ! function_exists( 'addonify_wishlist_is_product_in_wishlist' ) ) {
 			is_array( $wishlist_items ) &&
 			count( $wishlist_items ) > 0
 		) {
-			return in_array( $product_id, $wishlist_items );
+			return in_array( $product_id, $wishlist_items, true );
 		}
 
 		return false;

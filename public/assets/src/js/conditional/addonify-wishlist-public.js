@@ -4,24 +4,49 @@
 
     $(document).ready(function () {
 
-        let body = $('body'),
+        const body = $('body'),
             wishlistSidebarEle = $('#addonify-wishlist-sticky-sidebar-container'),
             wishlistTableEle = $('#addonify-wishlist-table');
 
-        let {
+        const {
             enabledMultiWishlist,
-            ajax_url,
+            ajaxURL,
             nonce,
             addToWishlistAction,
             removeFromWishlistAction,
             emptyWishlistAction,
             removeFromWishlistAfterAddedToCart,
             removeAlreadyAddedProductFromWishlist,
+
+            successModalClasses,
+            alertModalClasses,
+            errorModalClasses,
+
+            addedToWishlistModalIcon,
+            removedFromWishlistModalIcon,
+            successModalIcon,
+            alertModalIcon,
+            errorModalIcon,
+
+            addedToWishlistModalMessage,
+            alreadyInWishlistModalMessage,
+            productRemovedFormWishlistModalMessage,
+            wishlistEmptyingConfirmationModalMessage,
+
+            wishlistLinkModalButton,
+            emptyWishlistConfirmModalButton
         } = addonifyWishlistJSObject;
 
-        let productID, productName, currentAddToWishlistButton, currentRemoveFromWishlistButton, currentModalIcon, currentModalMessage;
+        let productID = 0,
+            productName = '',
+            currentAddToWishlistButton = '',
+            currentRemoveFromWishlistButton = '',
+            currentModalIcon = '',
+            currentModalMessage = '',
+            currentModalButton = '',
+            currentModalContainerClasses = '';
 
-        let addonifyWishlistInitArgs = {
+        const addonifyWishlistInitArgs = {
             loader: addonifyWishlistJSObject.loader,
             wishlistPageURL: addonifyWishlistJSObject.wishlistPageURL,
             saveForLaterButtonLabel: addonifyWishlistJSObject.saveForLaterButtonLabel,
@@ -34,18 +59,25 @@
             removedFromWishlistModal: addonifyWishlistJSObject.removedFromWishlistModal,
             afterAddToWishlistAction: addonifyWishlistJSObject.afterAddToWishlistAction,
             productRemovalUndoNotice: addonifyWishlistJSObject.productRemovalUndoNotice,
+            modalTemplate: addonifyWishlistJSObject.modalTemplate,
         };
 
-        let addonifyWishlistInit = body.addonifyWishlistInit(addonifyWishlistInitArgs);
+        const addonifyWishlistInit = body.addonifyWishlistInit(addonifyWishlistInitArgs);
 
         addonifyWishlistInit.init();
 
-        let addonifyWishlist = {
+        /**
+         * Handles DOM events.
+         * 
+         * @since 2.0.6
+         */
+        const addonifyWishlist = {
             init: function() {
                 this.wishlistButtonEventHandler();
                 this.undoEventsHandler();
                 this.addedToCartEventHandler();
             },
+            // Handles DOM events related to adding product into the wishlist and removing product from the wishlist.
             wishlistButtonEventHandler: function() {
                 if (enabledMultiWishlist !== '1') {
 
@@ -70,9 +102,12 @@
                                 currentRemoveFromWishlistButton = currentAddToWishlistButton;
                                 addonifyRemoveFromWishlist();
                             } else {
-                                addonifyWishlistInit.displayModal(
-                                    addonifyWishlistJSObject.alreadyInWishlistModal,
-                                    addonifyWishlistPrepareModalContentUpdateData()
+
+                                addonifyWishlistDispalyModal(
+                                    successModalClasses,
+                                    addedToWishlistModalIcon,
+                                    alreadyInWishlistModalMessage,
+                                    wishlistLinkModalButton
                                 );
                             }
                         } else {
@@ -98,39 +133,55 @@
                     // Click event handler for emptying wishlist.
                     $(document).on('click', '#addonify-wishlist__clear-all', function (event) {
                         event.preventDefault();
+                        // Displays confirmation modal to clear the wishlist.
+                        addonifyWishlistDispalyModal(
+                            alertModalClasses,
+                            alertModalIcon,
+                            wishlistEmptyingConfirmationModalMessage,
+                            emptyWishlistConfirmModalButton
+                        );                        
+                    });
+
+                    $(document).on('click', '#adfy-empty-wishlist-confirm-button', function(event){
+                        event.preventDefault();
 
                         // Display loader.
                         addonifyWishlistInit.displayLoader();
 
                         // Initiate AJAX request for emptying the wishlist.
                         $.post(
-                            ajax_url,
+                            ajaxURL,
                             {
                                 action: emptyWishlistAction,
                                 nonce: nonce
                             },
-                        ).done(function(response){
+                        ).done(function (response) {
                             if (response.success) {
 
                                 // Triggering custom event when wishlist is emptied. 
                                 // 'addonify_wishlist_emptied' custom event can be used to perform desired actions.
                                 $(document).trigger('addonify_wishlist_emptied');
 
-                                addonifyWishlistInit.updateWishlistTableElements(0);
+                                addonifyWishlistDispalyModal(
+                                    successModalClasses,
+                                    successModalIcon,
+                                    response.message,
+                                );
                             } else {
-                                currentModalMessage = response.message;
-                                currentModalIcon = 'flash';
-                                addonifyWishlistInit.displayModal(
-                                    addonifyWishlistJSObject.errorModal,
-                                    addonifyWishlistPrepareModalContentUpdateData()
+                                addonifyWishlistDispalyModal(
+                                    errorModalClasses,
+                                    errorModalIcon,
+                                    response.message,
                                 );
                             }
                         }).always(function () {
                             addonifyWishlistInit.hideLoader();
+                            addonifyWishlistResetModalContentUpdateData();
                         });
                     });
                 }
             },
+            // Handles DOM event related to undoing product removal from the wishlist.
             undoEventsHandler: function() {
                 if (enabledMultiWishlist !== '1') {
                     // Click event handler for undoing the product removal from the wishlist.
@@ -142,6 +193,7 @@
                     });
                 }
             },
+            // Handles DOM event related to removing product from the wishlist.
             addedToCartEventHandler: function() {
 
                 if (enabledMultiWishlist !== '1') {
@@ -152,6 +204,10 @@
                         if (removeFromWishlistAfterAddedToCart === '1') {
 
                             addonifyWishlistSetProductIDName(addToCartButton);
+
+                            currentModalContainerClasses = successModalClasses;
+                            currentModalMessage = productRemovedFormWishlistModalMessage;
+                            currentModalIcon = removedFromWishlistModalIcon;
                             
                             // Triggering custom event when product is added to wishlist. 
                             // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
@@ -164,6 +220,8 @@
                                     modalContentUpdateData: addonifyWishlistPrepareModalContentUpdateData(),
                                 }
                             ]);
+
+                            addonifyWishlistResetModalContentUpdateData();
                         }
                     });
                 }
@@ -194,10 +252,15 @@
             }
 
             $.post(
-                ajax_url,
+                ajaxURL,
                 postRequestData,
             ).done(function(response){
                 if (response.success == true) {
+
+                    currentModalContainerClasses = successModalClasses;
+                    currentModalMessage = addedToWishlistModalMessage;
+                    currentModalIcon = addedToWishlistModalIcon;
+                    currentModalButton = wishlistLinkModalButton;
 
                     // Triggering custom event when product is added to wishlist. 
                     // 'addonify_added_to_wishlist' custom event can be used to perform desired actions.
@@ -218,15 +281,15 @@
                         addonifyWishlistInit.addWishlistTableProductRow(response.tableProductRowContent);
                     }
                 } else {
-                    currentModalMessage = response.message;
-                    currentModalIcon = 'flash';
-                    addonifyWishlistInit.displayModal(
-                        addonifyWishlistJSObject.errorModal,
-                        addonifyWishlistPrepareModalContentUpdateData()
+                    addonifyWishlistDispalyModal(
+                        errorModalClasses,
+                        errorModalIcon,
+                        response.message,
                     );
                 }
             }).always(function () {
                 addonifyWishlistInit.hideLoader();
+                addonifyWishlistResetModalContentUpdateData();
             });
         }
 
@@ -242,7 +305,7 @@
             $(document).trigger('addonify_removing_from_wishlist');
 
             $.post(
-                ajax_url,
+                ajaxURL,
                 {
                     action: removeFromWishlistAction,
                     product_id: productID,
@@ -250,6 +313,10 @@
                 },
             ).done(function(response){
                 if (response.success) {
+
+                    currentModalContainerClasses = successModalClasses;
+                    currentModalMessage = productRemovedFormWishlistModalMessage;
+                    currentModalIcon = removedFromWishlistModalIcon;
 
                     // Triggering custom event when product is added to wishlist. 
                     // 'addonify_removed_from_wishlist' custom event can be used to perform desired actions.
@@ -263,30 +330,70 @@
                         }
                     ]);
                 } else {
-                    currentModalMessage = response.message;
-                    currentModalIcon = 'flash';
-                    addonifyWishlistInit.displayModal(
-                        addonifyWishlistJSObject.errorRemovingFromWishlistModal,
-                        addonifyWishlistPrepareModalContentUpdateData()
+                    addonifyWishlistDispalyModal(
+                        errorModalClasses,
+                        errorModalIcon,
+                        response.message,
                     );
                 }
             }).always(function () {
                 addonifyWishlistInit.hideLoader();
+                addonifyWishlistResetModalContentUpdateData();
             });
         }
 
-
+        /**
+         * Assign the values to productID and productName variables.
+         *
+         * @param {object} buttonEle 
+         */
         function addonifyWishlistSetProductIDName(buttonEle) {
             productID = buttonEle.data('product_id');
             productName = buttonEle.data('product_name');
         }
 
+
+        /**
+         * Prepare the data required for displaying modal.
+         *
+         * @returns object
+         */
         function addonifyWishlistPrepareModalContentUpdateData() {
             return {
-                product_name: productName,
                 modal_icon: currentModalIcon,
                 modal_message: currentModalMessage,
+                modal_button: currentModalButton,
+                modal_container_classes: currentModalContainerClasses,
+                product_name: productName,
             };
+        }
+
+        
+        /**
+         * Resets the variables that hold the data required for modal.
+         */
+        function addonifyWishlistResetModalContentUpdateData() {
+            currentModalButton = '';
+            currentModalIcon = '';
+            currentModalContainerClasses = '';
+            currentModalMessage = '';
+        }
+
+
+        /**
+         * Set data required for modal and display the modal.
+         */
+        function addonifyWishlistDispalyModal(modalContainerClasses, modalIcon, modalMessage, modalButton = '') {
+
+            currentModalContainerClasses = modalContainerClasses;
+            currentModalIcon = modalIcon;
+            currentModalMessage = modalMessage;
+            currentModalButton = modalButton;
+            addonifyWishlistInit.displayModal(
+                addonifyWishlistPrepareModalContentUpdateData()
+            );
+
+            addonifyWishlistResetModalContentUpdateData();
         }
 
         addonifyWishlist.init();

@@ -13,10 +13,10 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <div class="addonify-wishlist-modal-btns">
-	<a
-		class="adfy-wishlist-btn-link addonify-goto-login-btn"
-		href="<?php echo esc_url( $redirect_url ); ?>"
+	<button
+		id="adfy-empty-wishlist-confirm-button"
+		class="button adfy-wishlist-btn"
 	>
-		<?php echo esc_html( $login_button_label ); ?>
-	</a>
+		<?php echo esc_html( $button_label ); ?>
+	</button>
 </div>

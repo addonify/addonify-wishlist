@@ -36,11 +36,8 @@ class Wishlist {
 	 * Create table if not exists.
 	 */
 	public function create_table() {
-		$table_name = $this->get_table_name();
 
-		if ( $this->check_table_exists( $table_name ) ) {
-			return;
-		}
+		$table_name = $this->get_table_name();
 
 		global $wpdb;
 
@@ -80,6 +77,7 @@ class Wishlist {
 	 * @return bool
 	 */
 	public function check_table_exists( $table_name ) {
+
 		$available_tables = $this->get_all_tables();
 
 		foreach ( $available_tables as $_table_name ) {
@@ -96,9 +94,7 @@ class Wishlist {
 	 * Migrate old usermeta wishlist data to new table.
 	 */
 	public function migrate_wishlist_data() {
-		if ( ! $this->check_wishlist_table_exists() ) {
-			return;
-		}
+
 		$wishlist_data = get_user_meta( get_current_user_id(), 'addonify-wishlist', true );
 		if ( ! empty( $wishlist_data ) ) {
 			$wishlist_data = json_decode( $wishlist_data, true );
@@ -161,8 +157,8 @@ class Wishlist {
 	 * Check if wishlist table is created.
 	 */
 	public function check_wishlist_table_exists() {
-		$wishlist   = new Wishlist();
-		$table_name = $wishlist->get_table_name();
+
+		$table_name = $this->get_table_name();
 
 		return $this->check_table_exists( $table_name );
 	}
@@ -173,18 +169,18 @@ class Wishlist {
 	 * @param int $product_id Product ID.
 	 */
 	public function get_wishlist_id_from_product_id( $product_id ) {
-		if ( $this->check_wishlist_table_exists() ) {
-			$where = array(
-				'site_url'   => get_bloginfo( 'url' ),
-				'product_id' => $product_id,
-				'user_id'    => get_current_user_id(),
-			);
 
-			$wishlist = $this->get_row( $where );
-			if ( ! empty( $wishlist ) ) {
-				return $wishlist->parent_wishlist_id;
-			}
+		$where = array(
+			'site_url'   => get_bloginfo( 'url' ),
+			'product_id' => $product_id,
+			'user_id'    => get_current_user_id(),
+		);
+
+		$wishlist = $this->get_row( $where );
+		if ( ! empty( $wishlist ) ) {
+			return $wishlist->parent_wishlist_id;
 		}
+
 		return false;
 	}
 

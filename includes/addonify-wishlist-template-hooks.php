@@ -22,14 +22,10 @@ add_action( 'addonify_wishlist_render_wishlist_page_loop', 'addonify_wishlist_re
 
 add_action( 'addonify_wishlist_modal_wishlist_link', 'addonify_wishlist_render_popup_wishlist_link_button' );
 add_action( 'addonify_wishlist_modal_login_link', 'addonify_wishlist_render_popup_login_link_button' );
+add_action(
+	'addonify_wishlist_modal_empty_wishlist_confirm_button',
+	'addonify_wishlist_render_popup_empty_wishlist_confirm_button'
+);
 
-add_action( 'addonify_wishlist_already_in_wishlist_modal_content', 'addonify_wishlist_render_already_in_wishlist_modal_content' );
+add_action( 'addonify_wishlist_render_modal_template', 'addonify_wishlist_modal_content_template' );
 
-add_action( 'addonify_wishlist_render_added_to_wishlist_modal', 'addonify_wishlist_added_to_wishlist_modal_template' );
-add_action( 'addonify_wishlist_render_already_in_wishlist_modal', 'addonify_wishlist_already_in_wishlist_modal_template' );
-add_action( 'addonify_wishlist_render_login_required_modal', 'addonify_wishlist_login_required_modal_template' );
-add_action( 'addonify_wishlist_render_error_adding_to_wishlist_modal', 'addonify_wishlist_error_adding_to_wishlist_modal_template' );
-add_action( 'addonify_wishlist_render_error_removing_from_wishlist_modal', 'addonify_wishlist_error_removing_from_wishlist_modal_template' );
-add_action( 'addonify_wishlist_render_removed_from_wishlist_modal', 'addonify_wishlist_removed_from_wishlist_modal_template' );
-
-add_action( 'addonify_wishlist_render_wishlist_error_modal', 'addonify_wishlist_error_modal_template' );

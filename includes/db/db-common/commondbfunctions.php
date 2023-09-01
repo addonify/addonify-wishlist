@@ -132,7 +132,7 @@ trait CommonDBFunctions {
 
 			foreach ( $fields as $field_id => $field_value ) {
 
-				if ( $field_value === NULL ) {
+				if ( null === $field_value ) {
 					$where .= "{$field_id} IS NULL";
 				} else {
 					$where .= "{$field_id} = '{$field_value}' ";

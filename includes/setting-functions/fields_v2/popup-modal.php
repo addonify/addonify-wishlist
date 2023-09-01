@@ -18,7 +18,7 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 	function addonify_wishlist_popup_modal_v_2_options() {
 		return array(
 			'added_to_wishlist_modal' => array(
-				'title'        => __( 'Added to Wishlist Modal Options', 'addonify-wishlist' ),
+				'title'        => __( 'Success Modal Options', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
 					'view_wishlist_btn_text'           => array(
@@ -37,13 +37,29 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
 					),
-					'product_already_in_wishlist_text' => array(
+					'product_already_in_wishlist_text'   => array(
 						'type'        => 'text',
 						'className'   => '',
 						'label'       => __( 'Product already in wishlist text', 'addonify-wishlist' ),
 						'description' => __( 'Set the text to be displayed when a product that is already in the wishlist is attempted to be added again. Use, placeholder {product_name} to display name of the product.', 'addonify-wihlist' ),
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'product_already_in_wishlist_text' ),
+					),
+					'product_removed_from_wishlist_text' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Product removed from wishlist text', 'addonify-wishlist' ),
+						'description' => __( 'Set the text to be displayed when a product that is removed from the wishlist. Use, placeholder {product_name} to display name of the product.', 'addonify-wihlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'product_removed_from_wishlist_text' ),
+					),
+					'success_emptying_wishlist_message'  => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Wishlist emptied text', 'addonify-wishlist' ),
+						'description' => __( 'Set the text to be displayed when the wishlist is successfully emptied.', 'addonify-wihlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'success_emptying_wishlist_message' ),
 					),
 				),
 			),
@@ -67,6 +83,46 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'could_not_remove_from_wishlist_error_description' ),
 					),
+					'security_token_error_message'     => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Security token error message', 'addonify-wishlist' ),
+						'description' => __( 'Set the error message to be displayed when the security token is invalid.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'security_token_error_message' ),
+					),
+					'invalid_product_id_error_message' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Invalid Product id error message', 'addonify-wishlist' ),
+						'description' => __( 'Set the error message to be displayed when the product id is invalid.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'invalid_product_id_error_message' ),
+					),
+					'invalid_product_error_message'    => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Invalid product error message', 'addonify-wishlist' ),
+						'description' => __( 'Set the error message to be displayed when the product is invalid.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'invalid_product_error_message' ),
+					),
+					'product_not_in_wishlist_error_message' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Product not in wishlist error message', 'addonify-wishlist' ),
+						'description' => __( 'Set the error message to be displayed when the product does not exit in the wishlist.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'product_not_in_wishlist_error_message' ),
+					),
+					'error_emptying_wishlist_message'  => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Wishlist could not be emptied error message', 'addonify-wishlist' ),
+						'description' => __( 'Set the error message to be displayed when the wishlist could not be emptied.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'error_emptying_wishlist_message' ),
+					),
 				),
 			),
 			'login_modal'             => array(
@@ -88,6 +144,28 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 						'description' => __( 'Set the label for button that links to login page.', 'addonify-wishlist' ),
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'login_btn_label' ),
+					),
+				),
+			),
+			'confirm_modal'           => array(
+				'title'        => __( 'Confirmation Modal Options', 'addonify-wishlist' ),
+				'type'         => 'sub_section',
+				'sub_sections' => array(
+					'confirmation_message_for_emptying_wishlist' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Confirmation text message for emptying wishlist', 'addonify-wishlist' ),
+						'description' => __( 'Set the text to be displayed when user tries to empty the wishlist.', 'addonify-wishlist' ),
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'confirmation_message_for_emptying_wishlist' ),
+					),
+					'confirm_btn_label' => array(
+						'type'        => 'text',
+						'className'   => '',
+						'label'       => __( 'Confirm button label', 'addonify-wishlist' ),
+						'description' => '',
+						'dependent'   => array( 'enable_wishlist' ),
+						'value'       => addonify_wishlist_get_option( 'confirm_btn_label' ),
 					),
 				),
 			),
