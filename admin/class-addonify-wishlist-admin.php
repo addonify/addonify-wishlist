@@ -48,19 +48,30 @@ class Addonify_Wishlist_Admin {
 	 */
 	private $version;
 
+	/**
+	 * True if wishlist table exists. Else false.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $version    True if wishlist table exists. Else false.
+	 */
+	private $wishlist_table_exits;
+
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param    string $plugin_name The name of this plugin.
-	 * @param    string $version     The version of this plugin.
+	 * @param string  $plugin_name The name of this plugin.
+	 * @param string  $version     The version of this plugin.
+	 * @param boolean $wishlist_table_exists The boolean if wishlist table exits.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $wishlist_table_exists ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
+		$this->wishlist_table_exists = $wishlist_table_exists;
 	}
 
 	/**
@@ -85,7 +96,10 @@ class Addonify_Wishlist_Admin {
 	 * Admin initial functions.
 	 */
 	public function admin_init() {
-		$this->maybe_create_table();
+
+		if ( ! $this->wishlist_table_exists ) {
+			$this->maybe_create_table();
+		}
 
 		$this->maybe_show_table_created_message();
 

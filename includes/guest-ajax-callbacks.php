@@ -31,7 +31,7 @@ if ( ! function_exists( 'addonify_wishlist_get_guest_wishlist_content' ) ) {
 			! $nonce ||
 			! wp_verify_nonce( $nonce, 'addonify-wishlist' )
 		) {
-			$response_data['message'] = esc_html__( 'Invalid security token.', 'addonify-wishlist' );
+			$response_data['message'] = addonify_wishlist_get_option( 'security_token_error_message' );
 			wp_send_json( $response_data );
 		}
 
@@ -83,21 +83,21 @@ if ( ! function_exists( 'addonify_wishlist_get_guest_sidebar_table_product_row' 
 			! $nonce ||
 			! wp_verify_nonce( $nonce, 'addonify-wishlist' )
 		) {
-			$response_data['message'] = esc_html__( 'Invalid security token.', 'addonify-wishlist' );
+			$response_data['message'] = addonify_wishlist_get_option( 'security_token_error_message' );
 			wp_send_json( $response_data );
 		}
 
 		$product_id = isset( $_POST['product_id'] ) ? absint( wp_unslash( $_POST['product_id'] ) ) : 0;
 
 		if ( ! $product_id ) {
-			$response_data['message'] = esc_html__( 'Invalid product id.', 'addonify-wishlist' );
+			$response_data['message'] = addonify_wishlist_get_option( 'invalid_product_id_error_message' );
 			wp_send_json( $response_data );
 		}
 
 		$product = wc_get_product( $product_id );
 
 		if ( ! $product ) {
-			$response_data['message'] = esc_html__( 'Invalid product.', 'addonify-wishlist' );
+			$response_data['message'] = addonify_wishlist_get_option( 'invalid_product_error_message' );
 			wp_send_json( $response_data );
 		}
 

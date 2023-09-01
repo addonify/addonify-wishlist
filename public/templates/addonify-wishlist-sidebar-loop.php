@@ -16,8 +16,8 @@ $empty_notice_css_class     = '';
 $wishlist_sidebar_css_class = '';
 
 if (
-	is_array( $products_data ) &&
-	count( $products_data ) > 0
+	is_array( $wishlist_product_ids ) &&
+	count( $wishlist_product_ids ) > 0
 ) {
 	$empty_notice_css_class     = 'adfy-wishlist-hide';
 	$wishlist_sidebar_css_class = 'adfy-wishlist-show';
@@ -31,7 +31,7 @@ if (
 	class="adfy-wishlist-sidebar-items-entry <?php echo esc_attr( $wishlist_sidebar_css_class ); ?>"
 >
 	<?php
-	foreach ( $products_data as $product_id => $product_data ) {
+	foreach ( $wishlist_product_ids as $product_id ) {
 
 		$product = wc_get_product( (int) $product_id );
 

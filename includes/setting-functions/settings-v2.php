@@ -54,7 +54,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'view_wishlist_btn_text'                   => esc_html__( 'View wishlist', 'addonify-wishlist' ),
 				'product_added_to_wishlist_text'           => esc_html__( '{product_name} added to wishlist', 'addonify-wishlist' ),
 				'product_already_in_wishlist_text'         => esc_html__( '{product_name} already in wishlist', 'addonify-wishlist' ),
-				'product_removed_from_wishlist_text'       => esc_html__( '{product_name} removed from wishlist', 'addonify-wishlist' ),
+				'product_removed_from_wishlist_text'       => esc_html__( '{product_name} removed from wishlist', 'addonify-wishlist' ), // @since 2.0.6
 				'show_wishlist_emptying_button'            => true,
 				'wishlist_emptied_text'                    => esc_html__( 'Wishlist cleared.', 'addonify-wishlist' ),
 				'show_sidebar'                             => false,
@@ -92,6 +92,15 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'save_for_later_btn_label_after_added_to_wishlist' => esc_html__( 'Saved for Later', 'addonify-wishlist' ),
 				'product_in_stock_label'                   => esc_html__( 'In stock', 'addonify-wishlist' ),
 				'product_out_of_stock_label'               => esc_html__( 'Out of stock', 'addonify-wishlist' ),
+
+				'confirmation_message_for_emptying_wishlist' => esc_html__( 'Do you want to empty the wishlist?', 'addonify-wishlist' ), // @since 2.0.6
+				'confirm_btn_label'                        => esc_html__( 'Confirm', 'addonify-wishlist' ), // @since 2.0.6
+				'security_token_error_message'             => esc_html__( 'Invalid security token.', 'addonify-wishlist' ), // @since 2.0.6
+				'invalid_product_id_error_message'         => esc_html__( 'Invalid product id.', 'addonify-wishlist' ), // @since 2.0.6
+				'invalid_product_error_message'            => esc_html__( 'Invalid product.', 'addonify-wishlist' ), // @since 2.0.6
+				'product_not_in_wishlist_error_message'    => esc_html__( '{product_name} does not exist in the wishlist.', 'addonify-wishlist' ), // @since 2.0.6
+				'success_emptying_wishlist_message'        => esc_html__( 'Wishlist has been successfully emptied.', 'addonify-wishlist' ), // @since 2.0.6
+				'error_emptying_wishlist_message'          => esc_html__( 'Error emptying the wishlist!', 'addonify-wishlist' ), // @since 2.0.6
 
 				'wishlist_btn_text_color'                  => '#ffffff',
 				'wishlist_btn_icon_color'                  => '#ffffff',

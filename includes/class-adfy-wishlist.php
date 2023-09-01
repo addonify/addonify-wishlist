@@ -237,7 +237,9 @@ class Adfy_Wishlist {
 	/**
 	 * Get wishlist items.
 	 *
-	 * @param int $wishlist_id Wishlist ID.
+	 * @param int    $wishlist_id Wishlist ID.
+	 * @param int    $user_id User ID.
+	 * @param string $site_url Site URL.
 	 * @return array Wishlist items.
 	 */
 	public function get_wishlist_items( $wishlist_id = 0, $user_id = 0, $site_url = '' ) {
@@ -315,6 +317,5 @@ class Adfy_Wishlist {
 
 global $adfy_wishlist, $addonify_wishlist;
 
-if ( $addonify_wishlist->check_wishlist_table_exists() ) {
-	$adfy_wishlist = Adfy_Wishlist::get_instance();
-}
+$adfy_wishlist = Adfy_Wishlist::get_instance();
+

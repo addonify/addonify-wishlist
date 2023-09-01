@@ -12,6 +12,11 @@
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
 ?>
-<a class="adfy-wishlist-btn-link addonify-view-wishlist-btn" href="<?php echo esc_url( $wishlist_page_url ); ?>">
-	<?php echo esc_html( $view_wishlist_button_label ); ?>
-</a>
+<div class="addonify-wishlist-modal-btns">
+	<a
+		class="adfy-wishlist-btn-link addonify-view-wishlist-btn"
+		href="<?php echo esc_url( $wishlist_page_url ); ?>"
+	>
+		<?php echo esc_html( $view_wishlist_button_label ); ?>
+	</a>
+</div>
