@@ -11,8 +11,8 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
-?>
 
+?>
 <div id="addonify-wishlist-page-container">
 
 	<div id="addonify-wishlist-notice" class="addonify-wishlist-notice"></div>

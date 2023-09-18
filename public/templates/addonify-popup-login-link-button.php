@@ -11,6 +11,7 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
+
 ?>
 <div class="addonify-wishlist-modal-btns">
 	<a

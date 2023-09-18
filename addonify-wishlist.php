@@ -30,6 +30,7 @@ define( 'ADDONIFY_WISHLIST_VERSION', '2.0.5' );
 define( 'ADDONIFY_WISHLIST_DB_INITIALS', 'addonify_wishlist_' );
 define( 'ADDONIFY_WISHLIST_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'ADDONIFY_WISHLIST_PLUGIN_FILE', __FILE__ );
+define( 'ADDONIFY_WISHLIST_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * The code that runs during plugin activation.
@@ -62,7 +63,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-addonify-wishlist.php';
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 require_once plugin_dir_path( __FILE__ ) . 'admin/app.php';
 
-
 /**
  * Begins execution of the plugin.
  *
@@ -75,9 +75,23 @@ require_once plugin_dir_path( __FILE__ ) . 'admin/app.php';
 function run_addonify_wishlist() {
 
 	if ( class_exists( 'WooCommerce' ) ) {
-
 		$plugin = new Addonify_Wishlist();
 		$plugin->run();
+	} else {
+		add_action(
+			'admin_notices',
+			function() {
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p>
+						<?php
+						echo wp_kses_post( __( '<b>Addonify WooCommerce Wishlist</b>  plugin is enabled but not functional. <b>WooCommerce</b> is required for it to work properly.', 'addonify-wishlist' ) );
+						?>
+					</p>
+				</div>
+				<?php
+			}
+		);
 	}
 }
 add_action( 'plugins_loaded', 'run_addonify_wishlist' );

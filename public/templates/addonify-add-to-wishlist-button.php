@@ -11,6 +11,7 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
+
 ?>
 <button
 	class="button adfy-wishlist-btn addonify-add-to-wishlist-btn addonify-wishlist-ajax-add-to-wishlist <?php echo esc_attr( implode( ' ', $classes ) ); ?>" 

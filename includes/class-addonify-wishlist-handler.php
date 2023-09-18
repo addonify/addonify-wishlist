@@ -12,23 +12,15 @@
 /**
  * Class for wishlist fetch and manipulation.
  */
-class Adfy_Wishlist {
+class Addonify_Wishlist_Handler {
 
 	/**
-	 * Wishlist database class.
+	 * Wishlist database handler class object.
 	 *
 	 * @access protected
 	 * @var object $wishlist
 	 */
-	protected $wishlist;
-
-	/**
-	 * Default Public wishlist.
-	 *
-	 * @access protected
-	 * @var string $default_wishlist
-	 */
-	protected $default_wishlist = 'Default Wishlist';
+	protected $database_handler;
 
 	/**
 	 * Stores this Object instance.
@@ -41,13 +33,11 @@ class Adfy_Wishlist {
 	/**
 	 * Class constructor.
 	 */
-	protected function __construct() {
+	public function __construct() {
 
-		global $addonify_wishlist;
+		$this->database_handler = new Addonify_Wishlist_Database_Handler();
 
 		$this->maybe_generate_share_key();
-
-		$this->wishlist = $addonify_wishlist;
 	}
 
 	/**
@@ -58,7 +48,7 @@ class Adfy_Wishlist {
 	public static function get_instance() {
 
 		if ( ! ( is_array( self::$instance ) && array_key_exists( 'instance', self::$instance ) ) ) {
-			self::$instance['instance'] = new Adfy_Wishlist();
+			self::$instance['instance'] = new Addonify_Wishlist_Handler();
 		}
 		return self::$instance['instance'];
 	}
@@ -72,9 +62,7 @@ class Adfy_Wishlist {
 	 */
 	public function get_user_wishlists_data( $user_id = 0 ) {
 
-		global $addonify_wishlist;
-
-		$query_results = $addonify_wishlist->get_rows(
+		$query_results = $this->database_handler->get_rows(
 			array(
 				'user_id'  => ( ! $user_id ) ? get_current_user_id() : $user_id,
 				'site_url' => get_site_url(),
@@ -140,7 +128,7 @@ class Adfy_Wishlist {
 
 			do_action( 'addonify_wishlist_before_adding_to_wishlist', $save );
 
-			$insert_id = $this->wishlist->insert_row( $save );
+			$insert_id = $this->database_handler->insert_row( $save );
 			if ( $insert_id ) {
 				$return_boolean = true;
 			}
@@ -172,7 +160,7 @@ class Adfy_Wishlist {
 
 		if ( in_array( (int) $product_id, $wishlist_items, true ) ) {
 
-			return $this->wishlist->delete_where(
+			return $this->database_handler->delete_where(
 				array(
 					'parent_wishlist_id' => $parent_wishlist_id,
 					'product_id'         => $product_id,
@@ -188,19 +176,22 @@ class Adfy_Wishlist {
 	/**
 	 * Get default wishlist id.
 	 *
-	 * @return int
+	 * @param int $current_user_id Current user ID.
+	 * @return int|boolean If found, wishlist ID. Else, false.
 	 */
-	public function get_default_wishlist_id() {
+	public function get_default_wishlist_id( $current_user_id = 0 ) {
 
-		$get_default_wishlist_from_user_meta = addonify_wishlist_get_user_default_wishlist_from_meta( get_current_user_id() );
-
-		if ( $get_default_wishlist_from_user_meta ) {
-			return $get_default_wishlist_from_user_meta;
+		if ( 0 === $current_user_id ) {
+			$current_user_id = get_current_user_id();
 		}
 
-		$wishlist_ids = $this->get_user_wishlists();
+		$user_wishlists = $this->get_user_wishlists( $current_user_id );
 
-		return isset( $wishlist_ids[0] ) ? $wishlist_ids[0] : false;
+		if ( ! empty( $user_wishlists ) && isset( $user_wishlists[0] ) ) {
+			return (int) $user_wishlists[0];
+		}
+
+		return false;
 	}
 
 
@@ -211,9 +202,9 @@ class Adfy_Wishlist {
 	 *
 	 * @param int $user_id User ID.
 	 */
-	protected function get_user_wishlists( $user_id = 0 ) {
+	public function get_user_wishlists( $user_id = 0 ) {
 
-		$user_wishlists = $this->wishlist->get_rows(
+		$user_wishlists = $this->database_handler->get_rows(
 			array(
 				'user_id'            => ( ! $user_id ) ? get_current_user_id() : $user_id,
 				'site_url'           => get_site_url(),
@@ -231,7 +222,7 @@ class Adfy_Wishlist {
 
 		sort( $wishlist_ids );
 
-		return $wishlist_ids;
+		return ( empty( $wishlist_ids ) || count( $wishlist_ids ) === 0 ) ? false : $wishlist_ids;
 	}
 
 	/**
@@ -248,7 +239,7 @@ class Adfy_Wishlist {
 			$wishlist_id = $this->get_default_wishlist_id();
 		}
 
-		$wishlist_items = $this->wishlist->get_rows(
+		$wishlist_items = $this->database_handler->get_rows(
 			array(
 				'user_id'            => ( ! $user_id ) ? get_current_user_id() : $user_id,
 				'site_url'           => ( ! $site_url ) ? get_site_url() : $site_url,
@@ -285,7 +276,7 @@ class Adfy_Wishlist {
 			'site_url'           => get_site_url(),
 		);
 
-		return $this->wishlist->delete_where( $delete_where );
+		return $this->database_handler->delete_where( $delete_where );
 	}
 
 	/**
@@ -293,9 +284,9 @@ class Adfy_Wishlist {
 	 */
 	public function maybe_generate_share_key() {
 
-		global $wpdb, $addonify_wishlist;
+		global $wpdb;
 
-		$table_name = $addonify_wishlist->get_table_name();
+		$table_name = $this->database_handler->get_table_name();
 
 		$wishlist_ids_with_no_share_keys = $wpdb->get_row( //phpcs:ignore
 			"SELECT GROUP_CONCAT(`id`) as ids FROM {$table_name} WHERE `wishlist_name` IS NOT NULL AND `share_key` IS NULL",//phpcs:ignore
@@ -312,10 +303,5 @@ class Adfy_Wishlist {
 			$wpdb->query( "UPDATE {$table_name} SET `share_key` = REVERSE(CAST( ({$time} + `id`) AS CHAR )) WHERE `id` IN ({$ids}) " ); //phpcs:ignore
 		}
 	}
-
 }
-
-global $adfy_wishlist, $addonify_wishlist;
-
-$adfy_wishlist = Adfy_Wishlist::get_instance();
 
