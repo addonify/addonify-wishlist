@@ -23,6 +23,8 @@
             ifNotLoginAction,
             loginURL,
 
+            defaultWishlistName,
+
             successModalClasses,
             alertModalClasses,
             errorModalClasses,
@@ -101,7 +103,7 @@
                     let currentDate = new Date();
                     let defaultWishlistData = {
                         'id': 0,
-                        'name': 'Default Wishlist',
+                        'name': defaultWishlistName,
                         'visibility': 'private',
                         'created_at': currentDate.getTime(),
                         'product_ids': []

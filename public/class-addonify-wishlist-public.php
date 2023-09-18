@@ -48,15 +48,6 @@ class Addonify_Wishlist_Public {
 	private $is_user_logged_in;
 
 	/**
-	 * True if wishlist table exists. Else false.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    True if wishlist table exists. Else false.
-	 */
-	private $wishlist_table_exits;
-
-	/**
 	 * Default wishlist ID.
 	 *
 	 * @since 1.1.0
@@ -138,23 +129,50 @@ class Addonify_Wishlist_Public {
 	private $wishlist_items = array();
 
 	/**
+	 * The wishlist handler object.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      object    $wishlist_handler    The wishlist handler object.
+	 */
+	private $wishlist_handler;
+
+	/**
+	 * The current user ID.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      int    $current_user_id    The current user ID.
+	 */
+	private $current_user_id = 0;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param string  $plugin_name       The name of the plugin.
-	 * @param string  $version    The version of this plugin.
-	 * @param boolean $wishlist_table_exists The boolean if wishlist table exits.
+	 * @param string $plugin_name       The name of the plugin.
+	 * @param string $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version, $wishlist_table_exists ) {
+	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 
 		$this->is_user_logged_in = is_user_logged_in();
 
-		$this->default_wishlist_name = esc_html__( 'Default Wishlist', 'addonify-wishlist' );
+		$this->current_user_id = get_current_user_id();
 
-		$this->wishlist_table_exists = $wishlist_table_exists;
+		$this->default_wishlist_name = apply_filters( 'addonify_wishist_default_wishlist_name', esc_html__( 'Default Wishlist', 'addonify-wishlist' ) );
+
+		$this->wishlist_handler = Addonify_Wishlist_Handler::get_instance();
+
+		$this->user_wishlists_data = $this->get_user_wishlists_data();
+
+		$this->default_wishlist_id = array_key_first( $this->user_wishlists_data );
+
+		if ( isset( $this->user_wishlists_data[ $this->default_wishlist_id ]['product_ids'] ) ) {
+			$this->wishlist_items = $this->user_wishlists_data[ $this->default_wishlist_id ]['product_ids'];
+		}
 	}
 
 
@@ -162,14 +180,34 @@ class Addonify_Wishlist_Public {
 	 * Gets logged in user's wishlists data.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param int $user_id User ID.
 	 */
-	private function get_user_wishlists_data( $user_id ) {
+	private function get_user_wishlists_data() {
 
-		global $adfy_wishlist;
+		return $this->wishlist_handler->get_user_wishlists_data( $this->current_user_id );
+	}
 
-		return $adfy_wishlist->get_user_wishlists_data( $user_id );
+	/**
+	 * Create default wishlist and migrate wishlist data from user meta on user login.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param string $username Logged in user's username.
+	 * @param object $user WP_User object.
+	 */
+	public function maybe_create_and_migrate_wishlist_data( $username, $user ) {
+
+		if ( ! $this->wishlist_handler->get_default_wishlist_id( $user->ID ) ) {
+
+			$wishlist_data = get_user_meta( $user->ID, 'addonify-wishlist', true );
+
+			if ( ! empty( $wishlist_data ) ) {
+				$wishlist_database_handler = new Addonify_Wishlist_Database_Handler();
+				$wishlist_database_handler->migrate_wishlist_data( $user->ID );
+			} else {
+				$database_handler = new Addonify_Wishlist_Database_Handler();
+				$database_handler->seed_wishlist_table( $user->ID );
+			}
+		}
 	}
 
 	/**
@@ -181,28 +219,12 @@ class Addonify_Wishlist_Public {
 			return;
 		}
 
-		if ( $this->wishlist_table_exists ) {
-
-			$this->maybe_migrate_metadata_to_table();
-		}
-
-		$this->maybe_create_default_wishlist();
-
-		if ( $this->is_user_logged_in ) {
-			$this->default_wishlist_id = $this->get_default_wishlist_id();
-			$this->user_wishlists_data = $this->get_user_wishlists_data( get_current_user_id() );
-			$this->wishlist_items      = isset( $this->user_wishlists_data[ $this->default_wishlist_id ]['product_ids'] ) ? $this->user_wishlists_data[ $this->default_wishlist_id ]['product_ids'] : array();
-		}
-
 		$this->add_to_wishlist_button_label       = addonify_wishlist_get_option( 'btn_label' );
 		$this->added_to_wishlist_button_label     = addonify_wishlist_get_option( 'btn_label_when_added_to_wishlist' );
 		$this->already_in_wishlist_button_label   = addonify_wishlist_get_option( 'btn_label_if_added_to_wishlist' );
 		$this->show_wishlist_button_icon          = addonify_wishlist_get_option( 'show_icon' );
 		$this->wishlist_button_icon_position      = addonify_wishlist_get_option( 'icon_position' );
 		$this->wishlist_button_custom_css_classes = addonify_wishlist_get_option( 'btn_custom_class' );
-
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 15 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 15 );
 
 		$this->add_actions_and_filters();
 
@@ -504,6 +526,7 @@ class Addonify_Wishlist_Public {
 			$script_object['isLoginRequired']                      = addonify_wishlist_get_option( 'require_login' );
 			$script_object['ifNotLoginAction']                     = addonify_wishlist_get_option( 'if_not_login_action' );
 			$script_object['loginURL']                             = $login_url;
+			$script_object['defaultWishlistName']                  = apply_filters( 'addonify_wishist_default_wishlist_name', esc_html__( 'Default Wishlist', 'addonify-wishlist' ) );
 			$script_object['getGuestWishlistContent']              = 'addonify_wishlist_guest_get_wishlist_content';
 			$script_object['getGuestSidebarTableProductRowAction'] = 'addonify_wishlist_guest_get_sidebar_table_product_row';
 			// Modal Messages.
@@ -586,9 +609,7 @@ class Addonify_Wishlist_Public {
 			wp_send_json( $response_data );
 		}
 
-		global $adfy_wishlist;
-
-		if ( $adfy_wishlist->add_to_wishlist( $product_id, 0 ) ) {
+		if ( $this->wishlist_handler->add_to_wishlist( $product_id, 0 ) ) {
 
 			$this->wishlist_items[] = $product_id;
 
@@ -666,9 +687,7 @@ class Addonify_Wishlist_Public {
 			wp_send_json( $response_data );
 		}
 
-		global $adfy_wishlist;
-
-		if ( $adfy_wishlist->remove_from_wishlist( $product_id, 0 ) ) {
+		if ( $this->wishlist_handler->remove_from_wishlist( $product_id, 0 ) ) {
 
 			$wishlist_items = $this->wishlist_items;
 
@@ -714,9 +733,7 @@ class Addonify_Wishlist_Public {
 			wp_send_json( $response_data );
 		}
 
-		global $adfy_wishlist;
-
-		if ( $adfy_wishlist->empty_wishlist( 0 ) ) {
+		if ( $this->wishlist_handler->empty_wishlist( 0 ) ) {
 			$response_data['success'] = true;
 			$response_data['message'] = esc_html( addonify_wishlist_get_option( 'success_emptying_wishlist_message' ) );
 			wp_send_json( $response_data );
@@ -952,61 +969,14 @@ class Addonify_Wishlist_Public {
 
 
 	/**
-	 * Get default wishlist id.
-	 *
-	 * @return int
-	 */
-	private function get_default_wishlist_id() {
-
-		global $adfy_wishlist;
-
-		return (int) $adfy_wishlist->get_default_wishlist_id();
-	}
-
-
-	/**
-	 * Created default wishlist if does not exists.
-	 */
-	private function maybe_create_default_wishlist() {
-
-		if ( is_user_logged_in() ) {
-
-			if ( ! $this->default_wishlist_id ) {
-				global $addonify_wishlist;
-				$addonify_wishlist->seed_wishlist_table( $this->default_wishlist_name );
-			}
-
-			$user_default_wishlist_meta = addonify_wishlist_get_user_default_wishlist_from_meta( get_current_user_id() );
-
-			if ( ! $user_default_wishlist_meta ) {
-				addonify_wishlist_set_user_default_wishlist_in_meta( get_current_user_id(), $this->default_wishlist_id );
-			}
-		}
-	}
-
-
-	/**
-	 * Migrate to table if not migrated already.
-	 */
-	private function maybe_migrate_metadata_to_table() {
-
-		global $addonify_wishlist;
-
-		$addonify_wishlist->migrate_wishlist_data();
-	}
-
-
-	/**
 	 * Gather shortcode contents and display template
 	 *
 	 * @since    1.0.0
 	 */
 	public function get_shortcode_contents() {
 
-		$wishlist_product_ids = $this->wishlist_items;
-
 		ob_start();
-		do_action( 'addonify_wishlist_render_shortcode_content', $wishlist_product_ids );
+		do_action( 'addonify_wishlist_render_shortcode_content', $this->wishlist_items );
 		return ob_get_clean();
 	}
 
@@ -1194,9 +1164,7 @@ class Addonify_Wishlist_Public {
 			addonify_wishlist_get_option( 'remove_from_wishlist_if_added_to_cart' ) === '1'
 		) {
 
-			global $adfy_wishlist;
-
-			$adfy_wishlist->remove_from_wishlist( $product_id, 0 );
+			$this->wishlist_handler->remove_from_wishlist( $product_id, 0 );
 		}
 	}
 

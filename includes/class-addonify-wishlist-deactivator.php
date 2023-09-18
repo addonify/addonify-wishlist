@@ -29,10 +29,15 @@ class Addonify_Wishlist_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		if ( addonify_wishlist_get_option( 'remove_all_plugin_data_on_uninstall' ) ) {
-			global $addonify_wishlist;
-			$addonify_wishlist->delete_table();
-			$addonify_wishlist->remove_wishlist_options();
+
+		if ( get_option( ADDONIFY_WISHLIST_DB_INITIALS . 'remove_all_plugin_data_on_uninstall', false ) ) {
+
+			$database_handler = new Addonify_Wishlist_Database_Handler();
+
+			$database_handler->delete_table();
+			$database_handler->remove_wishlist_options();
+
+			delete_user_meta( get_current_user_id(), 'addonify_wishlist_default_wishlist' );
 		}
 	}
 

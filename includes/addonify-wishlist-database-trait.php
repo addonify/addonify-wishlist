@@ -2,19 +2,23 @@
 /**
  * Trait for performing CRUD operation on a table.
  *
+ * @link       https://www.addonify.com
+ * @since      2.0.0
+ *
  * @package    Addonify_Wishlist
- * @subpackage Addonify_Wishlist/includes/db
- * @author     CreamCode <creamcodetech@gmail.com>
+ * @subpackage Addonify_Wishlist/includes
  */
 
 /**
  * Trait for performing CRUD operation on a table.
  *
+ * @link       https://www.addonify.com
+ * @since      2.0.0
+ *
  * @package    Addonify_Wishlist
- * @subpackage Addonify_Wishlist/includes/db
- * @author     CreamCode <creamcodetech@gmail.com>
+ * @subpackage Addonify_Wishlist/includes
  */
-trait CommonDBFunctions {
+trait Addonify_Wishlist_Database_Trait {
 
 	/**
 	 * CMPriceAction database prefix.
@@ -33,7 +37,7 @@ trait CommonDBFunctions {
 
 		global $wpdb;
 
-		return $wpdb->base_prefix . self::$db_prefix . self::$table_name;
+		return $wpdb->base_prefix . self::$db_prefix . 'table';
 	}
 
 	/**
@@ -265,6 +269,7 @@ trait CommonDBFunctions {
 	 * Get all tables.
 	 */
 	private function get_all_tables() {
+
 		global $wpdb;
 
 		return $wpdb->get_results( 'show tables', ARRAY_A ); //phpcs:ignore

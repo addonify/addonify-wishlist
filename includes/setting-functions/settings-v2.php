@@ -146,6 +146,10 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'sidebar_modal_in_stock_text_color'        => '#249901',
 				'sidebar_modal_out_of_stock_text_color'    => '#ff0000',
 				'custom_css'                               => '',
+
+				'popup_close_btn_text'                     => __( 'Close', 'addonify-wishlist' ), // deprecated @since 2.0.0.
+				'sidebar_modal_notification_text_color'    => '', // deprecated @since 2.0.0.
+				'sidebar_modal_notification_bg_color'      => '', // deprecated @since 2.0.0.
 			)
 		);
 

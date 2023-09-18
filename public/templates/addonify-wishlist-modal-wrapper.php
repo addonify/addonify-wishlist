@@ -11,6 +11,7 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
+
 ?>
 <div id="addonify-wishlist-modal-overlay"></div>
 <div id="addonify-wishlist-modal-wrapper"></div>

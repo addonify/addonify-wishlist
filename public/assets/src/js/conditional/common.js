@@ -146,6 +146,8 @@
                 // Update the wishlist sidebar and wishlist table when wishlist is emptied.
                 $(document).on('addonify_wishlist_emptied', function(event){
                     event.preventDefault();
+                    // Remove product removal undo notice.
+                    initializeAddonifyWishlist.renderUndoNotice(false);
                     initializeAddonifyWishlist.updateWishlistSidebarElements(0);
                     initializeAddonifyWishlist.updateWishlistTableElements(0);
                 });
