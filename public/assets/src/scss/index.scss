@@ -1,24 +1,25 @@
 /*
 ===========================================================
 
-# Pugin: Addonify WooCommerce Wishlist
+# Plugin: Addonify WooCommerce Wishlist.
 
-# Author: https://addonify.com
+# Author: https://addonify.com/
 
 # Since: 22 Nov, 2020
 
 =====================================
 */
 
-@use 'abstracts/variables' as *;
-@use 'abstracts/mixins' as *;
+@use './abstracts/variables' as *;
+@use './abstracts/mixins' as *;
 
-@import 'partials/components/buttons';				// buttons.
-@import 'partials/layout/wishlist-modal';			// modal.
-@import 'partials/layout/wishlist-sidebar';			// sidebar.
-@import 'partials/layout/wishlist-page';			// page.
-@import 'partials/layout/cart';			            // Cart page.
+@import './components/buttons';				// Buttons.
 
-@import 'helpers/classes';		                    // Helper classes.		
+@import './layout/wishlist-modal';			// Modal.
+@import './layout/wishlist-sidebar';	    // Sidebar.
+@import './layout/wishlist-page';			// Page.
+@import './layout/cart';			        // Cart page.
 
-@import 'partials/components/keyframe';				// keyframe.
+@import './helpers/classes';		        // Helper classes.		
+
+@import './helpers/keyframe';				// Keyframes.

@@ -7,7 +7,7 @@
     overflow: hidden;
 }
 
-#addonify-wishlist-modal-wrapper * {
+#addonify-wishlist-modal-wrapper {
 
     box-sizing: border-box;
     @include better_font_rendering();
@@ -171,7 +171,6 @@
 * Loading state.
 *
 */
-
 #addonify-wishlist-modal-wrapper.loading {
 
     .addonify-wishlist-modal {
@@ -207,12 +206,75 @@
 * Require login
 *
 */
-
 #addonify-wishlist-modal-wrapper.require-login {
 
     form {
 
         margin: 0;
         padding: 0;
+    }
+}
+
+/**
+*
+* Modal icon colors.
+*
+*/
+#addonify-wishlist-modal-wrapper {
+
+    &.adfy-success-modal {
+
+        .addonify-wishlist-modal  {
+
+            .adfy-wishlist-icon-entry {
+
+                .adfy-wishlist-icon {
+
+                    color: var(--adfy_wishlist_success_icon_color);
+                }
+            }
+        }
+    }
+
+    &.adfy-info-modal {
+
+        .addonify-wishlist-modal  {
+
+            .adfy-wishlist-icon-entry {
+
+                .adfy-wishlist-icon {
+
+                    color: var(--adfy_wishlist_info_icon_color);
+                }
+            }
+        }
+    }
+
+    &.adfy-warning-modal {
+
+        .addonify-wishlist-modal  {
+
+            .adfy-wishlist-icon-entry {
+
+                .adfy-wishlist-icon {
+
+                    color: var(--adfy_wishlist_warning_icon_color);
+                }
+            }
+        }
+    }
+
+    &.adfy-error-modal {
+
+         .addonify-wishlist-modal  {
+
+            .adfy-wishlist-icon-entry {
+
+                .adfy-wishlist-icon {
+
+                    color: var(--adfy_wishlist_error_icon_color);
+                }
+            }
+        }
     }
 }
