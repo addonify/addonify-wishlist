@@ -582,6 +582,8 @@ class Addonify_Wishlist_Public {
 
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
+		//return wp_send_json( $response_data );
+
 		if (
 			! $nonce ||
 			! wp_verify_nonce( $nonce, 'addonify-wishlist' )

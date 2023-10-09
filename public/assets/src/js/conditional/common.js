@@ -1,5 +1,5 @@
 (function ($) {
-    $.fn.addonifyWishlistInit = function(settings) {
+    $.fn.addonifyWishlistInit = function (settings) {
 
         const body = $('body');
 
@@ -9,7 +9,7 @@
          * Collection of functions that are common to both guest and logged in users.
          */
         const initializeAddonifyWishlist = {
-            init: function(){
+            init: function () {
                 initializeAddonifyWishlist.toggleModalBackgrounds();
                 initializeAddonifyWishlist.wishlistEvents();
                 initializeAddonifyWishlist.undoEvent();
@@ -22,21 +22,21 @@
                 // Update or modify modal elements with the data received.
                 for (const key in elesToUpdate) {
 
-                    if (elesToUpdate.hasOwnProperty(key)){
+                    if (elesToUpdate.hasOwnProperty(key)) {
                         let value = elesToUpdate[key];
-                        
+
                         modalTemplate = modalTemplate.includes(`{${key}}`) ? modalTemplate.replace(`{${key}}`, value) : modalTemplate.replace(`{${key}}`, '');
                     }
                 };
 
                 // Display the modal.
                 $('#addonify-wishlist-modal-wrapper').replaceWith(modalTemplate);
-                if (!body.hasClass('addonify-wishlist-modal-is-open')){
+                if (!body.hasClass('addonify-wishlist-modal-is-open')) {
                     body.toggleClass('addonify-wishlist-modal-is-open');
                 }
             },
             // Handle the event for toggling the modal overlays.
-            toggleModalBackgrounds: function(){
+            toggleModalBackgrounds: function () {
                 // Toggle modal background overlay.
                 body.on('click', '#addonify-wishlist-close-modal-btn, #addonify-wishlist-modal-overlay', function () {
                     body.toggleClass('addonify-wishlist-modal-is-open');
@@ -49,7 +49,7 @@
                 });
             },
             // Handle the wishlist events.
-            wishlistEvents: function(){
+            wishlistEvents: function () {
 
                 // Displays loader when product is being added into the wishlist.
                 $(document).on('addonify_adding_to_wishlist', function () {
@@ -67,7 +67,7 @@
                     initializeAddonifyWishlist.renderUndoNotice(false);
 
                     // Redirect to wishlist page after product is added to the wishlist.
-                    if( data.hasOwnProperty('thisButton') ) {
+                    if (data.hasOwnProperty('thisButton')) {
                         if (settings.afterAddToWishlistAction === 'redirect_to_wishlist_page' && data.thisButton.hasClass('addonify-add-to-wishlist-btn')) {
                             window.location.href = settings.wishlistPageURL;
                             return;
@@ -91,7 +91,7 @@
                                 let currentButton = $(this);
                                 let wishlistId = data.hasOwnProperty('wishlistID') ? data.wishlistID : '';
                                 let wishlistName = data.hasOwnProperty('wishlistName') ? data.wishlistName : '';
-                                initializeAddonifyWishlist.updateWishlistButtons(currentButton, 'added-to-wishlist', wishlistId, wishlistName );
+                                initializeAddonifyWishlist.updateWishlistButtons(currentButton, 'added-to-wishlist', wishlistId, wishlistName);
                             });
                         }
                     }
@@ -105,11 +105,11 @@
 
                 // Sets button label and icon for add to wishlist buttons on product removed from the cart.
                 $(document).on('addonify_removed_from_wishlist', function (event, data) {
-                    
+
                     // Display the product removed from wishlist modal.
                     if (data.hasOwnProperty('thisButton') && data.hasOwnProperty('modalContentUpdateData')) {
                         if (data.thisButton !== undefined && data.thisButton.hasClass('addonify-add-to-wishlist-btn')) {
-                            initializeAddonifyWishlist.displayModal( data.modalContentUpdateData );
+                            initializeAddonifyWishlist.displayModal(data.modalContentUpdateData);
                         }
                     }
 
@@ -123,7 +123,7 @@
                                 let currentButton = $(this);
                                 let wishlistId = data.hasOwnProperty('wishlistID') ? data.wishlistID : '';
                                 let wishlistName = data.hasOwnProperty('wishlistName') ? data.wishlistName : '';
-                                initializeAddonifyWishlist.updateWishlistButtons(currentButton, 'removed-from-wishlist', wishlistId, wishlistName );
+                                initializeAddonifyWishlist.updateWishlistButtons(currentButton, 'removed-from-wishlist', wishlistId, wishlistName);
                             });
                         }
 
@@ -132,19 +132,19 @@
                     }
 
                     // Update wishlist sidebar and wishlist table.
-                    if (data.hasOwnProperty('itemsCount')){
+                    if (data.hasOwnProperty('itemsCount')) {
                         initializeAddonifyWishlist.updateWishlistSidebarElements(data.itemsCount);
                         initializeAddonifyWishlist.updateWishlistTableElements(data.itemsCount);
                     }
 
                     // Displays the product removal and undo notice.
-                    if(data.hasOwnProperty('productName')){
+                    if (data.hasOwnProperty('productName')) {
                         initializeAddonifyWishlist.renderUndoNotice(true, data.productName);
                     }
                 });
 
                 // Update the wishlist sidebar and wishlist table when wishlist is emptied.
-                $(document).on('addonify_wishlist_emptied', function(event){
+                $(document).on('addonify_wishlist_emptied', function (event) {
                     event.preventDefault();
                     // Remove product removal undo notice.
                     initializeAddonifyWishlist.renderUndoNotice(false);
@@ -152,9 +152,9 @@
                     initializeAddonifyWishlist.updateWishlistTableElements(0);
                 });
             },
-            updateWishlistButtons: function(buttonElement, buttonStatus, wishlistId = '', wishlistName = ''){
+            updateWishlistButtons: function (buttonElement, buttonStatus, wishlistId = '', wishlistName = '') {
 
-                if (buttonStatus === 'added-to-wishlist' || buttonStatus === 'already-in-wishlist'){
+                if (buttonStatus === 'added-to-wishlist' || buttonStatus === 'already-in-wishlist') {
                     if (!buttonElement.hasClass('added-to-wishlist')) {
                         buttonElement.addClass('added-to-wishlist');
                     }
@@ -173,7 +173,7 @@
                                 if (addedToWishlistButtonLabel.includes('{wishlist_name}')) {
                                     addedToWishlistButtonLabel = addedToWishlistButtonLabel.replace('{wishlist_name}', wishlistName);
                                 }
-                                if ( buttonElement.data('added_to_wishlist_button_label') ) {
+                                if (buttonElement.data('added_to_wishlist_button_label')) {
                                     buttonElement.find('span.addonify-wishlist-btn-label').text(buttonElement.data('added_to_wishlist_button_label'));
                                 } else {
                                     buttonElement.find('span.addonify-wishlist-btn-label').text(addedToWishlistButtonLabel);
@@ -192,7 +192,7 @@
                         }
                     }
 
-                    if (wishlistId !== ''){
+                    if (wishlistId !== '') {
                         buttonElement.attr('data-wishlist_id', wishlistId);
                     }
 
@@ -201,7 +201,7 @@
                     }
                 }
 
-                if(buttonStatus === 'removed-from-wishlist'){
+                if (buttonStatus === 'removed-from-wishlist') {
                     if (buttonElement.hasClass('added-to-wishlist')) {
                         buttonElement.removeClass('added-to-wishlist');
                     }
@@ -214,7 +214,7 @@
                         if (buttonElement.hasClass('addonify-wishlist-save-for-later')) {
                             // If button is save for later button.
                             buttonElement.find('span.addonify-wishlist-btn-label').text(settings.saveForLaterButtonLabel);
-                        } else if (buttonElement.hasClass('adfy-wishlist-shortcode-btn') && buttonElement.data('button_label') ) {
+                        } else if (buttonElement.hasClass('adfy-wishlist-shortcode-btn') && buttonElement.data('button_label')) {
                             // If button is a shortcode button.
                             buttonElement.find('span.addonify-wishlist-btn-label').text(buttonElement.data('button_label'));
                         } else {
@@ -236,20 +236,20 @@
                     }
                 }
             },
-            addWishlistSidebarProductRow: function(newSidebarProductRow){
+            addWishlistSidebarProductRow: function (newSidebarProductRow) {
                 let wishlistSidebarListEle = $('#addonify-wishlist-sidebar-ul');
                 if (wishlistSidebarListEle.length > 0) {
                     wishlistSidebarListEle.prepend(newSidebarProductRow);
                 }
             },
-            addWishlistTableProductRow: function(newTableProductRow){
+            addWishlistTableProductRow: function (newTableProductRow) {
                 let wishlistTableBodyEle = $('#adfy-wishlist-table-body');
                 if (wishlistTableBodyEle.length > 0) {
                     wishlistTableBodyEle.prepend(newTableProductRow);
                 }
             },
-            removeWishlistSidebarTableProductRow: function(productId){
-                
+            removeWishlistSidebarTableProductRow: function (productId) {
+
                 let removedProductRow = '';
                 if ($('#addonify-wishlist-sticky-sidebar-container').length > 0) {
                     removedProductRow = $('#adfy-wishlist-sidebar-product-row-' + productId);
@@ -263,7 +263,7 @@
                     removedProductRow.remove();
                 }
             },
-            updateWishlistSidebarElements: function(itemsCount){
+            updateWishlistSidebarElements: function (itemsCount) {
 
                 if ($('#addonify-wishlist-sticky-sidebar-container').length > 0) {
 
@@ -287,7 +287,7 @@
                     }
                 }
             },
-            updateWishlistTableElements: function(itemsCount){
+            updateWishlistTableElements: function (itemsCount) {
 
                 if ($('#addonify-wishlist-page-container').length > 0) {
                     let wishlistTableFormEle = $('#addonify-wishlist-page-form');
@@ -302,7 +302,7 @@
                     }
                 }
             },
-            undoEvent: function(){
+            undoEvent: function () {
                 // Event handler for setting timeout for undo notice.
                 $(document).on('addonify_wishlist_undo_notice_set', function (data) {
                     clearTimeout(undoTimeout);
@@ -316,7 +316,7 @@
                     }
                 });
             },
-            displayLoader: function(){
+            displayLoader: function () {
                 if ($('#addonify-wishlist-sticky-sidebar-container').length > 0) {
                     $('#addonify-wishlist-sticky-sidebar-container').append(settings.loader);
                 }
@@ -325,17 +325,17 @@
                     $('#addonify-wishlist-page-container').append(settings.loader);
                 }
             },
-            hideLoader: function(){
+            hideLoader: function () {
                 if ($('#addonify-wishlist_spinner')) {
                     $('#addonify-wishlist_spinner').remove();
                 }
             },
-            displayModalLoader: function(){
+            displayModalLoader: function () {
                 if ($('.addonify-wishlist-modal-btns').length > 0) {
                     $('.addonify-wishlist-modal-btns').append(settings.loader);
                 }
             },
-            renderUndoNotice: function(setNotice = false, productName = ""){
+            renderUndoNotice: function (setNotice = false, productName = "") {
                 let undoNoticeContainerEle = $('#addonify-wishlist-notice');
                 if (undoNoticeContainerEle.length > 0) {
                     if (setNotice) {
