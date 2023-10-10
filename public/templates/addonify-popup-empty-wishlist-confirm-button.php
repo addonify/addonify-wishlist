@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 <div class="addonify-wishlist-modal-btns">
 	<button
 		id="adfy-empty-wishlist-confirm-button"
-		class="button adfy-wishlist-btn"
+		class="button adfy-wishlist-btn adfy-wishlist-btn-link"
 	>
 		<?php echo esc_html( $button_label ); ?>
 	</button>

@@ -113,7 +113,10 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'popup_modal_bg_color'                     => '#ffffff',
 				'popup_close_btn_icon_color'               => '#444444',
 				'popup_close_btn_icon_color_on_hover'      => '#2274fb',
-				'popup_modal_icon_color'                   => '#7e7e7e',
+				'popup_modal_icon_color'                   => '#fe0c67',
+				'popup_modal_success_icon_color'           => '#36ff79', // @since 2.0.6
+				'popup_modal_alert_icon_color'             => '#ff9536', // @since 2.0.6
+				'popup_modal_error_icon_color'             => '#ff363a', // @since 2.0.6
 				'popup_modal_text_color'                   => '#444444',
 				'popup_modal_btn_text_color'               => '#ffffff',
 				'popup_modal_btn_text_color_hover'         => '#ffffff',

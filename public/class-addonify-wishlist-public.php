@@ -582,8 +582,6 @@ class Addonify_Wishlist_Public {
 
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
-		//return wp_send_json( $response_data );
-
 		if (
 			! $nonce ||
 			! wp_verify_nonce( $nonce, 'addonify-wishlist' )
@@ -1263,6 +1261,9 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_popup_modal_close_btn_icon_color' => addonify_wishlist_get_option( 'popup_close_btn_icon_color' ),
 			'--adfy_wishlist_popup_modal_close_btn_icon_color_hover' => addonify_wishlist_get_option( 'popup_close_btn_icon_color_on_hover' ),
 			'--adfy_wishlist_popup_modal_icon_color'       => addonify_wishlist_get_option( 'popup_modal_icon_color' ),
+			'--adfy_wishlist_success_icon_color'           => addonify_wishlist_get_option( 'popup_modal_success_icon_color' ),
+			'--adfy_wishlist_alert_icon_color'             => addonify_wishlist_get_option( 'popup_modal_alert_icon_color' ),
+			'--adfy_wishlist_error_icon_color'             => addonify_wishlist_get_option( 'popup_modal_error_icon_color' ),
 			'--adfy_wishlist_popup_modal_text_color'       => addonify_wishlist_get_option( 'popup_modal_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color'   => addonify_wishlist_get_option( 'popup_modal_btn_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color_hover' => addonify_wishlist_get_option( 'popup_modal_btn_text_color_hover' ),
