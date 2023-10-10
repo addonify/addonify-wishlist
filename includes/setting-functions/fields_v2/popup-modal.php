@@ -21,7 +21,7 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 				'title'        => __( 'Success Modal Options', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
-					'view_wishlist_btn_text'           => array(
+					'view_wishlist_btn_text'             => array(
 						'type'        => 'text',
 						'className'   => '',
 						'label'       => __( 'View wishlist link button label', 'addonify-wishlist' ),
@@ -29,7 +29,7 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'view_wishlist_btn_text' ),
 					),
-					'product_added_to_wishlist_text'   => array(
+					'product_added_to_wishlist_text'     => array(
 						'type'        => 'text',
 						'className'   => '',
 						'label'       => __( 'Product added to wishlist text', 'addonify-wishlist' ),
@@ -199,9 +199,27 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 					),
 					'popup_modal_icon_color'              => array(
 						'type'      => 'color',
-						'label'     => __( 'Modal icon color', 'addonify-wishlist' ),
+						'label'     => __( 'Modal wishlist icon color', 'addonify-wishlist' ),
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_icon_color' ),
+					),
+					'popup_modal_success_icon_color'      => array(
+						'type'      => 'color',
+						'label'     => __( 'Modal success icon color', 'addonify-wishlist' ),
+						'className' => '',
+						'value'     => addonify_wishlist_get_option( 'popup_modal_success_icon_color' ),
+					),
+					'popup_modal_alert_icon_color'        => array(
+						'type'      => 'color',
+						'label'     => __( 'Modal alert icon color', 'addonify-wishlist' ),
+						'className' => '',
+						'value'     => addonify_wishlist_get_option( 'popup_modal_alert_icon_color' ),
+					),
+					'popup_modal_error_icon_color'        => array(
+						'type'      => 'color',
+						'label'     => __( 'Modal error icon color', 'addonify-wishlist' ),
+						'className' => '',
+						'value'     => addonify_wishlist_get_option( 'popup_modal_error_icon_color' ),
 					),
 					'popup_modal_text_color'              => array(
 						'type'      => 'color',

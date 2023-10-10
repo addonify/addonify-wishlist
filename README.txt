@@ -140,15 +140,15 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 2.0.6 - ? July, 2023 =
+= 2.0.6 - ? October, 2023 =
 
-- Added: New options for popup notice's messages.
+- Added: Confirmation modal when trying to empty wishist and new options for popup notice's messages.
 - Updated: Optimized database query and avoided duplicate queries.
 - Updated: Action hooks `addonify_wishlist_before_adding_to_wishlist` and `addonify_wishlist_after_adding_to_wishlist`. Array argument is passed in both action hooks.
 - Fixed: Migration of user wishlist data when updating from version 1.1.3.
 - Fixed: Plugin setting page link in plugins listing page is displayed before `Deactivate` link.
 - Fixed: Color picker cursor issue (Vue JS).
-- Added: Documentation link, GitHub link, and support linkt to the plugin row in plugins list table.
+- Added: Documentation link, GitHub link, and support link to the plugin row in plugins list table.
 - Tweak: Changed DIR for Inter & Manrope fonts files. Now, Using NPM package to install Inter & Manrope fonts.
 - Added: Deprecated files are renamed with suffix, `deprecated`, and are moved to folders named `deprecated`.
 
