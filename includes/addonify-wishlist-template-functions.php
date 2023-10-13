@@ -182,7 +182,7 @@ if ( ! function_exists( 'addonify_wishlist_render_sidebar_toggle_button' ) ) {
 					'css_classes' => implode( ' ', $css_classes ),
 					'label'       => addonify_wishlist_get_option( 'sidebar_btn_label' ),
 					'show_icon'   => (int) addonify_wishlist_get_option( 'sidebar_show_icon' ),
-					'icon'        => addonify_wishlist_get_option( 'sidebar_btn_icon' ),
+					'icon'        => addonify_wishlist_get_wishlist_icons( addonify_wishlist_get_option( 'sidebar_toggle_btn_icon' ) ),
 				)
 			)
 		);
@@ -481,7 +481,7 @@ if ( ! function_exists( 'addonify_wishlist_modal_close_button_template' ) ) {
 	 */
 	function addonify_wishlist_modal_close_button_template() {
 
-		$close_button = '<button type="button" id="addonify-wishlist-close-modal-btn" class="adfy-wishlist-btn adfy-wishlist-clear-button-style"><svg x="0px" y="0px" viewBox="0 0 511.991 511.991"><g><path d="M286.161,255.867L505.745,36.283c8.185-8.474,7.951-21.98-0.523-30.165c-8.267-7.985-21.375-7.985-29.642,0   L255.995,225.702L36.411,6.118c-8.475-8.185-21.98-7.95-30.165,0.524c-7.985,8.267-7.985,21.374,0,29.641L225.83,255.867   L6.246,475.451c-8.328,8.331-8.328,21.835,0,30.165l0,0c8.331,8.328,21.835,8.328,30.165,0l219.584-219.584l219.584,219.584   c8.331,8.328,21.835,8.328,30.165,0l0,0c8.328-8.331,8.328-21.835,0-30.165L286.161,255.867z"/></g></svg></button>';
+		$close_button = '<button type="button" id="addonify-wishlist-close-modal-btn" class="adfy-wishlist-btn adfy-wishlist-clear-button-style">' . addonify_wishlist_escape_svg( addonify_wishlist_get_wishlist_icons( 'close-1' ) ) . '</button>';
 
 		echo apply_filters( 'addonify_wishlist_modal_close_button', $close_button ); // phpcs:ignore
 	}
@@ -592,7 +592,7 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_product_row_template' ) ) {
 							data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
 							data-source="wishlist-sidebar"
 						>
-							<i class="adfy-wishlist-icon trash-2"></i>
+							<?php echo addonify_wishlist_escape_svg( addonify_wishlist_get_wishlist_icons( 'bin-5' ) ); // phpcs:ignore ?>
 						</button>
 					</div>
 				</div>
@@ -629,7 +629,7 @@ if ( ! function_exists( 'addonify_wishlist_table_product_row_template' ) ) {
 					data-product_name="<?php echo esc_attr( $product->get_name() ); ?>"
 					data-source="wishlist-table"
 				>
-					<i class="adfy-wishlist-icon trash-2"></i>
+					<?php echo addonify_wishlist_escape_svg( addonify_wishlist_get_wishlist_icons( 'bin-5' ) ); // phpcs:ignore ?>
 				</button>
 			</td>
 			<td class="image">
