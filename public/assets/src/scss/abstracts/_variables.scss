@@ -11,8 +11,6 @@
     */ 
     --adfy_wishlist_wishlist_btn_text_color: white;
     --adfy_wishlist_wishlist_btn_icon_color: white;
-    //--adfy_wishlist_wishlist_btn_text_color_hover: white;
-    //--adfy_wishlist_wishlist_btn_icon_color_hover: white;
     --adfy_wishlist_wishlist_btn_bg_color: #444444;
     --adfy_wishlist_wishlist_btn_bg_color_hover: #2274FB;
 
@@ -108,7 +106,6 @@
     --adfy_wishlist_popup_modal_zindex: 1000000000000000;
     --adfy_wishlist_sidebar_overlay_zindex: 10000000000000000;
     --adfy_wishlist_sidebar_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) + 10 );
-    --adfy_wishlist_sidebar_trigger_button_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) - 1 );
 
     /**
     *
