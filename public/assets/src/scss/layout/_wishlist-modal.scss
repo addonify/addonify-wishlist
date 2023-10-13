@@ -60,19 +60,20 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
+                fill: var(--adfy_wishlist_popup_modal_close_btn_icon_color);
                 color: var(--adfy_wishlist_popup_modal_close_btn_icon_color);
 
-                svg {
+                .addonify-wishlist-icon {
 
                     display: inline-flex;
                     line-height: 1;
-                    width: 14px;
-                    height: 14px;
-                    fill: currentColor;
+                    width: 16px;
+                    height: 16px;
                 }
 
                 &:hover {
 
+                    fill: var(--adfy_wishlist_popup_modal_close_btn_icon_color_hover);
                     color: var(--adfy_wishlist_popup_modal_close_btn_icon_color_hover);
                 }
             }
@@ -86,17 +87,20 @@
 
             .adfy-wishlist-icon-entry {
 
+                @include flex();
+                align-items: center;
+                justify-content: center;
                 padding: 0;
                 margin: 0 0 20px 0;
 
-                .adfy-wishlist-icon {
+                .addonify-wishlist-icon {
 
-                    @include flex();
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 62px;
+                    display: inline-flex;
+                    height: 62px;
+                    width: 62px;
+                    fill: var(--adfy_wishlist_popup_modal_icon_color);
                     color: var(--adfy_wishlist_popup_modal_icon_color);
-                    animation: AddonifyWishlistPulse 0.8s infinite linear;
+                    //animation: AddonifyWishlistPulse 0.8s infinite linear;
                 }
             }
 
@@ -231,7 +235,7 @@
 
             .adfy-wishlist-icon-entry {
 
-                .adfy-wishlist-icon {
+                .adfy-wishlist-icon:not([class*=".icon-heart-"]) {
 
                     color: var(--adfy_wishlist_success_icon_color);
                 }
