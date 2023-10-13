@@ -244,6 +244,7 @@
                                     font-size: 20px;
                                     font-weight: normal;
                                     color: var(--adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color);
+                                    fill: var(--adfy_wishlist_sidebar_modal_product_remove_from_wishlist_icon_color);
                                     padding: 0;
                                     margin: 0;
                                     height: auto;
@@ -266,50 +267,6 @@
                     &:last-child {
 
                         margin-bottom: 0;
-                    }
-                }
-
-                li.loading {
-
-                    position: relative;
-
-                    &::after,
-                    &::before {
-
-                        content: "";
-                        @include flex();
-                        justify-content: center;
-                        align-items: center;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        right: 0;
-                        left: 0;
-                        height: 100%;
-                        width: 100%;
-                        z-index: 2;
-                    }
-
-                    &::before {
-
-                        content: "";
-                        background: white url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M18.364 5.636L16.95 7.05A7 7 0 1 0 19 12h2a9 9 0 1 1-2.636-6.364z'/%3E%3C/svg%3E") no-repeat 50%;
-                        top: 50%;
-                        left: 50%;
-                        right: auto;
-                        bottom: auto;
-                        height: 40px;
-                        width: 40px;
-                        border-radius: 100%;
-                        transform: translate(-50%, -50%);
-                        animation: AddonifyWishlistSpin 0.7s cubic-bezier(0.37, 0.35, 0.5, 0.44) infinite;
-                    }
-
-                    &::after {
-
-                        content: "";
-                        z-index: 1;
-                        background: rgba(255, 255, 255, 0.9);
                     }
                 }
             }
@@ -450,6 +407,7 @@
     margin: 0;
     padding: 10px;
     cursor: pointer;
+    fill: var(--adfy_wishlist_sidebar_modal_toggle_btn_label_color);
     color: var(--adfy_wishlist_sidebar_modal_toggle_btn_label_color);
     font-size: 11px;
     line-height: 1;
@@ -478,8 +436,14 @@
 
     .button-icon {
         
-        font-size: 18px;
         transform: rotate(-90deg);
+
+        svg {
+
+            display: inline-flex;
+            width: 20px;
+            height: 20px;
+        }
     }
 
     &.hidden {

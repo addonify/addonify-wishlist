@@ -2,6 +2,29 @@
 	#. Button General
   -------------------------------------------------------------------------- */
 
+.adfy-wishlist-btn {
+
+    fill: var(--adfy_wishlist_wishlist_btn_text_color);
+    color: var(--adfy_wishlist_wishlist_btn_text_color);
+    background: transparent;
+    background-color: var(--adfy_wishlist_wishlist_btn_bg_color);
+    @include transition_delay();
+
+    &:hover {
+
+        outline: none;
+        fill: var(--adfy_wishlist_wishlist_btn_text_color_hover);
+        color: var(--adfy_wishlist_wishlist_btn_text_color_hover);
+        background: transparent;
+        background-color: var(--adfy_wishlist_wishlist_btn_bg_color_hover);
+    }
+
+    &:focus {
+
+        outline: none;
+    }
+}
+
 p.adfy-wishlist-btn .button,
 .adfy-wishlist-btn:not(p.adfy-wishlist-btn) {
 
@@ -114,7 +137,6 @@ p.adfy-wishlist-btn .button,
 	#. Add to Wishlist button
   -------------------------------------------------------------------------- */
   
-.adfy-wishlist-btn,
 .addonify-add-to-wishlist-btn,
 .addonify-wishlist-add-to-cart .button,
 .addonify-wishlist-add-to-cart .added_to_cart,
@@ -131,9 +153,14 @@ p.adfy-wishlist-btn .button,
     background-color: var(--adfy_wishlist_wishlist_btn_bg_color);
     @include transition_delay();
 
-    .icon {
+    .addonify-wishlist-icon {
 
+        display: inline-flex;
+        fill: var(--adfy_wishlist_wishlist_btn_icon_color);
         color: var(--adfy_wishlist_wishlist_btn_icon_color);
+        line-height: 1;
+        width: 16px;
+        height: 16px;
     }
 
     &:hover {
@@ -143,8 +170,9 @@ p.adfy-wishlist-btn .button,
         background: transparent;
         background-color: var(--adfy_wishlist_wishlist_btn_bg_color_hover);
 
-        .icon {
+        .addonify-wishlist-icon {
 
+            fill: var(--adfy_wishlist_wishlist_btn_icon_color_hover);
             color: var(--adfy_wishlist_wishlist_btn_icon_color_hover);
         }
     }
