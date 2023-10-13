@@ -4,6 +4,8 @@
 
 #addonify-wishlist-sticky-sidebar-container {
 
+    --sidebar-zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) + 5 );
+
     @include flex();
     flex-direction: column;
     justify-content: space-between;
@@ -16,7 +18,7 @@
     height: 100%;
     margin: 0;
     padding: 30px 20px 20px 20px;
-    z-index: var(--adfy_wishlist_sidebar_zindex);
+    z-index: var(--sidebar-zindex);
     background-color: var(--adfy_wishlist_sidebar_modal_bg_color);
     @include large_drop_shadow();
     @include transition_delay();
@@ -391,7 +393,7 @@
 
 #addonify-wishlist-show-sidebar-btn {
 
-    --button-zindex: calc( var(--adfy_wishlist_popup_modal_zindex) - 2 );
+    --button-zindex: calc( var(----adfy_wishlist_popup_modal_zindex) - 100 );
 
     @include flex();
     align-items: center;
@@ -456,6 +458,7 @@
 
     &:hover {
 
+        fill: var(--adfy_wishlist_sidebar_modal_toggle_btn_label_color_hover);
         color: var(--adfy_wishlist_sidebar_modal_toggle_btn_label_color_hover);
         background-color: var(--adfy_wishlist_sidebar_modal_toggle_btn_bg_color_hover);
         text-decoration: none;
