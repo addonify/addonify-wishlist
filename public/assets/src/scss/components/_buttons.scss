@@ -148,38 +148,31 @@ p.adfy-wishlist-btn .button,
 .woocommerce-page .product .summary button.addonify-add-to-wishlist-btn,
 #addonify-wishlist-page-form .adfy-wishlist-btn .button {
 
-    color: var(--adfy_wishlist_wishlist_btn_text_color);
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
     background: transparent;
+    fill: var(--adfy_wishlist_wishlist_btn_text_color);
+    color: var(--adfy_wishlist_wishlist_btn_text_color);
     background-color: var(--adfy_wishlist_wishlist_btn_bg_color);
     @include transition_delay();
 
     .addonify-wishlist-icon {
 
         display: inline-flex;
-        fill: var(--adfy_wishlist_wishlist_btn_icon_color);
-        color: var(--adfy_wishlist_wishlist_btn_icon_color);
         line-height: 1;
         width: 16px;
         height: 16px;
     }
 
-    &:hover {
+    &:is(:hover, :focus) {
 
         outline: none;
-        color: var(--adfy_wishlist_wishlist_btn_text_color_hover);
         background: transparent;
+        fill: var(--adfy_wishlist_wishlist_btn_text_color_hover);
+        color: var(--adfy_wishlist_wishlist_btn_text_color_hover);
         background-color: var(--adfy_wishlist_wishlist_btn_bg_color_hover);
-
-        .addonify-wishlist-icon {
-
-            fill: var(--adfy_wishlist_wishlist_btn_icon_color_hover);
-            color: var(--adfy_wishlist_wishlist_btn_icon_color_hover);
-        }
-    }
-
-    &:focus {
-
-        outline: none;
     }
 }
 
