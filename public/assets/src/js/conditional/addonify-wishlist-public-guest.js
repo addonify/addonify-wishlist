@@ -70,6 +70,8 @@
             initialAddToWishlistButtonLabel: addonifyWishlistJSObject.initialAddToWishlistButtonLabel,
             addedToWishlistButtonLabel: addonifyWishlistJSObject.addedToWishlistButtonLabel,
             alreadyInWishlistButtonLabel: addonifyWishlistJSObject.alreadyInWishlistButtonLabel,
+            addToWishlistButtonIcon: addonifyWishlistJSObject.addToWishlistButtonIcon,
+            addedToWishlistButtonIcon: addonifyWishlistJSObject.addedToWishlistButtonIcon,
             undoNoticeTimeout: addonifyWishlistJSObject.undoNoticeTimeout,
             addedToWishlistModal: addonifyWishlistJSObject.addedToWishlistModal,
             removedFromWishlistModal: addonifyWishlistJSObject.removedFromWishlistModal,

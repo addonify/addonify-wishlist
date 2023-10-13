@@ -475,23 +475,32 @@ class Addonify_Wishlist_Public {
 				// Modal Icons.
 				'addedToWishlistModalIcon'                 => apply_filters(
 					'addonify_wishlist_added_to_wishlist_modal_icon',
-					'<i class="adfy-wishlist-icon heart-style-one"></i>'
+					addonify_wishlist_get_wishlist_icons( 'heart-2' )
 				),
 				'removedFromWishlistModalIcon'             => apply_filters(
 					'addonify_wishlist_removed_from_wishlist_modal_icon',
-					'<i class="adfy-wishlist-icon heart-o-style-three"></i>'
+					addonify_wishlist_get_wishlist_icons( 'heart-1' )
 				),
 				'successModalIcon'                         => apply_filters(
 					'addonify_wishlist_success_modal_icon',
-					'<i class="adfy-wishlist-icon check"></i>'
+					addonify_wishlist_get_wishlist_icons( 'check-1' )
 				),
 				'alertModalIcon'                           => apply_filters(
 					'addonify_wishlist_alert_modal_icon',
-					'<i class="adfy-wishlist-icon alert-triangle"></i>'
+					addonify_wishlist_get_wishlist_icons( 'warning-1' )
 				),
 				'errorModalIcon'                           => apply_filters(
 					'addonify_wishlist_error_modal_icon',
-					'<i class="adfy-wishlist-icon flash"></i>'
+					addonify_wishlist_get_wishlist_icons( 'error-1' )
+				),
+				// Wishlist Button Icons.
+				'addToWishlistButtonIcon'                  => apply_filters(
+					'addonify_wishlist_add_to_wishlist_btn_icon',
+					addonify_wishlist_get_wishlist_icons( 'heart-1' )
+				),
+				'addedToWishlistButtonIcon'                => apply_filters(
+					'addonify_wishlist_added_to_wishlist_btn_icon',
+					addonify_wishlist_get_wishlist_icons( 'heart-2' )
 				),
 				// Modal Messages.
 				'addedToWishlistModalMessage'              => addonify_wishlist_get_option( 'product_added_to_wishlist_text' ),
@@ -577,7 +586,7 @@ class Addonify_Wishlist_Public {
 
 		$response_data = array(
 			'success' => false,
-			'message' => '',
+			'message' => 'Something went wrong! Please try again.',
 		);
 
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
@@ -816,12 +825,12 @@ class Addonify_Wishlist_Public {
 				$this->is_user_logged_in &&
 				in_array( $product->get_id(), $this->wishlist_items, true )
 			) {
-				$button_icon_class = 'heart-style-one';
+				$button_args['button_icon'] = addonify_wishlist_get_wishlist_icons( 'heart-2' );
+			} else {
+				$button_args['button_icon'] = addonify_wishlist_get_wishlist_icons( 'heart-1' );
 			}
 
 			$button_args['classes'][] = ( 'left' === $args['button_icon_position'] ) ? 'adfy-icon-before-label' : 'adfy-icon-after-label';
-
-			$button_args['button_icon'] = '<i class="icon adfy-wishlist-icon ' . $button_icon_class . '"></i>';
 		}
 
 		if ( ! empty( $this->wishlist_button_custom_css_classes ) ) {

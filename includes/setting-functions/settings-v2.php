@@ -63,7 +63,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'sidebar_btn_label'                        => esc_html__( 'Wishlist', 'addonify-wishlist' ),
 				'sidebar_btn_position_offset'              => -40,
 				'sidebar_show_icon'                        => true,
-				'sidebar_btn_icon'                         => 'heart-style-one',
+				'sidebar_toggle_btn_icon'                  => 'heart-2',
 				'view_wishlist_page_button_label'          => esc_html__( 'View All Wishlist Items', 'addonify-wishlist' ),
 				'empty_wishlist_label'                     => esc_html__( 'Your wishlist is currently empty.', 'addonify-wishlist' ),
 				'clear_wishlist_label'                     => esc_html__( 'Clear Wishlist!', 'addonify-wishlist' ),

@@ -187,7 +187,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_sidebar_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist', 'show_sidebar' ),
 						'value'       => addonify_wishlist_get_option( 'sidebar_show_icon' ),
 					),
-					'sidebar_btn_icon'                     => array(
+					'sidebar_toggle_btn_icon'              => array(
 						'type'        => 'radio',
 						'design'      => 'radioIcons',
 						'width'       => 'full',

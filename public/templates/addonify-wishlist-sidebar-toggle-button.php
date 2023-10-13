@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 	if ( $show_icon ) {
 		?>
 		<span class="button-icon">
-			<i class="adfy-wishlist-icon <?php echo esc_attr( $icon ); ?>"></i>
+			<?php echo addonify_wishlist_escape_svg( $icon ); // phpcs:ignore ?>
 		</span>
 		<?php
 	}

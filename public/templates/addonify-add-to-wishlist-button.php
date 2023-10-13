@@ -33,7 +33,11 @@ defined( 'ABSPATH' ) || exit;
 	}
 
 	if ( isset( $button_icon ) ) {
-		echo $button_icon; // phpcs:ignore
+		?>
+		<span class="adfy-wishlist-btn-icon">
+			<?php echo addonify_wishlist_escape_svg( $button_icon ); // phpcs:ignore ?>
+		</span>
+		<?php
 	}
 	?>
 </button>

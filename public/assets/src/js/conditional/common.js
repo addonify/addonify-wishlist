@@ -161,7 +161,7 @@
                     // Update button label and icon of custom add to wishlist button.
                     if (!buttonElement.hasClass('addonify-custom-wishlist-btn') && buttonElement.hasClass('addonify-add-to-wishlist-btn')) {
                         // Update button icon.
-                        buttonElement.find('i.icon.adfy-wishlist-icon').removeClass('heart-o-style-one').addClass('heart-style-one');
+                        buttonElement.find('span.adfy-wishlist-btn-icon').html(settings.addedToWishlistButtonIcon);
 
                         // Update button label.
                         if (buttonElement.hasClass('addonify-wishlist-save-for-later')) {
@@ -208,7 +208,7 @@
                     // Update button label and icon of custom add to wishlist button.
                     if (!buttonElement.hasClass('addonify-custom-wishlist-btn') && buttonElement.hasClass('addonify-add-to-wishlist-btn')) {
                         // Update button icon.
-                        buttonElement.find('i.icon.adfy-wishlist-icon').addClass('heart-o-style-one').removeClass('heart-style-one');
+                        buttonElement.find('span.adfy-wishlist-btn-icon').html(settings.addToWishlistButtonIcon);
 
                         // Update button label.
                         if (buttonElement.hasClass('addonify-wishlist-save-for-later')) {
