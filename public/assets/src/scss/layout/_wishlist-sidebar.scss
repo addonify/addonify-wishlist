@@ -58,9 +58,10 @@
                 color: var(--adfy_wishlist_sidebar_modal_close_icon_color);
                 padding: 0;
                 margin: 0;
-                width: 30px;
-                height: 30px;
+                width: auto;
+                height: auto;
                 border: none;
+                line-height: 1;
                 border-radius: 100%;
                 box-shadow: none;
                 text-decoration: none;
@@ -70,8 +71,8 @@
 
                 svg {
 
-                    height: 22px;
-                    width: 22px;
+                    height: 24px;
+                    width: 24px;
                 }
 
                 &:hover {
@@ -390,6 +391,8 @@
 
 #addonify-wishlist-show-sidebar-btn {
 
+    --button-zindex: calc( var(--adfy_wishlist_popup_modal_zindex) - 2 );
+
     @include flex();
     align-items: center;
     justify-content: center;
@@ -419,7 +422,7 @@
     transform: rotate(90deg);
     background: transparent;
     background-color: var(--adfy_wishlist_sidebar_modal_toggle_btn_bg_color);
-    z-index: var(--adfy_wishlist_sidebar_trigger_button_zindex);
+    z-index: var(--button-zindex);
     @include transition_delay();
 
     .button-icon,
