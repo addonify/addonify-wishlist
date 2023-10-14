@@ -221,6 +221,12 @@ if ( ! function_exists( 'addonify_wishlist_popup_modal_v_2_options' ) ) {
 						'className' => '',
 						'value'     => addonify_wishlist_get_option( 'popup_modal_error_icon_color' ),
 					),
+					'popup_modal_info_icon_color'         => array(
+						'type'      => 'color',
+						'label'     => __( 'Modal info icon color', 'addonify-wishlist' ),
+						'className' => '',
+						'value'     => addonify_wishlist_get_option( 'popup_modal_info_icon_color' ),
+					),
 					'popup_modal_text_color'              => array(
 						'type'      => 'color',
 						'label'     => __( 'Modal text color', 'addonify-wishlist' ),
