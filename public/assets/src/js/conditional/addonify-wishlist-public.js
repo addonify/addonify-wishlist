@@ -87,7 +87,7 @@
                      * Check if product is already in the cart.
                      * If not call AJAX function to add the product into the cart.
                      */
-                    body.on('click', '.addonify-wishlist-ajax-add-to-wishlist', function (e) {
+                    body.on('click', '.addonify-wishlist-ajax-add-to-wishlist, .addonify-add-to-wishlist-btn', function (e) {
                         e.preventDefault();
 
                         currentAddToWishlistButton = jQuery(this);

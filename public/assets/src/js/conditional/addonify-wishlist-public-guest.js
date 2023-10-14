@@ -308,7 +308,7 @@
                     /**
                      * Handle the event associated with add to wishlist wishlist button.
                      */
-                    body.on('click', '.addonify-wishlist-ajax-add-to-wishlist', function (e) {
+                    body.on('click', '.addonify-wishlist-ajax-add-to-wishlist, .addonify-add-to-wishlist-btn', function (e) {
                         e.preventDefault();
                         /**
                          * If login is required, displays modal or redirects to login page.

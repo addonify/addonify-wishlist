@@ -547,7 +547,7 @@ class Addonify_Wishlist_Public {
 			// Modal Icon.
 			$script_object['loginRequiredModalIcon'] = apply_filters(
 				'addonify_wishlist_login_required_modal_icon',
-				'<i class="adfy-wishlist-icon log-in"></i>'
+				addonify_wishlist_get_wishlist_icons( 'login-1' )
 			);
 			// Modal Button.
 			$script_object['loginLinkModalButton'] = $this->get_login_link_modal_button();
