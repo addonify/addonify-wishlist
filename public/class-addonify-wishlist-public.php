@@ -472,6 +472,10 @@ class Addonify_Wishlist_Public {
 					'addonify_wishlist_error_modal_classes',
 					'adfy-error-modal'
 				),
+				'infoModalClasses'                         => apply_filters(
+					'addonify_wishlist_info_modal_classes',
+					'adfy-info-modal'
+				),
 				// Modal Icons.
 				'addedToWishlistModalIcon'                 => apply_filters(
 					'addonify_wishlist_added_to_wishlist_modal_icon',
@@ -1271,6 +1275,7 @@ class Addonify_Wishlist_Public {
 			'--adfy_wishlist_success_icon_color'           => addonify_wishlist_get_option( 'popup_modal_success_icon_color' ),
 			'--adfy_wishlist_alert_icon_color'             => addonify_wishlist_get_option( 'popup_modal_alert_icon_color' ),
 			'--adfy_wishlist_error_icon_color'             => addonify_wishlist_get_option( 'popup_modal_error_icon_color' ),
+			'--adfy_wishlist_info_icon_color'              => addonify_wishlist_get_option( 'popup_modal_info_icon_color' ),
 			'--adfy_wishlist_popup_modal_text_color'       => addonify_wishlist_get_option( 'popup_modal_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color'   => addonify_wishlist_get_option( 'popup_modal_btn_text_color' ),
 			'--adfy_wishlist_popup_modal_btn_text_color_hover' => addonify_wishlist_get_option( 'popup_modal_btn_text_color_hover' ),

@@ -28,6 +28,7 @@
             successModalClasses,
             alertModalClasses,
             errorModalClasses,
+            infoModalClasses,
 
             addedToWishlistModalIcon,
             removedFromWishlistModalIcon,
@@ -316,7 +317,7 @@
                         if(isLoginRequired === '1') {
                             if( ifNotLoginAction === 'show_popup' ){
                                 addonifyWishlistDispalyModal(
-                                    alertModalClasses,
+                                    infoModalClasses,
                                     loginRequiredModalIcon,
                                     loginRequiredModalMessage,
                                     loginLinkModalButton

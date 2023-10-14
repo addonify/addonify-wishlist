@@ -115,6 +115,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'popup_modal_success_icon_color'           => '#36ff79', // @since 2.0.6
 				'popup_modal_alert_icon_color'             => '#ff9536', // @since 2.0.6
 				'popup_modal_error_icon_color'             => '#ff363a', // @since 2.0.6
+				'popup_modal_info_icon_color'              => '#2196F3', // @since 2.0.6
 				'popup_modal_text_color'                   => '#444444',
 				'popup_modal_btn_text_color'               => '#ffffff',
 				'popup_modal_btn_text_color_hover'         => '#ffffff',
