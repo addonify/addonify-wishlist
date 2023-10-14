@@ -103,9 +103,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 				'error_emptying_wishlist_message'          => esc_html__( 'Error emptying the wishlist!', 'addonify-wishlist' ), // @since 2.0.6
 
 				'wishlist_btn_text_color'                  => '#ffffff',
-				//'wishlist_btn_icon_color'                  => '#ffffff', // Removed: 2.0.6
 				'wishlist_btn_text_color_hover'            => '#ffffff',
-				//'wishlist_btn_icon_color_hover'            => '#ffffff', / Removed: 2.0.6
 				'wishlist_btn_bg_color'                    => '#444444',
 				'wishlist_btn_bg_color_hover'              => '#2274fb',
 				'sidebar_modal_overlay_bg_color'           => 'rgba(255,255,255,.96)',
