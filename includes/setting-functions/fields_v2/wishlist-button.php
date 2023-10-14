@@ -172,7 +172,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 				'title'        => __( 'Button Icon Options', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
-					'show_icon'                     => array(
+					'show_icon'     => array(
 						'type'        => 'switch',
 						'className'   => '',
 						'label'       => __( 'Display icon in button', 'addonify-wishlist' ),
@@ -180,7 +180,7 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist' ),
 						'value'       => addonify_wishlist_get_option( 'show_icon' ),
 					),
-					'icon_position'                 => array(
+					'icon_position' => array(
 						'type'        => 'select',
 						'className'   => '',
 						'label'       => __( 'Button Icon Position', 'addonify-wishlist' ),
@@ -192,20 +192,6 @@ if ( ! function_exists( 'addonify_wishlist_wishlist_button_v_2_options' ) ) {
 						'dependent'   => array( 'enable_wishlist', 'show_icon' ),
 						'value'       => addonify_wishlist_get_option( 'icon_position' ),
 					),
-					//'wishlist_btn_icon_color'       => array(
-					//	'type'          => 'color',
-					//	'label'         => __( 'Icon color', 'addonify-wishlist' ),
-					//	'isAlphaPicker' => true,
-					//	'className'     => '',
-					//	'value'         => addonify_wishlist_get_option( 'wishlist_btn_icon_color' ),
-					//),
-					//'wishlist_btn_icon_color_hover' => array(
-					//	'type'          => 'color',
-					//	'label'         => __( 'On hover icon color', 'addonify-wishlist' ),
-					//	'isAlphaPicker' => true,
-					//	'className'     => '',
-					//	'value'         => addonify_wishlist_get_option( 'wishlist_btn_icon_color_hover' ),
-					//),
 				),
 			),
 		);

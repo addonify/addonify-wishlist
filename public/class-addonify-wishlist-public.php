@@ -466,7 +466,7 @@ class Addonify_Wishlist_Public {
 				),
 				'alertModalClasses'                        => apply_filters(
 					'addonify_wishlist_alert_modal_classes',
-					'adfy-alert-modal'
+					'adfy-warning-modal'
 				),
 				'errorModalClasses'                        => apply_filters(
 					'addonify_wishlist_error_modal_classes',
@@ -1258,9 +1258,7 @@ class Addonify_Wishlist_Public {
 
 		$css_values = array(
 			'--adfy_wishlist_wishlist_btn_text_color'      => addonify_wishlist_get_option( 'wishlist_btn_text_color' ),
-			'--adfy_wishlist_wishlist_btn_icon_color'      => addonify_wishlist_get_option( 'wishlist_btn_icon_color' ),
 			'--adfy_wishlist_wishlist_btn_text_color_hover' => addonify_wishlist_get_option( 'wishlist_btn_text_color_hover' ),
-			'--adfy_wishlist_wishlist_btn_icon_color_hover' => addonify_wishlist_get_option( 'wishlist_btn_icon_color_hover' ),
 			'--adfy_wishlist_wishlist_btn_bg_color'        => addonify_wishlist_get_option( 'wishlist_btn_bg_color' ),
 			'--adfy_wishlist_wishlist_btn_bg_color_hover'  => addonify_wishlist_get_option( 'wishlist_btn_bg_color_hover' ),
 			'--adfy_wishlist_sidebar_modal_overlay_bg_color' => addonify_wishlist_get_option( 'sidebar_modal_overlay_bg_color' ),
@@ -1315,7 +1313,8 @@ class Addonify_Wishlist_Public {
 		$css = ':root {';
 
 		foreach ( $css_values as $key => $value ) {
-			if ( $value ) {
+
+			if ( ! is_array( $value ) ) {
 				$css .= $key . ': ' . $value . ';';
 			}
 		}
