@@ -393,7 +393,7 @@
 
 #addonify-wishlist-show-sidebar-btn {
 
-    --button-zindex: calc( var(----adfy_wishlist_popup_modal_zindex) - 100 );
+    --zindex: calc( var(--adfy_wishlist_popup_modal_zindex) - 1 );
 
     @include flex();
     align-items: center;
@@ -424,7 +424,7 @@
     transform: rotate(90deg);
     background: transparent;
     background-color: var(--adfy_wishlist_sidebar_modal_toggle_btn_bg_color);
-    z-index: var(--button-zindex);
+    z-index: var(--zindex);
     @include transition_delay();
 
     .button-icon,

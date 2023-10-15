@@ -235,8 +235,9 @@
 
             .adfy-wishlist-icon-entry {
 
-                .adfy-wishlist-icon:not([class*=".icon-heart-"]) {
+                .adfy-wishlist-icon:not([class*="icon-heart-"]) {
 
+                    fill: var(--adfy_wishlist_success_icon_color);
                     color: var(--adfy_wishlist_success_icon_color);
                 }
             }
@@ -251,6 +252,7 @@
 
                 .adfy-wishlist-icon {
 
+                    fill: var(--adfy_wishlist_info_icon_color);
                     color: var(--adfy_wishlist_info_icon_color);
                 }
             }
@@ -265,6 +267,7 @@
 
                 .adfy-wishlist-icon {
 
+                    fill: var(--adfy_wishlist_warning_icon_color);
                     color: var(--adfy_wishlist_warning_icon_color);
                 }
             }
@@ -279,6 +282,7 @@
 
                 .adfy-wishlist-icon {
 
+                    fill: var(--adfy_wishlist_error_icon_color);
                     color: var(--adfy_wishlist_error_icon_color);
                 }
             }
