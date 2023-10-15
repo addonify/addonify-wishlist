@@ -3,7 +3,7 @@
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
-Tested up to: 6.2.2
+Tested up to: 6.2.3
 Stable tag: 2.0.6
 Requires PHP: 7.4
 License: GPLv2 or later
@@ -143,16 +143,18 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 = 2.0.6 - ? October, 2023 =
 
 - Added:   Confirmation modal when trying to empty wishist and new options for popup notice's messages.
+- Added:   Documentation link, GitHub link, and support link to the plugin row in plugins list table.
+- Added:   Deprecated files are renamed with suffix, `deprecated`, and are moved to folders named `deprecated`.
 - Updated: Optimized database query and avoided duplicate queries.
 - Updated: Action hooks `addonify_wishlist_before_adding_to_wishlist` and `addonify_wishlist_after_adding_to_wishlist`. Array argument is passed in both action hooks.
 - Updated: Icons.
 - Fixed:   Migration of user wishlist data when updating from version 1.1.3.
 - Fixed:   Plugin setting page link in plugins listing page is displayed before `Deactivate` link.
 - Fixed:   Color picker cursor issue (Vue JS).
-- Added:   Documentation link, GitHub link, and support link to the plugin row in plugins list table.
 - Tweak:   Changed DIR for Inter & Manrope fonts files. Now, Using NPM package to install Inter & Manrope fonts.
-- Added:   Deprecated files are renamed with suffix, `deprecated`, and are moved to folders named `deprecated`.
 - Removed: Wishlist button icon color options.
+- Tested:  WordPress v6.2.3
+- Tested: WooCommerce 8.2.0
 
 = 2.0.5 - 29 June, 2023 =
 

@@ -1,6 +1,6 @@
 {
   "admin/app/src/main.css": {
-    "file": "assets/main-58fe8cc2.css",
+    "file": "assets/main-489af1b8.css",
     "src": "admin/app/src/main.css"
   },
   "admin/app/src/main.js": {
@@ -96,9 +96,9 @@
       "assets/manrope-latin-700-normal-97b53048.woff"
     ],
     "css": [
-      "assets/main-58fe8cc2.css"
+      "assets/main-489af1b8.css"
     ],
-    "file": "assets/main-67e6a673.js",
+    "file": "assets/main-c5a741fa.js",
     "isEntry": true,
     "src": "admin/app/src/main.js"
   },
