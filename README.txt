@@ -140,7 +140,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
-= 2.0.6 - ? October, 2023 =
+= 2.0.6 - 16 October, 2023 =
 
 - Added:   Confirmation modal when trying to empty wishist and new options for popup notice's messages.
 - Added:   Documentation link, GitHub link, and support link to the plugin row in plugins list table.
@@ -154,7 +154,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Tweak:   Changed DIR for Inter & Manrope fonts files. Now, Using NPM package to install Inter & Manrope fonts.
 - Removed: Wishlist button icon color options.
 - Tested:  WordPress v6.2.3
-- Tested: WooCommerce 8.2.0
+- Tested:  WooCommerce 8.2.0
 
 = 2.0.5 - 29 June, 2023 =
 

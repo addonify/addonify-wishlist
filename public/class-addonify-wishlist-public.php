@@ -590,7 +590,7 @@ class Addonify_Wishlist_Public {
 
 		$response_data = array(
 			'success' => false,
-			'message' => 'Something went wrong! Please try again.',
+			'message' => '',
 		);
 
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
