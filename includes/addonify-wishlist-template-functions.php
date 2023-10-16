@@ -562,13 +562,13 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_product_row_template' ) ) {
 					<?php
 					$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
 					if (
-						isset( $product_avaibility['stock_status']['class'] ) &&
-						isset( $product_avaibility['stock_status']['avaibility'] )
+						isset( $product_avaibility['class'] ) &&
+						isset( $product_avaibility['avaibility'] )
 					) {
 						?>
 						<div class="adfy-wishlist-woo-stock">
-							<span class="stock-label <?php echo esc_attr( $product_avaibility['stock_status']['class'] ); ?>">
-								<?php echo esc_html( $product_avaibility['stock_status']['avaibility'] ); ?>
+							<span class="stock-label <?php echo esc_attr( $product_avaibility['class'] ); ?>">
+								<?php echo esc_html( $product_avaibility['avaibility'] ); ?>
 							</span>
 						</div>
 						<?php
@@ -649,12 +649,12 @@ if ( ! function_exists( 'addonify_wishlist_table_product_row_template' ) ) {
 				<?php
 				$product_avaibility = addonify_wishlist_get_product_avaibility( $product );
 				if (
-					isset( $product_avaibility['stock_status']['class'] ) &&
-					isset( $product_avaibility['stock_status']['avaibility'] )
+					isset( $product_avaibility['class'] ) &&
+					isset( $product_avaibility['avaibility'] )
 				) {
 					?>
-					<span class="stock-label <?php echo esc_attr( $product_avaibility['stock_status']['class'] ); ?>">
-						<?php echo esc_html( $product_avaibility['stock_status']['avaibility'] ); ?>
+					<span class="stock-label <?php echo esc_attr( $product_avaibility['class'] ); ?>">
+						<?php echo esc_html( $product_avaibility['avaibility'] ); ?>
 					</span>
 					<?php
 				}
