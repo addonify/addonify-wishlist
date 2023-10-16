@@ -548,7 +548,7 @@ if ( ! function_exists( 'addonify_wishlist_sidebar_product_row_template' ) ) {
 				<div class="adfy-wishlist-col image-column">
 					<div class="adfy-wishlist-woo-image">
 						<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
-							<?php echo wp_kses_post( $product->get_image( 'woocommerce_thumbnail' ) ); ?>
+							<?php echo wp_kses_post( $product->get_image( array( 82, 82 ) ) ); ?>
 						</a>
 					</div>
 				</div>
@@ -634,7 +634,7 @@ if ( ! function_exists( 'addonify_wishlist_table_product_row_template' ) ) {
 			</td>
 			<td class="image">
 				<a href="<?php echo esc_url( $product->get_permalink() ); ?>">
-					<?php echo wp_kses_post( $product->get_image( 'woocommerce_thumbnail' ) ); ?>
+					<?php echo wp_kses_post( $product->get_image( array( 128, 128 ) ) ); ?>
 				</a>
 			</td>
 			<td class="name">
