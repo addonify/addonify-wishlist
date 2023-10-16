@@ -21,10 +21,10 @@ export const currentVersion = addonify_wishlist_localizer.version_number;
 
 /**
  *
- * Advertise upsell in plugin setting page.
+ * Advertise up-sell in plugin setting page.
  *
  * @options {boolean} true | false
  * @since 2.0.0
  */
 
-export const advertiseUpsell: boolean = true;
+export const advertiseUpsell: boolean = false;
