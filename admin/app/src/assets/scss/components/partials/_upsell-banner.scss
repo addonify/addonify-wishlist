@@ -4,6 +4,8 @@
 
 #upsell-banner {
 
+	--badge-size: 60px;
+
 	position: relative;
 	padding: 30px;
 	background-color: var(--addonify_primary_color);
@@ -28,13 +30,27 @@
 		z-index: 10;
 		left: auto;
 		right: -30px;
-		top: -40px;
-		height: 70px;
-		width: 70px;
+		top: -30px;
+		height: var(--badge-size);
+		width: var(--badge-size);
 		color: white;
-		background-color: red;
 		border-radius: 100%;
-		box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.1);
+		animation: addonifyPulseDot 2s infinite;
+		background-color: red;
+		background: linear-gradient(to right, #ff416c, #ff4b2b);
+		@include transition(0.8s);
+
+		&::before {
+
+			content: "";
+			position: absolute;
+			height: calc( var(--badge-size) + 8px );
+			width: calc( var(--badge-size) + 8px );
+			border-style: dotted;
+			border-width: 2px;
+			border-color: #FF9D9D;
+			border-radius: 100%;
+		}
 
 		&.has-caption {
 
@@ -44,16 +60,16 @@
 
 		.sale-title {
 
-			font-size: 13px;
-			font-weight: 500;
+			font-size: 14px;
+			font-weight: normal;
 			line-height: 1;
-			letter-spacing: 1px;
+			letter-spacing: 0.25px;
 			text-transform: uppercase;
 		}
 
 		.sale-caption {
 
-			font-size: 12px;
+			font-size: 13px;
 			letter-spacing: 0;
 			text-transform: none;
 			font-weight: normal;
@@ -113,15 +129,24 @@
 
 			.adfy-button {
 
-				width: 100%;
+				width: max-content;
+				padding: 20px 30px;
 				color: var(--addonify_primary_color);
 				background-color: white;
+				border-radius: 40px;
+				box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.2);
 
-				&:hover {
+				&:is(:hover, :focus) {
 
-					color: white;
+                    fill: white;
+                    color: white;
 					background-color: var(--addonify_secondary_color);
-				}
+                }
+
+                &:is(:focus) {
+
+                    outline: none;
+                }
 			}
 		}
 	}

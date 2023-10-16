@@ -10,16 +10,46 @@
         .el-radio-group {
 
             @include flex();
-            gap: 20px;
+            gap: 15px;
             
+            // Standard
             .el-radio {
 
+                @include flex();
+                gap: 10px;
+                align-items: center;
+                justify-content: center;
                 margin: 0;
                 align-items: center;
+                line-height: 1;
+                padding: 15px 25px;
+                height: auto;
+                border-radius: 30px;
 
-                .adfy-wishlist-icon {
+                .el-radio__label {
+
+                    display: inline-flex;
+                    line-height: 1;
+                    margin: 0;
+                    padding: 0;
+
+                    svg {
+
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 20px;
+                        height: 20px;
+                        line-height: 1;
+                    }
+
+                    .adfy-wishlist-icon {
                     
-                    font-size: 14px;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 18px;
+                    }
                 }
             }
 		}

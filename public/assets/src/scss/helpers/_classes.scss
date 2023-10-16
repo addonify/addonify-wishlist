@@ -41,22 +41,22 @@
 
 #addonify-wishlist-notice {
 
-   position: relative;
+   	position: relative;
 
- > p {
+ 	> p {
 
-	position: relative;
-	display: block;
-	color: var(--adfy_wishlist_product_removed_notice_text_color);
-    padding: 15px 20px;
-    margin-bottom: 30px;
-	font-size: var(--adfy_wishlist_product_removed_notice_font_size);
-	font-weight: normal;
-    overflow: hidden;
-	border-radius: 3px;
-	background-color: var(--adfy_wishlist_product_removed_notice_bg_color);
+		position: relative;
+		display: block;
+		color: var(--adfy_wishlist_product_removed_notice_text_color);
+		padding: 15px 20px;
+		margin-bottom: 30px;
+		font-size: var(--adfy_wishlist_product_removed_notice_font_size);
+		font-weight: normal;
+		overflow: hidden;
+		border-radius: 3px;
+		background-color: var(--adfy_wishlist_product_removed_notice_bg_color);
 
-    #addonify-wishlist-undo-deleted-product-link {
+		#addonify-wishlist-undo-deleted-product-link {
 
 		display: inline-flex;
 		align-items: center;
@@ -73,14 +73,14 @@
 		background-color: var(--adfy_wishlist_product_removed_notice_undo_btn_bg_color);
 		@include transition_delay();
 
-		&:hover {
+			&:hover {
 
-			color: var(--adfy_wishlist_product_removed_notice_undo_btn_hover_text_color);
-			background-color: var(--adfy_wishlist_product_removed_notice_undo_btn_hover_bg_color);
-			text-decoration: none;
+				color: var(--adfy_wishlist_product_removed_notice_undo_btn_hover_text_color);
+				background-color: var(--adfy_wishlist_product_removed_notice_undo_btn_hover_bg_color);
+				text-decoration: none;
+			}
 		}
-    }
-  }
+  	}
 }
 
 #addonify-wishlist-empty {

@@ -3,12 +3,12 @@ import Icon from "@components/core/Icon.vue";
 const { __ } = wp.i18n;
 </script>
 <template>
-	<section id="adfy-hero">
+	<section class="adfy-hero">
 		<div class="content">
 			<h3 class="hero-title">
 				{{
 					__(
-						"Do you have a problem? Help is only a mouse click away!",
+						"Need help? We are just a click away. Create a ticket.",
 						"addonify-wishlist"
 					)
 				}}

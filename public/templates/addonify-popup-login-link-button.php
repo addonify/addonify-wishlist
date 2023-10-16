@@ -11,7 +11,13 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
+
 ?>
-<a class="adfy-wishlist-btn-link addonify-goto-login-btn" href="<?php echo esc_url( $redirect_url ); ?>">
-	<?php echo esc_html( $login_button_label ); ?>
-</a>
+<div class="addonify-wishlist-modal-btns">
+	<a
+		class="adfy-wishlist-btn-link addonify-goto-login-btn"
+		href="<?php echo esc_url( $redirect_url ); ?>"
+	>
+		<?php echo esc_html( $login_button_label ); ?>
+	</a>
+</div>

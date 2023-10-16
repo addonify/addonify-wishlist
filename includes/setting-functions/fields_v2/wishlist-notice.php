@@ -76,28 +76,28 @@ if ( ! function_exists( 'addonify_wishlist_notice_options' ) ) {
 				'title'        => __( 'Notice Color Options', 'addonify-wishlist' ),
 				'type'         => 'sub_section',
 				'sub_sections' => array(
-					'notice_background_color' => array(
+					'notice_background_color'            => array(
 						'type'          => 'color',
 						'label'         => __( 'Background color', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'notice_background_color' ),
 					),
-					'notice_text_color'       => array(
+					'notice_text_color'                  => array(
 						'type'          => 'color',
 						'label'         => __( 'Text color', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'notice_text_color' ),
 					),
-					'undo_button_label_color'       => array(
+					'undo_button_label_color'            => array(
 						'type'          => 'color',
 						'label'         => __( 'Undo button label color', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'undo_button_label_color' ),
 					),
-					'undo_button_label_color_hover'       => array(
+					'undo_button_label_color_hover'      => array(
 						'type'          => 'color',
 						'label'         => __( 'Undo button label color on hover', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,
@@ -111,7 +111,7 @@ if ( ! function_exists( 'addonify_wishlist_notice_options' ) ) {
 						'className'     => '',
 						'value'         => addonify_wishlist_get_option( 'undo_button_background_color' ),
 					),
-					'undo_button_background_color_hover'       => array(
+					'undo_button_background_color_hover' => array(
 						'type'          => 'color',
 						'label'         => __( 'Undo button background color on hover', 'addonify-wishlist' ),
 						'isAlphaPicker' => true,

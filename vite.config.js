@@ -1,9 +1,11 @@
+import { resolve } from "path";
+
 import create_config from "@kucrut/vite-for-wp";
 import vue from "@vitejs/plugin-vue";
+
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-import { resolve } from "path";
 
 export default create_config("admin/app/src/main.js", "admin/app/dist", {
 	plugins: [
@@ -26,6 +28,10 @@ export default create_config("admin/app/src/main.js", "admin/app/dist", {
 			"@views": resolve(__dirname, "./admin/app/src/views"),
 			"@utilities": resolve(__dirname, "./admin/app/src/utilities"),
 			"@helpers": resolve(__dirname, "./admin/app/src/helpers"),
+			"@types": resolve(__dirname, "./admin/app/src/types"),
 		},
 	},
+	build: {
+		sourcemap: false, // disable sourcemap in build.
+	}
 });

@@ -28,34 +28,17 @@ class Addonify_Wishlist_Activator {
 	 */
 	public static function activate() {
 
-		global $addonify_wishlist;
-		$addonify_wishlist->create_table();
-		$wishlist_data = get_user_meta( get_current_user_id(), 'addonify-wishlist', true );
-		if ( ! empty( $wishlist_data ) ) {
-			$wishlist_data = json_decode( $wishlist_data, true );
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-database-handler.php';
 
-			foreach ( $wishlist_data as $index => $row ) {
-				$insert_data = array();
+		$database_handler = new Addonify_Wishlist_Database_Handler();
 
-				$insert_data['site_url']            = $index;
-				$insert_data['user_id']             = get_current_user_id();
-				$insert_data['wishlist_name']       = array_key_first( $row );
-				$insert_data['wishlist_visibility'] = 'public';
+		$wishlist_table_exists = $database_handler->check_wishlist_table_exists();
 
-				$wishlist_id = $addonify_wishlist->insert_row( $insert_data );
+		if ( ! $wishlist_table_exists ) {
 
-				$wishlist_single_data = (array) $row[ array_key_first( $row ) ];
-				if ( $wishlist_id && ! empty( $wishlist_single_data['products'] ) ) {
-					$insert_data = array();
-					foreach ( $wishlist_single_data['products'] as $i => $product_id ) {
-						$insert_data[ $i ]['site_url']           = $index;
-						$insert_data[ $i ]['user_id']            = get_current_user_id();
-						$insert_data[ $i ]['product_id']         = $product_id;
-						$insert_data[ $i ]['parent_wishlist_id'] = $wishlist_id;
-					}
-					$addonify_wishlist->insert_multiple_rows( $insert_data );
-				}
-			}
+			$database_handler->create_table();
+
+			$database_handler->migrate_wishlist_data();
 		}
 
 		self::create_wishlist_page();

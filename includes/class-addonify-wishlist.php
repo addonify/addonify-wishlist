@@ -57,6 +57,24 @@ class Addonify_Wishlist {
 	protected $version;
 
 	/**
+	 * True if wishlist table exists. Else false.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    True if wishlist table exists. Else false.
+	 */
+	protected $wishlist_table_exists = false;
+
+	/**
+	 * The wishlist database handler object.
+	 *
+	 * @since    2.0.6
+	 * @access   private
+	 * @var      object    $database_handler    The wishlist database handler object.
+	 */
+	protected $database_handler;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -66,11 +84,13 @@ class Addonify_Wishlist {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+
 		if ( defined( 'ADDONIFY_WISHLIST_VERSION' ) ) {
 			$this->version = ADDONIFY_WISHLIST_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
+
 		$this->plugin_name = 'addonify-wishlist';
 
 		$this->load_dependencies();
@@ -98,12 +118,9 @@ class Addonify_Wishlist {
 	 */
 	private function load_dependencies() {
 
-		/**
-		 * Wishlist Database functions.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/db/class-wishlist.php';
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-database-handler.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-adfy-wishlist.php';
+		$database_handler = new Addonify_Wishlist_Database_Handler();
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
@@ -117,23 +134,33 @@ class Addonify_Wishlist {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-i18n.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-user-meta-functions.php';
+
+		$this->wishlist_table_exists = $database_handler->check_wishlist_table_exists();
+
+		if ( $this->wishlist_table_exists ) {
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-handler.php';
+		}
+
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-addonify-wishlist-admin.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/settings-v2.php';
-
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/helpers.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/setting-functions/settings-v2.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-rest-api.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-functions.php';
+		if ( $this->wishlist_table_exists ) {
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-hooks.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
 
-		global $addonify_wishlist;
-		if ( $addonify_wishlist->check_wishlist_table_exists() ) {
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-functions.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-template-hooks.php';
 
 			/**
 			 * The class responsible for defining all actions that occur in the public-facing
@@ -141,11 +168,16 @@ class Addonify_Wishlist {
 			 */
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public.php';
 
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/guest-ajax-callbacks.php';
 		} else {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public-deprecated.php';
 
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-helper-functions-deprecated.php';
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/deprecated/addonify-wishlist-helper-functions-deprecated.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/deprecated/addonify-wishlist-template-functions-deprecated.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/deprecated/addonify-wishlist-template-hooks-deprecated.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-addonify-wishlist-public-deprecated.php';
 		}
 
 		/**
@@ -183,7 +215,27 @@ class Addonify_Wishlist {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Addonify_Wishlist_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Addonify_Wishlist_Admin(
+			$this->get_plugin_name(),
+			$this->get_version()
+		);
+
+		if ( ! $this->wishlist_table_exists ) {
+			$this->loader->add_action( 'admin_notices', $plugin_admin, 'maybe_show_insert_table_notice' );
+		}
+
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'maybe_show_table_created_message' );
+
+		// Display review message on certain time interval if not already reviewed.
+		if ( ! get_transient( 'addonify_wishlist_ask_for_review_transient' ) ) {
+			$review_status = get_option( 'addonify_wishlist_plugin_review_status' );
+			if ( ! $review_status ) {
+				update_option( 'addonify_wishlist_plugin_review_status', 'later' );
+				set_transient( 'addonify_wishlist_ask_for_review_transient', '1', 3 * DAY_IN_SECONDS );
+			} elseif ( 'reviewed' !== $review_status ) {
+				$this->loader->add_action( 'admin_notices', $plugin_admin, 'show_add_a_review_notice' );
+			}
+		}
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 
@@ -198,28 +250,12 @@ class Addonify_Wishlist {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_callback', 20 );
 
 		// custom link in plugins.php page in wp-admin.
-		$this->loader->add_action( 'plugin_action_links', $plugin_admin, 'custom_plugin_link_callback', 10, 2 );
+		$this->loader->add_filter( 'plugin_action_links_' . ADDONIFY_WISHLIST_BASENAME, $plugin_admin, 'plugin_action_links', 10, 2 );
 
-		// show notice if woocommerce is not active.
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'show_woocommerce_not_active_notice_callback' );
-
-		// show migrate data to new table notice if table not created.
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'maybe_show_insert_table_notice' );
+		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_row_meta', 10, 2 );
 
 		// add custom post status "Addonify Wishlist Page" after page name.
 		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'display_custom_post_states_after_page_title', 10, 2 );
-
-		// display review message on certain time interval if not already reviewed.
-		if ( ! get_transient( 'addonify_wishlist_ask_for_review_transient' ) ) {
-			$review_status = get_option( 'addonify_wishlist_plugin_review_status' );
-			if ( ! $review_status ) {
-				update_option( 'addonify_wishlist_plugin_review_status', 'later' );
-				set_transient( 'addonify_wishlist_ask_for_review_transient', '1', 3 * DAY_IN_SECONDS );
-			} elseif ( 'reviewed' !== $review_status ) {
-				$this->loader->add_action( 'admin_init', $plugin_admin, 'show_add_a_review_notice' );
-			}
-		}
-
 	}
 
 	/**
@@ -241,14 +277,21 @@ class Addonify_Wishlist {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-		global $addonify_wishlist;
-		if ( $addonify_wishlist->check_wishlist_table_exists() ) {
+
+		if ( $this->wishlist_table_exists ) {
+
 			$plugin_public = new Addonify_Wishlist_Public( $this->get_plugin_name(), $this->get_version() );
+
+			$this->loader->add_action( 'wp_login', $plugin_public, 'maybe_create_and_migrate_wishlist_data', 10, 2 );
+
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts', 15 );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles', 15 );
+
+			$this->loader->add_action( 'init', $plugin_public, 'public_init' );
 		} else {
 			$plugin_public = new Addonify_Wishlist_Public_Deprecated( $this->get_plugin_name(), $this->get_version() );
+			$this->loader->add_action( 'init', $plugin_public, 'public_init' );
 		}
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_public, 'public_init' );
 	}
 
 	/**
@@ -312,9 +355,10 @@ class Addonify_Wishlist {
 		) {
 			foreach ( $options['plugins'] as $each_plugin ) {
 				if ( $each_plugin === $current_plugin_path_name ) {
-					global $addonify_wishlist;
-					$addonify_wishlist->create_table();
-					$addonify_wishlist->migrate_wishlist_data();
+					$database_handler = new Addonify_Wishlist_Database_Handler();
+
+					$database_handler->create_table();
+					$database_handler->migrate_wishlist_data();
 				}
 			}
 		}

@@ -11,7 +11,7 @@ export const jsonFileName: string = "addonify_wishlist";
 /**
  *
  * Get the current version of the plugin.
- * We are receiving the value of locolized variable.
+ * We are receiving the value of localized variable.
  *
  * @since 2.0.0
  */
@@ -21,7 +21,7 @@ export const currentVersion = addonify_wishlist_localizer.version_number;
 
 /**
  *
- * Advertise upsell in plugin setting page.
+ * Advertise up-sell in plugin setting page.
  *
  * @options {boolean} true | false
  * @since 2.0.0

@@ -20,6 +20,6 @@
 		"admin/app/src/**/*.tsx",
 		"admin/app/src/**/*.vue",
 		"admin/app/src/stores/products.js"
-	],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	]
+	//"references": [{ "path": "./tsconfig.node.json" }]
 }

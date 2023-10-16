@@ -7,10 +7,9 @@ import { computed } from "vue";
  *
  * @since: 2.0.0
  */
-
 const props = defineProps({
 	modelValue: {
-		type: String,
+		type: [Boolean, String],
 		required: true,
 	},
 	choices: {

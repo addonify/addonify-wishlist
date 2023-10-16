@@ -11,18 +11,19 @@
 
 // direct access is disabled.
 defined( 'ABSPATH' ) || exit;
+
 ?>
 <div id="addonify-wishlist-sticky-sidebar-overlay"></div>
 <div id="addonify-wishlist-sticky-sidebar-container" class="<?php echo esc_attr( $css_class ); ?>">
 	<?php do_action( 'addonify_wishlist_after_sidebar_opening_tag' ); ?>
 	<div class="addonify-wishlist-ssc-body">
 		<div class="addonify-wishlist-scs-header">
-			<h3 class="adfy-wishlist-sidebar-title">
+			<h3 id="addonify-wishlist-title" class="adfy-wishlist-sidebar-title">
 				<?php echo esc_html( $title ); ?>
 			</h3>
+			<?php do_action( 'addonify_wishlist_after_sidebar_title' ); ?>
 			<button id="close-adfy-wishlist-sidebar-button" class="button">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-				</svg>
+				<?php echo addonify_wishlist_escape_svg( addonify_wishlist_get_wishlist_icons( 'close-2' ) ); // phpcs:ignore ?>
 			</button>
 		</div>
 
@@ -31,15 +32,8 @@ defined( 'ABSPATH' ) || exit;
 		<form action="" method="POST" id="addonify-wishlist-sidebar-form">
 			<?php do_action( 'addonify_wishlist_before_wishlist_form_table' ); ?>
 			<div id="addonify-wishlist-sidebar-items-wrapper">
-				<ul class="adfy-wishlist-sidebar-items-entry">
-					<?php do_action( 'addonify_wishlist_render_sidebar_loop', $product_ids ); ?>
-				</ul>
+				<?php do_action( 'addonify_wishlist_render_sidebar_loop', $product_ids ); ?>
 			</div>
-			<?php if ( empty( $product_ids ) && $total_items < 1 ) : ?>
-			<p id="addonify-empty-wishlist-para" class="empty-wishlist">
-				<?php echo esc_html__( 'Your wishlist is empty', 'addonify-wishlist' ); ?>
-			</p>
-			<?php endif; ?>
 			<?php do_action( 'addonify_wishlist_after_wishlist_form_table' ); ?>
 		</form>
 	</div>
@@ -47,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 	if ( $view_wishlist_page_button_label ) {
 		?>
 		<div class="addonify-wishlist-ssc-footer">
-			<a href="<?php echo esc_url( $wishlist_url ); ?>" class="addonify-wishlist-goto-wishlist-btn">
+			<a id="addonify-wishlist-wishlist-page-link" href="<?php echo esc_url( $wishlist_url ); ?>" class="addonify-wishlist-goto-wishlist-btn">
 				<?php echo esc_html( $view_wishlist_page_button_label ); ?>
 				<span class="icon">
 					<svg viewBox="0 0 64 64" xml:space="preserve">

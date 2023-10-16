@@ -38,19 +38,16 @@ export const useProductStore = defineStore({
 	}),
 
 	getters: {
-
 		/**
 		 * 
 		 * This getter returns the state of the store.
 		 * Used to indicate the product page loading state. 
 		 *
-		 * @param {*} state 
-		 * @returns {boolean} boolean
+		 * @param {Object} state 
+		 * @return {boolean} boolean
 		 * @since 2.0.0
 		 */
 		isLoading: (state) => {
-
-
 			/**
 			 * 
 			 * Get settings store.
@@ -92,7 +89,7 @@ export const useProductStore = defineStore({
 					* Case: Success!
 					* We have the list of recommended plugins.
 					*/
-					console.log("💥 Github repo fetched successfully.");
+					console.log("✅ Success: Github repo fetched successfully!");
 					this.processRecommendedPluginsList(data);
 					this.status.isFetching = false;
 
@@ -112,6 +109,8 @@ export const useProductStore = defineStore({
 						duration: 10000,
 					});
 				}
+
+				return res;
 
 			} catch (err) {
 
@@ -242,7 +241,7 @@ export const useProductStore = defineStore({
 
 			if (typeof this.installedAddons == 'object' && this.installedAddons.length > 0) {
 
-				console.log("=> Setting the status of the addon.");
+				console.log("=> Setting the status of the addon....");
 				//console.log(slugs);
 
 				slugs.forEach((slug) => {
@@ -265,7 +264,7 @@ export const useProductStore = defineStore({
 				console.log("=> Bailing!!! The installed addons list is empty.");
 			}
 
-			console.log("💥 Done setting the status of the addon.");
+			console.log("✅ Success: All done, setting addon status completed!");
 			// Done setting the status till here. Let's set the flag to false.
 			this.status.isSettingAddonStatus = false;
 		},

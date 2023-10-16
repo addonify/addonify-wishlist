@@ -1,0 +1,5 @@
+#addonify-wishlist-app {
+    
+    @include better_font_rendering();
+    font-family: var(--addonify_base_font_family);
+}

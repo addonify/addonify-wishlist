@@ -9,11 +9,8 @@
     * Button colors
     *
     */ 
-
     --adfy_wishlist_wishlist_btn_text_color: white;
     --adfy_wishlist_wishlist_btn_icon_color: white;
-    --adfy_wishlist_wishlist_btn_text_color_hover: white;
-    --adfy_wishlist_wishlist_btn_icon_color_hover: white;
     --adfy_wishlist_wishlist_btn_bg_color: #444444;
     --adfy_wishlist_wishlist_btn_bg_color_hover: #2274FB;
 
@@ -22,7 +19,6 @@
     * Model colors
     *
     */ 
-
     --adfy_wishlist_popup_modal_bg_color: white;
     --adfy_wishlist_popup_modal_overlay_bg_color: rgba(0, 0, 0, 0.8);
     --adfy_wishlist_popup_modal_icon_color: #7E7E7E;
@@ -33,6 +29,12 @@
     --adfy_wishlist_popup_modal_btn_bg_color_hover: #2274FB;
     --adfy_wishlist_popup_modal_close_btn_icon_color: #444444;
     --adfy_wishlist_popup_modal_close_btn_icon_color_hover: #2274FB;
+
+    // Icon colors
+    --adfy_wishlist_success_icon_color: #38A104;
+    --adfy_wishlist_error_icon_color: #FF0000;
+    --adfy_wishlist_warning_icon_color: #FFC107;
+    --adfy_wishlist_info_icon_color: #2196F3;
 
 
     /**
@@ -86,12 +88,14 @@
     --adfy_wishlist_product_removed_notice_undo_btn_text_color: #004D90;
     --adfy_wishlist_product_removed_notice_undo_btn_hover_text_color: #01447F;
 
+    --adfy_wishlist_sidebar_modal_spinner_bg_color: rgba(255, 255, 255, 0.8);
+    --adfy_wishlist_sidebar_modal_spinner_icon_color: #444444;
+
     /**
     *
     * General border color
     *
     */ 
-
     --adfy_wishlist_border_color: #F5F5F5;
 
     /**
@@ -99,17 +103,15 @@
     * z-index values
     *
     */ 
-
     --adfy_wishlist_popup_modal_zindex: 1000000000000000;
     --adfy_wishlist_sidebar_overlay_zindex: 10000000000000000;
     --adfy_wishlist_sidebar_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) + 10 );
-    --adfy_wishlist_sidebar_trigger_button_zindex: calc( var(--adfy_wishlist_sidebar_overlay_zindex) - 1 );
 
     /**
     *
     * Position offset
     *
     */ 
-
     --adfy_wishlist_sidebar_btn_position_offset: -40;
+    
 }

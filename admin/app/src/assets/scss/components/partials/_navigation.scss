@@ -31,7 +31,7 @@
                 box-shadow: none;
                 border-top-left-radius: 8px;
                 border-bottom-left-radius: 8px;
-                @include transition_delay();
+                @include transition();
 
                 &:hover {
 

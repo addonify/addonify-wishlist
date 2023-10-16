@@ -10,7 +10,7 @@
  * Plugin Name:       Addonify - WooCommerce Wishlist
  * Plugin URI:        https://wordpress.org/plugins/addonify-wishlist
  * Description:       Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wishlist functionality to your e-commerce shop.
- * Version:           2.0.5
+ * Version:           2.0.6
  * Requires at least: 5.9
  * Requires PHP:      7.4
  * Author:            Addonify
@@ -26,10 +26,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'ADDONIFY_WISHLIST_VERSION', '2.0.5' );
+define( 'ADDONIFY_WISHLIST_VERSION', '2.0.6' );
 define( 'ADDONIFY_WISHLIST_DB_INITIALS', 'addonify_wishlist_' );
 define( 'ADDONIFY_WISHLIST_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'ADDONIFY_WISHLIST_PLUGIN_FILE', __FILE__ );
+define( 'ADDONIFY_WISHLIST_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
  * The code that runs during plugin activation.
@@ -62,7 +63,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-addonify-wishlist.php';
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 require_once plugin_dir_path( __FILE__ ) . 'admin/app.php';
 
-
 /**
  * Begins execution of the plugin.
  *
@@ -74,9 +74,24 @@ require_once plugin_dir_path( __FILE__ ) . 'admin/app.php';
  */
 function run_addonify_wishlist() {
 
-	$plugin = new Addonify_Wishlist();
-	$plugin->run();
-
+	if ( class_exists( 'WooCommerce' ) ) {
+		$plugin = new Addonify_Wishlist();
+		$plugin->run();
+	} else {
+		add_action(
+			'admin_notices',
+			function() {
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p>
+						<?php
+						echo wp_kses_post( __( '<b>Addonify WooCommerce Wishlist</b>  plugin is enabled but not functional. <b>WooCommerce</b> is required for it to work properly.', 'addonify-wishlist' ) );
+						?>
+					</p>
+				</div>
+				<?php
+			}
+		);
+	}
 }
-
-run_addonify_wishlist();
+add_action( 'plugins_loaded', 'run_addonify_wishlist' );

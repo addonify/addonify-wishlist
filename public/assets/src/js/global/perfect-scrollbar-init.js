@@ -3,33 +3,34 @@
 const helpers = {
 
     /**
-    *
     * Init perfect scrollbar.
     * 
+    * @returns {void} void.
     * @since 2.0.0
     */
 
     addonifyPerfectScrollBar: () => {
 
-        const wishlistSidebarScrollableEle = document.getElementById('addonify-wishlist-sidebar-form');
+        if (typeof PerfectScrollbar === 'function') {
 
-        if (wishlistSidebarScrollableEle) {
+            const wishlistSidebarScrollableEle = document.getElementById('addonify-wishlist-sidebar-form');
 
-            new PerfectScrollbar(wishlistSidebarScrollableEle, {
+            if (wishlistSidebarScrollableEle) {
 
-                wheelSpeed: 1,
-                wheelPropagation: true,
-                minScrollbarLength: 20
-            });
+                new PerfectScrollbar(wishlistSidebarScrollableEle, {
+
+                    wheelSpeed: 1,
+                    wheelPropagation: true,
+                    minScrollbarLength: 20
+                });
+            }
         }
     }
 }
 
 /**
-*
-* DOMContentLoaded event.
+* 'DOMContentLoaded' event.
 * 
 * @since 2.0.0
 */
-
 document.addEventListener("DOMContentLoaded", helpers.addonifyPerfectScrollBar());

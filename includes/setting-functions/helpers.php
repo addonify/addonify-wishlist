@@ -104,15 +104,22 @@ if ( ! function_exists( 'addonify_wishlist_get_sidebar_icons' ) ) {
 	function addonify_wishlist_get_sidebar_icons() {
 
 		return apply_filters(
-			'addonify_wishlist_sidebar_icons',
+			'addonify_wishlist_sidebar_toggle_button_icons',
 			array(
-				'heart-style-one'     => '<i class="adfy-wishlist-icon heart-style-one"></i>',
-				'heart-o-style-one'   => '<i class="adfy-wishlist-icon heart-o-style-one"></i>',
-				'heart-o-style-three' => '<i class="adfy-wishlist-icon heart-o-style-three"></i>',
-				'flash'               => '<i class="adfy-wishlist-icon flash"></i>',
-				'eye'                 => '<i class="adfy-wishlist-icon eye"></i>',
-				'loader'              => '<i class="adfy-wishlist-icon loader"></i>',
-				'settings'            => '<i class="adfy-wishlist-icon settings"></i>',
+				'heart-1'   => addonify_wishlist_get_wishlist_icons( 'heart-1' ),
+				'heart-2'   => addonify_wishlist_get_wishlist_icons( 'heart-2' ),
+				'heart-3'   => addonify_wishlist_get_wishlist_icons( 'heart-3' ),
+				'heart-4'   => addonify_wishlist_get_wishlist_icons( 'heart-4' ),
+				'heart-5'   => addonify_wishlist_get_wishlist_icons( 'heart-5' ),
+				'heart-6'   => addonify_wishlist_get_wishlist_icons( 'heart-6' ),
+				'gear-1'    => addonify_wishlist_get_wishlist_icons( 'gear-1' ),
+				'gear-2'    => addonify_wishlist_get_wishlist_icons( 'gear-2' ),
+				'spinner-1' => addonify_wishlist_get_wishlist_icons( 'spinner-1' ),
+				'spinner-2' => addonify_wishlist_get_wishlist_icons( 'spinner-2' ),
+				'bolt-1'    => addonify_wishlist_get_wishlist_icons( 'bolt-1' ),
+				'bolt-2'    => addonify_wishlist_get_wishlist_icons( 'bolt-2' ),
+				'eye-1'     => addonify_wishlist_get_wishlist_icons( 'eye-1' ),
+				'eye-2'     => addonify_wishlist_get_wishlist_icons( 'eye-2' ),
 			)
 		);
 	}
