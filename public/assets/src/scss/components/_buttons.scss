@@ -176,6 +176,11 @@ p.adfy-wishlist-btn .button,
         color: var(--adfy_wishlist_wishlist_btn_text_color_hover);
         background-color: var(--adfy_wishlist_wishlist_btn_bg_color_hover);
     }
+
+    &.adfy-icon-before-label {
+
+        flex-direction: row-reverse;
+    }
 }
 
 .addonify-wishlist-add-to-cart .button,
