@@ -11,7 +11,7 @@ export const jsonFileName: string = "addonify_wishlist";
 /**
  *
  * Get the current version of the plugin.
- * We are receiving the value of locolized variable.
+ * We are receiving the value of localized variable.
  *
  * @since 2.0.0
  */

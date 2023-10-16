@@ -13,7 +13,7 @@ Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wi
 
 == Description ==
 
-Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functionality to your e-commerce shop. Addonify Wishlist is packed with various functionalities that will help the shop owner to customize the wishlist behaviour. 
+Addonify Wishlist is a light-weight yet powerful tool that adds wishlist functionality to your e-commerce shop. Addonify Wishlist is packed with various functionalities that will help the shop owner to customize the wishlist behavior. 
 
 👉 [Live demo preview](https://demo.addonify.com/woo/01/wishlist/) 
 👉 [Documentation guide](https://docs.addonify.com/kb/woocommerce-wishlist/) 
@@ -25,7 +25,7 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 💰 *Not using a wishlist plugin yet? Let's start using it today. Addonify Wishlist is **FREE** & it will remain **free forever.*** Start using Addonify Wishlist today and increase your online store conversion.
 
 
-#### 🔔 BENIFITS & IMPORTANCE OF HAVING WISHLIST FUNCTIONALITY
+#### 🔔 BENEFITS & IMPORTANCE OF HAVING WISHLIST FUNCTIONALITY
 
 - Saves customers time (Assume that you are having 1500+ products in your e-commerce store).
 - Helps to boost revenue. 
@@ -40,7 +40,7 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Choose the position of "Add to Wishlist" button in WooCommerce product catalog.
 - Set custom "Add to Wishlist" button label.
 - Show/Hide icon on wishlist button.
-- Allow only logged-in users to add product in wishist.
+- Allow only logged-in users to add product in wishlist.
 - Display modal popup to let your customers know the product is either added to, removed from, or already in the wishlist.
 - Sticky off-canvas sidebar drawer to show the wishlist.
 - Display wishlist items in sidebar drawer for quick navigation.
@@ -75,12 +75,12 @@ The primary goal of the Addonify Wishlist plugin is to allow website visitors to
 - Reset all settings: This tool will reset all the plugin settings to default.
 - Export all settings: This tool will export all the plugin settings in a JSON file.
 - Import all settings: This tool will import all the plugin settings from a JSON file.
-- Remove data on plugin uninstallation: This tool will remove all the plugin data from the database on plugin uninstallation.
+- Remove data on plugin un-installation: This tool will remove all the plugin data from the database on plugin un-installation.
 
 
 #### 🔐 GDPR COMPLIANT
 
-Addonify Wishlist does not collect any personal or sensative data from website visitors which makes our plugin GDPR compliant.
+Addonify Wishlist does not collect any personal or sensitive data from website visitors which makes our plugin GDPR compliant.
 
 
 #### ⚔️ DEVELOPER
@@ -98,7 +98,7 @@ We are open to any kind of discussions on that can help improve our plugin. So, 
 
 ####  🎭 TRANSLATION GUIDELINES
 
-If you wish Addonify Wishist to be translated in your language, feel free to contribute translating at [*transalte.wordpress.org*](https://translate.wordpress.org/projects/wp-plugins/addonify-wishlist) directly.
+If you wish Addonify Wishlist to be translated in your language, feel free to contribute translating at [*translate.wordpress.org*](https://translate.wordpress.org/projects/wp-plugins/addonify-wishlist) directly.
 
 
 == Frequently Asked Questions ==
@@ -135,14 +135,14 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 5. Add to wishlist button in product catalog.
 6. Addonify wishlist canvas sidebar.
 7. Addonify wishlist page table.
-8. Add to wishist button in product single page.
+8. Add to wishlist button in product single page.
 9. Save for later (Add to wishlist) button in cart page.
 
 == Changelog ==
 
 = 2.0.6 - 16 October, 2023 =
 
-- Added:   Confirmation modal when trying to empty wishist and new options for popup notice's messages.
+- Added:   Confirmation modal when trying to empty wishlist and new options for popup notice's messages.
 - Added:   Documentation link, GitHub link, and support link to the plugin row in plugins list table.
 - Added:   Deprecated files are renamed with suffix, `deprecated`, and are moved to folders named `deprecated`.
 - Updated: Optimized database query and avoided duplicate queries.
@@ -205,8 +205,8 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 = 1.1.3 - 03 March, 2023 =
 
-- Updated : UDP updated.
-- Added : Shortcode for 'add-to-wishist' button.
+- Updated: UDP updated.
+- Added: Shortcode for 'add-to-wishlist' button.
 - Updated: Undo remove from wishlist action. Add undo notice timeout time option, action text, and undo link label.
 - Updated: For 0 value of the setting, Save Wishlist Cookie for [x] days, wishlist data remains forever.
 - Added: Option for icon position on Add to Wishlist button.
@@ -218,10 +218,10 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 = 1.1.2 - 22 February , 2023 =
 
 - Added: Clear Wishlist button in wishlist shortcode content for removing all items in wishlist.
-- Added: JavaScript function for getting wishlist items while handelling from client side (Not logged-in).
-- Update: Multisite Data stored in same array.
+- Added: JavaScript function for getting wishlist items while handling from client side (Not logged-in).
+- Update: Multi-site Data stored in same array.
 - Added: Spinner for clear wishlist data.
-- Fixed: Data removed from all sites in multisite on clear all button action.
+- Fixed: Data removed from all sites in multi-site on clear all button action.
 - Fixed: Wishlist icon and view wishlist button showing on add to cart in wishlist page.
 - Update: User wishlist saved as an array with created and updated time.
 - Update: Option to remove product from wishlist on clicking on add to wishlist button if already in wishlist.
@@ -233,7 +233,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Added: Option to import all settings.
 - Added: User Data Processing. Ref: https://creamcode.org/user-data-processing/
 - Added: Spinner on wishlist page.
-- Tweak: Now saving wishlist data in browser local strorage if the user is not logged-in.
+- Tweak: Now saving wishlist data in browser local storage if the user is not logged-in.
 - Removed: Default behavior from "After Add to Wishlist Action" option on settings page.
 - Updated: Removed custom add to cart button from wishlist table and added WooCommerce default button.
 - Removed: Unwanted settings.
@@ -284,12 +284,12 @@ Improvement: Color picker in settings page.
 
 - Fixed: Author name typo.
 - Updated: Cookie includes last_updated and wishlist_items fields.
-- Updated: Wishlist data is json ecoded and decoded to save and retrive respectively.
+- Updated: Wishlist data is json encoded and decoded to save and retrieve respectively.
 
 
 = 1.0.2 - 12 July 2022 =
 
-- New: Added graphics for wordpress.org pugin landing page.
+- New: Added graphics for wordpress.org plugin landing page.
 
 = 1.0.1 - 11 July 2022 =
 
