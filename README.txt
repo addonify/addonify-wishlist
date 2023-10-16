@@ -3,7 +3,7 @@
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
-Tested up to: 6.2.3
+Tested up to: 6.3.2
 Stable tag: 2.0.6
 Requires PHP: 7.4
 License: GPLv2 or later
@@ -153,7 +153,7 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 - Fixed:   Color picker cursor issue (Vue JS).
 - Tweak:   Changed DIR for Inter & Manrope fonts files. Now, Using NPM package to install Inter & Manrope fonts.
 - Removed: Wishlist button icon color options.
-- Tested:  WordPress v6.2.3
+- Tested:  WordPress 6.3.2
 - Tested:  WooCommerce 8.2.0
 
 = 2.0.5 - 29 June, 2023 =
