@@ -118,10 +118,6 @@ class Addonify_Wishlist {
 	 */
 	private function load_dependencies() {
 
-		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-database-handler.php';
-
-		$database_handler = new Addonify_Wishlist_Database_Handler();
-
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
@@ -135,6 +131,10 @@ class Addonify_Wishlist {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-i18n.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-user-meta-functions.php';
+
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-database-handler.php';
+
+		$database_handler = new Addonify_Wishlist_Database_Handler();
 
 		$this->wishlist_table_exists = $database_handler->check_wishlist_table_exists();
 
