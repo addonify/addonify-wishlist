@@ -28,6 +28,8 @@ class Addonify_Wishlist_Activator {
 	 */
 	public static function activate() {
 
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/addonify-wishlist-user-meta-functions.php';
+
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-database-handler.php';
 
 		$database_handler = new Addonify_Wishlist_Database_Handler();
