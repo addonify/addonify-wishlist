@@ -3,8 +3,8 @@
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, woocommerce, ecommerce, e-commerce
 Requires at least: 5.9
-Tested up to: 6.3.2
-Stable tag: 2.0.7
+Tested up to: 6.4.0
+Stable tag: 2.0.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -140,26 +140,31 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 2.0.8 - 09 November, 2023 =
+
+- Tested: WordPress v6.4.0
+- Tested: WooCommerce v8.2.2
+
 = 2.0.7 - 18 October, 2023 =
 
-- Fix:    PHP error while activating the plugin.
+- Fix: PHP error while activating the plugin.
 - Tested: WooCommerce 8.2.1
 
 = 2.0.6 - 16 October, 2023 =
 
-- Added:   Confirmation modal when trying to empty wishlist and new options for popup notice's messages.
-- Added:   Documentation link, GitHub link, and support link to the plugin row in plugins list table.
-- Added:   Deprecated files are renamed with suffix, `deprecated`, and are moved to folders named `deprecated`.
+- Added: Confirmation modal when trying to empty wishlist and new options for popup notice's messages.
+- Added: Documentation link, GitHub link, and support link to the plugin row in plugins list table.
+- Added: Deprecated files are renamed with suffix, `deprecated`, and are moved to folders named `deprecated`.
 - Updated: Optimized database query and avoided duplicate queries.
 - Updated: Action hooks `addonify_wishlist_before_adding_to_wishlist` and `addonify_wishlist_after_adding_to_wishlist`. Array argument is passed in both action hooks.
 - Updated: Icons.
-- Fixed:   Migration of user wishlist data when updating from version 1.1.3.
-- Fixed:   Plugin setting page link in plugins listing page is displayed before `Deactivate` link.
-- Fixed:   Color picker cursor issue (Vue JS).
-- Tweak:   Changed DIR for Inter & Manrope fonts files. Now, Using NPM package to install Inter & Manrope fonts.
+- Fixed: Migration of user wishlist data when updating from version 1.1.3.
+- Fixed: Plugin setting page link in plugins listing page is displayed before `Deactivate` link.
+- Fixed: Color picker cursor issue (Vue JS).
+- Tweak: Changed DIR for Inter & Manrope fonts files. Now, Using NPM package to install Inter & Manrope fonts.
 - Removed: Wishlist button icon color options.
-- Tested:  WordPress 6.3.2
-- Tested:  WooCommerce 8.2.0
+- Tested: WordPress 6.3.2
+- Tested: WooCommerce 8.2.0
 
 = 2.0.5 - 29 June, 2023 =
 
