@@ -140,6 +140,13 @@ You can use this `[addonify_wishlist]` shortcode to display the wishlist table i
 
 == Changelog ==
 
+= 2.0.9 - ? January, 2024 =
+
+- Fixed: PHP error, `Creation of dynamic property Addonify_Wishlist_Public::$added_to_wishlist_button_label is deprecated`.
+- Added: Loading icon to wishlist button while product is added into the wishlist.
+- Tested: WooCommerce version 8.5.1.
+- Tested: WordPress version 6.4.2.
+
 = 2.0.8 - 09 November, 2023 =
 
 - Tested: WordPress v6.4.0

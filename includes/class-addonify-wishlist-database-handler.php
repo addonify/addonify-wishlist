@@ -141,14 +141,12 @@ class Addonify_Wishlist_Database_Handler {
 	/**
 	 * Seeding wishlist table.
 	 *
-	 * @param int $user_id WP user ID.
-	 *
 	 * @return int|false Returns wishlist row id on success, false otherwise.
 	 */
-	public function seed_wishlist_table( $user_id ) {
+	public function seed_wishlist_table() {
 
 		$insert_data = array(
-			'user_id'             => $user_id,
+			'user_id'             => get_current_user_id(),
 			'site_url'            => get_site_url(),
 			'wishlist_name'       => apply_filters( 'addonify_wishist_default_wishlist_name', esc_html__( 'Default Wishlist', 'addonify-wishlist' ) ),
 			'wishlist_visibility' => 'private',

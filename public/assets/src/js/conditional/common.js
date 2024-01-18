@@ -52,13 +52,19 @@
             wishlistEvents: function () {
 
                 // Displays loader when product is being added into the wishlist.
-                $(document).on('addonify_adding_to_wishlist', function () {
+                $(document).on('addonify_adding_to_wishlist', function (event, data) {
                     initializeAddonifyWishlist.displayLoader();
+                    if (data.thisButton.find('span.adfy-wishlist-btn-icon').length > 0) {
+                        data.thisButton.find('span.adfy-wishlist-btn-icon').html(settings.loadingWishlistButtonIcon);
+                    }
                 });
 
                 // Displays loader when product is being removed from the wishlist.
-                $(document).on('addonify_removing_from_wishlist', function () {
+                $(document).on('addonify_removing_from_wishlist', function (event, data) {
                     initializeAddonifyWishlist.displayLoader();
+                    if (data.thisButton.find('span.adfy-wishlist-btn-icon').length > 0) {
+                        data.thisButton.find('span.adfy-wishlist-btn-icon').html(settings.loadingWishlistButtonIcon);
+                    }
                 });
 
                 // Sets button label and icon for add to wishlist buttons on product added into the cart.
