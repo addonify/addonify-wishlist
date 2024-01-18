@@ -14,6 +14,7 @@
 	id="addonify-wishlist-modal-wrapper"
 	class="{modal_container_classes}"
 	data_model-width="default"
+	data-modal_display="open"
 >
 
 	<?php do_action( 'addonify_wishlist_after_popup_opening_tag' ); ?>

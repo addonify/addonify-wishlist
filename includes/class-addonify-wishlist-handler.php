@@ -18,7 +18,8 @@ class Addonify_Wishlist_Handler {
 	 * Wishlist database handler class object.
 	 *
 	 * @access protected
-	 * @var object $wishlist
+	 *
+	 * @var object $database_handler
 	 */
 	protected $database_handler;
 
@@ -26,9 +27,37 @@ class Addonify_Wishlist_Handler {
 	 * Stores this Object instance.
 	 *
 	 * @access protected
-	 * @var array
+	 *
+	 * @var array $instance
 	 */
 	protected static $instance;
+
+	/**
+	 * Stores current user id.
+	 *
+	 * @access protected
+	 *
+	 * @var int $current_user_id
+	 */
+	protected $current_user_id;
+
+	/**
+	 * Stores current site url.
+	 *
+	 * @access protected
+	 *
+	 * @var string $current_site_url
+	 */
+	protected $current_site_url;
+
+	/**
+	 * Stores user's default wishlist ID.
+	 *
+	 * @access protected
+	 *
+	 * @var string $default_wishlist_id
+	 */
+	protected $default_wishlist_id;
 
 	/**
 	 * Class constructor.
@@ -38,6 +67,10 @@ class Addonify_Wishlist_Handler {
 		$this->database_handler = new Addonify_Wishlist_Database_Handler();
 
 		$this->maybe_generate_share_key();
+
+		$this->current_user_id     = get_current_user_id();
+		$this->current_site_url    = get_site_url();
+		$this->default_wishlist_id = $this->get_default_wishlist_id();
 	}
 
 	/**
@@ -50,6 +83,7 @@ class Addonify_Wishlist_Handler {
 		if ( ! ( is_array( self::$instance ) && array_key_exists( 'instance', self::$instance ) ) ) {
 			self::$instance['instance'] = new Addonify_Wishlist_Handler();
 		}
+
 		return self::$instance['instance'];
 	}
 
@@ -57,15 +91,13 @@ class Addonify_Wishlist_Handler {
 	 * Get all wishlists data associated to a user.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param int $user_id User ID.
 	 */
-	public function get_user_wishlists_data( $user_id = 0 ) {
+	public function get_user_wishlists_data() {
 
 		$query_results = $this->database_handler->get_rows(
 			array(
-				'user_id'  => ( ! $user_id ) ? get_current_user_id() : $user_id,
-				'site_url' => get_site_url(),
+				'user_id'  => $this->current_user_id,
+				'site_url' => $this->current_site_url,
 			)
 		);
 
@@ -100,40 +132,28 @@ class Addonify_Wishlist_Handler {
 			return false;
 		}
 
-		if ( ! $wishlist_id ) {
-			$wishlist_id = $this->get_default_wishlist_id();
+		if ( 0 === $wishlist_id ) {
+			$wishlist_id = $this->default_wishlist_id;
 		}
 
 		// If there is no default wishlist set for a user.
-		if ( ! $wishlist_id ) {
+		if ( 0 === $wishlist_id ) {
 			return false;
 		}
 
 		$return_boolean = false;
 
-		$user_wishlists = $this->get_user_wishlists();
+		$insert_id = $this->database_handler->insert_row(
+			array(
+				'user_id'            => $this->current_user_id,
+				'site_url'           => $this->current_site_url,
+				'parent_wishlist_id' => $wishlist_id,
+				'product_id'         => (int) $product_id,
+			)
+		);
 
-		// If given wishlist exists in the database, then insert the given product into the wishlist.
-		if ( in_array( (int) $wishlist_id, $user_wishlists, true ) ) {
-
-			$current_user_id = get_current_user_id();
-			$site_url        = get_site_url();
-
-			$save = array();
-
-			$save['user_id']            = $current_user_id;
-			$save['site_url']           = $site_url;
-			$save['parent_wishlist_id'] = $wishlist_id;
-			$save['product_id']         = (int) $product_id;
-
-			do_action( 'addonify_wishlist_before_adding_to_wishlist', $save );
-
-			$insert_id = $this->database_handler->insert_row( $save );
-			if ( $insert_id ) {
-				$return_boolean = true;
-			}
-
-			do_action( 'addonify_wishlist_after_adding_to_wishlist', $save );
+		if ( $insert_id ) {
+			$return_boolean = true;
 		}
 
 		return $return_boolean;
@@ -152,8 +172,8 @@ class Addonify_Wishlist_Handler {
 			return false;
 		}
 
-		if ( ! $parent_wishlist_id ) {
-			$parent_wishlist_id = $this->get_default_wishlist_id();
+		if ( 0 === $parent_wishlist_id ) {
+			$parent_wishlist_id = $this->default_wishlist_id;
 		}
 
 		$wishlist_items = $this->get_wishlist_items( $parent_wishlist_id );
@@ -164,8 +184,8 @@ class Addonify_Wishlist_Handler {
 				array(
 					'parent_wishlist_id' => $parent_wishlist_id,
 					'product_id'         => $product_id,
-					'user_id'            => get_current_user_id(),
-					'site_url'           => get_site_url(),
+					'user_id'            => $this->current_user_id,
+					'site_url'           => $this->current_site_url,
 				)
 			);
 		}
@@ -176,22 +196,20 @@ class Addonify_Wishlist_Handler {
 	/**
 	 * Get default wishlist id.
 	 *
-	 * @param int $current_user_id Current user ID.
 	 * @return int|boolean If found, wishlist ID. Else, false.
 	 */
-	public function get_default_wishlist_id( $current_user_id = 0 ) {
+	public function get_default_wishlist_id() {
 
-		if ( 0 === $current_user_id ) {
-			$current_user_id = get_current_user_id();
-		}
+		$user_wishlists = $this->get_wishlists();
 
-		$user_wishlists = $this->get_user_wishlists( $current_user_id );
-
-		if ( ! empty( $user_wishlists ) && isset( $user_wishlists[0] ) ) {
+		if (
+			! empty( $user_wishlists ) &&
+			isset( $user_wishlists[0] )
+		) {
 			return (int) $user_wishlists[0];
 		}
 
-		return false;
+		return 0;
 	}
 
 
@@ -200,21 +218,24 @@ class Addonify_Wishlist_Handler {
 	 *
 	 * @since 2.0.6
 	 *
-	 * @param int $user_id User ID.
+	 * @return array|boolean Lists of wishlists if found. Else false.
 	 */
-	public function get_user_wishlists( $user_id = 0 ) {
+	public function get_wishlists() {
 
 		$user_wishlists = $this->database_handler->get_rows(
 			array(
-				'user_id'            => ( ! $user_id ) ? get_current_user_id() : $user_id,
-				'site_url'           => get_site_url(),
+				'user_id'            => $this->current_user_id,
+				'site_url'           => $this->current_site_url,
 				'parent_wishlist_id' => NULL, // phpcs:ignore
 			)
 		);
 
 		$wishlist_ids = array();
 
-		if ( is_array( $user_wishlists ) && ! empty( $user_wishlists ) ) {
+		if (
+			is_array( $user_wishlists ) &&
+			! empty( $user_wishlists )
+		) {
 			foreach ( $user_wishlists as $user_wishlist ) {
 				$wishlist_ids[] = (int) $user_wishlist->id;
 			}
@@ -228,28 +249,29 @@ class Addonify_Wishlist_Handler {
 	/**
 	 * Get wishlist items.
 	 *
-	 * @param int    $wishlist_id Wishlist ID.
-	 * @param int    $user_id User ID.
-	 * @param string $site_url Site URL.
+	 * @param int $wishlist_id Wishlist ID.
 	 * @return array Wishlist items.
 	 */
-	public function get_wishlist_items( $wishlist_id = 0, $user_id = 0, $site_url = '' ) {
+	public function get_wishlist_items( $wishlist_id = 0 ) {
 
-		if ( ! $wishlist_id ) {
-			$wishlist_id = $this->get_default_wishlist_id();
+		if ( 0 === $wishlist_id ) {
+			$wishlist_id = $this->default_wishlist_id;
 		}
 
 		$wishlist_items = $this->database_handler->get_rows(
 			array(
-				'user_id'            => ( ! $user_id ) ? get_current_user_id() : $user_id,
-				'site_url'           => ( ! $site_url ) ? get_site_url() : $site_url,
+				'user_id'            => $this->current_user_id,
+				'site_url'           => $this->current_site_url,
 				'parent_wishlist_id' => $wishlist_id,
 			)
 		);
 
 		$items = array();
 
-		if ( is_array( $wishlist_items ) && ! empty( $wishlist_items ) ) {
+		if (
+			is_array( $wishlist_items ) &&
+			! empty( $wishlist_items )
+		) {
 			foreach ( $wishlist_items as $wishlist_item ) {
 				$items[] = (int) $wishlist_item->product_id;
 			}
@@ -266,14 +288,14 @@ class Addonify_Wishlist_Handler {
 	 */
 	public function empty_wishlist( $wishlist_id = 0 ) {
 
-		if ( ! $wishlist_id ) {
-			$wishlist_id = $this->get_default_wishlist_id();
+		if ( 0 === $wishlist_id ) {
+			$wishlist_id = $this->default_wishlist_id;
 		}
 
 		$delete_where = array(
 			'parent_wishlist_id' => $wishlist_id,
-			'user_id'            => get_current_user_id(),
-			'site_url'           => get_site_url(),
+			'user_id'            => $this->current_user_id,
+			'site_url'           => $this->current_site_url,
 		);
 
 		return $this->database_handler->delete_where( $delete_where );

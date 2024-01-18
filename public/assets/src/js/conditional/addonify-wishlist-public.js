@@ -56,6 +56,7 @@
             alreadyInWishlistButtonLabel: addonifyWishlistJSObject.alreadyInWishlistButtonLabel,
             addToWishlistButtonIcon: addonifyWishlistJSObject.addToWishlistButtonIcon,
             addedToWishlistButtonIcon: addonifyWishlistJSObject.addedToWishlistButtonIcon,
+            loadingWishlistButtonIcon: addonifyWishlistJSObject.loadingWishlistButtonIcon,
             undoNoticeTimeout: addonifyWishlistJSObject.undoNoticeTimeout,
             addedToWishlistModal: addonifyWishlistJSObject.addedToWishlistModal,
             removedFromWishlistModal: addonifyWishlistJSObject.removedFromWishlistModal,
@@ -237,7 +238,7 @@
 
             // Triggering custom event when product is being added into wishlist. 
             // 'addonify_adding_to_wishlist' custom event can be used to perform desired actions.
-            $(document).trigger('addonify_adding_to_wishlist');
+            $(document).trigger('addonify_adding_to_wishlist', [{ thisButton: currentAddToWishlistButton }]);
 
             let postRequestData = {
                 action: addToWishlistAction,
@@ -304,7 +305,7 @@
 
             // Triggering custom event when product is being removed from wishlist. 
             // 'addonify_removing_from_wishlist' custom event can be used to perform desired actions.
-            $(document).trigger('addonify_removing_from_wishlist');
+            $(document).trigger('addonify_removing_from_wishlist', [{thisButton: currentRemoveFromWishlistButton}]);
 
             $.post(
                 ajaxURL,
