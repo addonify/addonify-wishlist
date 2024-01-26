@@ -139,7 +139,7 @@ trait Addonify_Wishlist_Database_Trait {
 				if ( null === $field_value ) {
 					$where .= "{$field_id} IS NULL";
 				} else {
-					$where .= "{$field_id} = '{$field_value}' ";
+					$where .= "{$field_id} = '{$field_value}'";
 				}
 
 				if ( $counter < $fields_count ) {
@@ -158,11 +158,13 @@ trait Addonify_Wishlist_Database_Trait {
 			}
 		}
 
+		$query_statement = "SELECT * FROM {$table_name} {$where} {$order_by_}";
+
 		if ( ! empty( $limit_ ) ) {
-			return $wpdb->get_results( "SELECT * FROM {$table_name} {$where} {$order_by_} {$limit_}" ); //phpcs:ignore
+			$query_statement = "SELECT * FROM {$table_name} {$where} {$order_by_} {$limit_}";
 		}
 
-		return $wpdb->get_results( "SELECT * FROM {$table_name} {$where} {$order_by_}" ); //phpcs:ignore
+		return $wpdb->get_results( $query_statement ); //phpcs:ignore
 	}
 
 	/**
