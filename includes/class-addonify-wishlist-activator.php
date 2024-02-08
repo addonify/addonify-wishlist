@@ -32,6 +32,8 @@ class Addonify_Wishlist_Activator {
 
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-database-handler.php';
 
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-addonify-wishlist-handler.php';
+
 		$database_handler = new Addonify_Wishlist_Database_Handler();
 
 		$wishlist_table_exists = $database_handler->check_wishlist_table_exists();
@@ -40,7 +42,17 @@ class Addonify_Wishlist_Activator {
 
 			$database_handler->create_table();
 
-			$database_handler->migrate_wishlist_data();
+			$database_handler->migrate_wishlist_data( get_current_user_id() );
+		} else {
+
+			$database_handler->delete_where( array( 'user_id' => 0 ) );
+
+			$wishlist_handler = Addonify_Wishlist_Handler::get_instance();
+
+			if ( ! $wishlist_handler->get_default_wishlist_id( get_current_user_id() ) ) {
+				$database_handler = new Addonify_Wishlist_Database_Handler();
+				$database_handler->migrate_wishlist_data( get_current_user_id() );
+			}
 		}
 
 		self::create_wishlist_page();
@@ -86,5 +98,4 @@ class Addonify_Wishlist_Activator {
 		update_option( ADDONIFY_WISHLIST_DB_INITIALS . 'wishlist_page', $page_id );
 
 	}
-
 }

@@ -205,17 +205,19 @@ class Addonify_Wishlist_Public {
 	 */
 	public function maybe_create_and_migrate_wishlist_data( $username, $user ) {
 
-		if ( ! $this->wishlist_handler->get_default_wishlist_id() ) {
+		if (
+			in_array( 'administrator', $user->roles, true ) &&
+			( isset( $user->caps['administrator'] ) && $user->caps['administrator'] )
+		) {
+			$wishlist_database_handler = new Addonify_Wishlist_Database_Handler();
+			$wishlist_database_handler->delete_where( array( 'user_id' => 0 ) );
+		}
 
-			$wishlist_data = get_user_meta( $user->ID, 'addonify-wishlist', true );
+		$wishlist_handler = Addonify_Wishlist_Handler::get_instance();
 
-			if ( ! empty( $wishlist_data ) ) {
-				$wishlist_database_handler = new Addonify_Wishlist_Database_Handler();
-				$wishlist_database_handler->migrate_wishlist_data( $user->ID );
-			} else {
-				$database_handler = new Addonify_Wishlist_Database_Handler();
-				$database_handler->seed_wishlist_table();
-			}
+		if ( ! $wishlist_handler->get_default_wishlist_id( $user->get( 'ID' ) ) ) {
+			$wishlist_database_handler = new Addonify_Wishlist_Database_Handler();
+			$wishlist_database_handler->migrate_wishlist_data( $user->get( 'ID' ) );
 		}
 	}
 

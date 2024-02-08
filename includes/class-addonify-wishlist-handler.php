@@ -70,7 +70,7 @@ class Addonify_Wishlist_Handler {
 
 		$this->current_user_id     = get_current_user_id();
 		$this->current_site_url    = get_site_url();
-		$this->default_wishlist_id = $this->get_default_wishlist_id();
+		$this->default_wishlist_id = $this->get_default_wishlist_id( $this->current_user_id );
 	}
 
 	/**
@@ -196,11 +196,13 @@ class Addonify_Wishlist_Handler {
 	/**
 	 * Get default wishlist id.
 	 *
+	 * @param int $user_id WP User ID.
+	 *
 	 * @return int|boolean If found, wishlist ID. Else, false.
 	 */
-	public function get_default_wishlist_id() {
+	public function get_default_wishlist_id( $user_id ) {
 
-		$user_wishlists = $this->get_wishlists();
+		$user_wishlists = $this->get_wishlists( $user_id );
 
 		if (
 			! empty( $user_wishlists ) &&
@@ -218,14 +220,16 @@ class Addonify_Wishlist_Handler {
 	 *
 	 * @since 2.0.6
 	 *
+	 * @param int $user_id WP User ID.
+	 *
 	 * @return array|boolean Lists of wishlists if found. Else false.
 	 */
-	public function get_wishlists() {
+	public function get_wishlists( $user_id ) {
 
 		$user_wishlists = $this->database_handler->get_rows(
 			array(
-				'user_id'            => $this->current_user_id,
-				'site_url'           => $this->current_site_url,
+				'user_id'            => $user_id,
+				'site_url'           => get_site_url(),
 				'parent_wishlist_id' => NULL, // phpcs:ignore
 			)
 		);
