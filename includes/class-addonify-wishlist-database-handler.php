@@ -93,11 +93,7 @@ class Addonify_Wishlist_Database_Handler {
 	 *
 	 * @param int $user_id User ID.
 	 */
-	public function migrate_wishlist_data( $user_id = 0 ) {
-
-		if ( 0 === $user_id ) {
-			$user_id = get_current_user_id();
-		}
+	public function migrate_wishlist_data( $user_id ) {
 
 		$wishlist_data = get_user_meta( $user_id, 'addonify-wishlist', true );
 
@@ -135,28 +131,33 @@ class Addonify_Wishlist_Database_Handler {
 			}
 
 			delete_user_meta( $user_id, 'addonify-wishlist' );
+		} else {
+
+			$this->seed_wishlist_table( $user_id );
 		}
 	}
 
 	/**
 	 * Seeding wishlist table.
 	 *
+	 * @param int $user_id WP_User ID.
+	 *
 	 * @return int|false Returns wishlist row id on success, false otherwise.
 	 */
-	public function seed_wishlist_table() {
+	public function seed_wishlist_table( $user_id ) {
 
 		$insert_data = array(
-			'user_id'             => get_current_user_id(),
+			'user_id'             => $user_id,
 			'site_url'            => get_site_url(),
 			'wishlist_name'       => apply_filters( 'addonify_wishist_default_wishlist_name', esc_html__( 'Default Wishlist', 'addonify-wishlist' ) ),
 			'wishlist_visibility' => 'private',
-			'share_key'           => addonify_wishlist_reverse_num( time() ),
+			'share_key'           => $this->reverse_num( time() ),
 		);
 
 		$wishlist_id = $this->insert_row( $insert_data );
 
 		// Set default wishlist in the user meta.
-		addonify_wishlist_set_user_default_wishlist_in_meta( get_current_user_id(), $wishlist_id );
+		addonify_wishlist_set_user_default_wishlist_in_meta( $user_id, $wishlist_id );
 
 		return $wishlist_id;
 	}
@@ -179,5 +180,26 @@ class Addonify_Wishlist_Database_Handler {
 		global $wpdb;
 
 		$wpdb->query( "delete from $wpdb->options where option_name regexp '" . ADDONIFY_WISHLIST_DB_INITIALS . ".*'" ); // phpcs:ignore
+	}
+
+	/**
+	 * Get number reversed.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $num Any number.
+	 *
+	 * @return int Number reversed.
+	 */
+	public function reverse_num( $num ) {
+
+		$num    = absint( $num );
+		$revnum = 0;
+		while ( $num > 1 ) {
+			$rem    = $num % 10;
+			$revnum = ( $revnum * 10 ) + $rem;
+			$num    = ( $num / 10 );
+		}
+		return $revnum;
 	}
 }
