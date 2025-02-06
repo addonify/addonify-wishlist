@@ -28,14 +28,14 @@ onMounted(() => {
 
 	/**
 	 *
-	 * Fetch the recommded & installed addons in background.
+	 * Fetch the recommend & installed addons in background.
 	 * Doing this we can avoid the loading when user navigate to the recommended products page.
 	 * Wait till 20 seconds.
 	 *
 	 * @since: 2.0.6
 	 */
 	let operation = null;
-	const delay = 20000; // 20 seconds.
+	const delay = 20000;
 
 	if (typeof proStore.allAddons === "object") {
 		if (Object.keys(proStore.allAddons).length === 0) {
