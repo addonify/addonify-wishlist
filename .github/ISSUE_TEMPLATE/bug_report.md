@@ -14,14 +14,14 @@ Write a clear and concise description of what the bug is.
 
 👉 How can we reproduce this Bug?
 
-Write steps to reproduce the behaviour. Example:
+Write steps to reproduce the behavior. Example:
 
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See an error
 
-👉 Expected Behaviour:
+👉 Expected Behavior:
 
 Write a clear and concise description of what you expected to happen.
 
