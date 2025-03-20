@@ -1,6 +1,9 @@
 <script setup>
 import { advertiseUpsell } from "@helpers/global";
 import { useSettingsStore } from "@stores/settings";
+
+const { __ } = wp.i18n;
+
 const store = useSettingsStore();
 
 /**
@@ -90,6 +93,23 @@ const buildDynamicRouteLink = (route) => "/s/" + route;
 						</span>
 						<span class="label">Products</span>
 					</router-link>
+				</li>
+				<li class="list">
+					<a
+						href="https://donation.creamcode.org"
+						class="donation-link"
+						target="_blank"
+					>
+						<span class="icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<path
+									d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"
+								></path>
+							</svg>
+						</span>
+
+						{{ __("Donate (Coffee)", "addonify-wishlist") }}
+					</a>
 				</li>
 			</ul>
 		</nav>
