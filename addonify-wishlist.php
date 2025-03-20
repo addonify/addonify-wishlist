@@ -12,7 +12,7 @@
  * Description:       Addonify WooCommerce Wishlist is a light-weight yet powerful tool that adds a wishlist functionality to your e-commerce shop.
  * Version:           2.0.14
  * Requires at least: 6.3
- * Tested up to:      6.7.1
+ * Tested up to:      6.8
  * Requires PHP:      7.4
  * Author:            Addonify
  * Author URI:        https://www.addonify.com
