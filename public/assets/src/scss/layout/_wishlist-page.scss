@@ -1,8 +1,8 @@
-/* -------------------------------------------------------------------------- 
+/* --------------------------------------------------------------------------
 	#. Wishlist page
   -------------------------------------------------------------------------- */
 
-#addonify-wishlist-page-container  {
+#adfy-wl-content-wrapper  {
 
     position: relative;
     min-height: 150px;
@@ -19,13 +19,13 @@
         }
 
         td {
-
+            vertical-align: middle;
             padding: 15px;
         }
 
         td.price {
 
-            font-weight: bold; 
+            font-weight: bold;
 
             ins {
 
@@ -45,7 +45,7 @@
 
             width: 50px;
 
-            .adfy-wishlist-btn {
+            .adfy-wl-btn {
 
                 display: inline-flex;
                 align-items: center;
@@ -74,7 +74,7 @@
 
         td.actions {
 
-            p.adfy-wishlist-btn {
+            p.adfy-wl-btn {
 
                 position: relative;
                 display: inline;
@@ -99,6 +99,11 @@
                 }
             }
         }
+
+        .adfy-wl-table-toolbars {
+            display: flex;
+            justify-content: flex-end;
+        }
     }
 
     #addonify-wishlist-page-toolbar {
@@ -121,7 +126,7 @@
         bottom: 0;
         z-index: 100;
         background-color: rgba(255, 255, 255, 1);
-        @include transition_delay();
+        transition: all 0.5s ease;
 
         svg {
 
@@ -137,10 +142,10 @@
     /**
     *
     * Notice
-    * 
-    */ 
+    *
+    */
 
-    #addonify-wishlist-notice  {
+    #adfy-wl-notice  {
 
         display: block;
 
@@ -156,7 +161,7 @@
     /**
     *
     * Empty wishlist
-    * 
+    *
     */
 
     #addonify-wishlist-empty {
@@ -166,13 +171,13 @@
 }
 
 
-/* -------------------------------------------------------------------------- 
+/* --------------------------------------------------------------------------
 	#. Media Query
   -------------------------------------------------------------------------- */
 
 @media ( max-width: 768px ) {
 
-    #addonify-wishlist-page-container {
+    #adfy-wl-content-wrapper {
 
          #addonify-wishlist-table {
 
@@ -206,7 +211,7 @@
 
                             padding-bottom: 0;
                             border-bottom: none
-                        } 
+                        }
                     }
 
                     td.remove {
@@ -254,7 +259,7 @@
 
                     td.actions {
 
-                        .adfy-wishlist-btn {
+                        .adfy-wl-btn {
 
                             a {
 
@@ -274,8 +279,43 @@
     }
 
     // Toolbar
-    #addonify-wishlist-page-container #addonify-wishlist-page-toolbar {
+    #adfy-wl-content-wrapper #addonify-wishlist-page-toolbar {
 
         justify-content: center;
+    }
+}
+
+/*
+------------------------------------------------------------------
+    Wishlist page section
+------------------------------------------------------------------
+*/
+.adfy-wl-page-section {
+
+    text-align: center;
+
+    .adfy-wl-section-icon svg {
+        height: 4em;
+        width: 4em;
+    }
+
+    .adfy-wl-section-content {
+
+        margin-top: 30px;
+
+        .adfy-wl-section-header {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 0;
+
+            a.adfy-wl-page-btn {
+                display: inline-block;
+                padding: 5px 30px;
+                text-decoration: none;
+            }
+        }
+        
     }
 }

@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from "vue";
-import UpsellArrow from "@components/core/UpsellArrow.vue";
-import UpsellBanner from "@components/partials/UpsellBanner.vue";
-import QuickLinks from "@components/partials/QuickLinks.vue";
+
 import Hero from "@components/partials/Hero.vue";
+import UpsellArrow from "@components/core/UpsellArrow.vue";
+import QuickLinks from "@components/partials/QuickLinks.vue";
+import UpsellBanner from "@components/partials/UpsellBanner.vue";
 
 import { advertiseUpsell } from "@helpers/global";
 </script>

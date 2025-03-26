@@ -2,12 +2,12 @@
 	Hide/show
   -------------------------------------------------------------------------- */
 
-.adfy-wishlist-hide {
+.adfy-wl-hide {
 
     display: none;
 }
 
-.adfy-wishlist-show {
+.adfy-wl-show {
 
     display: block;
 }
@@ -39,7 +39,7 @@
 	Notices
   -------------------------------------------------------------------------- */
 
-#addonify-wishlist-notice {
+#adfy-wl-notice {
 
    	position: relative;
 
@@ -71,7 +71,7 @@
 		border-radius: 30px;
 		color: var(--adfy_wishlist_product_removed_notice_undo_btn_text_color);
 		background-color: var(--adfy_wishlist_product_removed_notice_undo_btn_bg_color);
-		@include transition_delay();
+		transition: all 0.5s ease;
 
 			&:hover {
 
@@ -91,4 +91,8 @@
 		align-items: center;
 		gap: 5px;
 	}
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
 }
