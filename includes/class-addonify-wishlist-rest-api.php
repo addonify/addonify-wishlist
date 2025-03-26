@@ -57,7 +57,6 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 		 * @access   public
 		 */
 		public function register_rest_endpoints() {
-
 			register_rest_route( // Get options.
 				$this->rest_namespace,
 				'/get_options',
@@ -150,7 +149,6 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 
 			return addonify_wishlist_v_2_get_settings_fields();
 		}
-
 
 		/**
 		 * Callback function to update all settings options values.
@@ -385,6 +383,20 @@ if ( ! class_exists( 'Addonify_Wishlist_Rest_API' ) ) {
 			} catch ( Exception $e ) {
 				error_log( $e->getMessage() ); //phpcs:ignore
 			}
+		}
+
+		/**
+		 * Checks if given date and format is valid.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string $date Date.
+		 * @param string $format Date format.
+		 */
+		public function validate_date_format( $date, $format = 'Y-m-d' ) {
+
+			$d = DateTime::createFromFormat( 'Y-m-d', $date );
+			return $d && $d->format( $format ) === $date;
 		}
 	}
 }
