@@ -149,18 +149,15 @@ Yes, there is. Use `[addonify_wishlist_button]` shortocde to display wishlist bu
 
 == Changelog ==
 
-= 2.0.15 - 06 February, 2025 =
-
-- Added: Donation link in the plugin's setting page.
-
-= 2.0.14 - 10 January, 2025 =
+= 2.0.14 - 26 March, 2025 =
 
 - Updated: Frontend templates and action hooks functions.
+- Added: Donation link in the plugin's setting page.
 - Tweak: Public assets (CSS & JS) path.
 - Tweak: Public assets (CSS & JS) file names.
 - Dev: Removed Gulp and added [Rollup](https://rollupjs.org/) to compile the public assets.
-- Tested: WordPress version 6.7.1
-- Tested: WooCommerce version 9.5.2
+- Tested: WordPress version 6.8
+- Tested: WooCommerce version 9.7.1
 
 = 2.0.13 - 13 December, 2024 =
 
