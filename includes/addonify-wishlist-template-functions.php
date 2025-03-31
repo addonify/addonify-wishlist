@@ -129,7 +129,7 @@ if ( ! function_exists( 'addonify_wishlist_no_wishlist_products_content_template
 	 */
 	function addonify_wishlist_no_wishlist_products_content_template( $css_class = 'adfy-wl-hide' ) {
 
-		$empty_wishlist_label = addonify_wishlist_get_option( 'empty_wishlist_label' );
+		$empty_wishlist_label = addonify_wishlist_get_option( 'sidebar_empty_wishlist_label' );
 
 		$nav_url          = '';
 		$display_nav_link = addonify_wishlist_get_option( 'show_empty_wishlist_navigation_link' );
