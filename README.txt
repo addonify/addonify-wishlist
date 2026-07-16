@@ -3,8 +3,8 @@
 Contributors: addonify
 Tags: wishlist, woocommerce wishlist, product wishlist, add to wishlist, save for later
 Requires at least: 6.3
-Tested up to: 6.7.1
-Stable tag: 2.0.15
+Tested up to: 6.9.1
+Stable tag: 2.0.16
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -149,18 +149,23 @@ Yes, there is. Use `[addonify_wishlist_button]` shortocde to display wishlist bu
 
 == Changelog ==
 
-= 2.0.15 - 06 February, 2025 =
+= 2.0.16 - 15 February, 2026 =
 
-- Added: Donation link in the plugin's setting page.
+- Fix: Broken Access Control in UDP Agent (CVSS 5.3). Credits to Legion Hunter. Unauthenticated attacker can update option value for "udp_agent_allow_tracking" via "init" hook due to missing authorization and nonce check in it's callback function "on_init".
 
-= 2.0.14 - 10 January, 2025 =
+= 2.0.15 - 31 March, 2025 =
+
+- Fixed : Empty wishlist message for wishlist page and wishlist sidebar.#460
+
+= 2.0.14 - 26 March, 2025 =
 
 - Updated: Frontend templates and action hooks functions.
+- Added: Donation link in the plugin's setting page.
 - Tweak: Public assets (CSS & JS) path.
 - Tweak: Public assets (CSS & JS) file names.
 - Dev: Removed Gulp and added [Rollup](https://rollupjs.org/) to compile the public assets.
-- Tested: WordPress version 6.7.1
-- Tested: WooCommerce version 9.5.2
+- Tested: WordPress version 6.8
+- Tested: WooCommerce version 9.7.1
 
 = 2.0.13 - 13 December, 2024 =
 

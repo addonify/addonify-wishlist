@@ -36,7 +36,7 @@ if ( ! function_exists( 'addonify_wishlist_v_2_settings_defaults' ) ) {
 		$defaults = apply_filters(
 			'addonify_wishlist_setting_defaults',
 			array(
-				'enable_wishlist'                          => true,
+				'enable_wishlist'                          => '1',
 				'wishlist_page'                            => addonify_wishlist_get_wishlist_page_id(),
 				'require_login'                            => false,
 				'if_not_login_action'                      => 'default',
