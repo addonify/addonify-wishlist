@@ -233,14 +233,31 @@ class Addonify_Wishlist_Admin {
 	 */
 	public function maybe_update_user_review_status() {
 
+		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+			wp_safe_redirect( esc_url( admin_url() ) );
+			exit;
+		}
+
+		if (
+			isset( $_GET['addonify-Wishlist-review-notice-already-did'] )
+			|| isset( $_GET['addonify-Wishlist-review-notice-maybe-later'] )
+		) {
+			if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['nonce'] ) ), 'addonify_wishlist_review_nonce' ) ) {
+				wp_safe_redirect( esc_url( admin_url() ) );
+				exit;
+			}
+		}
+
 		if ( isset( $_GET['addonify-Wishlist-review-notice-already-did'] ) ) { //phpcs:ignore
 			update_option( 'addonify_wishlist_plugin_review_status', 'reviewed' );
 			wp_safe_redirect( esc_url( admin_url() ) );
+			exit;
 		}
 
 		if ( isset( $_GET['addonify-Wishlist-review-notice-maybe-later'] ) ) { //phpcs:ignore
 			set_transient( 'addonify_wishlist_ask_for_review_transient', '1', 3 * DAY_IN_SECONDS );
 			wp_safe_redirect( esc_url( admin_url() ) );
+			exit;
 		}
 	}
 
@@ -256,6 +273,8 @@ class Addonify_Wishlist_Admin {
 		if ( 'index.php' !== $pagenow ) {
 			return;
 		}
+
+		$nonce = wp_create_nonce( 'addonify_wishlist_review_nonce' );
 		?>
 		<div class="addonify-wishlist-wp-notice notice notice-info" id="addonify-wishlist-review-notice">
 			<h3 class="notice-heading">
@@ -269,10 +288,28 @@ class Addonify_Wishlist_Admin {
 					<?php esc_html_e( 'Okay, You got it!', 'addonify-wishlist' ); ?>
 					<i class="dashicons dashicons-smiley"></i>
 				</a>
-				<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-already-did', true, admin_url() ) ); ?>" class="button button-secondary">
+				<?php
+				$review_done_url = add_query_arg(
+					array(
+						'addonify-wishlist-review-notice-already-did' => true,
+						'nonce' => $nonce,
+					),
+					admin_url()
+				)
+				?>
+				<a href="<?php echo esc_url( $review_done_url ); ?>" class="button button-secondary">
 					<?php esc_html_e( 'I already did', 'addonify-wishlist' ); ?>
 				</a>
-				<a href="<?php echo esc_html( add_query_arg( 'addonify-Wishlist-review-notice-maybe-later', true, admin_url() ) ); ?>" class="button button-secondary">
+				<?php
+				$review_later_url = add_query_arg(
+					array(
+						'addonify-Wishlist-review-notice-maybe-later' => true,
+						'nonce' => $nonce,
+					),
+					admin_url()
+				)
+				?>
+				<a href="<?php echo esc_url( $review_later_url ); ?>" class="button button-secondary">
 					<?php esc_html_e( 'Maybe later', 'addonify-wishlist' ); ?>
 				</a>
 			</div>
